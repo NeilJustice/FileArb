@@ -1,0 +1,41 @@
+# CMake
+CMakeFiles/
+Debug/
+Release/
+ReleaseCI/
+*.cmake
+!CMakeMacros.cmake
+CMakeCache.txt
+
+# Python
+__pycache__/
+htmlcov/
+coverage.xml
+.coverage
+
+# Windows
+.axoCover/
+.vs/
+x64/
+*.bin
+*.tlog
+*.dat
+*.db
+*.opendb
+*.sln
+!PyUtils.sln
+*.suo
+*.filters
+*.ipch
+*.lib
+*.exe
+*.obj
+*.pdb
+*.user
+*.ilk
+*.pch
+*.vcxproj
+*.tmp
+*.txt
+*.psess
+*.vspx

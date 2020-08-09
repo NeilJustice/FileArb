@@ -1,0 +1,19 @@
+{
+   "version": "0.2.0",
+   "configurations":
+   [
+      {
+         "name": "C++ Launch",
+         "request": "launch",
+         "type": "cppdbg",
+         "preLaunchTask": "Build Debug",
+         "program": "${workspaceRoot}/Debug/libFileArbTests/libFileArbTests",
+         //"args": [ ""],
+         "stopAtEntry": false,
+         "cwd": "${fileDirname}",
+         "environment": [],
+         "externalConsole": false,
+         "linux": { "MIMode": "gdb" }
+      }
+   ]
+}

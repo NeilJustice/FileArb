@@ -1,0 +1,2 @@
+ignore:
+  - "libFileArb/Components/Docopt/docopt.h"

@@ -1,0 +1,19 @@
+#!/bin/bash
+set -u
+
+osname="$(uname --operating-system)"
+if [[ "$osname" == *"Linux" ]]; then
+   sudo JenkinsJobs/Linux/FileArb_Debug_Clang.sh
+elif [ "$osname" == "Msys" ]; then
+   powershell.exe JenkinsJobs/Windows/FileArbDebug.ps1
+fi
+jenkinsJobExitCode=$?
+if [ "$jenkinsJobExitCode" -ne 0 ]; then
+   echo "======================================================================================"
+   echo "pre-commit: Jenkins job failed with exit code $jenkinsJobExitCode. Disallowing commit."
+   echo "======================================================================================"
+   exit 1
+fi
+echo "==================================================="
+echo "pre-commit: Jenkins job succeeded. Allowing commit."
+echo "==================================================="

@@ -1,0 +1,40 @@
+#pragma once
+namespace Utils
+{
+   class Console;
+   class FileSystem;
+   class StopwatchFactory;
+
+   template<typename ClassType, typename Arg1Type, typename Arg2Type>
+   class VoidTwoArgMemberFunctionCaller;
+
+   template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
+   class VoidThreeArgMemberFunctionCaller;
+}
+struct FileArbArgs;
+
+class FileCreator
+{
+   friend class FileCreatorTests;
+private:
+   using VoidTwoArgMemberFunctionCallerType =
+      Utils::VoidTwoArgMemberFunctionCaller<FileCreator, const FileArbArgs&, const string&>;
+   unique_ptr<const VoidTwoArgMemberFunctionCallerType> _caller_CreateSequentiallyNumberedFilesInNumberedDirectory;
+
+   using VoidThreeArgMemberFunctionCallerType =
+      Utils::VoidThreeArgMemberFunctionCaller<FileCreator, const fs::path&, const FileArbArgs&, const string&>;
+   unique_ptr<const VoidThreeArgMemberFunctionCallerType> _caller_CreateNumberedFileInDirectory;
+
+   unique_ptr<const Utils::Console> _console;
+   unique_ptr<const Utils::FileSystem> _fileSystem;
+   unique_ptr<const Utils::StopwatchFactory> _stopwatchFactory;
+public:
+   FileCreator();
+   virtual ~FileCreator();
+   virtual void WriteFiles(const FileArbArgs& args, const string& fileTextOrBytes);
+private:
+   void CreateSequentiallyNumberedFilesInNumberedDirectory(
+      size_t callIndex, const FileArbArgs& args, const string& fileTextOrBytes);
+   void CreateNumberedFileInDirectory(
+      size_t callIndex, const fs::path& directoryPath, const FileArbArgs& args, const string& fileTextOrBytes);
+};

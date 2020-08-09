@@ -4,13 +4,13 @@
 #include "libFileArb/Components/FileArb/FileArbProgram.h"
 #include "libFileArb/Utilities/DataStructure/Vector.h"
 #include "libFileArb/ValueTypes/FileArbArgs.h"
-#include "libFileArbTests/Components/FileArb/ZenMock/FileArbArgsParserMock.h"
-#include "libFileArbTests/Components/SubPrograms/ZenMock/FileArbSubProgramFactoryMock.h"
-#include "libFileArbTests/Components/SubPrograms/ZenMock/FileArbSubProgramMock.h"
-#include "libFileArbTests/Components/SubPrograms/ZenMock/FileCreatorMock.h"
-#include "libFileArbTests/Components/Console/ZenMock/ConsoleMock.h"
-#include "libFileArbTests/Components/Exception/ZenMock/TryCatchCallerMock.h"
-#include "libFileArbTests/Components/Time/ZenMock/StopwatchMock.h"
+#include "libFileArbTests/Components/FileArb/MetalMock/FileArbArgsParserMock.h"
+#include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramFactoryMock.h"
+#include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramMock.h"
+#include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/Exception/MetalMock/TryCatchCallerMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileArbProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -60,7 +60,7 @@ TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
    //
    const int exitCode = _fileArbProgram.Main(1, const_cast<char**>(argv));
    //
-   ZENMOCK(_consoleMock->WriteLineMock_string.CalledOnceWith(FileArbArgs::CommandLineUsage));
+   METALMOCK(_consoleMock->WriteLineMock_string.CalledOnceWith(FileArbArgs::CommandLineUsage));
    ARE_EQUAL(0, exitCode);
 }
 
@@ -73,8 +73,8 @@ TEST1X1(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsProgram
 {
    _stopwatchMock->StartMock.Expect();
 
-   ZENMOCK_NONVOID2_STATIC(vector<string>, Utils::Vector, FromArgcArgv, int, char**);
-   _fileArbProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_ZENMOCK_OBJECT(FromArgcArgvMock);
+   METALMOCK_NONVOID2_STATIC(vector<string>, Utils::Vector, FromArgcArgv, int, char**);
+   _fileArbProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(FromArgcArgvMock);
 
    const vector<string> vectorArgs{ ZenUnit::Random<string>(), ZenUnit::Random<string>() };
    FromArgcArgvMock.Return(vectorArgs);
@@ -92,14 +92,14 @@ TEST1X1(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsProgram
    //
    const int exitCode = _fileArbProgram.Main(argc, const_cast<char**>(argv));
    //
-   ZENMOCK(_stopwatchMock->StartMock.CalledOnce());
-   ZENMOCK(FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)));
-   ZENMOCK(_tryCatchCallerMock->TryCatchCallMock.CalledOnceWith(
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   METALMOCK(FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)));
+   METALMOCK(_tryCatchCallerMock->TryCatchCallMock.CalledOnceWith(
       &_fileArbProgram, &FileArbProgram::Run, vectorArgs, &FileArbProgram::ExceptionHandler));
-   ZENMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedDurationLine = "[FileArb] Duration: " + runtimeInSeconds + " seconds";
    const string expectedExitCodeLine = "[FileArb] ExitCode: " + to_string(exitCode);
-   ZENMOCK(_consoleMock->WriteLineMock_string.CalledAsFollows(
+   METALMOCK(_consoleMock->WriteLineMock_string.CalledAsFollows(
    {
       { expectedDurationLine },
       { expectedExitCodeLine }
@@ -125,19 +125,19 @@ TEST(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_Re
    //
    const int returnedExitCode = _fileArbProgram.Run(stringArgs);
    //
-   ZENMOCK(_argsParserMock->ParseArgsMock.CalledOnceWith(stringArgs));
-   ZENMOCK(_argsParserMock->PrintPreambleMock.CalledOnceWith(args));
-   ZENMOCK(_fileArbSubProgramFactoryMock->NewFileArbSubProgramMock.CalledOnceWith(args.programMode));
-   ZENMOCK(fileArbSubProgramMock->RunMock.CalledOnceWith(args));
+   METALMOCK(_argsParserMock->ParseArgsMock.CalledOnceWith(stringArgs));
+   METALMOCK(_argsParserMock->PrintPreambleMock.CalledOnceWith(args));
+   METALMOCK(_fileArbSubProgramFactoryMock->NewFileArbSubProgramMock.CalledOnceWith(args.programMode));
+   METALMOCK(fileArbSubProgramMock->RunMock.CalledOnceWith(args));
    ARE_EQUAL(exitCode, returnedExitCode);
 }
 
 TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
 {
-   ZENMOCK_NONVOID1_STATIC(string, Utils::Exception, ClassNameAndWhat, const exception*);
+   METALMOCK_NONVOID1_STATIC(string, Utils::Exception, ClassNameAndWhat, const exception*);
    const string exceptionTypeNameAndWhat = ZenUnit::Random<string>();
    ClassNameAndWhatMock.Return(exceptionTypeNameAndWhat);
-   _fileArbProgram._call_Utils_Exception_ClassNameAndWhat = BIND_1ARG_ZENMOCK_OBJECT(ClassNameAndWhatMock);
+   _fileArbProgram._call_Utils_Exception_ClassNameAndWhat = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
 
    _consoleMock->WriteLineMock_string.Expect();
    const exception ex;
@@ -145,9 +145,9 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    //
    int exitCode = _fileArbProgram.ExceptionHandler(ex, args);
    //
-   ZENMOCK(ClassNameAndWhatMock.CalledOnceWith(&ex));
+   METALMOCK(ClassNameAndWhatMock.CalledOnceWith(&ex));
    const string expectedErrorMessage = "FileArb error: FileArb threw an exception:\n" + exceptionTypeNameAndWhat;
-   ZENMOCK(_consoleMock->WriteLineMock_string.CalledOnceWith(expectedErrorMessage));
+   METALMOCK(_consoleMock->WriteLineMock_string.CalledOnceWith(expectedErrorMessage));
    ARE_EQUAL(1, exitCode);
 }
 

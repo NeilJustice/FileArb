@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "libFileArb/Components/FileArb/FileArbArgsParser.h"
 #include "libFileArb/Utilities/DataStructure/Vector.h"
-#include "libFileArbTests/Components/Console/ZenMock/ConsoleMock.h"
-#include "libFileArbTests/Components/Docopt/ZenMock/DocoptParserMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
 
 TESTS(FileArbArgsParserTests)
 AFACT(Constructor_NewsComponents_SetsFunctionPointers)
@@ -16,16 +16,16 @@ EVIDENCE
 FileArbArgsParser _fileArbArgsParser;
 Utils::ConsoleMock* _consoleMock = nullptr;
 Utils::DocoptParserMock* _docoptParserMock = nullptr;
-ZENMOCK_NONVOID2_STATIC(ProgramMode, FileArbArgsParser, DetermineProgramMode, bool, bool)
-ZENMOCK_NONVOID2_STATIC(string, FileArbArgsParser, DetermineFileExtension, bool, bool)
+METALMOCK_NONVOID2_STATIC(ProgramMode, FileArbArgsParser, DetermineProgramMode, bool, bool)
+METALMOCK_NONVOID2_STATIC(string, FileArbArgsParser, DetermineFileExtension, bool, bool)
 using DocoptMapType = map<string, docopt::Value>;
 
 STARTUP
 {
    _fileArbArgsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
    _fileArbArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
-   _fileArbArgsParser._call_DetermineProgramMode = BIND_2ARG_ZENMOCK_OBJECT(DetermineProgramModeMock);
-   _fileArbArgsParser._call_DetermineFileExtension = BIND_2ARG_ZENMOCK_OBJECT(DetermineFileExtensionMock);
+   _fileArbArgsParser._call_DetermineProgramMode = BIND_2ARG_METALMOCK_OBJECT(DetermineProgramModeMock);
+   _fileArbArgsParser._call_DetermineFileExtension = BIND_2ARG_METALMOCK_OBJECT(DetermineFileExtensionMock);
 }
 
 TEST(Constructor_NewsComponents_SetsFunctionPointers)
@@ -87,22 +87,22 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    expectedArgs.commandLine = Utils::Vector::Join(stringArgs, ' ');
    expectedArgs.programMode = programMode;
    expectedArgs.fileExtension = fileExtension;
-   ZENMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs));
-   ZENMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
+   METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs));
+   METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
    {
       { docoptValues, "create-text-files" },
       { docoptValues, "create-binary-files" },
       { docoptValues, "--parallel" },
       { docoptValues, "--verbose" }
    }));
-   ZENMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
+   METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
    const vector<int> expectedCreateTextFilesAndCreateBinaryFiles =
    {
       static_cast<int>(ProgramMode::CreateTextFiles),
       static_cast<int>(ProgramMode::CreateBinaryFiles)
    };
    const int expectedProgramModeAsInt = static_cast<int>(args.programMode);
-   ZENMOCK(_docoptParserMock->GetProgramModeSpecificRequiredSizeTMock.CalledAsFollows(
+   METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredSizeTMock.CalledAsFollows(
    {
       { docoptValues, "--directories", expectedProgramModeAsInt, expectedCreateTextFilesAndCreateBinaryFiles },
       { docoptValues, "--files", expectedProgramModeAsInt, expectedCreateTextFilesAndCreateBinaryFiles },
@@ -110,8 +110,8 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
       { docoptValues, "--characters", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateTextFiles) } },
       { docoptValues, "--bytes", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFiles) } }
    }));
-   ZENMOCK(DetermineFileExtensionMock.CalledOnceWith(isCreateTextFilesMode, isCreateBinaryFilesMode));
-   ZENMOCK(DetermineProgramModeMock.CalledOnceWith(isCreateTextFilesMode, isCreateBinaryFilesMode));
+   METALMOCK(DetermineFileExtensionMock.CalledOnceWith(isCreateTextFilesMode, isCreateBinaryFilesMode));
+   METALMOCK(DetermineProgramModeMock.CalledOnceWith(isCreateTextFilesMode, isCreateBinaryFilesMode));
    expectedArgs.targetDirectoryPath = targetDirectoryPath;
    expectedArgs.numberOfDirectoriesToCreate = numberOfDirectoriesToCreate;
    expectedArgs.numberOfFilesToCreate = numberOfFilesToCreate;
@@ -152,7 +152,7 @@ TEST(PrintPreamble_WritesRunningCommandLineMessageToConsole)
    _fileArbArgsParser.PrintPreamble(args);
    //
    const string expectedRunningMessage = "[FileArb] CommandLine: " + args.commandLine;
-   ZENMOCK(_consoleMock->WriteLineMock_string.CalledOnceWith(expectedRunningMessage));
+   METALMOCK(_consoleMock->WriteLineMock_string.CalledOnceWith(expectedRunningMessage));
 }
 
 RUN_TESTS(FileArbArgsParserTests)

@@ -22,21 +22,21 @@ EVIDENCE
 ErrorCodeTranslator _errorCodeTranslator;
 
 #ifdef __linux__
-ZENMOCK_NONVOID3_FREE(char*, strerror_r, int, char*, size_t)
+METALMOCK_NONVOID3_FREE(char*, strerror_r, int, char*, size_t)
 #elif _WIN32
-ZENMOCK_NONVOID3_FREE(errno_t, strerror_s, char*, size_t, int)
-ZENMOCK_NONVOID0_FREE(int, GetLastError)
+METALMOCK_NONVOID3_FREE(errno_t, strerror_s, char*, size_t, int)
+METALMOCK_NONVOID0_FREE(int, GetLastError)
 #endif
-ZENMOCK_NONVOID0_FREE(int*, _call_errno)
+METALMOCK_NONVOID0_FREE(int*, _call_errno)
 
 STARTUP
 {
-   _errorCodeTranslator._call_errno = BIND_0ARG_ZENMOCK_OBJECT(_call_errnoMock);
+   _errorCodeTranslator._call_errno = BIND_0ARG_METALMOCK_OBJECT(_call_errnoMock);
 #ifdef __linux__
-   _errorCodeTranslator._call_strerror_r = BIND_3ARG_ZENMOCK_OBJECT(strerror_rMock);
+   _errorCodeTranslator._call_strerror_r = BIND_3ARG_METALMOCK_OBJECT(strerror_rMock);
 #elif _WIN32
-   _errorCodeTranslator._call_strerror_s = BIND_3ARG_ZENMOCK_OBJECT(strerror_sMock);
-   _errorCodeTranslator._call_GetLastError = BIND_0ARG_ZENMOCK_OBJECT(GetLastErrorMock);
+   _errorCodeTranslator._call_strerror_s = BIND_3ARG_METALMOCK_OBJECT(strerror_sMock);
+   _errorCodeTranslator._call_GetLastError = BIND_0ARG_METALMOCK_OBJECT(GetLastErrorMock);
 #endif
 }
 
@@ -69,7 +69,7 @@ TEST(GetErrnoValue_ReturnsResultOfCallingErrnoFunction)
    //
    const int returnedErrnoValue = _errorCodeTranslator.GetErrnoValue();
    //
-   ZENMOCK(_call_errnoMock.CalledOnce());
+   METALMOCK(_call_errnoMock.CalledOnce());
    ARE_EQUAL(errnoValue, returnedErrnoValue);
 }
 
@@ -78,12 +78,12 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
    class ErrorCodeTranslatorSelfMocked : public Zen::Mock<ErrorCodeTranslator>
    {
    public:
-      ZENMOCK_NONVOID0_FREE(int*, _call_errno)
+      METALMOCK_NONVOID0_FREE(int*, _call_errno)
          ErrorCodeTranslatorSelfMocked()
       {
-         _call_errno = BIND_0ARG_ZENMOCK_OBJECT(_call_errnoMock);
+         _call_errno = BIND_0ARG_METALMOCK_OBJECT(_call_errnoMock);
       }
-      ZENMOCK_NONVOID1_CONST(string, GetErrnoDescription, int)
+      METALMOCK_NONVOID1_CONST(string, GetErrnoDescription, int)
    } errorCodeTranslatorSelfMocked;
 
    int errnoValue = ZenUnit::Random<int>();
@@ -92,8 +92,8 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
    //
    const pair<int, string> errnoWithDescription = errorCodeTranslatorSelfMocked.GetErrnoWithDescription();
    //
-   ZENMOCK(errorCodeTranslatorSelfMocked._call_errnoMock.CalledOnce());
-   ZENMOCK(errorCodeTranslatorSelfMocked.GetErrnoDescriptionMock.CalledOnceWith(errnoValue));
+   METALMOCK(errorCodeTranslatorSelfMocked._call_errnoMock.CalledOnce());
+   METALMOCK(errorCodeTranslatorSelfMocked.GetErrnoDescriptionMock.CalledOnceWith(errnoValue));
    const pair<int, string> expectedErrnoWithDescription(errnoValue, errnoDescription);
    ARE_EQUAL(expectedErrnoWithDescription, errnoWithDescription);
 }
@@ -129,12 +129,12 @@ char* strerror_r_CallInstead(
 class ErrorCodeTranslatorSelfMocked : public Zen::Mock<ErrorCodeTranslator>
 {
 public:
-   ZENMOCK_NONVOID0_FREE(DWORD, _call_GetLastError)
+   METALMOCK_NONVOID0_FREE(DWORD, _call_GetLastError)
       ErrorCodeTranslatorSelfMocked()
    {
-      _call_GetLastError = BIND_0ARG_ZENMOCK_OBJECT(_call_GetLastErrorMock);
+      _call_GetLastError = BIND_0ARG_METALMOCK_OBJECT(_call_GetLastErrorMock);
    }
-   ZENMOCK_NONVOID1_CONST(string, GetWindowsLastErrorDescription, DWORD)
+   METALMOCK_NONVOID1_CONST(string, GetWindowsLastErrorDescription, DWORD)
 } _errorCodeTranslatorSelfMocked;
 
 TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturns0_Returns0AndEmptyString)
@@ -144,7 +144,7 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturns0_Returns0AndEmptyStr
    const pair<DWORD, string> windowsLastErrorWithDescription =
       _errorCodeTranslatorSelfMocked.GetWindowsLastErrorWithDescription();
    //
-   ZENMOCK(_errorCodeTranslatorSelfMocked._call_GetLastErrorMock.CalledOnce());
+   METALMOCK(_errorCodeTranslatorSelfMocked._call_GetLastErrorMock.CalledOnce());
    const pair<DWORD, string> expectedWindowsLastErrorWithDescription(0, "");
    ARE_EQUAL(expectedWindowsLastErrorWithDescription, windowsLastErrorWithDescription);
 }
@@ -160,8 +160,8 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
    const pair<DWORD, string> windowsLastErrorWithDescription =
       _errorCodeTranslatorSelfMocked.GetWindowsLastErrorWithDescription();
    //
-   ZENMOCK(_errorCodeTranslatorSelfMocked._call_GetLastErrorMock.CalledOnce());
-   ZENMOCK(_errorCodeTranslatorSelfMocked.GetWindowsLastErrorDescriptionMock.CalledOnceWith(windowsLastError));
+   METALMOCK(_errorCodeTranslatorSelfMocked._call_GetLastErrorMock.CalledOnce());
+   METALMOCK(_errorCodeTranslatorSelfMocked.GetWindowsLastErrorDescriptionMock.CalledOnceWith(windowsLastError));
    const pair<DWORD, string> expectedWindowsLastErrorWithDescription(windowsLastError, windowsLastErrorDescription);
    ARE_EQUAL(expectedWindowsLastErrorWithDescription, windowsLastErrorWithDescription);
 }

@@ -8,11 +8,11 @@ FACTS(ReplicateLineNTimes_ReturnsLineReplicatedNTimes)
 EVIDENCE
 
 TextFileLinesGenerator _textFileLinesGenerator;
-ZENMOCK_NONVOID2_STATIC(string, FileTextGenerator, ReplicateLineNTimes, const string&, size_t);
+METALMOCK_NONVOID2_STATIC(string, FileTextGenerator, ReplicateLineNTimes, const string&, size_t);
 
 STARTUP
 {
-   _textFileLinesGenerator._call_ReplicateLineNTimes = BIND_2ARG_ZENMOCK_OBJECT(ReplicateLineNTimesMock);
+   _textFileLinesGenerator._call_ReplicateLineNTimes = BIND_2ARG_METALMOCK_OBJECT(ReplicateLineNTimesMock);
 }
 
 TEST(DefaultConstructor_SetsReplicateLineNTimesFunction)
@@ -31,7 +31,7 @@ TEST(MakeFileText_ReturnsStringWithNumberOfCharactersPerLineReplicatedNumberOfLi
    //
    string expectedLineToWrite(numberOfCharactersPerLine + 1, '0');
    expectedLineToWrite[expectedLineToWrite.size() - 1] = '\n';
-   ZENMOCK(ReplicateLineNTimesMock.CalledOnceWith(expectedLineToWrite, numberOfLinesPerFile));
+   METALMOCK(ReplicateLineNTimesMock.CalledOnceWith(expectedLineToWrite, numberOfLinesPerFile));
    ARE_EQUAL(fileText, returnedFileText);
 }
 

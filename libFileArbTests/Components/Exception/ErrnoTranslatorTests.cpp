@@ -7,11 +7,11 @@ AFACT(ToReadable_ReturnsStrErrorReturnValue)
 EVIDENCE
 
 Utils::ErrnoTranslator _errnoTranslator;
-ZENMOCK_NONVOID1_FREE(const char*, strerror, int)
+METALMOCK_NONVOID1_FREE(const char*, strerror, int)
 
 STARTUP
 {
-   _errnoTranslator._call_strerror = BIND_1ARG_ZENMOCK_OBJECT(strerrorMock);
+   _errnoTranslator._call_strerror = BIND_1ARG_METALMOCK_OBJECT(strerrorMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointerToStrError)
@@ -29,7 +29,7 @@ TEST(ToReadable_ReturnsStrErrorReturnValue)
    //
    const string errnoDescription = _errnoTranslator.ToReadable(errnoValue);
    //
-   ZENMOCK(strerrorMock.CalledOnceWith(errnoValue));
+   METALMOCK(strerrorMock.CalledOnceWith(errnoValue));
    ARE_EQUAL(strerrorReturnValue, errnoDescription);
 }
 

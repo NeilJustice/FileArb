@@ -9,6 +9,6 @@ namespace Utils
    public:
       using MemberFunctionType = int (ClassType::*)(ArgumentType);
       using ExceptionHandlerType = int (ClassType::*)(const exception&, ArgumentType);
-      ZENMOCK_NONVOID4_CONST(int, TryCatchCall, ClassType*, MemberFunctionType, ArgumentType, ExceptionHandlerType)
+      METALMOCK_NONVOID4_CONST(int, TryCatchCall, ClassType*, MemberFunctionType, ArgumentType, ExceptionHandlerType)
    };
 }

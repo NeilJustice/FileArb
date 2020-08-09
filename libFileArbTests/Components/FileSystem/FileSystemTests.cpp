@@ -12,15 +12,15 @@ AFACT(CloseFile_fcloseReturnValueIs0_Returns)
 EVIDENCE
 
 Utils::FileSystem _fileSystem;
-ZENMOCK_NONVOID1_FREE(int, fclose, FILE*)
-ZENMOCK_NONVOID0_FREE(int*, _errno)
-ZENMOCK_NONVOID2_NAMESPACED_FREE(bool, fs, create_directories, const fs::path&, error_code&)
+METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
+METALMOCK_NONVOID0_FREE(int*, _errno)
+METALMOCK_NONVOID2_NAMESPACED_FREE(bool, fs, create_directories, const fs::path&, error_code&)
 
 STARTUP
 {
-   _fileSystem._call_fclose = BIND_1ARG_ZENMOCK_OBJECT(fcloseMock);
-   _fileSystem._call_errno = BIND_0ARG_ZENMOCK_OBJECT(_errnoMock);
-   _fileSystem._call_fs_create_directories = BIND_2ARG_ZENMOCK_OBJECT(create_directoriesMock);
+   _fileSystem._call_fclose = BIND_1ARG_METALMOCK_OBJECT(fcloseMock);
+   _fileSystem._call_errno = BIND_0ARG_METALMOCK_OBJECT(_errnoMock);
+   _fileSystem._call_fs_create_directories = BIND_2ARG_METALMOCK_OBJECT(create_directoriesMock);
 }
 
 TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
@@ -54,7 +54,7 @@ TEST(OpenFile_FileCannotBeOpened_ThrowsRuntimeError)
    THROWS_EXCEPTION(_fileSystem.OpenFile(filePathThatDoesNotExist, fileOpenMode),
       runtime_error, expectedExceptionMessage);
    //
-   ZENMOCK(_errnoMock.CalledOnce());
+   METALMOCK(_errnoMock.CalledOnce());
 }
 
 TEST1X1(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException,
@@ -75,8 +75,8 @@ TEST1X1(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException,
    const string expectedExceptionWhat = Utils::MakeFileSystemExceptionMessage(filePath, errnoValue);
    THROWS_EXCEPTION(_fileSystem.CloseFile(filePath, file), Utils::FileCloseException, expectedExceptionWhat);
    //
-   ZENMOCK(fcloseMock.CalledOnceWith(file));
-   ZENMOCK(_errnoMock.CalledOnce());
+   METALMOCK(fcloseMock.CalledOnceWith(file));
+   METALMOCK(_errnoMock.CalledOnce());
 }
 
 TEST(CloseFile_fcloseReturnValueIs0_Returns)
@@ -87,7 +87,7 @@ TEST(CloseFile_fcloseReturnValueIs0_Returns)
    //
    _fileSystem.CloseFile(filePath, file);
    //
-   ZENMOCK(fcloseMock.CalledOnceWith(file));
+   METALMOCK(fcloseMock.CalledOnceWith(file));
 }
 
 RUN_TESTS(FileSystemTests)

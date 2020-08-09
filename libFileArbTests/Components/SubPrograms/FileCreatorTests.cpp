@@ -2,14 +2,14 @@
 #include "libFileArb/Components/String/StringUtil.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 #include "libFileArb/ValueTypes/FileArbArgs.h"
-#include "libFileArbTests/Components/SubPrograms/ZenMock/FileCreatorMock.h"
-#include "libFileArbTests/Components/Utilities/ZenMock/IncreasingIntegerSequenceMock.h"
-#include "libFileArbTests/Components/Console/ZenMock/ConsoleMock.h"
-#include "libFileArbTests/Components/FileSystem/ZenMock/FileSystemMock.h"
-#include "libFileArbTests/Components/Function/Member/ZenMock/VoidThreeArgMemberFunctionCallerMock.h"
-#include "libFileArbTests/Components/Function/Member/ZenMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileArbTests/Components/Time/ZenMock/StopwatchFactoryMock.h"
-#include "libFileArbTests/Components/Time/ZenMock/StopwatchMock.h"
+#include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
+#include "libFileArbTests/Components/Utilities/MetalMock/IncreasingIntegerSequenceMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileArbTests/Components/Function/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
+#include "libFileArbTests/Components/Function/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchFactoryMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileCreatorTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -63,7 +63,7 @@ TEST(WriteFiles_MakesAndStoresFileText_ParallelIsFalse_SequentiallyCallsCreateFi
    //
    _fileCreator.WriteFiles(args, fileTextOrBytes);
    //
-   ZENMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->
+   METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->
       CallNonConstMemberFunctionNTimesMock.CalledOnceWith(
          args.numberOfDirectoriesToCreate,
          &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory,
@@ -80,7 +80,7 @@ TEST(WriteFiles_MakesAndStoresFileText_ParallelIsTrue_ParallelCallsCreateFileNum
    //
    _fileCreator.WriteFiles(args, fileTextOrBytes);
    //
-   ZENMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->
+   METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->
       ParallelCallNonConstMemberFunctionNTimesMock.CalledOnceWith(
       args.numberOfDirectoriesToCreate,
          &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory,
@@ -99,7 +99,7 @@ TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_DoesSo)
    const size_t expectedDirectoryNumber = callIndex + 1;
    const string expectedDirectoryName = "directory" + to_string(expectedDirectoryNumber);
    const fs::path expectedDirectoryPath = args.targetDirectoryPath / fs::path(expectedDirectoryName);
-   ZENMOCK(_caller_CreateNumberedFileInDirectoryMock->CallNonConstMemberFunctionNTimesMock.CalledOnceWith(
+   METALMOCK(_caller_CreateNumberedFileInDirectoryMock->CallNonConstMemberFunctionNTimesMock.CalledOnceWith(
       args.numberOfFilesToCreate,
       &FileCreator::CreateNumberedFileInDirectory,
       &_fileCreator, expectedDirectoryPath, args, fileTextOrBytes));
@@ -124,17 +124,17 @@ TEST(CreateNumberedFileInDirectory_VerboseTrue_CreatesFile_WritesWroteFileMessag
    //
    _fileCreator.CreateNumberedFileInDirectory(callIndex, directoryPath, args, fileTextOrBytes);
    //
-   ZENMOCK(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce());
-   ZENMOCK(threadUniqueCreateFileStopwatchMock->StartMock.CalledOnce());
+   METALMOCK(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce());
+   METALMOCK(threadUniqueCreateFileStopwatchMock->StartMock.CalledOnce());
    const size_t expectedFileNumber = callIndex + 1;
    const string expectedFileName = Utils::String::Concat("file", expectedFileNumber, args.fileExtension);
    const fs::path expectedFilePath = directoryPath / expectedFileName;
-   ZENMOCK(_fileSystemMock->CreateBinaryFileMock.CalledOnceWith(
+   METALMOCK(_fileSystemMock->CreateBinaryFileMock.CalledOnceWith(
       expectedFilePath, fileTextOrBytes.data(), fileTextOrBytes.size()));
-   ZENMOCK(threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
+   METALMOCK(threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    const string expectedWroteFileMessage = Utils::String::Concat(
       "[FileArb] Wrote file ", expectedFilePath.string(), " (", millisecondsToWriteFile, " ms)\n");
-   ZENMOCK(_consoleMock->WriteMock_string.CalledOnceWith(expectedWroteFileMessage));
+   METALMOCK(_consoleMock->WriteMock_string.CalledOnceWith(expectedWroteFileMessage));
 }
 
 TEST(CreateNumberedFileInDirectory_VerboseFalse_CreatesFile_DoesNotWriteWroteFileMessage)
@@ -152,7 +152,7 @@ TEST(CreateNumberedFileInDirectory_VerboseFalse_CreatesFile_DoesNotWriteWroteFil
    const size_t expectedFileNumber = callIndex + 1;
    const string expectedFileName = Utils::String::Concat("file", expectedFileNumber, args.fileExtension);
    const fs::path expectedFilePath = directoryPath / expectedFileName;
-   ZENMOCK(_fileSystemMock->CreateBinaryFileMock.CalledOnceWith(
+   METALMOCK(_fileSystemMock->CreateBinaryFileMock.CalledOnceWith(
       expectedFilePath, fileTextOrBytes.data(), fileTextOrBytes.size()));
 }
 

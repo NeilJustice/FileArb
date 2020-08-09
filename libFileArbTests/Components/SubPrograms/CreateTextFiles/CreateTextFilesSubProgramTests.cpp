@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/CreateTextFiles/CreateTextFilesSubProgram.h"
-#include "libFileArbTests/Components/SubPrograms/ZenMock/FileCreatorMock.h"
-#include "libFileArbTests/Components/SubPrograms/CreateTextFiles/ZenMock/TextFileLinesGeneratorMock.h"
+#include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
+#include "libFileArbTests/Components/SubPrograms/CreateTextFiles/MetalMock/TextFileLinesGeneratorMock.h"
 
 TESTS(CreateTextFilesSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -35,8 +35,8 @@ TEST(Run_CreateTextFiles_Returns0)
    //
    const int exitCode = _createTextFilesSubProgram.Run(args);
    //
-   ZENMOCK(_textFileLinesGeneratorMock->MakeFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine));
-   ZENMOCK(_fileCreatorMock->WriteFilesMock.CalledOnceWith(args, fileText));
+   METALMOCK(_textFileLinesGeneratorMock->MakeFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine));
+   METALMOCK(_fileCreatorMock->WriteFilesMock.CalledOnceWith(args, fileText));
    IS_ZERO(exitCode);
 }
 

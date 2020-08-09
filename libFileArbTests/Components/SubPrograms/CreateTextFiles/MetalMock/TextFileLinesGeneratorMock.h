@@ -4,5 +4,5 @@
 class TextFileLinesGeneratorMock : public Zen::Mock<TextFileLinesGenerator>
 {
 public:
-   ZENMOCK_NONVOID2_CONST(string, MakeFileText, size_t, size_t)
+   METALMOCK_NONVOID2_CONST(string, MakeFileText, size_t, size_t)
 };

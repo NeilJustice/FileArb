@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/CreateBinaryFiles/CreateBinaryFilesSubProgram.h"
-#include "libFileArbTests/Components/SubPrograms/CreateBinaryFiles/ZenMock/BinaryFileBytesGeneratorMock.h"
-#include "libFileArbTests/Components/SubPrograms/ZenMock/FileCreatorMock.h"
+#include "libFileArbTests/Components/SubPrograms/CreateBinaryFiles/MetalMock/BinaryFileBytesGeneratorMock.h"
+#include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
 
 TESTS(CreateBinaryFilesSubProgramTests)
 AFACT(Constructor_NewsComponents)
@@ -35,8 +35,8 @@ TEST(Run_CreateBinaryFiles_Returns0)
    //
    const int exitCode = _createBinaryFilesSubProgram.Run(args);
    //
-   ZENMOCK(_binaryFileBytesGeneratorMock->MakeFileBytesMock.CalledOnceWith(args.numberOfBytesPerFile));
-   ZENMOCK(_fileCreatorMock->WriteFilesMock.CalledOnceWith(args, fileBytes));
+   METALMOCK(_binaryFileBytesGeneratorMock->MakeFileBytesMock.CalledOnceWith(args.numberOfBytesPerFile));
+   METALMOCK(_fileCreatorMock->WriteFilesMock.CalledOnceWith(args, fileBytes));
    IS_ZERO(exitCode);
 }
 

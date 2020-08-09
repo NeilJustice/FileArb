@@ -8,7 +8,7 @@ namespace Utils
    {
    public:
       using NonConstMemberFunctionType = void (ClassType::*)(ArgType);
-      ZENMOCK_VOID4_CONST(CallNonConstMemberFunctionNTimes, size_t, NonConstMemberFunctionType, ClassType*, ArgType)
-      ZENMOCK_VOID4_CONST(ParallelCallNonConstMemberFunctionNTimes, size_t, NonConstMemberFunctionType, ClassType*, ArgType)
+      METALMOCK_VOID4_CONST(CallNonConstMemberFunctionNTimes, size_t, NonConstMemberFunctionType, ClassType*, ArgType)
+      METALMOCK_VOID4_CONST(ParallelCallNonConstMemberFunctionNTimes, size_t, NonConstMemberFunctionType, ClassType*, ArgType)
    };
 }

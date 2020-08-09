@@ -4,6 +4,6 @@
 class FileArbArgsParserMock : public Zen::Mock<FileArbArgsParser>
 {
 public:
-   ZENMOCK_NONVOID1_CONST(FileArbArgs, ParseArgs, const vector<string>&)
-   ZENMOCK_VOID1_CONST(PrintPreamble, const FileArbArgs&)
+   METALMOCK_NONVOID1_CONST(FileArbArgs, ParseArgs, const vector<string>&)
+   METALMOCK_VOID1_CONST(PrintPreamble, const FileArbArgs&)
 };

@@ -4,5 +4,5 @@
 class FileArbSubProgramFactoryMock : public Zen::Mock<FileArbSubProgramFactory>
 {
 public:
-   ZENMOCK_NONVOID1_CONST(shared_ptr<FileArbSubProgram>, NewFileArbSubProgram, ProgramMode)
+   METALMOCK_NONVOID1_CONST(shared_ptr<FileArbSubProgram>, NewFileArbSubProgram, ProgramMode)
 };

@@ -4,5 +4,5 @@
 class FileCreatorMock : public Zen::Mock<FileCreator>
 {
 public:
-   ZENMOCK_VOID2(WriteFiles, const FileArbArgs&, const string&)
+   METALMOCK_VOID2(WriteFiles, const FileArbArgs&, const string&)
 };

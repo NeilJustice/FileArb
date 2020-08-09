@@ -36,6 +36,6 @@ x64/
 *.pch
 *.vcxproj
 *.tmp
-*.txt
 *.psess
 *.vspx
+install_manifest.txt

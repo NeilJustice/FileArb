@@ -23,7 +23,7 @@ FileArb is a C++ command line program for quickly creating in parallel an arbitr
 ## FileArb Command Line Usage
 
 ```
-FileArb v0.9.0 - Creates an arbitrary number of text or binary files.
+FileArb v0.9.0 - Creates an arbitrary number of text files or binary files.
 https://github.com/NeilJustice/FileArb
 
 Usage:

@@ -3,7 +3,7 @@
 
 namespace Utils
 {
-   class StopwatchMock : public Zen::Mock<Stopwatch>
+   class StopwatchMock : public Metal::Mock<Stopwatch>
    {
    public:
       METALMOCK_VOID0(Start)

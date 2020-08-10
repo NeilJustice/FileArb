@@ -75,7 +75,7 @@ TEST(GetErrnoValue_ReturnsResultOfCallingErrnoFunction)
 
 TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
 {
-   class ErrorCodeTranslatorSelfMocked : public Zen::Mock<ErrorCodeTranslator>
+   class ErrorCodeTranslatorSelfMocked : public Metal::Mock<ErrorCodeTranslator>
    {
    public:
       METALMOCK_NONVOID0_FREE(int*, _call_errno)
@@ -126,7 +126,7 @@ char* strerror_r_CallInstead(
 
 #elif _WIN32
 
-class ErrorCodeTranslatorSelfMocked : public Zen::Mock<ErrorCodeTranslator>
+class ErrorCodeTranslatorSelfMocked : public Metal::Mock<ErrorCodeTranslator>
 {
 public:
    METALMOCK_NONVOID0_FREE(DWORD, _call_GetLastError)

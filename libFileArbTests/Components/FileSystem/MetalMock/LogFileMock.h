@@ -3,7 +3,7 @@
 
 namespace Utils
 {
-   class LogFileMock : public Zen::Mock<LogFile>
+   class LogFileMock : public Metal::Mock<LogFile>
    {
    public:
       METALMOCK_VOID2(CreateIfDoesNotExistThenAppendLine, const fs::path&, string_view)

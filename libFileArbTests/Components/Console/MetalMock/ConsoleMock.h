@@ -3,7 +3,7 @@
 
 namespace Utils
 {
-   class ConsoleMock : public Zen::Mock<Console>
+   class ConsoleMock : public Metal::Mock<Console>
 	{
    public:
 		METALMOCK_VOID1_CONST(Write, string_view, _string)

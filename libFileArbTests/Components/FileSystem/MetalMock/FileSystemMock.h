@@ -3,7 +3,7 @@
 
 namespace Utils
 {
-   class FileSystemMock : public Zen::Mock<FileSystem>
+   class FileSystemMock : public Metal::Mock<FileSystem>
 	{
    public:
       METALMOCK_VOID2_CONST(CreateTextFile, const fs::path&, string_view)

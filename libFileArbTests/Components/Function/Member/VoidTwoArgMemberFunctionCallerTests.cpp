@@ -63,7 +63,7 @@ TEST(ParallelCallNonConstMemberFunctionNTimes_NIs2_CallsFunctionTwiceInParallel)
    vector<tuple<size_t, Arg1Type, Arg2Type>> expectedFunctionArguments;
    expectedFunctionArguments.push_back(make_tuple(0, arg1, arg2));
    expectedFunctionArguments.push_back(make_tuple(1, arg1, arg2));
-   EQUAL_ELEMENTS_ANY_ORDER(expectedFunctionArguments, _classInstance.functionArguments);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFunctionArguments, _classInstance.functionArguments);
 }
 
 RUN_TEMPLATE_TESTS(VoidTwoArgMemberFunctionCallerTests, int, unsigned)

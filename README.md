@@ -7,7 +7,7 @@ FileArb is a C++ command line program for quickly creating in parallel an arbitr
 |Build|Build Status|
 |----------|------------|
 |Travis CI Linux (Clang 7.0.0 and GCC 7.4.0)|<a href="https://travis-ci.org/NeilJustice/FileArb"><img src="https://travis-ci.org/NeilJustice/FileArb.svg?branch=master"/></a>|
-|AppVeyor Windows (Visual Studio 2019 x64)|<a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/8yu4l8xn7st4yo2w?svg=true"/></a>|
+|AppVeyor Windows (Visual Studio 2019 x64)|<a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"/></a>|
 
 [![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg)](https://codecov.io/gh/NeilJustice/FileArb) FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 

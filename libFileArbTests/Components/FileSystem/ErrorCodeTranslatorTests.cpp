@@ -44,7 +44,7 @@ STARTUP
 TEST(GetLinuxErrno_ReturnsAddressOfErrno)
 {
    int* const linuxErrno = GetLinuxErrno();
-   POINTER_IS_NOT_NULL(linuxErrno);
+   IS_NOT_NULLPTR(linuxErrno);
 }
 #endif
 

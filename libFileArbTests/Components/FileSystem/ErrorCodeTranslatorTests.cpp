@@ -211,13 +211,13 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
    //
 #ifdef __linux__
    ARE_EQUAL(1, _strerror_r_FunctionCall.numberOfCalls);
-   POINTER_IS_NOT_NULL(_strerror_r_FunctionCall.outErrnoDescriptionChars);
+   IS_NOT_NULLPTR(_strerror_r_FunctionCall.outErrnoDescriptionChars);
    ARE_EQUAL(64, _strerror_r_FunctionCall.outErrnoDescriptionCharsSize);
    ARE_EQUAL(errnoValue, _strerror_r_FunctionCall.errnoValue);
    ARE_EQUAL(errnoDescriptionChars, errnoDescription);
 #elif _WIN32
    ARE_EQUAL(1, _strerror_s_FunctionCall.numberOfCalls);
-   POINTER_IS_NOT_NULL(_strerror_s_FunctionCall.outErrnoDescriptionChars);
+   IS_NOT_NULLPTR(_strerror_s_FunctionCall.outErrnoDescriptionChars);
    ARE_EQUAL(64, _strerror_s_FunctionCall.outErrnoDescriptionCharsSize);
    ARE_EQUAL(errnoValue, _strerror_s_FunctionCall.errnoValue);
    const string expectedErrnoDescription(_strerror_s_FunctionCall.returnValue_outErrnoDescriptionChars);

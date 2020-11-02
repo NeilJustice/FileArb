@@ -8,17 +8,17 @@ EVIDENCE
 
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
 {
-   SETUP_EQUALIZER_TEST(FileArbArgs);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, commandLine, ZenUnit::Random<string>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, programMode, ZenUnit::RandomNon0Enum<ProgramMode>(ProgramMode::MaxValue));
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfFilesToCreate, ZenUnit::RandomNon0<size_t>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfLinesPerFile, ZenUnit::RandomNon0<size_t>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfCharactersPerLine, ZenUnit::RandomNon0<size_t>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfDirectoriesToCreate, ZenUnit::RandomNon0<size_t>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, targetDirectoryPath, ZenUnit::Random<string>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, parallel, true);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, verbose, true);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, fileExtension, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_TEST_SETUP(FileArbArgs);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, commandLine, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, programMode, ZenUnit::RandomNon0Enum<ProgramMode>(ProgramMode::MaxValue));
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfFilesToCreate, ZenUnit::RandomNon0<size_t>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfLinesPerFile, ZenUnit::RandomNon0<size_t>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfCharactersPerLine, ZenUnit::RandomNon0<size_t>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfDirectoriesToCreate, ZenUnit::RandomNon0<size_t>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, targetDirectoryPath, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, parallel, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, verbose, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, fileExtension, ZenUnit::Random<string>());
 }
 
 TEST(ZenUnitRandom_FileArbArgs_ReturnsAllNonDefaultFields)

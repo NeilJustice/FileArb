@@ -18,8 +18,8 @@ using namespace std;
    namespace fs = std::filesystem;
 #endif
 
-#include "ZenUnit.h"
-#include "MetalMock.h"
+#include "ZenUnit/ZenUnit.h"
+#include "ZenUnit/MetalMock.h"
 
 #include "libFileArb/Enums/ProgramMode.h"
 

@@ -25,4 +25,6 @@ before_build:
 build_script:
    - appveyor DownloadFile https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnit/ZenUnit.h ZenUnit/ZenUnit.h
    - appveyor DownloadFile https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnit/MetalMock.h ZenUnit/MetalMock.h
+   - ls -al
+   - tree
    - cmake --build . --config %configuration% -- /m

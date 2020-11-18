@@ -166,28 +166,45 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
    ARE_EQUAL(expectedWindowsLastErrorWithDescription, windowsLastErrorWithDescription);
 }
 
-struct strerror_s_FunctionCall
+struct strerror_s_CallHistory
 {
    size_t numberOfCalls = 0ull;
-
+   char* outErrnoDescriptionCharsArgument = nullptr;
+   string outErrnoDescriptionCharsReturnValue;
+   size_t outErrnoDescriptionCharsSizeArgument = 0ull;
+   int errnoValueArgument = 0;
    errno_t returnValue = 0;
-   string returnValue_outErrnoDescriptionChars;
 
-   char* outErrnoDescriptionChars = nullptr;
-   size_t outErrnoDescriptionCharsSize = 0ull;
-   int errnoValue = 0;
-};
-strerror_s_FunctionCall _strerror_s_FunctionCall;
+   errno_t RecordFunctionCall(char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize, int errnoValue)
+   {
+      ++numberOfCalls;
+      outErrnoDescriptionCharsArgument = outErrnoDescriptionChars;
+      constexpr size_t maximumErrnoDescriptionLength = 64;
+      const errno_t strcpyReturnValue = strcpy_s(
+         outErrnoDescriptionChars,
+         maximumErrnoDescriptionLength,
+         outErrnoDescriptionCharsReturnValue.c_str());
+      release_assert(strcpyReturnValue == 0);
+      outErrnoDescriptionCharsSizeArgument = outErrnoDescriptionCharsSize;
+      errnoValueArgument = errnoValue;
+      return returnValue;
+   }
 
-const errno_t& _strerror_s_CallInstead(
+   void AssertCalledOnceWith(size_t expectedOutErrnoDescriptionCharsSize, int expectedErrnoValue)
+   {
+      ARE_EQUAL(1ull, numberOfCalls);
+      IS_NOT_NULLPTR(outErrnoDescriptionCharsArgument);
+      ARE_EQUAL(expectedOutErrnoDescriptionCharsSize, outErrnoDescriptionCharsSizeArgument);
+      ARE_EQUAL(expectedErrnoValue, errnoValueArgument);
+   }
+} _strerror_s_CallHistory;
+
+errno_t _strerror_s_CallInstead(
    char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize, int errnoValue)
 {
-   ++_strerror_s_FunctionCall.numberOfCalls;
-   _strerror_s_FunctionCall.outErrnoDescriptionChars = outErrnoDescriptionChars;
-   strcpy(outErrnoDescriptionChars, _strerror_s_FunctionCall.returnValue_outErrnoDescriptionChars.c_str());
-   _strerror_s_FunctionCall.outErrnoDescriptionCharsSize = outErrnoDescriptionCharsSize;
-   _strerror_s_FunctionCall.errnoValue = errnoValue;
-   return _strerror_s_FunctionCall.returnValue;
+   const errno_t returnValue = _strerror_s_CallHistory.RecordFunctionCall(
+      outErrnoDescriptionChars, outErrnoDescriptionCharsSize, errnoValue);
+   return returnValue;
 }
 
 #endif
@@ -195,34 +212,22 @@ const errno_t& _strerror_s_CallInstead(
 TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 {
 #ifdef __linux__
-   strerror_rMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::strerror_r_CallInstead,
-      this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
    const string errnoDescriptionChars = ZenUnit::Random<string>();
    _strerror_r_FunctionCall.returnValue = const_cast<char*>(errnoDescriptionChars.c_str());
    _strerror_r_FunctionCall.returnValue_outErrnoDescriptionChars = ZenUnit::Random<string>();
+   strerror_rMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::strerror_r_CallInstead,
+      this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 #elif _WIN32
+   _strerror_s_CallHistory.outErrnoDescriptionCharsReturnValue = ZenUnit::Random<string>();
    strerror_sMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::_strerror_s_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
-   _strerror_s_FunctionCall.returnValue_outErrnoDescriptionChars = ZenUnit::Random<string>();
 #endif
    const int errnoValue = ZenUnit::Random<int>();
    //
    const string errnoDescription = _errorCodeTranslator.GetErrnoDescription(errnoValue);
    //
-#ifdef __linux__
-   ARE_EQUAL(1ull, _strerror_r_FunctionCall.numberOfCalls);
-   IS_NOT_NULLPTR(_strerror_r_FunctionCall.outErrnoDescriptionChars);
-   ARE_EQUAL(64ull, _strerror_r_FunctionCall.outErrnoDescriptionCharsSize);
-   ARE_EQUAL(errnoValue, _strerror_r_FunctionCall.errnoValue);
-   ARE_EQUAL(errnoDescriptionChars, errnoDescription);
-#elif _WIN32
-   ARE_EQUAL(1ull, _strerror_s_FunctionCall.numberOfCalls);
-   IS_NOT_NULLPTR(_strerror_s_FunctionCall.outErrnoDescriptionChars);
-   ARE_EQUAL(64ull, _strerror_s_FunctionCall.outErrnoDescriptionCharsSize);
-   ARE_EQUAL(errnoValue, _strerror_s_FunctionCall.errnoValue);
-   const string expectedErrnoDescription(_strerror_s_FunctionCall.returnValue_outErrnoDescriptionChars);
-   ARE_EQUAL(expectedErrnoDescription, errnoDescription);
-#endif
+   _strerror_s_CallHistory.AssertCalledOnceWith(64ull, errnoValue);
+   ARE_EQUAL(_strerror_s_CallHistory.outErrnoDescriptionCharsReturnValue, errnoDescription);
 }
 
 #ifdef _WIN32

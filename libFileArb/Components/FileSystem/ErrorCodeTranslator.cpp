@@ -74,7 +74,7 @@ string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 #pragma warning(push)
 #pragma warning(disable: 6255) // _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead.
 #endif
-   char* errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
+   char* const errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
 #ifdef _WIN32
 #pragma warning(pop)
 #endif

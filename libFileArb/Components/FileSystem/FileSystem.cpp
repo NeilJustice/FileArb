@@ -3,6 +3,7 @@
 #include "libFileArb/Components/FileSystem/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
+#include "libFileArb/Components/Misc/Asserter.h"
 #include "libFileArb/Components/Time/Stopwatch.h"
 
 #ifdef __linux__
@@ -13,14 +14,22 @@ int* GetErrno()
 #endif
 
 FileSystem::FileSystem()
-   : _call_fopen(::fopen)
+   // Function Callers
+   : _call_fopen_s(::fopen_s)
    , _call_fclose(::fclose)
 #ifdef __linux__
    , _call_errno(GetErrno)
 #elif _WIN32
    , _call_errno(::_errno)
-   , _call_fs_create_directories(static_cast<bool(*)(const fs::path&, error_code&)>(fs::create_directories))
+   , _call_fs_create_directories(static_cast<create_directories_FunctionOverloadType>(fs::create_directories))
 #endif
+   // Constant Components
+   , _asserter(make_unique<Asserter>())
+   , _errnoTranslator(make_unique<ErrnoTranslator>())
+{
+}
+
+FileSystem::~FileSystem()
 {
 }
 
@@ -34,18 +43,20 @@ void FileSystem::CreateBinaryFile(const fs::path& filePath, const char* bytes, s
    CreateBinaryOrTextFile(filePath, true, bytes, bytesSize);
 }
 
-FILE* FileSystem::OpenFile(const fs::path& filePath, const char* mode) const
+FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
 {
-   FILE* const file = _call_fopen(filePath.string().c_str(), mode);
-   if (file == nullptr)
+   FILE* openedFile = nullptr;
+   const errno_t fopenReturnValue = _call_fopen_s(&openedFile, filePath.string().c_str(), fileOpenMode);
+   if (fopenReturnValue != 0)
    {
       const int errnoValue = *_call_errno();
-      ErrnoTranslator errnoTranslator;
-      const string errnoReadable = errnoTranslator.ToReadable(errnoValue);
-      throw runtime_error("fopen() returned nullptr. filePath=\"" + filePath.string() +
-         "\". fileOpenMode=\"" + string(mode) + "\". errno=" + to_string(errnoValue) + " (" + errnoReadable + ").");
+      const string errnoDescription = _errnoTranslator->ErrnoValueToErrnoDescription(errnoValue);
+      const string exceptionMessage = String::Concat(
+         "fopen() returned nullptr. filePath=\"", filePath.string(),
+         "\". fileOpenMode=\"", fileOpenMode, "\". errno=", errnoValue, " (", errnoDescription, ").");
+      throw runtime_error(exceptionMessage);
    }
-   return file;
+   return openedFile;
 }
 
 void FileSystem::CloseFile(const fs::path& filePath, FILE* filePointer) const

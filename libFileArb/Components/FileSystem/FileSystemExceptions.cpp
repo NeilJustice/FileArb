@@ -5,7 +5,7 @@
 string MakeFileSystemExceptionMessage(const fs::path& filePath, int errnoValue)
 {
    ErrnoTranslator errnoTranslator;
-   const string errnoReadable = errnoTranslator.ToReadable(errnoValue);
+   const string errnoReadable = errnoTranslator.ErrnoValueToErrnoDescription(errnoValue);
    const string exceptionWhat = String::Concat(filePath.string(), ". Reason: ", errnoReadable, ". errno=", errnoValue);
 #ifdef _WIN32
    _set_errno(0);

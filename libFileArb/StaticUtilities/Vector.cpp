@@ -8,8 +8,8 @@ vector<string> Vector::FromArgcArgv(int argc, char** argv)
    vector<string> args;
    args.reserve(static_cast<size_t>(argc));
    std::for_each(argv, argv + argc, [&](char* arg)
-      {
-         args.emplace_back(arg);
-      });
+   {
+      args.emplace_back(arg);
+   });
    return args;
 }

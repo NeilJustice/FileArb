@@ -14,13 +14,15 @@ public:
    template<typename T>
    static const std::string* GetName(const T& variable)
    {
-      return TypeInfoToTypeName(typeid(variable));
+      const std::string* const typeName = TypeInfoToTypeName(typeid(variable));
+      return typeName;
    }
 
    template<typename T>
    static const std::string* GetName()
    {
-      return TypeInfoToTypeName(typeid(T));
+      const std::string* const typeName = TypeInfoToTypeName(typeid(T));
+      return typeName;
    }
 
    Type() = delete;
@@ -28,8 +30,8 @@ private:
    static const std::string* TypeInfoToTypeName(const std::type_info& typeInfo)
    {
       const char* const mangledTypeName = typeInfo.name();
-      const std::unordered_map<const char*, std::string>::const_iterator findIter
-         = s_mangledToDemangledTypeName.find(mangledTypeName);
+      const std::unordered_map<const char*, std::string>::const_iterator
+         findIter = s_mangledToDemangledTypeName.find(mangledTypeName);
       if (findIter == s_mangledToDemangledTypeName.end())
       {
          const std::string demangledTypeName = Demangle(mangledTypeName);
@@ -38,7 +40,7 @@ private:
          const std::string* const cachedDemangledTypeName = &emplaceResult.first->second;
          return cachedDemangledTypeName;
       }
-      const std::string* cachedDemangledTypeName = &findIter->second;
+      const std::string* const cachedDemangledTypeName = &findIter->second;
       return cachedDemangledTypeName;
    }
 

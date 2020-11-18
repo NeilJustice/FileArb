@@ -10,7 +10,7 @@
 #include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileArbProgramTests)
-AFACT(DefaultConstructor_NewsComponents)
+AFACT(DefaultConstructor_SetsFunctionPointer_NewsComponents)
 AFACT(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
 FACTS(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsProgramRuntimeInMilliseconds_ReturnsExitCode)
 AFACT(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_ReturnsExitCodeFromSubProgram)
@@ -45,7 +45,7 @@ STARTUP
    _fileArbProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
-TEST(DefaultConstructor_NewsComponents)
+TEST(DefaultConstructor_SetsFunctionPointer_NewsComponents)
 {
    FileArbProgram fileArbProgram;
    // Function Callers

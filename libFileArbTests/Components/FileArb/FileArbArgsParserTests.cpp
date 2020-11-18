@@ -5,7 +5,7 @@
 #include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
 
 TESTS(FileArbArgsParserTests)
-AFACT(Constructor_NewsComponents_SetsFunctionPointers)
+AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 AFACT(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
 FACTS(DetermineProgramMode_ReturnsExpectedProgramModeDependingOnProgramModeBoolValues)
 AFACT(DetermineFileExtension_IsCreateTextFilesModeIsTrue_ReturnsDotTxt)
@@ -33,7 +33,7 @@ STARTUP
    _fileArbArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
 }
 
-TEST(Constructor_NewsComponents_SetsFunctionPointers)
+TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
    FileArbArgsParser fileArbArgsParser;
    // Function Callers
@@ -91,7 +91,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    const FileArbArgs args = _fileArbArgsParser.ParseArgs(stringArgs);
    //
    FileArbArgs expectedArgs;
-   expectedArgs.commandLine = Vector::Join(stringArgs, ' ');
+   expectedArgs.commandLine = Vector::JoinWithSeparator(stringArgs, ' ');
    expectedArgs.programMode = programMode;
    expectedArgs.fileExtension = fileExtension;
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs));
@@ -103,7 +103,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
       { docoptValues, "--verbose" }
    }));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
-   const vector<int> expectedCreateTextFilesAndCreateBinaryFiles =
+   static const vector<int> expectedBothProgramModesAsInts =
    {
       static_cast<int>(ProgramMode::CreateTextFiles),
       static_cast<int>(ProgramMode::CreateBinaryFiles)
@@ -111,8 +111,8 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    const int expectedProgramModeAsInt = static_cast<int>(args.programMode);
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredSizeTMock.CalledAsFollows(
    {
-      { docoptValues, "--directories", expectedProgramModeAsInt, expectedCreateTextFilesAndCreateBinaryFiles },
-      { docoptValues, "--files", expectedProgramModeAsInt, expectedCreateTextFilesAndCreateBinaryFiles },
+      { docoptValues, "--directories", expectedProgramModeAsInt, expectedBothProgramModesAsInts },
+      { docoptValues, "--files", expectedProgramModeAsInt, expectedBothProgramModesAsInts },
       { docoptValues, "--lines", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateTextFiles) } },
       { docoptValues, "--characters", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateTextFiles) } },
       { docoptValues, "--bytes", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFiles) } }

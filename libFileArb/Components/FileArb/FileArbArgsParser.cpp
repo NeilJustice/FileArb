@@ -20,27 +20,26 @@ FileArbArgsParser::~FileArbArgsParser()
 FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
 {
    FileArbArgs args;
-   args.commandLine = Vector::Join(stringArgs, ' ');
-   const map<string, docopt::Value> docoptValues =
-      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage, stringArgs);
+   args.commandLine = Vector::JoinWithSeparator(stringArgs, ' ');
+   const map<string, docopt::Value> docoptValues = _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage, stringArgs);
    const bool isCreateTextFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-text-files");
    const bool isCreateBinaryFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-files");
    args.programMode = _call_DetermineProgramMode(isCreateTextFilesMode, isCreateBinaryFilesMode);
    args.fileExtension = _call_DetermineFileExtension(isCreateTextFilesMode, isCreateBinaryFilesMode);
    args.targetDirectoryPath = _docoptParser->GetRequiredString(docoptValues, "--target");
 
-   const int programModeAsInt = static_cast<int>(args.programMode);
-   const vector<int> createTextFilesAndCreateBinaryFiles =
+   static const vector<int> bothProgramModesAsInts =
    {
       static_cast<int>(ProgramMode::CreateTextFiles),
       static_cast<int>(ProgramMode::CreateBinaryFiles)
    };
+   const int programModeAsInt = static_cast<int>(args.programMode);
 
    args.numberOfDirectoriesToCreate = _docoptParser->GetProgramModeSpecificRequiredSizeT(
-      docoptValues, "--directories", programModeAsInt, createTextFilesAndCreateBinaryFiles);
+      docoptValues, "--directories", programModeAsInt, bothProgramModesAsInts);
 
    args.numberOfFilesToCreate = _docoptParser->GetProgramModeSpecificRequiredSizeT(
-      docoptValues, "--files", programModeAsInt, createTextFilesAndCreateBinaryFiles);
+      docoptValues, "--files", programModeAsInt, bothProgramModesAsInts);
 
    args.numberOfLinesPerFile = _docoptParser->GetProgramModeSpecificRequiredSizeT(
       docoptValues, "--lines", programModeAsInt, { static_cast<int>(ProgramMode::CreateTextFiles) });

@@ -3,9 +3,9 @@
 
 TESTS(VectorTests)
 AFACT(FromArgcArgv_ReturnsArgsVector)
-AFACT(Join_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
-AFACT(Join_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
-FACTS(Join_2ElementIntVector_ReturnsElementsJoinedBySeparator)
+AFACT(JoinWithSeparator_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
+AFACT(JoinWithSeparator_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
+FACTS(JoinWithSeparator_2ElementIntVector_ReturnsElementsJoinedBySeparator)
 FACTS(Contains_ReturnsTrueIfVectorContainsElementAccordingToEqualityOperator)
 EVIDENCE
 
@@ -24,28 +24,28 @@ TEST(FromArgcArgv_ReturnsArgsVector)
    VECTORS_ARE_EQUAL(expectedArgsC, Vector::FromArgcArgv(3, const_cast<char**>(chars3)));
 }
 
-TEST(Join_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
+TEST(JoinWithSeparator_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
 {
    const vector<int> emptyIntVector = {};
-   ARE_EQUAL("", Vector::Join(emptyIntVector, ' '));
-   ARE_EQUAL("", Vector::Join(emptyIntVector, ','));
+   ARE_EQUAL("", Vector::JoinWithSeparator(emptyIntVector, ' '));
+   ARE_EQUAL("", Vector::JoinWithSeparator(emptyIntVector, ','));
 }
 
-TEST(Join_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
+TEST(JoinWithSeparator_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
 {
    const vector<int> intVector = { 1 };
-   ARE_EQUAL("1", Vector::Join(intVector, ' '));
-   ARE_EQUAL("1", Vector::Join(intVector, ','));
+   ARE_EQUAL("1", Vector::JoinWithSeparator(intVector, ' '));
+   ARE_EQUAL("1", Vector::JoinWithSeparator(intVector, ','));
 }
 
-TEST3X3(Join_2ElementIntVector_ReturnsElementsJoinedBySeparator,
+TEST3X3(JoinWithSeparator_2ElementIntVector_ReturnsElementsJoinedBySeparator,
    const string& expectedJoinedVector, const vector<int>& vec, char separator,
    "1 2", vector<int>{ 1, 2 }, ' ',
    "1,2", vector<int>{ 1, 2 }, ',',
    "1 2 3", vector<int>{ 1, 2, 3 }, ' ',
    "1,2,3", vector<int>{ 1, 2, 3 }, ',')
 {
-   const string joinedVector = Vector::Join(vec, separator);
+   const string joinedVector = Vector::JoinWithSeparator(vec, separator);
    ARE_EQUAL(expectedJoinedVector, joinedVector);
 }
 

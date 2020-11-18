@@ -46,6 +46,10 @@ Usage:
       [--verbose]
 ```
 
+FileArb command line arguments are parsed using the excellent single-header library Docopt.
+
+![FileArb arguments parsing](Screenshots/DocoptArgumentsParsing.png)
+
 ## FileArb Program Modes
 
 ### create-text-files

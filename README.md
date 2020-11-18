@@ -15,8 +15,8 @@ FileArb is a C++ command line program for quickly creating in parallel an arbitr
 * [FileArb Program Modes](#filearb-program-modes)
    * [create-text-files](#create-text-files)
    * [create-binary-files](#create-binary-files)
-* [Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](#linux-jenkins-jobs-that-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearb)
-* [Windows Jenkins Jobs That Compile FileArb](#windows-jenkins-jobs-that-compile-filearb)
+* [Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](#linux-jenkins-jobs-which-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearb)
+* [Windows Jenkins Jobs Which Compile FileArb](#windows-jenkins-jobs-which-compile-filearb)
 * [Four Steps To Compile And Install FileArb On Linux](#four-steps-to-compile-and-install-filearb-on-linux)
 * [Four Steps To Compile And Install FileArb On Windows](#four-steps-to-compile-and-install-filearb-on-windows)
 
@@ -50,27 +50,27 @@ Usage:
 
 ### create-text-files
 
-FileArb program mode `create-text-files` creates at a specified directory a configurable number of subdirectories containing a configurable number of text files each containing '0' characters.
+FileArb program mode `create-text-files` creates at a specified directory a specified number of subdirectories containing a specified number of text files each containing '0' characters.
 
 ![create-text-files](Screenshots/create-text-files.png)
 
 ### create-binary-files
 
-FileArb program mode `create-binary-files` creates at a specified directory a configurable number of subdirectories containing a configurable number of binary files each containing binary 0 bytes.
+FileArb program mode `create-binary-files` creates at a specified directory a specified number of subdirectories containing a specified number of binary files each containing binary 0 bytes.
 
 ![create-binary-files](Screenshots/create-binary-files.png)
 
-## Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb
+## Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 31:
 
-![Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](Screenshots/LinuxJenkinsJobsForFileArb.png)
+![Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](Screenshots/LinuxJenkinsJobsForFileArb.png)
 
-## Windows Jenkins Jobs That Compile FileArb
+## Windows Jenkins Jobs Which Compile FileArb
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Windows:
 
-![Windows Jenkins Jobs That Compile FileArb](Screenshots/WindowsJenkinsJobsForFileArb.png)
+![Windows Jenkins Jobs Which Compile FileArb](Screenshots/WindowsJenkinsJobsForFileArb.png)
 
 ## Four Steps To Compile And Install FileArb On Linux
 

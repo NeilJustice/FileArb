@@ -35,15 +35,17 @@ pair<int, string> ErrorCodeTranslator::GetErrnoWithDescription() const
 }
 
 #ifdef _WIN32
+
 pair<DWORD, string> ErrorCodeTranslator::GetWindowsLastErrorWithDescription() const
 {
    const DWORD windowsLastError = _call_GetLastError();
    if (windowsLastError == 0)
    {
-      return make_pair(0, "");
+      return make_pair(0ul, ""s);
    }
    const string windowsLastErrorDescription = GetWindowsLastErrorDescription(windowsLastError);
-   return make_pair(windowsLastError, windowsLastErrorDescription);
+   const pair<DWORD, string> windowsLastErrorAndDescription = make_pair(windowsLastError, windowsLastErrorDescription);
+   return windowsLastErrorAndDescription;
 }
 
 string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastError) const
@@ -80,8 +82,7 @@ string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 #ifdef __linux__
    errnoDescriptionChars = _call_strerror_r(errnoValue, errnoDescriptionChars, maximumErrnoDescriptionLength);
 #elif _WIN32
-   const errno_t strErrorSReturnValue = _call_strerror_s(
-      errnoDescriptionChars, maximumErrnoDescriptionLength, errnoValue);
+   const errno_t strErrorSReturnValue = _call_strerror_s(errnoDescriptionChars, maximumErrnoDescriptionLength, errnoValue);
    release_assert(strErrorSReturnValue == 0);
 #endif
 
@@ -94,10 +95,8 @@ string ErrorCodeTranslator::GetSystemErrorDescription(int systemErrorValue) cons
 #if _WIN32
    switch (systemErrorValue)
    {
-   case ERROR_SHARING_VIOLATION:
-      return "The process cannot access the file because it is being used by another process.";
-   case ERROR_FILENAME_EXCED_RANGE:
-      return "The filename or extension is too long.";
+   case ERROR_SHARING_VIOLATION: return "The process cannot access the file because it is being used by another process.";
+   case ERROR_FILENAME_EXCED_RANGE: return "The filename or extension is too long.";
    }
 #endif
    return to_string(systemErrorValue);

@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/CreateTextFiles/TextFileLinesGenerator.h"
-#include "libFileArb/ValueTypes/FileArbArgs.h"
 
 TextFileLinesGenerator::TextFileLinesGenerator()
    : _call_ReplicateLineNTimes(ReplicateLineNTimes)

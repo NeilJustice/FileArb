@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libFileArb/Components/Docopt/DocoptParser.h"
-#include "libFileArbTests/Components/Docopt/ZenUnit/docoptValueRandom.h"
 
 TESTS(DocoptParserTests)
 AFACT(Constructor_SetsFunctionsToExpected)
@@ -23,9 +22,9 @@ FACTS(GetProgramModeSpecificRequiredSizeT_ProgramModeIsNotContainedWithinTheProg
 FACTS(GetProgramModeSpecificRequiredSizeT_ProgramModeIsTheProgramModeThatRequiresTheUnsigned_ReturnsResultOfCallingStaticGetRequiredUnsigned)
 EVIDENCE
 
-Utils::DocoptParser _docoptParser;
+DocoptParser _docoptParser;
 METALMOCK_NONVOID5_FREE(map<string COMMA docopt::Value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
-METALMOCK_NONVOID2_STATIC(unsigned, Utils::DocoptParser, StaticGetRequiredUnsigned, map<string COMMA docopt::Value>, const string&)
+METALMOCK_NONVOID2_STATIC(unsigned, DocoptParser, StaticGetRequiredUnsigned, map<string COMMA docopt::Value>, const string&)
 
 map<string, docopt::Value> _docoptArgs;
 string _argName;
@@ -43,9 +42,9 @@ STARTUP
 
 TEST(Constructor_SetsFunctionsToExpected)
 {
-   Utils::DocoptParser docoptParser;
+   DocoptParser docoptParser;
    STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
-   STD_FUNCTION_TARGETS(Utils::DocoptParser::StaticGetRequiredUnsigned, docoptParser._call_StaticGetRequiredUnsigned);
+   STD_FUNCTION_TARGETS(DocoptParser::StaticGetRequiredUnsigned, docoptParser._call_StaticGetRequiredUnsigned);
 }
 
 TEST(ParseArgs_ArgvVectorEmpty_Throws)

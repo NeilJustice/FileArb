@@ -25,7 +25,7 @@ ErrorCodeTranslator _errorCodeTranslator;
 METALMOCK_NONVOID3_FREE(char*, strerror_r, int, char*, size_t)
 #elif _WIN32
 METALMOCK_NONVOID3_FREE(errno_t, strerror_s, char*, size_t, int)
-METALMOCK_NONVOID0_FREE(int, GetLastError)
+METALMOCK_NONVOID0_FREE(unsigned long, GetLastError)
 #endif
 METALMOCK_NONVOID0_FREE(int*, _call_errno)
 
@@ -43,7 +43,7 @@ STARTUP
 #ifdef __linux__
 TEST(GetLinuxErrno_ReturnsAddressOfErrno)
 {
-   int* const linuxErrno = GetLinuxErrno();
+   const int* const linuxErrno = GetLinuxErrno();
    IS_NOT_NULLPTR(linuxErrno);
 }
 #endif
@@ -102,14 +102,14 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
 
 struct strerror_r_FunctionCall
 {
-   size_t numberOfCalls = 0;
+   size_t numberOfCalls = 0ull;
 
    char* returnValue = nullptr;
    string returnValue_outErrnoDescriptionChars;
 
    int errnoValue = 0;
    char* outErrnoDescriptionChars = nullptr;
-   size_t outErrnoDescriptionCharsSize = 0;
+   size_t outErrnoDescriptionCharsSize = 0ull;
 };
 strerror_r_FunctionCall _strerror_r_FunctionCall;
 
@@ -130,7 +130,7 @@ class ErrorCodeTranslatorSelfMocked : public Metal::Mock<ErrorCodeTranslator>
 {
 public:
    METALMOCK_NONVOID0_FREE(DWORD, _call_GetLastError)
-      ErrorCodeTranslatorSelfMocked()
+   ErrorCodeTranslatorSelfMocked()
    {
       _call_GetLastError = BIND_0ARG_METALMOCK_OBJECT(_call_GetLastErrorMock);
    }
@@ -139,13 +139,13 @@ public:
 
 TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturns0_Returns0AndEmptyString)
 {
-   _errorCodeTranslatorSelfMocked._call_GetLastErrorMock.Return(0);
+   _errorCodeTranslatorSelfMocked._call_GetLastErrorMock.Return(0ul);
    //
    const pair<DWORD, string> windowsLastErrorWithDescription =
       _errorCodeTranslatorSelfMocked.GetWindowsLastErrorWithDescription();
    //
    METALMOCK(_errorCodeTranslatorSelfMocked._call_GetLastErrorMock.CalledOnce());
-   const pair<DWORD, string> expectedWindowsLastErrorWithDescription(0, "");
+   const pair<DWORD, string> expectedWindowsLastErrorWithDescription(0ul, "");
    ARE_EQUAL(expectedWindowsLastErrorWithDescription, windowsLastErrorWithDescription);
 }
 
@@ -168,13 +168,13 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
 
 struct strerror_s_FunctionCall
 {
-   size_t numberOfCalls = 0;
+   size_t numberOfCalls = 0ull;
 
    errno_t returnValue = 0;
    string returnValue_outErrnoDescriptionChars;
 
    char* outErrnoDescriptionChars = nullptr;
-   size_t outErrnoDescriptionCharsSize = 0;
+   size_t outErrnoDescriptionCharsSize = 0ull;
    int errnoValue = 0;
 };
 strerror_s_FunctionCall _strerror_s_FunctionCall;
@@ -210,15 +210,15 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
    const string errnoDescription = _errorCodeTranslator.GetErrnoDescription(errnoValue);
    //
 #ifdef __linux__
-   ARE_EQUAL(1, _strerror_r_FunctionCall.numberOfCalls);
+   ARE_EQUAL(1ull, _strerror_r_FunctionCall.numberOfCalls);
    IS_NOT_NULLPTR(_strerror_r_FunctionCall.outErrnoDescriptionChars);
-   ARE_EQUAL(64, _strerror_r_FunctionCall.outErrnoDescriptionCharsSize);
+   ARE_EQUAL(64ull, _strerror_r_FunctionCall.outErrnoDescriptionCharsSize);
    ARE_EQUAL(errnoValue, _strerror_r_FunctionCall.errnoValue);
    ARE_EQUAL(errnoDescriptionChars, errnoDescription);
 #elif _WIN32
-   ARE_EQUAL(1, _strerror_s_FunctionCall.numberOfCalls);
+   ARE_EQUAL(1ull, _strerror_s_FunctionCall.numberOfCalls);
    IS_NOT_NULLPTR(_strerror_s_FunctionCall.outErrnoDescriptionChars);
-   ARE_EQUAL(64, _strerror_s_FunctionCall.outErrnoDescriptionCharsSize);
+   ARE_EQUAL(64ull, _strerror_s_FunctionCall.outErrnoDescriptionCharsSize);
    ARE_EQUAL(errnoValue, _strerror_s_FunctionCall.errnoValue);
    const string expectedErrnoDescription(_strerror_s_FunctionCall.returnValue_outErrnoDescriptionChars);
    ARE_EQUAL(expectedErrnoDescription, errnoDescription);

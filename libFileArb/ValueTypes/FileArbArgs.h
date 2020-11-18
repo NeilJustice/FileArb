@@ -4,6 +4,7 @@ struct FileArbArgs
 {
    static const string CommandLineUsage;
 
+   // Command line fields
    string commandLine;
    ProgramMode programMode = ProgramMode::Unset;
    fs::path targetDirectoryPath;
@@ -15,5 +16,14 @@ struct FileArbArgs
    bool parallel = false;
    bool verbose = false;
 
+   // Calculated fields
    string fileExtension;
 };
+
+#ifdef _WIN32
+   #ifdef _DEBUG
+      static_assert(sizeof(FileArbArgs) == 176);
+   #else
+      static_assert(sizeof(FileArbArgs) == 152);
+   #endif
+#endif

@@ -1,4 +1,6 @@
 #include "pch.h"
+#include "libFileArb/Components/Console/Console.h"
+#include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/SubPrograms/CreateBinaryFiles/CreateBinaryFilesSubProgram.h"
 #include "libFileArbTests/Components/SubPrograms/CreateBinaryFiles/MetalMock/BinaryFileBytesGeneratorMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"

@@ -2,7 +2,6 @@
 #include "libFileArb/Components/Exception/ErrnoTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
-#include "libFileArb/Components/String/StringUtil.h"
 
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFunctionPointers)
@@ -11,7 +10,7 @@ FACTS(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException)
 AFACT(CloseFile_fcloseReturnValueIs0_Returns)
 EVIDENCE
 
-Utils::FileSystem _fileSystem;
+FileSystem _fileSystem;
 METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
 METALMOCK_NONVOID0_FREE(int*, _errno)
 METALMOCK_NONVOID2_NAMESPACED_FREE(bool, fs, create_directories, const fs::path&, error_code&)
@@ -25,11 +24,11 @@ STARTUP
 
 TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
 {
-   Utils::FileSystem fileSystem;
-   fileSystem._call_errno(); // Code coverage for Utils::GetErrno on Linux
+   FileSystem fileSystem;
+   fileSystem._call_errno(); // Code coverage for GetErrno on Linux
    STD_FUNCTION_TARGETS(::fclose, fileSystem._call_fclose);
 #ifdef __linux__
-   STD_FUNCTION_TARGETS(Utils::GetErrno, fileSystem._call_errno);
+   STD_FUNCTION_TARGETS(GetErrno, fileSystem._call_errno);
 #elif _WIN32
    STD_FUNCTION_TARGETS(::_errno, fileSystem._call_errno);
    using create_directories_overload = bool(*)(const fs::path&, error_code&);
@@ -46,9 +45,9 @@ TEST(OpenFile_FileCannotBeOpened_ThrowsRuntimeError)
    const fs::path filePathThatDoesNotExist = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = "r";
    //
-   Utils::ErrnoTranslator errnoTranslator;
+   ErrnoTranslator errnoTranslator;
    const string expectedErrnoDescription = errnoTranslator.ToReadable(errnoValue);
-   const string expectedExceptionMessage = Utils::String::Concat(
+   const string expectedExceptionMessage = String::Concat(
       "fopen() returned nullptr. filePath=\"", filePathThatDoesNotExist.string(),
       "\". fileOpenMode=\"", fileOpenMode, "\". errno=", errnoValue, " (", expectedErrnoDescription, ").");
    THROWS_EXCEPTION(_fileSystem.OpenFile(filePathThatDoesNotExist, fileOpenMode),
@@ -72,8 +71,8 @@ TEST1X1(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException,
    const fs::path filePath = ZenUnit::Random<fs::path>();
    FILE* const file = nullptr;
    //
-   const string expectedExceptionWhat = Utils::MakeFileSystemExceptionMessage(filePath, errnoValue);
-   THROWS_EXCEPTION(_fileSystem.CloseFile(filePath, file), Utils::FileCloseException, expectedExceptionWhat);
+   const string expectedExceptionWhat = MakeFileSystemExceptionMessage(filePath, errnoValue);
+   THROWS_EXCEPTION(_fileSystem.CloseFile(filePath, file), FileCloseException, expectedExceptionWhat);
    //
    METALMOCK(fcloseMock.CalledOnceWith(file));
    METALMOCK(_errnoMock.CalledOnce());

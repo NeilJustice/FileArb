@@ -1,15 +1,22 @@
 #include "pch.h"
+#include "libFileArb/Components/Console/Console.h"
+#include "libFileArb/Components/FunctionCallers/Member/VoidThreeArgMemberFunctionCaller.h"
+#include "libFileArb/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileArb/Components/Misc/IncreasingIntegerSequence.h"
 #include "libFileArb/Components/SubPrograms/CreateTextFiles/TextFileLinesGenerator.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
-#include "libFileArb/Components/Utilities/IncreasingIntegerSequence.h"
-#include "libFileArb/ValueTypes/FileArbArgs.h"
+#include "libFileArb/Components/FileSystem/FileSystem.h"
+#include "libFileArb/Components/Time/Stopwatch.h"
+#include "libFileArb/Components/Time/StopwatchFactory.h"
 
 FileCreator::FileCreator()
+   // Function Callers
    : _caller_CreateSequentiallyNumberedFilesInNumberedDirectory(make_unique<VoidTwoArgMemberFunctionCallerType>())
    , _caller_CreateNumberedFileInDirectory(make_unique<VoidThreeArgMemberFunctionCallerType>())
-   , _console(make_unique<Utils::Console>())
-   , _fileSystem(make_unique<Utils::FileSystem>())
-   , _stopwatchFactory(make_unique<Utils::StopwatchFactory>())
+   // Constant Components
+   , _console(make_unique<Console>())
+   , _fileSystem(make_unique<FileSystem>())
+   , _stopwatchFactory(make_unique<StopwatchFactory>())
 {
 }
 
@@ -50,19 +57,19 @@ void FileCreator::CreateNumberedFileInDirectory(
    size_t callIndex, const fs::path& directoryPath, const FileArbArgs& args, const string& fileTextOrBytes)
 {
    const size_t fileNumber = callIndex + 1;
-   shared_ptr<Utils::Stopwatch> threadUniqueCreateFileStopwatch;
+   shared_ptr<Stopwatch> threadUniqueCreateFileStopwatch;
    if (args.verbose)
    {
       threadUniqueCreateFileStopwatch = _stopwatchFactory->NewStopwatch();
       threadUniqueCreateFileStopwatch->Start();
    }
-   const string fileName = Utils::String::Concat("file", fileNumber, args.fileExtension);
+   const string fileName = String::Concat("file", fileNumber, args.fileExtension);
    const fs::path filePath = directoryPath / fileName;
    _fileSystem->CreateBinaryFile(filePath, fileTextOrBytes.data(), fileTextOrBytes.size());
    if (args.verbose)
    {
       const long long millisecondsToWriteFile = threadUniqueCreateFileStopwatch->StopAndGetElapsedMilliseconds();
-      const string wroteFileMessage = Utils::String::Concat(
+      const string wroteFileMessage = String::Concat(
          "[FileArb] Wrote file ", filePath.string(), " (", millisecondsToWriteFile, " ms)\n");
       _console->Write(wroteFileMessage);
    }

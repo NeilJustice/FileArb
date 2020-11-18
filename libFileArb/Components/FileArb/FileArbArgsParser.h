@@ -1,23 +1,21 @@
 #pragma once
-#include "libFileArb/ValueTypes/FileArbArgs.h"
 namespace docopt
 {
    struct value;
 }
-namespace Utils
-{
-   class Console;
-   class DocoptParser;
-}
+class Console;
+class DocoptParser;
 
 class FileArbArgsParser
 {
    friend class FileArbArgsParserTests;
 private:
-   unique_ptr<const Utils::Console> _console;
-   unique_ptr<const Utils::DocoptParser> _docoptParser;
+   // Function Callers
    function<ProgramMode(bool, bool)> _call_DetermineProgramMode;
    function<string(bool, bool)> _call_DetermineFileExtension;
+   // Constant Components
+   unique_ptr<const Console> _console;
+   unique_ptr<const DocoptParser> _docoptParser;
 public:
    FileArbArgsParser();
    virtual ~FileArbArgsParser();

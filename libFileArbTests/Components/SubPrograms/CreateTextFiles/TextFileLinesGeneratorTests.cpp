@@ -37,14 +37,14 @@ TEST(MakeFileText_ReturnsStringWithNumberOfCharactersPerLineReplicatedNumberOfLi
 
 TEST3X3(ReplicateLineNTimes_ReturnsLineReplicatedNTimes,
    size_t n, const string& lineToWrite, const string& expectedReturnValue,
-   0, "Line", "",
-   1, "Line", "Line",
-   2, "Line", "LineLine",
-   3, "Line", "LineLineLine",
-   0, "123", "",
-   1, "123", "123",
-   2, "123", "123123",
-   3, "123", "123123123")
+   0ull, "Line", "",
+   1ull, "Line", "Line",
+   2ull, "Line", "LineLine",
+   3ull, "Line", "LineLineLine",
+   0ull, "123", "",
+   1ull, "123", "123",
+   2ull, "123", "123123",
+   3ull, "123", "123123123")
 {
    const string lineReplicatedNTimes = TextFileLinesGenerator::ReplicateLineNTimes(lineToWrite, n);
    ARE_EQUAL(expectedReturnValue, lineReplicatedNTimes);

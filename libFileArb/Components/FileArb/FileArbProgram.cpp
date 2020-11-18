@@ -1,21 +1,22 @@
 #include "pch.h"
+#include "libFileArb/Components/Console/Console.h"
 #include "libFileArb/Components/FileArb/FileArbArgsParser.h"
 #include "libFileArb/Components/FileArb/FileArbProgram.h"
+#include "libFileArb/Components/Exception/TryCatchCaller.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgramFactory.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
-#include "libFileArb/Utilities/DataStructure/Vector.h"
-#include "libFileArb/ValueTypes/FileArbArgs.h"
+#include "libFileArb/Components/Time/Stopwatch.h"
 
 FileArbProgram::FileArbProgram()
-   : _call_Utils_Exception_ClassNameAndWhat(Utils::Exception::ClassNameAndWhat)
-   , _call_Utils_Vector_FromArgcArgv(Utils::Vector::FromArgcArgv)
-   , _console(make_unique<Utils::Console>())
-   , _tryCatchCaller(make_unique<Utils::TryCatchCaller<FileArbProgram, const vector<string>&>>())
+   : _call_Utils_Exception_ClassNameAndMessage(Exception::GetClassNameAndMessage)
+   , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
+   , _console(make_unique<Console>())
+   , _tryCatchCaller(make_unique<TryCatchCaller<FileArbProgram, const vector<string>&>>())
    , _argsParser(make_unique<FileArbArgsParser>())
    , _fileArbSubProgramFactory(make_unique<FileArbSubProgramFactory>())
    , _fileCreator(make_unique<FileCreator>())
-   , _stopwatch(make_unique<Utils::Stopwatch>())
+   , _stopwatch(make_unique<Stopwatch>())
 {
 }
 
@@ -52,9 +53,9 @@ int FileArbProgram::Run(const vector<string>& stringArgs)
    return exitCode;
 }
 
-int FileArbProgram::ExceptionHandler(const exception& ex, const vector<string>& stringArgs)
+int FileArbProgram::ExceptionHandler(const exception& ex, const vector<string>& /*stringArgs*/)
 {
-   const string exceptionTypeNameAndWhat = _call_Utils_Exception_ClassNameAndWhat(&ex);
+   const string exceptionTypeNameAndWhat = _call_Utils_Exception_ClassNameAndMessage(&ex);
    const string errorMessage = "FileArb error: FileArb threw an exception:\n" + exceptionTypeNameAndWhat;
    _console->WriteLine(errorMessage);
    return 1;

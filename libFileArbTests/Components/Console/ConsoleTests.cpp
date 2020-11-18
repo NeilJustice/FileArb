@@ -5,11 +5,10 @@ TESTS(ConsoleTests)
 AFACT(Write_Int_CodeCoverage)
 AFACT(Write_StringView_CodeCoverage)
 AFACT(WriteLine_CodeCoverage)
-AFACT(WriteLine_Int_CodeCoverage)
 AFACT(WriteLine_StringView_CodeCoverage)
 EVIDENCE
 
-Utils::Console _console;
+Console _console;
 
 TEST(Write_Int_CodeCoverage)
 {
@@ -27,11 +26,6 @@ TEST(Write_StringView_CodeCoverage)
 TEST(WriteLine_CodeCoverage)
 {
    _console.WriteLine();
-}
-
-TEST(WriteLine_Int_CodeCoverage)
-{
-   _console.WriteLine(ZenUnit::Random<int>());
 }
 
 TEST(WriteLine_StringView_CodeCoverage)

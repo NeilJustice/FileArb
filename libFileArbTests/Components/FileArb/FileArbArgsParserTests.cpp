@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/FileArb/FileArbArgsParser.h"
-#include "libFileArb/Utilities/DataStructure/Vector.h"
+#include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
 
@@ -14,27 +14,34 @@ AFACT(PrintPreamble_WritesRunningCommandLineMessageToConsole)
 EVIDENCE
 
 FileArbArgsParser _fileArbArgsParser;
-Utils::ConsoleMock* _consoleMock = nullptr;
-Utils::DocoptParserMock* _docoptParserMock = nullptr;
+// Function Callers
 METALMOCK_NONVOID2_STATIC(ProgramMode, FileArbArgsParser, DetermineProgramMode, bool, bool)
 METALMOCK_NONVOID2_STATIC(string, FileArbArgsParser, DetermineFileExtension, bool, bool)
+// Constant Components
+ConsoleMock* _consoleMock = nullptr;
+DocoptParserMock* _docoptParserMock = nullptr;
+
 using DocoptMapType = map<string, docopt::Value>;
 
 STARTUP
 {
-   _fileArbArgsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
-   _fileArbArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
+   // Function Callers
    _fileArbArgsParser._call_DetermineProgramMode = BIND_2ARG_METALMOCK_OBJECT(DetermineProgramModeMock);
    _fileArbArgsParser._call_DetermineFileExtension = BIND_2ARG_METALMOCK_OBJECT(DetermineFileExtensionMock);
+   // Constant Components
+   _fileArbArgsParser._console.reset(_consoleMock = new ConsoleMock);
+   _fileArbArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
 }
 
 TEST(Constructor_NewsComponents_SetsFunctionPointers)
 {
    FileArbArgsParser fileArbArgsParser;
-   DELETE_TO_ASSERT_NEWED(fileArbArgsParser._console);
-   DELETE_TO_ASSERT_NEWED(fileArbArgsParser._docoptParser);
+   // Function Callers
    STD_FUNCTION_TARGETS(FileArbArgsParser::DetermineProgramMode, fileArbArgsParser._call_DetermineProgramMode);
    STD_FUNCTION_TARGETS(FileArbArgsParser::DetermineFileExtension, fileArbArgsParser._call_DetermineFileExtension);
+   // Constant Components
+   DELETE_TO_ASSERT_NEWED(fileArbArgsParser._console);
+   DELETE_TO_ASSERT_NEWED(fileArbArgsParser._docoptParser);
 }
 
 TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
@@ -84,7 +91,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    const FileArbArgs args = _fileArbArgsParser.ParseArgs(stringArgs);
    //
    FileArbArgs expectedArgs;
-   expectedArgs.commandLine = Utils::Vector::Join(stringArgs, ' ');
+   expectedArgs.commandLine = Vector::Join(stringArgs, ' ');
    expectedArgs.programMode = programMode;
    expectedArgs.fileExtension = fileExtension;
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs));
@@ -117,6 +124,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    expectedArgs.numberOfFilesToCreate = numberOfFilesToCreate;
    expectedArgs.numberOfLinesPerFile = numberOfLinesPerFile;
    expectedArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
+   expectedArgs.numberOfBytesPerFile = numberOfBytesPerFile;
    expectedArgs.parallel = parallel;
    expectedArgs.verbose = verbose;
    ARE_EQUAL(expectedArgs, args);
@@ -135,13 +143,13 @@ TEST3X3(DetermineProgramMode_ReturnsExpectedProgramModeDependingOnProgramModeBoo
 TEST(DetermineFileExtension_IsCreateTextFilesModeIsTrue_ReturnsDotTxt)
 {
    const string fileExtension = FileArbArgsParser::DetermineFileExtension(true, ZenUnit::Random<bool>());
-   ARE_EQUAL(".txt", fileExtension);
+   ARE_EQUAL(".txt"s, fileExtension);
 }
 
 TEST(DetermineFileExtension_IsCreateTextFilesModeIsFalse_IsCreateBinaryFilesModeIsTrue_ReturnsDotBin)
 {
    const string fileExtension = FileArbArgsParser::DetermineFileExtension(false, true);
-   ARE_EQUAL(".bin", fileExtension);
+   ARE_EQUAL(".bin"s, fileExtension);
 }
 
 TEST(PrintPreamble_WritesRunningCommandLineMessageToConsole)

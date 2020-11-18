@@ -1,9 +1,6 @@
 #include "pch.h"
-#include "libFileArb/Components/Exception/Exception.h"
 #include "libFileArb/Components/FileArb/FileArbArgsParser.h"
 #include "libFileArb/Components/FileArb/FileArbProgram.h"
-#include "libFileArb/Utilities/DataStructure/Vector.h"
-#include "libFileArb/ValueTypes/FileArbArgs.h"
 #include "libFileArbTests/Components/FileArb/MetalMock/FileArbArgsParserMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramFactoryMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramMock.h"
@@ -17,32 +14,32 @@ AFACT(DefaultConstructor_NewsComponents)
 AFACT(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
 FACTS(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsProgramRuntimeInMilliseconds_ReturnsExitCode)
 AFACT(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_ReturnsExitCodeFromSubProgram)
-AFACT(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
+AFACT(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
 EVIDENCE
 
 FileArbProgram _fileArbProgram;
-Utils::ConsoleMock* _consoleMock = nullptr;
-Utils::TryCatchCallerMock<FileArbProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
-Utils::StopwatchMock* _stopwatchMock = nullptr;
+ConsoleMock* _consoleMock = nullptr;
+TryCatchCallerMock<FileArbProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
+StopwatchMock* _stopwatchMock = nullptr;
 FileArbArgsParserMock* _argsParserMock = nullptr;
 FileArbSubProgramFactoryMock* _fileArbSubProgramFactoryMock = nullptr;
 FileCreatorMock* _fileCreatorMock = nullptr;
 
 STARTUP
 {
-   _fileArbProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
-   _fileArbProgram._tryCatchCaller.reset(_tryCatchCallerMock = new Utils::TryCatchCallerMock<FileArbProgram, const vector<string>&>);
+   _fileArbProgram._console.reset(_consoleMock = new ConsoleMock);
+   _fileArbProgram._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMock<FileArbProgram, const vector<string>&>);
    _fileArbProgram._argsParser.reset(_argsParserMock = new FileArbArgsParserMock);
    _fileArbProgram._fileArbSubProgramFactory.reset(_fileArbSubProgramFactoryMock = new FileArbSubProgramFactoryMock);
    _fileArbProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
-   _fileArbProgram._stopwatch.reset(_stopwatchMock = new Utils::StopwatchMock);
+   _fileArbProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    FileArbProgram fileArbProgram;
-   STD_FUNCTION_TARGETS(Utils::Exception::ClassNameAndWhat, fileArbProgram._call_Utils_Exception_ClassNameAndWhat);
-   STD_FUNCTION_TARGETS(Utils::Vector::FromArgcArgv, fileArbProgram._call_Utils_Vector_FromArgcArgv);
+   STD_FUNCTION_TARGETS(Exception::GetClassNameAndMessage, fileArbProgram._call_Utils_Exception_ClassNameAndMessage);
+   STD_FUNCTION_TARGETS(Vector::FromArgcArgv, fileArbProgram._call_Utils_Vector_FromArgcArgv);
    DELETE_TO_ASSERT_NEWED(fileArbProgram._console);
    DELETE_TO_ASSERT_NEWED(fileArbProgram._tryCatchCaller);
    DELETE_TO_ASSERT_NEWED(fileArbProgram._argsParser);
@@ -73,7 +70,7 @@ TEST1X1(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsProgram
 {
    _stopwatchMock->StartMock.Expect();
 
-   METALMOCK_NONVOID2_STATIC(vector<string>, Utils::Vector, FromArgcArgv, int, char**);
+   METALMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**);
    _fileArbProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(FromArgcArgvMock);
 
    const vector<string> vectorArgs{ ZenUnit::Random<string>(), ZenUnit::Random<string>() };
@@ -132,12 +129,12 @@ TEST(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_Re
    ARE_EQUAL(exitCode, returnedExitCode);
 }
 
-TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
+TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
 {
-   METALMOCK_NONVOID1_STATIC(string, Utils::Exception, ClassNameAndWhat, const exception*);
-   const string exceptionTypeNameAndWhat = ZenUnit::Random<string>();
-   ClassNameAndWhatMock.Return(exceptionTypeNameAndWhat);
-   _fileArbProgram._call_Utils_Exception_ClassNameAndWhat = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
+   METALMOCK_NONVOID1_STATIC(string, Exception, GetClassNameAndMessage, const exception*);
+   const string exceptionClassNameAndMessage = ZenUnit::Random<string>();
+   GetClassNameAndMessageMock.Return(exceptionClassNameAndMessage);
+   _fileArbProgram._call_Utils_Exception_ClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(GetClassNameAndMessageMock);
 
    _consoleMock->WriteLineMock_string.Expect();
    const exception ex;
@@ -145,8 +142,8 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    //
    int exitCode = _fileArbProgram.ExceptionHandler(ex, args);
    //
-   METALMOCK(ClassNameAndWhatMock.CalledOnceWith(&ex));
-   const string expectedErrorMessage = "FileArb error: FileArb threw an exception:\n" + exceptionTypeNameAndWhat;
+   METALMOCK(GetClassNameAndMessageMock.CalledOnceWith(&ex));
+   const string expectedErrorMessage = "FileArb error: FileArb threw an exception:\n" + exceptionClassNameAndMessage;
    METALMOCK(_consoleMock->WriteLineMock_string.CalledOnceWith(expectedErrorMessage));
    ARE_EQUAL(1, exitCode);
 }

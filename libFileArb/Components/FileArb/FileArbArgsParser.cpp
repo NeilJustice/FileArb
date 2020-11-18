@@ -1,12 +1,15 @@
 #include "pch.h"
+#include "libFileArb/Components/Console/Console.h"
+#include "libFileArb/Components/Docopt/DocoptParser.h"
 #include "libFileArb/Components/FileArb/FileArbArgsParser.h"
-#include "libFileArb/Utilities/DataStructure/Vector.h"
 
 FileArbArgsParser::FileArbArgsParser()
-   : _console(make_unique<Utils::Console>())
-   , _docoptParser(make_unique<Utils::DocoptParser>())
-   , _call_DetermineProgramMode(FileArbArgsParser::DetermineProgramMode)
+   // Function Callers
+   : _call_DetermineProgramMode(FileArbArgsParser::DetermineProgramMode)
    , _call_DetermineFileExtension(FileArbArgsParser::DetermineFileExtension)
+   // Constant Components
+   , _console(make_unique<Console>())
+   , _docoptParser(make_unique<DocoptParser>())
 {
 }
 
@@ -17,7 +20,7 @@ FileArbArgsParser::~FileArbArgsParser()
 FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
 {
    FileArbArgs args;
-   args.commandLine = Utils::Vector::Join(stringArgs, ' ');
+   args.commandLine = Vector::Join(stringArgs, ' ');
    const map<string, docopt::Value> docoptValues =
       _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage, stringArgs);
    const bool isCreateTextFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-text-files");
@@ -70,12 +73,12 @@ string FileArbArgsParser::DetermineFileExtension(bool isCreateTextFilesMode, boo
 {
    if (isCreateTextFilesMode)
    {
-      return ".txt";
+      return ".txt"s;
    }
    else
    {
       release_assert(isCreateBinaryFilesMode);
-      return ".bin";
+      return ".bin"s;
    }
 }
 

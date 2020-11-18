@@ -8,18 +8,20 @@ EVIDENCE
 
 TEST(DefaultConstructor_SetsFieldsTo0)
 {
-   FileArbArgs args;
-   ARE_EQUAL("", args.commandLine);
-   ARE_EQUAL(ProgramMode::Unset, args.programMode);
-   ARE_EQUAL(fs::path(), args.targetDirectoryPath);
-   IS_ZERO(args.numberOfDirectoriesToCreate);
-   IS_ZERO(args.numberOfFilesToCreate);
-   IS_ZERO(args.numberOfLinesPerFile);
-   IS_ZERO(args.numberOfCharactersPerLine);
-   IS_ZERO(args.numberOfBytesPerFile);
-   IS_FALSE(args.parallel);
-   IS_FALSE(args.verbose);
-   ARE_EQUAL("", args.fileExtension);
+   FileArbArgs defaultFileArbArgs;
+   FileArbArgs expectedDefaultFileArbArgs;
+   expectedDefaultFileArbArgs.commandLine = "";
+   expectedDefaultFileArbArgs.programMode = ProgramMode::Unset;
+   expectedDefaultFileArbArgs.targetDirectoryPath = fs::path();
+   expectedDefaultFileArbArgs.numberOfDirectoriesToCreate = 0;
+   expectedDefaultFileArbArgs.numberOfFilesToCreate = 0;
+   expectedDefaultFileArbArgs.numberOfLinesPerFile = 0;
+   expectedDefaultFileArbArgs.numberOfCharactersPerLine = 0;
+   expectedDefaultFileArbArgs.numberOfBytesPerFile = 0;
+   expectedDefaultFileArbArgs.parallel = false;
+   expectedDefaultFileArbArgs.verbose = false;
+   expectedDefaultFileArbArgs.fileExtension = "";
+   ARE_EQUAL(expectedDefaultFileArbArgs, defaultFileArbArgs);
 }
 
 TEST(Usage_IsExpectedString)

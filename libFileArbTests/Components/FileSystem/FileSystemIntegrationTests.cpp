@@ -6,7 +6,7 @@ AFACT(CreateTextFile_CreatesTextFileWithSpecifiedText)
 AFACT(CreateBinaryFile_CreatesBinaryFileWithSpecifiedBytes)
 EVIDENCE
 
-Utils::FileSystem _fileSystem;
+FileSystem _fileSystem;
 const fs::path _fileSystemIntegrationTestsDirectoryPath = "FileSystemIntegrationTests";
 
 STARTUP

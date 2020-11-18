@@ -1,33 +1,30 @@
 #pragma once
-namespace Utils
-{
-   class Console;
-   class FileSystem;
-   class StopwatchFactory;
-
-   template<typename ClassType, typename Arg1Type, typename Arg2Type>
-   class VoidTwoArgMemberFunctionCaller;
-
-   template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
-   class VoidThreeArgMemberFunctionCaller;
-}
+class Console;
+class FileSystem;
+class StopwatchFactory;
+template<typename ClassType, typename Arg1Type, typename Arg2Type>
+class VoidTwoArgMemberFunctionCaller;
+template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
+class VoidThreeArgMemberFunctionCaller;
 struct FileArbArgs;
 
 class FileCreator
 {
    friend class FileCreatorTests;
 private:
+   // Function Callers
    using VoidTwoArgMemberFunctionCallerType =
-      Utils::VoidTwoArgMemberFunctionCaller<FileCreator, const FileArbArgs&, const string&>;
+      VoidTwoArgMemberFunctionCaller<FileCreator, const FileArbArgs&, const string&>;
    unique_ptr<const VoidTwoArgMemberFunctionCallerType> _caller_CreateSequentiallyNumberedFilesInNumberedDirectory;
 
    using VoidThreeArgMemberFunctionCallerType =
-      Utils::VoidThreeArgMemberFunctionCaller<FileCreator, const fs::path&, const FileArbArgs&, const string&>;
+      VoidThreeArgMemberFunctionCaller<FileCreator, const fs::path&, const FileArbArgs&, const string&>;
    unique_ptr<const VoidThreeArgMemberFunctionCallerType> _caller_CreateNumberedFileInDirectory;
 
-   unique_ptr<const Utils::Console> _console;
-   unique_ptr<const Utils::FileSystem> _fileSystem;
-   unique_ptr<const Utils::StopwatchFactory> _stopwatchFactory;
+   // Constant Components
+   unique_ptr<const Console> _console;
+   unique_ptr<const FileSystem> _fileSystem;
+   unique_ptr<const StopwatchFactory> _stopwatchFactory;
 public:
    FileCreator();
    virtual ~FileCreator();

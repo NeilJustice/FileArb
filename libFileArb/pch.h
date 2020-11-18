@@ -1,9 +1,6 @@
 #pragma once
-#include "libFileArb/Components/Misc/MSVCIgnoredWallWarnings.h"
+#include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
 
-#include <array>
-#include <atomic>
-#include <fstream>
 #include <functional>
 #include <iostream>
 #include <map>
@@ -34,16 +31,19 @@ using namespace std;
    #include "Windows.h"
 #endif
 
-#include "libFileArb/Components/Console/Console.h"
-#include "libFileArb/Components/Docopt/DocoptParser.h"
-#include "libFileArb/Components/Exception/Exception.h"
-#include "libFileArb/Components/Exception/TryCatchCaller.h"
-#include "libFileArb/Components/FileSystem/FileSystem.h"
-#include "libFileArb/Components/Function/Member/VoidOneArgMemberFunctionCaller.h"
-#include "libFileArb/Components/Function/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileArb/Components/Function/Member/VoidThreeArgMemberFunctionCaller.h"
-#include "libFileArb/Components/Misc/ReleaseAssert.h"
-#include "libFileArb/Components/String/StringUtil.h"
-#include "libFileArb/Components/Time/Stopwatch.h"
-#include "libFileArb/Components/Time/StopwatchFactory.h"
+// libFileArb Compiler
+#include "libFileArb/Compiler/CompilerMacros.h"
+
+// libFileArb Enums
 #include "libFileArb/Enums/ProgramMode.h"
+
+// libFileArb ValueTypes
+#include "libFileArb/ValueTypes/FileArbArgs.h"
+
+// libFileArb StaticUtilities
+#include "libFileArb/StaticUtilities/Exception.h"
+#include "libFileArb/StaticUtilities/Map.h"
+#include "libFileArb/StaticUtilities/ReleaseAssert.h"
+#include "libFileArb/StaticUtilities/StringUtil.h"
+#include "libFileArb/StaticUtilities/Type.h"
+#include "libFileArb/StaticUtilities/Vector.h"

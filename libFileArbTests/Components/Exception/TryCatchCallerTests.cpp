@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libFileArb/Components/Exception/Exception.h"
 #include "libFileArb/Components/Exception/TryCatchCaller.h"
 
 template<typename ArgumentType, typename ExceptionType>
@@ -39,14 +38,14 @@ public:
 
    int ExceptionHandler(const exception& ex, ArgumentType argument)
    {
-      const string exceptionClassNameAndWhat = Utils::Exception::ClassNameAndWhat(&ex);
-      exceptionHandlerCalls.emplace_back(exceptionClassNameAndWhat, argument);
+      const string exceptionClassNameAndMessage = Exception::GetClassNameAndMessage(&ex);
+      exceptionHandlerCalls.emplace_back(exceptionClassNameAndMessage, argument);
       return exceptionHandlerExitCode;
    }
 };
 
 Class classInstance;
-Utils::TryCatchCaller<Class, ArgumentType> _tryCatchCaller;
+TryCatchCaller<Class, ArgumentType> _tryCatchCaller;
 
 TEST(TryCatchCall_CallsFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
 {
@@ -70,10 +69,10 @@ TEST(TryCatchCall_CallsFunctionWhichThrowsException_CallsExceptionHandler_Return
    //
    VECTORS_ARE_EQUAL({ argument }, classInstance.calls);
    const ExceptionType ex(classInstance.exceptionWhat.c_str());
-   const string exceptionClassNameAndWhat = Utils::Exception::ClassNameAndWhat(&ex);
+   const string exceptionClassNameAndMessage = Exception::GetClassNameAndMessage(&ex);
    const vector<pair<string, ArgumentType>> expectedExceptionHandlerCalls =
    {
-      { exceptionClassNameAndWhat, argument }
+      { exceptionClassNameAndMessage, argument }
    };
    VECTORS_ARE_EQUAL(expectedExceptionHandlerCalls, classInstance.exceptionHandlerCalls);
    ARE_EQUAL(classInstance.exceptionHandlerExitCode, exitCode);

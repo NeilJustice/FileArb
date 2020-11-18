@@ -6,7 +6,7 @@ AFACT(DefaultConstructor_SetsFunctionPointerToStrError)
 AFACT(ToReadable_ReturnsStrErrorReturnValue)
 EVIDENCE
 
-Utils::ErrnoTranslator _errnoTranslator;
+ErrnoTranslator _errnoTranslator;
 METALMOCK_NONVOID1_FREE(const char*, strerror, int)
 
 STARTUP
@@ -16,7 +16,7 @@ STARTUP
 
 TEST(DefaultConstructor_SetsFunctionPointerToStrError)
 {
-   Utils::ErrnoTranslator errnoTranslator;
+   ErrnoTranslator errnoTranslator;
    STD_FUNCTION_TARGETS(::strerror, errnoTranslator._call_strerror);
 }
 

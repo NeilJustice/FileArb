@@ -19,19 +19,19 @@ const string _expectedDirectoryWhat = _directoryPath.string() + ". Reason: " + _
 
 TEST(FileCreateException_WhatReturnsExpected)
 {
-   const Utils::FileCreateException ex(_filePath, _errnoValue);
+   const FileCreateException ex(_filePath, _errnoValue);
 	ARE_EQUAL(_expectedFileWhat, ex.what());
 }
 
 TEST(FileOpenException_WhatReturnsExpected)
 {
-   const Utils::FileOpenException ex(_filePath, _errnoValue);
+   const FileOpenException ex(_filePath, _errnoValue);
    ARE_EQUAL(_expectedFileWhat, ex.what());
 }
 
 TEST(FileCloseException_WhatReturnsExpected)
 {
-   const Utils::FileCloseException ex(_filePath, _errnoValue);
+   const FileCloseException ex(_filePath, _errnoValue);
    ARE_EQUAL(_expectedFileWhat, ex.what());
 }
 
@@ -39,7 +39,7 @@ TEST(FileMalformedException_NonLineNumberOverload_WhatReturnsExpected)
 {
    const string reason = ZenUnit::Random<string>();
    //
-   const Utils::FileMalformedException e(_filePath, reason);
+   const FileMalformedException e(_filePath, reason);
    //
    const string expectedWhat = _filePath.string() + ":\n" + reason;
    ARE_EQUAL(expectedWhat, e.what());
@@ -50,7 +50,7 @@ TEST(FileMalformedException_LineNumberOverload_WhatReturnsExpected)
    const string reason = ZenUnit::Random<string>();
    const size_t lineNumber = ZenUnit::Random<size_t>();
    //
-   const Utils::FileMalformedException e(_filePath, lineNumber, reason);
+   const FileMalformedException e(_filePath, lineNumber, reason);
    //
    const string expectedWhat = _filePath.string() + "(" + to_string(lineNumber) + "):\n" + reason;
 	ARE_EQUAL(expectedWhat, e.what());

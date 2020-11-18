@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/CreateBinaryFiles/BinaryFileBytesGenerator.h"
-#include "libFileArb/ValueTypes/FileArbArgs.h"
 
 BinaryFileBytesGenerator::BinaryFileBytesGenerator()
 {

@@ -13,7 +13,7 @@ public:
    using strerror_s_function_type = errno_t(*)(char*, size_t, int);
 #endif
 private:
-   function<int* ()> _call_errno;
+   function<int*()> _call_errno;
 #ifdef __linux__
    std::function<char* (int, char*, size_t)> _call_strerror_r;
 #elif _WIN32

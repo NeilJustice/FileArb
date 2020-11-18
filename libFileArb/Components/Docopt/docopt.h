@@ -1,5 +1,4 @@
 #pragma once
-#include "libFileArb/Components/Misc/ReleaseAssert.h"
 
 template<typename T>
 inline void hash_combine(std::size_t& seed, const T& v)
@@ -690,7 +689,8 @@ namespace docopt
 	public:
 		using LeafPattern::LeafPattern;
 	protected:
-		virtual std::pair<size_t, std::shared_ptr<LeafPattern>> SingleMatch(const std::vector<std::shared_ptr<Pattern>>& left) const override;
+		virtual std::pair<size_t, std::shared_ptr<LeafPattern>> SingleMatch(
+			const std::vector<std::shared_ptr<Pattern>>& left) const override;
 	};
 
 	class CommandArgumentLeafPattern : public ArgumentLeafPattern
@@ -701,13 +701,15 @@ namespace docopt
 		{
 		}
 	protected:
-		virtual std::pair<size_t, std::shared_ptr<LeafPattern>> SingleMatch(const std::vector<std::shared_ptr<Pattern>>& left) const override;
+		virtual std::pair<size_t, std::shared_ptr<LeafPattern>> SingleMatch(
+			const std::vector<std::shared_ptr<Pattern>>& left) const override;
 	};
 
 	class OptionLeafPattern final : public LeafPattern
 	{
    protected:
-      virtual std::pair<size_t, std::shared_ptr<LeafPattern>> SingleMatch(const std::vector<std::shared_ptr<Pattern>>& left) const override;
+      virtual std::pair<size_t, std::shared_ptr<LeafPattern>> SingleMatch(
+			const std::vector<std::shared_ptr<Pattern>>& left) const override;
    private:
       std::string _shortOption;
       std::string _longOption;
@@ -1005,7 +1007,8 @@ namespace docopt
 		return true;
 	}
 
-	inline std::pair<size_t, std::shared_ptr<LeafPattern>> ArgumentLeafPattern::SingleMatch(const std::vector<std::shared_ptr<Pattern>>& left) const
+	inline std::pair<size_t, std::shared_ptr<LeafPattern>> ArgumentLeafPattern::SingleMatch(
+		const std::vector<std::shared_ptr<Pattern>>& left) const
 	{
 		std::pair<size_t, std::shared_ptr<LeafPattern>> ret{};
 		for (size_t i = 0, size = left.size(); i < size; ++i)
@@ -1021,7 +1024,8 @@ namespace docopt
 		return ret;
 	}
 
-	inline std::pair<size_t, std::shared_ptr<LeafPattern>> CommandArgumentLeafPattern::SingleMatch(const std::vector<std::shared_ptr<Pattern>>& left) const
+	inline std::pair<size_t, std::shared_ptr<LeafPattern>> CommandArgumentLeafPattern::SingleMatch(
+		const std::vector<std::shared_ptr<Pattern>>& left) const
 	{
 		std::pair<size_t, std::shared_ptr<LeafPattern>> ret{};
 		for (size_t i = 0, size = left.size(); i < size; ++i)
@@ -1109,7 +1113,8 @@ namespace docopt
 #pragma warning(push)
 #pragma warning(disable: 4868) // compiler may not enforce left - to - right evaluation order in braced initializer list
 #endif
-	inline std::pair<size_t, std::shared_ptr<LeafPattern>> OptionLeafPattern::SingleMatch(const std::vector<std::shared_ptr<Pattern>>& left) const
+	inline std::pair<size_t, std::shared_ptr<LeafPattern>> OptionLeafPattern::SingleMatch(
+		const std::vector<std::shared_ptr<Pattern>>& left) const
 	{
 		auto thematch = find_if(left.begin(), left.end(), [this](const std::shared_ptr<Pattern>& a)
 		{
@@ -1120,7 +1125,10 @@ namespace docopt
 		{
 			return {};
 		}
-		return { std::distance(left.begin(), thematch), std::dynamic_pointer_cast<LeafPattern>(*thematch) };
+		const size_t theDistance = static_cast<size_t>(std::distance(left.begin(), thematch));
+		const std::pair<size_t, std::shared_ptr<LeafPattern>> ret = std::make_pair(
+			theDistance, std::dynamic_pointer_cast<LeafPattern>(*thematch));
+		return ret;
 	}
 #ifdef _WIN32
 #pragma warning(pop)

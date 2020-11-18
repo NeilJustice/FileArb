@@ -1,9 +1,11 @@
 #include "pch.h"
+#include "libFileArb/Components/Console/Console.h"
+#include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 
 FileArbSubProgram::FileArbSubProgram()
-   : _protected_console(make_unique<Utils::Console>())
-   , _protected_fileSystem(make_unique<Utils::FileSystem>())
+   : _protected_console(make_unique<Console>())
+   , _protected_fileSystem(make_unique<FileSystem>())
 {
 }
 

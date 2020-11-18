@@ -2,7 +2,6 @@
 #include "libFileArb/Components/SubPrograms/CreateBinaryFiles/BinaryFileBytesGenerator.h"
 #include "libFileArb/Components/SubPrograms/CreateBinaryFiles/CreateBinaryFilesSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
-#include "libFileArb/ValueTypes/FileArbArgs.h"
 
 CreateBinaryFilesSubProgram::CreateBinaryFilesSubProgram()
    : _binaryFileBytesGenerator(make_unique<BinaryFileBytesGenerator>())

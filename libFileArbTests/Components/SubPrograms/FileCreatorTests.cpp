@@ -135,7 +135,7 @@ TEST(CreateNumberedFileInDirectory_VerboseTrue_CreatesFile_WritesWroteFileMessag
       expectedFilePath, fileTextOrBytes.data(), fileTextOrBytes.size()));
    METALMOCK(threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    const string expectedWroteFileMessage = String::Concat(
-      "[FileArb] Wrote file ", expectedFilePath.string(), " (", millisecondsToWriteFile, " ms)\n");
+      "[FileArb] Wrote file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]\n");
    METALMOCK(_consoleMock->WriteMock_string.CalledOnceWith(expectedWroteFileMessage));
 }
 

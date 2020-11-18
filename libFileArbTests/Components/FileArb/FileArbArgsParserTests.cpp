@@ -159,7 +159,7 @@ TEST(PrintPreamble_WritesRunningCommandLineMessageToConsole)
    //
    _fileArbArgsParser.PrintPreamble(args);
    //
-   const string expectedRunningMessage = "[FileArb] CommandLine: " + args.commandLine;
+   const string expectedRunningMessage = "[FileArb] Running: " + args.commandLine;
    METALMOCK(_consoleMock->WriteLineMock_string.CalledOnceWith(expectedRunningMessage));
 }
 

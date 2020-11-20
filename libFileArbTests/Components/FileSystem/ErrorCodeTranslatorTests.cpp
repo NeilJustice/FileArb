@@ -98,30 +98,7 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
    ARE_EQUAL(expectedErrnoWithDescription, errnoWithDescription);
 }
 
-#ifdef __linux__
-
-struct strerror_r_FunctionCall
-{
-   size_t numberOfCalls = 0ull;
-   char* returnValue = nullptr;
-   int errnoValueArgument = 0;
-   char* outErrnoDescriptionCharsArgument = nullptr;
-   string returnValue_outErrnoDescriptionChars;
-   size_t outErrnoDescriptionCharsSizeArgument = 0ull;
-};
-strerror_r_CallHistory _strerror_r_CallHistory;
-
-char* strerror_r_CallInstead(int errnoValue, char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize)
-{
-   ++_strerror_r_CallHistory.numberOfCalls;
-   _strerror_r_CallHistory.errnoValueArgument = errnoValue;
-   _strerror_r_CallHistory.outErrnoDescriptionCharsArgument = outErrnoDescriptionChars;
-   strcpy(outErrnoDescriptionChars, _strerror_r_CallHistory.returnValue_outErrnoDescriptionChars.c_str());
-   _strerror_r_CallHistory.outErrnoDescriptionCharsSizeArgument = outErrnoDescriptionCharsSize;
-   return _strerror_r_CallHistory.returnValue;
-}
-
-#elif _WIN32
+#if _WIN32
 
 class ErrorCodeTranslatorSelfMocked : public Metal::Mock<ErrorCodeTranslator>
 {
@@ -167,6 +144,46 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
 
 #ifdef __linux__
 
+struct strerror_r_FunctionCall
+{
+   size_t numberOfCalls = 0ull;
+   char* returnValue = nullptr;
+   int errnoValueArgument = 0;
+   char* outErrnoDescriptionCharsArgument = nullptr;
+   string returnValue_outErrnoDescriptionChars;
+   size_t errnoDescriptionCharsSizeArgument = 0ull;
+
+   char* RecordFunctionCall(int errnoValue, char* outErrnoDescriptionChars, errnoDescriptionCharsSize)
+   {
+      ++numberOfCalls;
+      errnoValueArgument = errnoValue;
+      outErrnoDescriptionCharsArgument = outErrnoDescriptionChars;
+      constexpr size_t maximumErrnoDescriptionLength = 64;
+      strcpy(outErrnoDescriptionChars, outErrnoDescriptionCharsReturnValue.c_str());
+      errnoDescriptionCharsSizeArgument = errnoDescriptionCharsSize;
+      return returnValue;
+   }
+
+   void AssertCalledOnceWith(int expectedErrnoValue, size_t expectedOutErrnoDescriptionCharsSize)
+   {
+      ARE_EQUAL(1ull, numberOfCalls);
+      ARE_EQUAL(expectedErrnoValue, errnoValueArgument);
+      IS_NOT_NULLPTR(outErrnoDescriptionCharsArgument);
+      ARE_EQUAL(expectedOutErrnoDescriptionCharsSize, outErrnoDescriptionCharsSizeArgument);
+   }
+};
+strerror_r_CallHistory _strerror_r_CallHistory;
+
+char* strerror_r_CallInstead(int errnoValue, char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize)
+{
+   ++_strerror_r_CallHistory.numberOfCalls;
+   _strerror_r_CallHistory.errnoValueArgument = errnoValue;
+   _strerror_r_CallHistory.outErrnoDescriptionCharsArgument = outErrnoDescriptionChars;
+   strcpy(outErrnoDescriptionChars, _strerror_r_CallHistory.returnValue_outErrnoDescriptionChars.c_str());
+   _strerror_r_CallHistory.outErrnoDescriptionCharsSizeArgument = outErrnoDescriptionCharsSize;
+   return _strerror_r_CallHistory.returnValue;
+}
+
 TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 {
    const string errnoDescriptionChars = ZenUnit::Random<string>();
@@ -174,10 +191,12 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
    _strerror_r_FunctionCall.returnValue_outErrnoDescriptionChars = ZenUnit::Random<string>();
    strerror_rMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::strerror_r_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+   const int errnoValue = ZenUnit::Random<int>();
    //
    const string errnoDescription = _errorCodeTranslator.GetErrnoDescription(errnoValue);
    //
-
+   _strerror_s_CallHistory.AssertCalledOnceWith(errnoValue, 64ull);
+   ARE_EQUAL(_strerror_s_CallHistory.outErrnoDescriptionCharsReturnValue, errnoDescription);
 }
 
 #elif _WIN32
@@ -215,8 +234,7 @@ struct strerror_s_CallHistory
    }
 } _strerror_s_CallHistory;
 
-errno_t _strerror_s_CallInstead(
-   char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize, int errnoValue)
+errno_t _strerror_s_CallInstead(char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize, int errnoValue)
 {
    const errno_t returnValue = _strerror_s_CallHistory.RecordFunctionCall(
       outErrnoDescriptionChars, outErrnoDescriptionCharsSize, errnoValue);

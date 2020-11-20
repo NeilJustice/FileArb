@@ -66,11 +66,12 @@ string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastErro
 }
 #endif
 
+constexpr size_t maximumErrnoDescriptionLength = 64ull;
+
 #ifdef __linux__
 
 string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {
-   constexpr size_t maximumErrnoDescriptionLength = 64;
    char* const errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
    errnoDescriptionChars = _call_strerror_r(errnoValue, errnoDescriptionChars, maximumErrnoDescriptionLength);
    const string errnoDescription(errnoDescriptionChars);
@@ -81,7 +82,6 @@ string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 
 string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {
-   constexpr size_t maximumErrnoDescriptionLength = 64;
 #pragma warning(push)
 #pragma warning(disable: 6255) // _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead.
    char* const errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));

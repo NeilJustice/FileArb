@@ -12,11 +12,7 @@ AFACT(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 #if _WIN32
 AFACT(GetWindowsLastErrorWithDescription_GetLastErrorReturns0_Returns0AndEmptyString)
 AFACT(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastErrorAndErrorDescription)
-AFACT(GetSystemErrorDescription_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
-AFACT(GetSystemErrorDescription_SystemErrorIs206_ReturnsFileNameIsTooLongMessage)
 #endif
-AFACT(GetSystemErrorDescription_SystemErrorIsLessThan32_ReturnsIntAsString)
-AFACT(GetSystemErrorDescription_SystemErrorIsGreaterThan32_ReturnsIntAsString)
 EVIDENCE
 
 ErrorCodeTranslator _errorCodeTranslator;
@@ -228,40 +224,6 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
    //
    _strerror_s_CallHistory.AssertCalledOnceWith(64ull, errnoValue);
    ARE_EQUAL(_strerror_s_CallHistory.outErrnoDescriptionCharsReturnValue, errnoDescription);
-}
-
-#ifdef _WIN32
-TEST(GetSystemErrorDescription_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
-{
-   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(ERROR_SHARING_VIOLATION);
-   ARE_EQUAL("The process cannot access the file because it is being used by another process.", systemErrorDescription);
-}
-
-TEST(GetSystemErrorDescription_SystemErrorIs206_ReturnsFileNameIsTooLongMessage)
-{
-   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(ERROR_FILENAME_EXCED_RANGE);
-   ARE_EQUAL("The filename or extension is too long.", systemErrorDescription);
-}
-#endif
-
-TEST(GetSystemErrorDescription_SystemErrorIsLessThan32_ReturnsIntAsString)
-{
-   const int systemErrorValue = ZenUnit::RandomBetween<int>(0, 31);
-   //
-   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(systemErrorValue);
-   //
-   const string expectedSystemErrorDescription = to_string(systemErrorValue);
-   ARE_EQUAL(expectedSystemErrorDescription, systemErrorDescription);
-}
-
-TEST(GetSystemErrorDescription_SystemErrorIsGreaterThan32_ReturnsIntAsString)
-{
-   const int systemErrorValue = ZenUnit::RandomBetween<int>(33, 100);
-   //
-   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(systemErrorValue);
-   //
-   const string expectedSystemErrorDescription = to_string(systemErrorValue);
-   ARE_EQUAL(expectedSystemErrorDescription, systemErrorDescription);
 }
 
 RUN_TESTS(ErrorCodeTranslatorTests)

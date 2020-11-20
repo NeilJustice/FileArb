@@ -7,8 +7,12 @@ class ErrnoTranslator
    friend class ::ErrnoTranslatorTests;
 private:
    // Function Callers
-   using errno_t_FunctionType = errno_t(*)(char*, size_t, int);
+#ifdef __linux__
+
+#elif _WIN32
+   using strerror_s_FunctionType = errno_t(*)(char*, size_t, int);
    std::function<errno_t(char*, size_t, int)> _call_strerror_s;
+#endif
    // Constant Components
    unique_ptr<const Asserter> _asserter;
 public:

@@ -66,38 +66,30 @@ string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastErro
 }
 #endif
 
+#ifdef __linux__
+
 string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {
    constexpr size_t maximumErrnoDescriptionLength = 64;
-
-#ifdef _WIN32
-#pragma warning(push)
-#pragma warning(disable: 6255) // _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead.
-#endif
    char* const errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
-#ifdef _WIN32
-#pragma warning(pop)
-#endif
-
-#ifdef __linux__
    errnoDescriptionChars = _call_strerror_r(errnoValue, errnoDescriptionChars, maximumErrnoDescriptionLength);
-#elif _WIN32
-   const errno_t strErrorSReturnValue = _call_strerror_s(errnoDescriptionChars, maximumErrnoDescriptionLength, errnoValue);
-   release_assert(strErrorSReturnValue == 0);
-#endif
-
    const string errnoDescription(errnoDescriptionChars);
    return errnoDescription;
 }
 
-string ErrorCodeTranslator::GetSystemErrorDescription(int systemErrorValue) const
+#elif _WIN32
+
+string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {
-#if _WIN32
-   switch (systemErrorValue)
-   {
-   case ERROR_SHARING_VIOLATION: return "The process cannot access the file because it is being used by another process.";
-   case ERROR_FILENAME_EXCED_RANGE: return "The filename or extension is too long.";
-   }
-#endif
-   return to_string(systemErrorValue);
+   constexpr size_t maximumErrnoDescriptionLength = 64;
+#pragma warning(push)
+#pragma warning(disable: 6255) // _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead.
+   char* const errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
+#pragma warning(pop)
+   const errno_t strErrorSReturnValue = _call_strerror_s(errnoDescriptionChars, maximumErrnoDescriptionLength, errnoValue);
+   release_assert(strErrorSReturnValue == 0);
+   const string errnoDescription(errnoDescriptionChars);
+   return errnoDescription;
 }
+
+#endif

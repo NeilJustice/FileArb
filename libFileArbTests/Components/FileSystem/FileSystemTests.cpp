@@ -2,7 +2,7 @@
 #include "libFileArb/Components/Exception/ErrnoTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
-#include "libFileArbTests/Components/Exception/MetalMock/ErrnoTranslatorMock.h"
+#include "libFileArbTests/Components/FileSystem/MetalMock/ErrnoTranslatorMock.h"
 #include "libFileArbTests/Components/Misc/MetalMock/AsserterMock.h"
 
 TESTS(FileSystemTests)

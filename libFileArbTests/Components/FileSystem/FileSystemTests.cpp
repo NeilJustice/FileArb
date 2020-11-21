@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Exception/ErrnoTranslator.h"
+#include "libFileArb/Components/FileSystem/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
 #include "libFileArbTests/Components/FileSystem/MetalMock/ErrnoTranslatorMock.h"
@@ -32,7 +32,7 @@ STARTUP
    _fileSystem._call_fs_create_directories = BIND_2ARG_METALMOCK_OBJECT(create_directoriesMock);
    // Constant Components
    _fileSystem._asserter.reset(_asserterMock = new AsserterMock);
-   _fileSystem._errnoTranslator.reset(_errnoTranslatorMock = new ErrnoTranslatorMock);
+   _fileSystem._errorCodeTranslator.reset(_errnoTranslatorMock = new ErrnoTranslatorMock);
 }
 
 TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
@@ -50,7 +50,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
 #endif
    // Constant Components
    DELETE_TO_ASSERT_NEWED(fileSystem._asserter);
-   DELETE_TO_ASSERT_NEWED(fileSystem._errnoTranslator);
+   DELETE_TO_ASSERT_NEWED(fileSystem._errorCodeTranslator);
 
    fileSystem._call_errno(); // 100% code coverage for GetErrno() on Linux
 }
@@ -110,7 +110,7 @@ TEST(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValu
    int errnoValue = ZenUnit::Random<int>();
    _errnoMock.Return(&errnoValue);
 
-   const string errnoDescription = _errnoTranslatorMock->ErrnoValueToErrnoDescriptionMock.ReturnRandom();
+   const string errnoDescription = _errnoTranslatorMock->GetErrnoDescriptionMock.ReturnRandom();
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
@@ -123,7 +123,7 @@ TEST(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValu
    //
    _fopen_s_CallHistory.AssertCalledOnceWith(filePath.string().c_str(), fileOpenMode);
    METALMOCK(_errnoMock.CalledOnce());
-   METALMOCK(_errnoTranslatorMock->ErrnoValueToErrnoDescriptionMock.CalledOnceWith(errnoValue));
+   METALMOCK(_errnoTranslatorMock->GetErrnoDescriptionMock.CalledOnceWith(errnoValue));
 }
 
 TEST1X1(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException,

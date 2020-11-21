@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libFileArb/Components/Exception/ErrnoTranslator.h"
 #include "libFileArb/Components/FileSystem/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
@@ -25,7 +24,7 @@ FileSystem::FileSystem()
 #endif
    // Constant Components
    , _asserter(make_unique<Asserter>())
-   , _errnoTranslator(make_unique<ErrnoTranslator>())
+   , _errorCodeTranslator(make_unique<ErrorCodeTranslator>())
 {
 }
 
@@ -50,7 +49,7 @@ FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) c
    if (fopenReturnValue != 0)
    {
       const int errnoValue = *_call_errno();
-      const string errnoDescription = _errnoTranslator->ErrnoValueToErrnoDescription(errnoValue);
+      const string errnoDescription = _errorCodeTranslator->GetErrnoDescription(errnoValue);
       const string exceptionMessage = String::Concat(
          "fopen() returned nullptr. filePath=\"", filePath.string(),
          "\". fileOpenMode=\"", fileOpenMode, "\". errno=", errnoValue, " (", errnoDescription, ").");

@@ -1,8 +1,8 @@
 #pragma once
-#include "libFileArb/Components/Exception/ErrnoTranslator.h"
+#include "libFileArb/Components/FileSystem/ErrorCodeTranslator.h"
 
-class ErrnoTranslatorMock : public Metal::Mock<ErrnoTranslator>
+class ErrnoTranslatorMock : public Metal::Mock<ErrorCodeTranslator>
 {
 public:
-   METALMOCK_NONVOID1_CONST(string, ErrnoValueToErrnoDescription, int)
+   METALMOCK_NONVOID1_CONST(string, GetErrnoDescription, int)
 };

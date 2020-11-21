@@ -1,6 +1,6 @@
 #pragma once
 class Asserter;
-class ErrnoTranslator;
+class ErrorCodeTranslator;
 class FileSystemTests;
 
 #ifdef __linux__
@@ -19,7 +19,7 @@ private:
    std::function<bool(const fs::path&, error_code&)> _call_fs_create_directories;
    // Constant Callers
    unique_ptr<const Asserter> _asserter;
-   unique_ptr<const ErrnoTranslator> _errnoTranslator;
+   unique_ptr<const ErrorCodeTranslator> _errorCodeTranslator;
 public:
    FileSystem();
    virtual ~FileSystem();

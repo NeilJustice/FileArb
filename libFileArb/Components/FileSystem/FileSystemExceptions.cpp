@@ -1,12 +1,12 @@
 #include "pch.h"
-#include "libFileArb/Components/Exception/ErrnoTranslator.h"
+#include "libFileArb/Components/FileSystem/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
 
 string MakeFileSystemExceptionMessage(const fs::path& filePath, int errnoValue)
 {
-   ErrnoTranslator errnoTranslator;
-   const string errnoReadable = errnoTranslator.ErrnoValueToErrnoDescription(errnoValue);
-   const string exceptionWhat = String::Concat(filePath.string(), ". Reason: ", errnoReadable, ". errno=", errnoValue);
+   ErrorCodeTranslator errorCodeTranslator;
+   const string errnoDescription = errorCodeTranslator.GetErrnoDescription(errnoValue);
+   const string exceptionWhat = String::Concat(filePath.string(), ". Reason: ", errnoDescription, ". errno=", errnoValue);
 #ifdef _WIN32
    _set_errno(0);
 #endif

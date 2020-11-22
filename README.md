@@ -46,7 +46,7 @@ Usage:
       [--verbose]
 ```
 
-FileArb command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp).
+FileArb command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
 
 ![FileArb arguments parsing](Screenshots/DocoptArgumentsParsing.png)
 

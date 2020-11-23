@@ -1,19 +1,20 @@
 {
    "version": "0.2.0",
-   "configurations":
-   [
-      {
-         "name": "C++ Launch",
-         "request": "launch",
+   "configurations": [
+   {
+         "name": "Debug libFileArbTests",
          "type": "cppdbg",
-         "preLaunchTask": "Build Debug",
+         "request": "launch",
+         //"program": "${workspaceRoot}/Debug/FileArb/FileArb",
          "program": "${workspaceRoot}/Debug/libFileArbTests/libFileArbTests",
-         //"args": [ ""],
+         "args": [],
          "stopAtEntry": false,
-         "cwd": "${fileDirname}",
+         "cwd": "${workspaceFolder}",
          "environment": [],
          "externalConsole": false,
-         "linux": { "MIMode": "gdb" }
+         "MIMode": "gdb",
+         "miDebuggerPath": "/usr/bin/gdb",
+         "preLaunchTask": "Build Debug"
       }
    ]
 }

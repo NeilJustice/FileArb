@@ -1,20 +1,28 @@
 {
-    "configurations": [
-        {
-            "name": "Linux",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "/usr/local/include/CppUtils",
-                "/usr/local/include/ZenUnit",
-                "/usr/local/include/MetalMock"
-            ],
-            "defines": [],
-            "compilerPath": "/bin/clang",
-            "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x64",
-            "configurationProvider": "vector-of-bool.cmake-tools"
-        }
-    ],
-    "version": 4
+   "configurations": [
+       {
+           "name": "Linux",
+           "includePath": [
+               "/usr/include",
+               "/usr/local/include/ZenUnit",
+               "${workspaceFolder}",
+               "${workspaceFolder}/libFileArb",
+               "${workspaceFolder}/libFileArbTests"
+           ],
+           "browse": {
+               "limitSymbolsToIncludedHeaders": true,
+               "databaseFilename": "",
+               "path": [
+                   "/usr/include",
+                   "/usr/local/include/ZenUnit",
+                   "${workspaceRoot}"
+               ]
+           },
+           "intelliSenseMode": "clang-x64",
+           "compilerPath": "/usr/bin/clang",
+           "cStandard": "c11",
+           "cppStandard": "c++17"
+       }
+   ],
+   "version": 4
 }

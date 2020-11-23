@@ -1,66 +1,99 @@
 {
-   "version": "0.1.0",
-   "command": "bash",
-   "args": [ "-c" ],
-   "options":
+   "version": "2.0.0",
+   "tasks": [
    {
-      "cwd": "${fileDirname}"
+      "type": "shell",
+      "label": "Build Debug",
+      "command": "ninja",
+      "args": [ "-v" ],
+      "options": { "cwd": "${workspaceRoot}/Debug" },
+      "problemMatcher": [ "$gcc" ],
+      "group": { "kind": "build", "isDefault": true }
    },
-   "echoCommand": true,
-   "suppressTaskName": true,
-   "tasks":
-   [
-      {
-         "taskName": "Build Debug",
-         "args": [ "cd ${workspaceRoot}/Debug && time ninja -v" ],
-         "isBuildCommand": true,
-         "problemMatcher":
-         {
-            "owner": "cpp",
-            "fileLocation": [ "relative", "${workspaceRoot}/DebugOrRelease" ],
-            "pattern": {
-               // ../main.cpp:31:4: error: ‘abc’ was not declared in this scope
-               // ../main.cpp:99:48: fatal error: boost/date_time/posix_time/ptime.hpp: No such file or directory
-               "regexp": "^(.*):(\\d+):(\\d+):\\s+(error|fatal error|warning):\\s+(.*)$",
-               "file": 1, "line": 2, "column": 3, "severity": 4, "message": 5
-            }
-         }
-      },
-      {
-         "taskName": "Build Release",
-         "args": [ "cd ${workspaceRoot}/Release && time ninja -v" ],
-         //"isBuildCommand": true,
-         "problemMatcher":
-         {
-            "owner": "cpp",
-            "fileLocation": [ "relative", "${workspaceRoot}/DebugOrRelease" ],
-            "pattern": {
-               "regexp": "^(.*):(\\d+):(\\d+):\\s+(error|fatal error|warning):\\s+(.*)$",
-               "file": 1, "line": 2, "column": 3, "severity": 4, "message": 5
-            }
-         }
-      },
-      {
-         "taskName": "Run Debug",
-         "isTestCommand": true,
-         "args": [ "${workspaceRoot}/Debug/libFileArbTests/libFileArbTests" ]
-      },
-      {
-         "taskName": "Run Release",
-         //"isTestCommand": true,
-         "args": [ "${workspaceRoot}/Release/libFileArbTests/libFileArbTests" ]
-      },
-      {
-         "taskName": "Clean Debug",
-         "args": [ "cd ${workspaceRoot}/Debug && ninja clean" ]
-      },
-      {
-         "taskName": "Clean Release",
-         "args": [ "cd ${workspaceRoot}/Release && ninja clean" ]
-      },
-      {
-         "taskName": "clang-format",
-         "args": [ "clang-format -i --fallback-style=none ${file}" ]
-      }
+   {
+      "type": "shell",
+      "label": "Build Release",
+      "command": "ninja",
+      "args": [ "-v" ],
+      "options": { "cwd": "${workspaceRoot}/Release" },
+      "problemMatcher": [ "$gcc" ]
+   },
+   {
+      "type": "shell",
+      "label": "Run Debug FileArb",
+      "command": "${workspaceRoot}/Debug/FileArb/FileArb",
+      "args": [ "" ],
+      "problemMatcher": [ "$gcc" ]
+   },
+   {
+      "type": "shell",
+      "label": "Run Debug libFileArbTests",
+      "command": "${workspaceRoot}/Debug/libFileArbTests/libFileArbTests",
+      "args": [ "" ],
+      "problemMatcher": [ "$gcc" ],
+      "group": { "kind": "test", "isDefault": true }
+   },
+   {
+      "type": "shell",
+      "label": "Run Release FileArb",
+      "command": "${workspaceRoot}/Release/FileArb/FileArb",
+      "args": [ "" ],
+      "problemMatcher": [ "$gcc" ]
+   },
+   {
+      "type": "shell",
+      "label": "Run Release libFileArbTests",
+      "command": "${workspaceRoot}/Release/libFileArbTests/libFileArbTests",
+      "args": [ "" ],
+      "problemMatcher": [ "$gcc" ]
+   },
+   {
+      "type": "shell",
+      "label": "Clean Debug",
+      "command": "ninja",
+      "args": [ "clean" ],
+      "options": { "cwd": "${workspaceRoot}/Debug" },
+      "problemMatcher": [ "$gcc" ]
+   },
+   {
+      "type": "shell",
+      "label": "Clean Release",
+      "command": "ninja",
+      "args": [ "clean" ],
+      "options": { "cwd": "${workspaceRoot}/Release" },
+      "problemMatcher": [ "$gcc" ]
+   },
+   {
+      "type": "shell",
+      "label": "Compile Active File",
+      "command": "/usr/bin/clang++",
+      "args": [
+         "-c",
+         "-std=c++1z",
+         "-Wall",
+         "-Werror",
+         "-I/code/FileArb",
+         "-I/code/FileArb/libFileArb",
+         "-I/code/FileArb/libFileArbTests",
+         "${file}"
+       ],
+       "options": { "cwd": "${workspaceFolder}" },
+       "problemMatcher": [ "$gcc" ]
+     },
+     {
+      "type": "shell",
+      "label": "Check Syntax Of Active File",
+      "command": "/usr/bin/clang++",
+      "args": [
+        "-fsyntax-only",
+        "-std=c++1z",
+        "-I/code/FileArb",
+        "-I/code/FileArb/libFileArb",
+        "-I/code/FileArb/libFileArbTests",
+        "${file}"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [ "$gcc" ]
+   }
    ]
 }

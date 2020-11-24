@@ -14,12 +14,13 @@ int* GetErrno()
 
 FileSystem::FileSystem()
    // Function Callers
-   : _call_fopen_s(::fopen_s)
-   , _call_fclose(::fclose)
+   : _call_fclose(::fclose)
 #ifdef __linux__
    , _call_errno(GetErrno)
+   , _call_fopen(::fopen)
 #elif _WIN32
    , _call_errno(::_errno)
+   , _call_fopen_s(::fopen_s)
    , _call_fs_create_directories(static_cast<create_directories_FunctionOverloadType>(fs::create_directories))
 #endif
    // Constant Components
@@ -44,6 +45,20 @@ void FileSystem::CreateBinaryFile(const fs::path& filePath, const char* bytes, s
 
 FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
 {
+#ifdef __linux__
+   FILE* openedFile = _call_fopen(filePath.string().c_str(), fileOpenMode);
+   if (openedFile == nullptr)
+   {
+      const int errnoValue = *_call_errno();
+      const string errnoDescription = _errorCodeTranslator->GetErrnoDescription(errnoValue);
+      const string exceptionMessage = String::Concat(
+         "fopen(filePath.string().c_str(), fileOpenMode) returned nullptr. ",
+         "filePath=\"", filePath.string(), "\". fileOpenMode=\"", fileOpenMode,
+         "\". errno=", errnoValue, " (", errnoDescription, ").");
+      throw runtime_error(exceptionMessage);
+   }
+   return openedFile;
+#elif _WIN32
    FILE* openedFile = nullptr;
    const errno_t fopensReturnValue = _call_fopen_s(&openedFile, filePath.string().c_str(), fileOpenMode);
    if (fopensReturnValue != 0)
@@ -57,6 +72,7 @@ FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) c
       throw runtime_error(exceptionMessage);
    }
    return openedFile;
+#endif
 }
 
 void FileSystem::CloseFile(const fs::path& filePath, FILE* filePointer) const

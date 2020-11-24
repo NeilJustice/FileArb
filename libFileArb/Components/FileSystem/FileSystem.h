@@ -12,9 +12,10 @@ class FileSystem
    friend class ::FileSystemTests;
 private:
    // Function Callers
-   std::function<errno_t(FILE**, const char*, const char*)> _call_fopen_s;
    std::function<int(FILE*)> _call_fclose;
    std::function<int* ()> _call_errno;
+   std::function<FILE* (const char*, const char*)> _call_fopen;
+   std::function<errno_t(FILE**, const char*, const char*)> _call_fopen_s;
    using create_directories_FunctionOverloadType = bool(*)(const fs::path&, error_code&);
    std::function<bool(const fs::path&, error_code&)> _call_fs_create_directories;
    // Constant Callers

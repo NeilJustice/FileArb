@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "libFileArb/Components/FileSystem/ErrorCodeTranslator.h"
+#include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
-#include "libFileArbTests/Components/FileSystem/MetalMock/ErrorCodeTranslatorMock.h"
+#include "libFileArbTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libFileArbTests/Components/Misc/MetalMock/AsserterMock.h"
 
 TESTS(FileSystemTests)

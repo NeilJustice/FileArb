@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/FileSystem/ErrorCodeTranslator.h"
+#include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
 #include "libFileArb/Components/Misc/Asserter.h"

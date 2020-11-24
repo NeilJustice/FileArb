@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/FileSystem/ErrorCodeTranslator.h"
+#include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
 
 string MakeFileSystemExceptionMessage(const fs::path& filePath, int errnoValue)

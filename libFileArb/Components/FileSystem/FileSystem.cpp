@@ -45,14 +45,15 @@ void FileSystem::CreateBinaryFile(const fs::path& filePath, const char* bytes, s
 FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
 {
    FILE* openedFile = nullptr;
-   const errno_t fopenReturnValue = _call_fopen_s(&openedFile, filePath.string().c_str(), fileOpenMode);
-   if (fopenReturnValue != 0)
+   const errno_t fopensReturnValue = _call_fopen_s(&openedFile, filePath.string().c_str(), fileOpenMode);
+   if (fopensReturnValue != 0)
    {
       const int errnoValue = *_call_errno();
       const string errnoDescription = _errorCodeTranslator->GetErrnoDescription(errnoValue);
       const string exceptionMessage = String::Concat(
-         "fopen() returned nullptr. filePath=\"", filePath.string(),
-         "\". fileOpenMode=\"", fileOpenMode, "\". errno=", errnoValue, " (", errnoDescription, ").");
+         "fopen_s(&openedFile, filePath.string().c_str(), fileOpenMode) returned non-0: ", fopensReturnValue,
+         ". filePath=\"", filePath.string(), "\". fileOpenMode=\"", fileOpenMode,
+         "\". errno=", errnoValue, " (", errnoDescription, ").");
       throw runtime_error(exceptionMessage);
    }
    return openedFile;

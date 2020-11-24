@@ -116,8 +116,9 @@ TEST(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValu
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
    //
    const string expectedExceptionMessage = String::Concat(
-      "fopen() returned nullptr. filePath=\"", filePath.string(),
-      "\". fileOpenMode=\"", fileOpenMode, "\". errno=", errnoValue, " (", errnoDescription, ").");
+      "fopen_s(&openedFile, filePath.string().c_str(), fileOpenMode) returned non-0: ", _fopen_s_CallHistory.returnValue,
+      ". filePath=\"", filePath.string(), "\". fileOpenMode=\"", fileOpenMode,
+      "\". errno=", errnoValue, " (", errnoDescription, ").");
    THROWS_EXCEPTION(_fileSystem.OpenFile(filePath, fileOpenMode),
       runtime_error, expectedExceptionMessage);
    //

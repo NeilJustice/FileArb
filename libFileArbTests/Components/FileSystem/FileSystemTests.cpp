@@ -2,7 +2,7 @@
 #include "libFileArb/Components/FileSystem/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
-#include "libFileArbTests/Components/FileSystem/MetalMock/ErrnoTranslatorMock.h"
+#include "libFileArbTests/Components/FileSystem/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libFileArbTests/Components/Misc/MetalMock/AsserterMock.h"
 
 TESTS(FileSystemTests)
@@ -27,7 +27,7 @@ METALMOCK_NONVOID0_FREE(int*, _errno)
 METALMOCK_NONVOID2_NAMESPACED_FREE(bool, fs, create_directories, const fs::path&, error_code&)
 // Constant Components
 AsserterMock* _asserterMock = nullptr;
-ErrnoTranslatorMock* _errnoTranslatorMock = nullptr;
+ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 
 STARTUP
 {
@@ -39,7 +39,7 @@ STARTUP
    _fileSystem._call_fs_create_directories = BIND_2ARG_METALMOCK_OBJECT(create_directoriesMock);
    // Constant Components
    _fileSystem._asserter.reset(_asserterMock = new AsserterMock);
-   _fileSystem._errorCodeTranslator.reset(_errnoTranslatorMock = new ErrnoTranslatorMock);
+   _fileSystem._errorCodeTranslator.reset(_errorCodeTranslatorMock = new ErrorCodeTranslatorMock);
 }
 
 TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
@@ -148,7 +148,7 @@ TEST(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoV
    int errnoValue = ZenUnit::Random<int>();
    _errnoMock.Return(&errnoValue);
 
-   const string errnoDescription = _errnoTranslatorMock->GetErrnoDescriptionMock.ReturnRandom();
+   const string errnoDescription = _errorCodeTranslatorMock->GetErrnoDescriptionMock.ReturnRandom();
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
@@ -162,7 +162,7 @@ TEST(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoV
    //
    _fopen_CallHistory.AssertCalledOnceWith(filePath.string().c_str(), fileOpenMode);
    METALMOCK(_errnoMock.CalledOnce());
-   METALMOCK(_errnoTranslatorMock->GetErrnoDescriptionMock.CalledOnceWith(errnoValue));
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoDescriptionMock.CalledOnceWith(errnoValue));
 }
 
 #elif _WIN32
@@ -189,7 +189,7 @@ TEST(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValu
    int errnoValue = ZenUnit::Random<int>();
    _errnoMock.Return(&errnoValue);
 
-   const string errnoDescription = _errnoTranslatorMock->GetErrnoDescriptionMock.ReturnRandom();
+   const string errnoDescription = _errorCodeTranslatorMock->GetErrnoDescriptionMock.ReturnRandom();
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
@@ -203,7 +203,7 @@ TEST(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValu
    //
    _fopen_s_CallHistory.AssertCalledOnceWith(filePath.string().c_str(), fileOpenMode);
    METALMOCK(_errnoMock.CalledOnce());
-   METALMOCK(_errnoTranslatorMock->GetErrnoDescriptionMock.CalledOnceWith(errnoValue));
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoDescriptionMock.CalledOnceWith(errnoValue));
 }
 
 #endif

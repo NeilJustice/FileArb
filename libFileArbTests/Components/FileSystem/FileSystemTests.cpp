@@ -32,8 +32,11 @@ ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 STARTUP
 {
    // Function Callers
+#ifdef __linux__
    _fileSystem._call_fopen = BIND_2ARG_METALMOCK_OBJECT(fopenMock);
+#elif _WIN32
    _fileSystem._call_fopen_s = BIND_3ARG_METALMOCK_OBJECT(fopen_sMock);
+#endif
    _fileSystem._call_fclose = BIND_1ARG_METALMOCK_OBJECT(fcloseMock);
    _fileSystem._call_errno = BIND_0ARG_METALMOCK_OBJECT(_errnoMock);
    _fileSystem._call_fs_create_directories = BIND_2ARG_METALMOCK_OBJECT(create_directoriesMock);

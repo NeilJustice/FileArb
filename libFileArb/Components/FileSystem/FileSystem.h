@@ -14,8 +14,11 @@ private:
    // Function Callers
    std::function<int(FILE*)> _call_fclose;
    std::function<int* ()> _call_errno;
+#ifdef __linux__
    std::function<FILE* (const char*, const char*)> _call_fopen;
+#elif _WIN32
    std::function<errno_t(FILE**, const char*, const char*)> _call_fopen_s;
+#endif
    using create_directories_FunctionOverloadType = bool(*)(const fs::path&, error_code&);
    std::function<bool(const fs::path&, error_code&)> _call_fs_create_directories;
    // Constant Callers

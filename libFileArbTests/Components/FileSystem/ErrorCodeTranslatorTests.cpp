@@ -57,7 +57,8 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 #elif _WIN32
    STD_FUNCTION_TARGETS(::_errno, errorCodeTranslator._call_errno);
    STD_FUNCTION_TARGETS_OVERLOAD(
-      ErrorCodeTranslator::strerror_s_function_type, strerror_s, errorCodeTranslator._call_strerror_s);
+      ErrorCodeTranslator::strerror_s_function_type,
+      strerror_s, errorCodeTranslator._call_strerror_s);
    STD_FUNCTION_TARGETS(GetLastError, errorCodeTranslator._call_GetLastError);
 #endif
 }
@@ -187,16 +188,16 @@ char* strerror_r_CallInstead(int errnoValue, char* outErrnoDescriptionChars, siz
 TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 {
    const string errnoDescriptionChars = ZenUnit::Random<string>();
-   _strerror_r_FunctionCall.returnValue = const_cast<char*>(errnoDescriptionChars.c_str());
-   _strerror_r_FunctionCall.returnValue_outErrnoDescriptionChars = ZenUnit::Random<string>();
+   _strerror_r_CallHistory.returnValue = const_cast<char*>(errnoDescriptionChars.c_str());
+   _strerror_r_CallHistory.returnValue_outErrnoDescriptionChars = ZenUnit::Random<string>();
    strerror_rMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::strerror_r_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
    const int errnoValue = ZenUnit::Random<int>();
    //
    const string errnoDescription = _errorCodeTranslator.GetErrnoDescription(errnoValue);
    //
-   _strerror_s_CallHistory.AssertCalledOnceWith(errnoValue, 64ull);
-   ARE_EQUAL(_strerror_s_CallHistory.outErrnoDescriptionCharsReturnValue, errnoDescription);
+   _strerror_r_CallHistory.AssertCalledOnceWith(errnoValue, 64ull);
+   ARE_EQUAL(_strerror_r_CallHistory.outErrnoDescriptionCharsReturnValue, errnoDescription);
 }
 
 #elif _WIN32

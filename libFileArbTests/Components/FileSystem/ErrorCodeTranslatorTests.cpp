@@ -5,18 +5,23 @@ TESTS(ErrorCodeTranslatorTests)
 #ifdef __linux__
 AFACT(GetLinuxErrno_ReturnsAddressOfErrno)
 #endif
+
 AFACT(DefaultConstructor_SetsFunctionPointers)
 AFACT(GetErrnoValue_ReturnsResultOfCallingErrnoFunction)
 AFACT(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
+
 #ifdef __linux__
 AFACT(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 #elif _WIN32
 AFACT(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 #endif
-#if _WIN32
-AFACT(GetWindowsLastErrorWithDescription_GetLastErrorReturns0_Returns0AndEmptyString)
-AFACT(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastErrorAndErrorDescription)
+
+#ifdef __linux__
+AFACT(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
+#elif _WIN32
+AFACT(GetSystemErrorDescriptionOnWindows_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
 #endif
+AFACT(GetSystemErrorDescription_SystemErrorIsNot32_ReturnsIntAsString)
 EVIDENCE
 
 ErrorCodeTranslator _errorCodeTranslator;
@@ -256,5 +261,35 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 }
 
 #endif
+
+#ifdef __linux__
+
+TEST(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
+{
+   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(32);
+   //
+   const string expectedSystemErrorDescription = to_string(systemErrorValue);
+   ARE_EQUAL(expectedSystemErrorDescription, systemErrorDescription);
+}
+
+#elif _WIN32
+
+TEST(GetSystemErrorDescriptionOnWindows_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
+{
+   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(ERROR_SHARING_VIOLATION);
+   ARE_EQUAL("The process cannot access the file because it is being used by another process.", systemErrorDescription);
+}
+
+#endif
+
+TEST(GetSystemErrorDescription_SystemErrorIsNot32_ReturnsIntAsString)
+{
+   const int systemErrorValue = ZenUnit::RandomBetween<int>(0, 31);
+   //
+   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(systemErrorValue);
+   //
+   const string expectedSystemErrorDescription = to_string(systemErrorValue);
+   ARE_EQUAL(expectedSystemErrorDescription, systemErrorDescription);
+}
 
 RUN_TESTS(ErrorCodeTranslatorTests)

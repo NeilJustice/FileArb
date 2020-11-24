@@ -6,18 +6,18 @@ class TryCatchCaller
 public:
    virtual int TryCatchCall(
       ClassType* classPointer,
-      int (ClassType::* memberFunction)(ArgumentType),
+      int (ClassType::* nonConstMemberFunction)(ArgumentType),
       ArgumentType argument,
-      int (ClassType::* memberExceptionHandlerFunction)(const exception&, ArgumentType)) const
+      int (ClassType::* exceptionHandlerMemberFunction)(const exception&, ArgumentType)) const
    {
       try
       {
-         const int exitCode = (classPointer->*memberFunction)(argument);
+         const int exitCode = (classPointer->*nonConstMemberFunction)(argument);
          return exitCode;
       }
       catch (const exception& ex)
       {
-         const int exceptionHandlerExitCode = (classPointer->*memberExceptionHandlerFunction)(ex, argument);
+         const int exceptionHandlerExitCode = (classPointer->*exceptionHandlerMemberFunction)(ex, argument);
          return exceptionHandlerExitCode;
       }
    }

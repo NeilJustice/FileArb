@@ -10,7 +10,7 @@ EVIDENCE
 class Class
 {
 public:
-   bool doThrow = false;
+   bool doThrowException = false;
    vector<ArgumentType> calls;
    int exitCode = 0;
 
@@ -19,24 +19,24 @@ public:
    int exceptionHandlerExitCode = 0;
 
    Class()
-      : doThrow(false)
+      : doThrowException(false)
    {
       exitCode = ZenUnit::Random<int>();
       exceptionWhat = ZenUnit::Random<string>();
       exceptionHandlerExitCode = ZenUnit::Random<int>();
    }
 
-   int MemberFunction(ArgumentType argument)
+   int NonConstMemberFunction(ArgumentType argument)
    {
       calls.push_back(argument);
-      if (doThrow)
+      if (doThrowException)
       {
          throw ExceptionType(exceptionWhat.c_str());
       }
       return exitCode;
    }
 
-   int ExceptionHandler(const exception& ex, ArgumentType argument)
+   int ExceptionHandlerMemberFunction(const exception& ex, ArgumentType argument)
    {
       const string exceptionClassNameAndMessage = Exception::GetClassNameAndMessage(&ex);
       exceptionHandlerCalls.emplace_back(exceptionClassNameAndMessage, argument);
@@ -50,10 +50,10 @@ TryCatchCaller<Class, ArgumentType> _tryCatchCaller;
 TEST(TryCatchCall_CallsFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
 {
    const ArgumentType argument = ZenUnit::Random<ArgumentType>();
-   classInstance.doThrow = false;
+   classInstance.doThrowException = false;
    //
    const int exitCode = _tryCatchCaller.TryCatchCall(
-      &classInstance, &Class::MemberFunction, argument, &Class::ExceptionHandler);
+      &classInstance, &Class::NonConstMemberFunction, argument, &Class::ExceptionHandlerMemberFunction);
    //
    VECTORS_ARE_EQUAL({ argument }, classInstance.calls);
    ARE_EQUAL(classInstance.exitCode, exitCode);
@@ -62,10 +62,10 @@ TEST(TryCatchCall_CallsFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
 TEST(TryCatchCall_CallsFunctionWhichThrowsException_CallsExceptionHandler_ReturnsExceptionHandlerReturnValue)
 {
    const ArgumentType argument = ZenUnit::Random<ArgumentType>();
-   classInstance.doThrow = true;
+   classInstance.doThrowException = true;
    //
    const int exitCode = _tryCatchCaller.TryCatchCall(
-      &classInstance, &Class::MemberFunction, argument, &Class::ExceptionHandler);
+      &classInstance, &Class::NonConstMemberFunction, argument, &Class::ExceptionHandlerMemberFunction);
    //
    VECTORS_ARE_EQUAL({ argument }, classInstance.calls);
    const ExceptionType ex(classInstance.exceptionWhat.c_str());

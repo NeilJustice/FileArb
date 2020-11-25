@@ -72,7 +72,7 @@ constexpr size_t maximumErrnoDescriptionLength = 64ull;
 
 string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {
-   char* const errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
+   char* errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
    errnoDescriptionChars = _call_strerror_r(errnoValue, errnoDescriptionChars, maximumErrnoDescriptionLength);
    const string errnoDescription(errnoDescriptionChars);
    return errnoDescription;

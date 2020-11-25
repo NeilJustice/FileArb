@@ -20,8 +20,11 @@ EVIDENCE
 
 FileSystem _fileSystem;
 // Function Callers
+#ifdef __linux__
 METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
+#elif _WIN32
 METALMOCK_NONVOID3_FREE(errno_t, fopen_s, FILE**, const char*, const char*)
+#endif
 METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
 METALMOCK_NONVOID0_FREE(int*, _errno)
 METALMOCK_NONVOID2_NAMESPACED_FREE(bool, fs, create_directories, const fs::path&, error_code&)
@@ -94,39 +97,6 @@ FILE* fopen_CallInsteadFunction(const char* filePath, const char* fileOpenMode)
    return _fopen_CallHistory.returnValue;
 }
 
-struct fopen_s_CallHistory
-{
-   size_t numberOfCalls = 0;
-   errno_t returnValue = 0;
-   FILE** outFileArgument = nullptr;
-   FILE* outFileReturnValue = nullptr;
-   fs::path filePathArgument;
-   const char* fileOpenModeArgument = nullptr;
-
-   void RecordFunctionCall(FILE** outFile, const fs::path& filePath, const char* fileOpenMode)
-   {
-      ++numberOfCalls;
-      outFileArgument = outFile;
-      *outFile = outFileReturnValue;
-      filePathArgument = filePath;
-      fileOpenModeArgument = fileOpenMode;
-   }
-
-   void AssertCalledOnceWith(const char* expectedFilePath, const char* expectedFileOpenMode)
-   {
-      ARE_EQUAL(1, numberOfCalls);
-      IS_NOT_NULLPTR(outFileArgument);
-      ARE_EQUAL(expectedFilePath, filePathArgument);
-      ARE_EQUAL(expectedFileOpenMode, fileOpenModeArgument);
-   }
-} _fopen_s_CallHistory;
-
-errno_t fopen_s_CallInsteadFunction(FILE** outFile, const char* filePath, const char* fileOpenMode)
-{
-   _fopen_s_CallHistory.RecordFunctionCall(outFile, filePath, fileOpenMode);
-   return _fopen_s_CallHistory.returnValue;
-}
-
 #ifdef __linux__
 
 TEST(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
@@ -169,6 +139,39 @@ TEST(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoV
 }
 
 #elif _WIN32
+
+struct fopen_s_CallHistory
+{
+   size_t numberOfCalls = 0;
+   errno_t returnValue = 0;
+   FILE** outFileArgument = nullptr;
+   FILE* outFileReturnValue = nullptr;
+   fs::path filePathArgument;
+   const char* fileOpenModeArgument = nullptr;
+
+   void RecordFunctionCall(FILE** outFile, const fs::path& filePath, const char* fileOpenMode)
+   {
+      ++numberOfCalls;
+      outFileArgument = outFile;
+      *outFile = outFileReturnValue;
+      filePathArgument = filePath;
+      fileOpenModeArgument = fileOpenMode;
+   }
+
+   void AssertCalledOnceWith(const char* expectedFilePath, const char* expectedFileOpenMode)
+   {
+      ARE_EQUAL(1, numberOfCalls);
+      IS_NOT_NULLPTR(outFileArgument);
+      ARE_EQUAL(expectedFilePath, filePathArgument);
+      ARE_EQUAL(expectedFileOpenMode, fileOpenModeArgument);
+   }
+} _fopen_s_CallHistory;
+
+errno_t fopen_s_CallInsteadFunction(FILE** outFile, const char* filePath, const char* fileOpenMode)
+{
+   _fopen_s_CallHistory.RecordFunctionCall(outFile, filePath, fileOpenMode);
+   return _fopen_s_CallHistory.returnValue;
+}
 
 TEST(OpenFile_FOpenSReturns0_ReturnsOpenedFile)
 {

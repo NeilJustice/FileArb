@@ -150,23 +150,20 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
 
 #ifdef __linux__
 
-struct strerror_r_FunctionCall
+struct strerror_r_CallHistory
 {
    size_t numberOfCalls = 0ull;
    char* returnValue = nullptr;
    int errnoValueArgument = 0;
    char* outErrnoDescriptionCharsArgument = nullptr;
-   string returnValue_outErrnoDescriptionChars;
-   size_t errnoDescriptionCharsSizeArgument = 0ull;
+   size_t outErrnoDescriptionCharsSizeArgument = 0ull;
 
-   char* RecordFunctionCall(int errnoValue, char* outErrnoDescriptionChars, errnoDescriptionCharsSize)
+   char* RecordFunctionCall(int errnoValue, char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize)
    {
       ++numberOfCalls;
       errnoValueArgument = errnoValue;
       outErrnoDescriptionCharsArgument = outErrnoDescriptionChars;
-      constexpr size_t maximumErrnoDescriptionLength = 64;
-      strcpy(outErrnoDescriptionChars, outErrnoDescriptionCharsReturnValue.c_str());
-      errnoDescriptionCharsSizeArgument = errnoDescriptionCharsSize;
+      outErrnoDescriptionCharsSizeArgument = outErrnoDescriptionCharsSize;
       return returnValue;
    }
 
@@ -177,32 +174,26 @@ struct strerror_r_FunctionCall
       IS_NOT_NULLPTR(outErrnoDescriptionCharsArgument);
       ARE_EQUAL(expectedOutErrnoDescriptionCharsSize, outErrnoDescriptionCharsSizeArgument);
    }
-};
-strerror_r_CallHistory _strerror_r_CallHistory;
+} _strerror_r_CallHistory;
 
 char* strerror_r_CallInstead(int errnoValue, char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize)
 {
-   ++_strerror_r_CallHistory.numberOfCalls;
-   _strerror_r_CallHistory.errnoValueArgument = errnoValue;
-   _strerror_r_CallHistory.outErrnoDescriptionCharsArgument = outErrnoDescriptionChars;
-   strcpy(outErrnoDescriptionChars, _strerror_r_CallHistory.returnValue_outErrnoDescriptionChars.c_str());
-   _strerror_r_CallHistory.outErrnoDescriptionCharsSizeArgument = outErrnoDescriptionCharsSize;
-   return _strerror_r_CallHistory.returnValue;
+   char* const returnValue = _strerror_r_CallHistory.RecordFunctionCall(errnoValue, outErrnoDescriptionChars, outErrnoDescriptionCharsSize);
+   return returnValue;
 }
 
 TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 {
-   const string errnoDescriptionChars = ZenUnit::Random<string>();
-   _strerror_r_CallHistory.returnValue = const_cast<char*>(errnoDescriptionChars.c_str());
-   _strerror_r_CallHistory.returnValue_outErrnoDescriptionChars = ZenUnit::Random<string>();
+   const string errnoDescription = ZenUnit::Random<string>();
+   _strerror_r_CallHistory.returnValue = const_cast<char*>(errnoDescription.c_str());
    strerror_rMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::strerror_r_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
    const int errnoValue = ZenUnit::Random<int>();
    //
-   const string errnoDescription = _errorCodeTranslator.GetErrnoDescription(errnoValue);
+   const string returnedErrnoDescription = _errorCodeTranslator.GetErrnoDescription(errnoValue);
    //
    _strerror_r_CallHistory.AssertCalledOnceWith(errnoValue, 64ull);
-   ARE_EQUAL(_strerror_r_CallHistory.outErrnoDescriptionCharsReturnValue, errnoDescription);
+   ARE_EQUAL(errnoDescription, returnedErrnoDescription);
 }
 
 #elif _WIN32
@@ -268,7 +259,7 @@ TEST(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
 {
    const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(32);
    //
-   const string expectedSystemErrorDescription = to_string(systemErrorValue);
+   const string expectedSystemErrorDescription = to_string(32);
    ARE_EQUAL(expectedSystemErrorDescription, systemErrorDescription);
 }
 

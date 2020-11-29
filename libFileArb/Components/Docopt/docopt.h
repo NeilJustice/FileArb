@@ -18,6 +18,7 @@ namespace docopt
 			Empty,
 			Bool,
 			Long,
+			SizeT,
 			String,
 			StringList
 		};
@@ -25,7 +26,8 @@ namespace docopt
 		struct Variant
 		{
 			bool boolValue = false;
-			long longValue = 0;
+			long longValue = 0l;
+			size_t sizeTValue = 0ull;
 			std::string strValue;
 			std::vector<std::string> strList;
 		};
@@ -39,6 +41,7 @@ namespace docopt
 
 		explicit Value(bool);
 		explicit Value(long);
+		explicit Value(size_t);
 		explicit Value(int value)
 			: Value(static_cast<long>(value))
 		{
@@ -69,6 +72,11 @@ namespace docopt
 			return kind == Kind::Long;
 		}
 
+		bool IsSizeT() const
+		{
+			return kind == Kind::SizeT;
+		}
+
 		bool IsStringList() const
 		{
 			return kind == Kind::StringList;
@@ -85,15 +93,30 @@ namespace docopt
 			{
 				const std::string& str = variant.strValue;
 				std::size_t pos;
-				const long ret = stol(str, &pos); // Throws if it can't convert
+				const long ret = stol(str, &pos);
 				if (pos != str.length())
 				{
-					// The string ended in non-digits
 					throw std::runtime_error(str + " contains non-numeric characters");
 				}
 				return ret;
 			}
 			return variant.longValue;
+		}
+
+		size_t AsSizeT() const
+		{
+			if (kind == Kind::String)
+			{
+				const std::string& str = variant.strValue;
+				std::size_t pos;
+				const size_t ret = stoull(str, &pos);
+				if (pos != str.length())
+				{
+					throw std::runtime_error(str + " contains non-numeric characters");
+				}
+				return ret;
+			}
+			return variant.sizeTValue;
 		}
 
 		const std::string& AsString() const
@@ -131,6 +154,10 @@ namespace docopt
 			{
 				return std::hash<long>()(variant.longValue);
 			}
+			case Kind::SizeT:
+			{
+				return std::hash<size_t>()(variant.sizeTValue);
+			}
 			case Kind::Empty:
 			default:
 			{
@@ -149,6 +176,7 @@ namespace docopt
 			case Kind::Empty: return "empty";
 			case Kind::Bool: return "bool";
 			case Kind::Long: return "long";
+			case Kind::SizeT: return "size_t";
 			case Kind::String: return "string";
 			case Kind::StringList: return "string-list";
          default: return "unknown";
@@ -181,6 +209,11 @@ inline std::ostream& operator<<(std::ostream& os, const docopt::Value& docoptVal
 	{
 		const long docoptValueAsLong = docoptValue.AsLong();
 		os << docoptValueAsLong;
+	}
+	else if (docoptValue.IsSizeT())
+	{
+		const size_t docoptValueAsSizeT = docoptValue.AsSizeT();
+		os << docoptValueAsSizeT;
 	}
 	else if (docoptValue.IsString())
 	{
@@ -215,16 +248,22 @@ inline std::ostream& operator<<(std::ostream& os, const docopt::Value& docoptVal
 
 namespace docopt
 {
-	inline Value::Value(bool v)
+	inline Value::Value(bool boolValue)
 		: kind(Kind::Bool)
 	{
-		variant.boolValue = v;
+		variant.boolValue = boolValue;
 	}
 
-	inline Value::Value(long v)
+	inline Value::Value(long longValue)
 		: kind(Kind::Long)
 	{
-		variant.longValue = v;
+		variant.longValue = longValue;
+	}
+
+	inline Value::Value(size_t sizeTValue)
+		: kind(Kind::SizeT)
+	{
+		variant.sizeTValue = sizeTValue;
 	}
 
 	inline Value::Value(std::string v)
@@ -256,6 +295,9 @@ namespace docopt
 		case Kind::Long:
 			variant.longValue = other.variant.longValue;
 			break;
+		case Kind::SizeT:
+			variant.sizeTValue = other.variant.sizeTValue;
+			break;
 		case Kind::Empty:
 		default:
 			break;
@@ -278,6 +320,9 @@ namespace docopt
 			break;
 		case Kind::Long:
 			variant.longValue = other.variant.longValue;
+			break;
+		case Kind::SizeT:
+			variant.sizeTValue = other.variant.sizeTValue;
 			break;
 		case Kind::Empty:
 		default:
@@ -320,6 +365,10 @@ namespace docopt
 		case Value::Kind::Long:
 		{
 			return v1.variant.longValue == v2.variant.longValue;
+		}
+		case Value::Kind::SizeT:
+		{
+			return v1.variant.sizeTValue == v2.variant.sizeTValue;
 		}
 		case Value::Kind::Empty:
 		default:
@@ -961,6 +1010,24 @@ namespace docopt
 			else if ((**same_name).getValue().IsLong())
 			{
 				val += (**same_name).getValue().AsLong();
+				(**same_name).setValue(Value{ val });
+			}
+			else
+			{
+				(**same_name).setValue(Value{ val });
+			}
+		}
+		else if (getValue().IsSizeT())
+		{
+			size_t val = 1;
+			if (same_name == collected.end())
+			{
+				collected.push_back(match.second);
+				match.second->setValue(Value{ val });
+			}
+			else if ((**same_name).getValue().IsSizeT())
+			{
+				val += (**same_name).getValue().AsSizeT();
 				(**same_name).setValue(Value{ val });
 			}
 			else

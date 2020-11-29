@@ -3,62 +3,19 @@
 
 DocoptParser::DocoptParser()
    : _call_docopt_docopt(docopt::docopt)
-   , _call_StaticGetRequiredUnsigned(StaticGetRequiredUnsigned)
+   , _call_StaticGetRequiredSizeT(StaticGetRequiredSizeT)
 {
 }
 
-DocoptParser::~DocoptParser()
-{
-}
-
-map<string, docopt::Value> DocoptParser::ParseArgs(const string& usage, const vector<string>& argv) const
+map<string, docopt::Value> DocoptParser::ParseArgs(const string& commandLineUsage, const vector<string>& argv) const
 {
    if (argv.empty())
    {
       throw invalid_argument("argv cannot be empty");
    }
    const vector<string> argvWithoutFirstArgument(argv.data() + 1, argv.data() + argv.size());
-   const map<string, docopt::Value> argPairs = _call_docopt_docopt(usage, argvWithoutFirstArgument, true, "", false);
+   const map<string, docopt::Value> argPairs = _call_docopt_docopt(commandLineUsage, argvWithoutFirstArgument, true, "", false);
    return argPairs;
-}
-
-string DocoptParser::GetRequiredString(const map<string, docopt::Value>& docoptArgs, const string& argName) const
-{
-   const docopt::Value docoptValue = Map::At(docoptArgs, argName);
-   const string& stringArg = docoptValue.AsString();
-   return stringArg;
-}
-
-unsigned DocoptParser::GetRequiredUnsigned(const map<string, docopt::Value>& docoptArgs, const string& argName) const
-{
-   return StaticGetRequiredUnsigned(docoptArgs, argName);
-}
-
-unsigned DocoptParser::StaticGetRequiredUnsigned(const map<string, docopt::Value>& docoptArgs, const string& argName)
-{
-   const docopt::Value docoptValue = Map::At(docoptArgs, argName);
-   const size_t docoptValueHash = docoptValue.Hash();
-   const size_t kindEmptyHashValue = std::hash<void*>()(nullptr);
-   if (docoptValueHash == kindEmptyHashValue)
-   {
-      const string exceptionMessage = "For argument [" + argName + "], a required unsigned value was not specified";
-      throw invalid_argument(exceptionMessage);
-   }
-   const long longValue = docoptValue.AsLong();
-   if (longValue < 0)
-   {
-      const string exceptionMessage = "For argument [" + argName + "], invalid negative value: " + to_string(longValue);
-      throw invalid_argument(exceptionMessage);
-   }
-   const unsigned unsignedValue = static_cast<unsigned>(longValue);
-   return unsignedValue;
-}
-
-bool DocoptParser::GetRequiredBool(const map<string, docopt::Value>& docoptArgs, const string& argName) const
-{
-   const docopt::Value docoptValue = Map::At(docoptArgs, argName);
-   const bool boolValue = docoptValue.AsBool();
-   return boolValue;
 }
 
 bool DocoptParser::GetOptionalBool(const map<string, docopt::Value>& docoptArgs, const string& argName) const
@@ -69,6 +26,13 @@ bool DocoptParser::GetOptionalBool(const map<string, docopt::Value>& docoptArgs,
       return false;
    }
    const bool boolValue = didGetDocoptValueAndDocoptValue.second.AsBool();
+   return boolValue;
+}
+
+bool DocoptParser::GetRequiredBool(const map<string, docopt::Value>& docoptArgs, const string& argName) const
+{
+   const docopt::Value docoptValue = Map::At(docoptArgs, argName);
+   const bool boolValue = docoptValue.AsBool();
    return boolValue;
 }
 
@@ -83,6 +47,13 @@ string DocoptParser::GetOptionalString(const map<string, docopt::Value>& docoptA
    return optionalStringValue;
 }
 
+string DocoptParser::GetRequiredString(const map<string, docopt::Value>& docoptArgs, const string& argName) const
+{
+   const docopt::Value docoptValue = Map::At(docoptArgs, argName);
+   const string& stringArg = docoptValue.AsString();
+   return stringArg;
+}
+
 size_t DocoptParser::GetProgramModeSpecificRequiredSizeT(
    const map<string, docopt::Value>& docoptArgs,
    const string& argumentName,
@@ -93,9 +64,30 @@ size_t DocoptParser::GetProgramModeSpecificRequiredSizeT(
       Vector::Contains(programModesThatRequiresArgument, programMode);
    if (programModeIsContainedInProgramModesThatRequiresArgument)
    {
-      const unsigned argumentValueAsUnsigned = _call_StaticGetRequiredUnsigned(docoptArgs, argumentName);
-      const size_t argumentValueAsSizeT = static_cast<size_t>(argumentValueAsUnsigned);
+      const size_t argumentValueAsSizeT = _call_StaticGetRequiredSizeT(docoptArgs, argumentName);
       return argumentValueAsSizeT;
    }
    return 0;
+}
+
+size_t DocoptParser::GetRequiredSizeT(const map<string, docopt::Value>& docoptArgs, const string& argName) const
+{
+   const size_t requiredSizeTValue = StaticGetRequiredSizeT(docoptArgs, argName);
+   return requiredSizeTValue;
+}
+
+// Private Functions
+
+size_t DocoptParser::StaticGetRequiredSizeT(const map<string, docopt::Value>& docoptArgs, const string& argName)
+{
+   const docopt::Value docoptValue = Map::At(docoptArgs, argName);
+   const size_t docoptValueHash = docoptValue.Hash();
+   const size_t kindEmptyHashValue = std::hash<void*>()(nullptr);
+   if (docoptValueHash == kindEmptyHashValue)
+   {
+      const string exceptionMessage = String::Concat("For argument [", argName, "], a required size_t value was not specified");
+      throw invalid_argument(exceptionMessage);
+   }
+   const size_t sizeTValue = docoptValue.AsSizeT();
+   return sizeTValue;
 }

@@ -2,7 +2,6 @@
 #include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
-#include "libFileArb/Components/Time/Stopwatch.h"
 
 #ifdef __linux__
 int* GetErrno()

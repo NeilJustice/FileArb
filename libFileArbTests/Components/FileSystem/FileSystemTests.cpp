@@ -44,7 +44,6 @@ STARTUP
    _fileSystem._call_errno = BIND_0ARG_METALMOCK_OBJECT(_errnoMock);
    _fileSystem._call_fs_create_directories = BIND_2ARG_METALMOCK_OBJECT(create_directoriesMock);
    // Constant Components
-   _fileSystem._asserter.reset(_asserterMock = new AsserterMock);
    _fileSystem._errorCodeTranslator.reset(_errorCodeTranslatorMock = new ErrorCodeTranslatorMock);
 }
 
@@ -63,7 +62,6 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
       FileSystem::create_directories_FunctionOverloadType, fs::create_directories, fileSystem._call_fs_create_directories);
 #endif
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileSystem._asserter);
    DELETE_TO_ASSERT_NEWED(fileSystem._errorCodeTranslator);
 
    fileSystem._call_errno(); // 100% code coverage for GetErrno() on Linux

@@ -2,7 +2,6 @@
 #include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
-#include "libFileArb/Components/Misc/Asserter.h"
 #include "libFileArb/Components/Time/Stopwatch.h"
 
 #ifdef __linux__
@@ -24,7 +23,6 @@ FileSystem::FileSystem()
    , _call_fs_create_directories(static_cast<create_directories_FunctionOverloadType>(fs::create_directories))
 #endif
    // Constant Components
-   , _asserter(make_unique<Asserter>())
    , _errorCodeTranslator(make_unique<ErrorCodeTranslator>())
 {
 }

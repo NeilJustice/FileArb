@@ -1,5 +1,4 @@
 #pragma once
-class Asserter;
 class ErrorCodeTranslator;
 class FileSystemTests;
 
@@ -22,7 +21,6 @@ private:
    using create_directories_FunctionOverloadType = bool(*)(const fs::path&, error_code&);
    std::function<bool(const fs::path&, error_code&)> _call_fs_create_directories;
    // Constant Callers
-   unique_ptr<const Asserter> _asserter;
    unique_ptr<const ErrorCodeTranslator> _errorCodeTranslator;
 public:
    FileSystem();

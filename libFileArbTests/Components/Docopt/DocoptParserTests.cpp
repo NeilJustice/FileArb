@@ -106,7 +106,7 @@ TEST(GetRequiredBool_ArgInMap_ReturnsValue)
 TEST(GetOptionalString_ArgNotInMap_ReturnsEmptyString)
 {
    const string argValue = _docoptParser.GetOptionalString(_docoptArgs, _argName);
-   ARE_EQUAL("", argValue);
+   IS_EMPTY_STRING(argValue);
 }
 
 TEST(GetOptionalString_ArgInMapWithStringValue_ReturnsValue)
@@ -122,7 +122,7 @@ TEST(GetOptionalString_ArgInMapWithStringValue_ReturnsValue)
 TEST(GetOptionalString_ArgInMapWithEmptyValue_ReturnsEmptyString)
 {
    _docoptArgs[_argName] = docopt::Value(""s);
-   ARE_EQUAL("", _docoptParser.GetOptionalString(_docoptArgs, _argName));
+   IS_EMPTY_STRING(_docoptParser.GetOptionalString(_docoptArgs, _argName));
 }
 
 TEST(GetRequiredString_ArgNotInMap_ThrowsOutOfRangeException)

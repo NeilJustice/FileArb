@@ -3,7 +3,7 @@ project(FileArb)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 if(UNIX)
-   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -Werror -pthread -Wno-unused-parameter")
+   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -pedantic -Werror -pthread")
    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
       append(CMAKE_CXX_FLAGS "-fopenmp")
    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")

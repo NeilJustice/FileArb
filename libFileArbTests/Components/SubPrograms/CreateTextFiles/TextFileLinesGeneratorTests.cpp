@@ -8,7 +8,7 @@ FACTS(ReplicateLineNTimes_ReturnsLineReplicatedNTimes)
 EVIDENCE
 
 TextFileLinesGenerator _textFileLinesGenerator;
-METALMOCK_NONVOID2_STATIC(string, FileTextGenerator, ReplicateLineNTimes, const string&, size_t);
+METALMOCK_NONVOID2_STATIC(string, FileTextGenerator, ReplicateLineNTimes, const string&, size_t)
 
 STARTUP
 {

@@ -4,9 +4,8 @@
    {
       "type": "shell",
       "label": "Build Debug",
-      "command": "ninja",
-      "args": [ "-v" ],
       "options": { "cwd": "${workspaceRoot}/Debug" },
+      "command": "ninja",
       "problemMatcher": [ "$gcc" ],
       "group": { "kind": "build", "isDefault": true }
    },

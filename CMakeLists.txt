@@ -37,7 +37,7 @@ add_subdirectory(FileArb)
 add_subdirectory(libFileArb)
 add_subdirectory(libFileArbTests)
 
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo")
 
 if(UNIX)
    include(ProcessorCount)

@@ -39,5 +39,5 @@ namespace ZenUnit
    FileArbArgs Random()
    {
       return TestableFileArbArgs(RandomGenerator::Instance());
-   };
+   }
 }

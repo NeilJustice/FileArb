@@ -13,4 +13,4 @@ namespace ZenUnit
    FileArbArgs TestableFileArbArgs(const RandomGenerator* randomGenerator);
    template<>
    FileArbArgs Random();
-};
+}

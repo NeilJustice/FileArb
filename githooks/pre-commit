@@ -3,7 +3,7 @@ set -u
 
 osname="$(uname --operating-system)"
 if [[ "$osname" == *"Linux" ]]; then
-   sudo JenkinsJobs/Linux/FileArb_Debug_Clang.sh
+   sudo JenkinsJobs/Linux/FileArb-Debug-Clang.sh
 elif [ "$osname" == "Msys" ]; then
    powershell.exe JenkinsJobs/Windows/FileArbDebug.ps1
 fi

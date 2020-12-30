@@ -4,7 +4,10 @@ dist: focal
 group: edge
 arch: amd64
 language: cpp
-cache: ccache
+cache:
+   ccache: true
+   directories:
+      - $HOME/Library/Caches/Homebrew
 sudo: false
 
 git:
@@ -66,7 +69,7 @@ matrix:
       before_install:
       - brew install ninja
 
-script: ./TravisScripts/travis_script.sh
+script: ./travis_script.sh
 
 notifications:
   email: true

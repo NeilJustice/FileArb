@@ -1,7 +1,7 @@
 #pragma once
 class ErrorCodeTranslatorTests;
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 int* GetLinuxErrno();
 #endif
 
@@ -14,7 +14,7 @@ public:
 #endif
 private:
    function<int*()> _call_errno;
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    std::function<char*(int, char*, size_t)> _call_strerror_r;
 #elif _WIN32
    std::function<errno_t(char*, size_t, int)> _call_strerror_s;

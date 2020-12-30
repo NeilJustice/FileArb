@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 int* GetLinuxErrno()
 {
    return &errno;
@@ -9,7 +9,7 @@ int* GetLinuxErrno()
 #endif
 
 ErrorCodeTranslator::ErrorCodeTranslator()
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    : _call_errno(GetLinuxErrno)
    , _call_strerror_r(strerror_r)
 #elif _WIN32
@@ -68,7 +68,7 @@ string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastErro
 
 constexpr size_t maximumErrnoDescriptionLength = 64ull;
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 
 string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {

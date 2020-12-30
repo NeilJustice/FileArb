@@ -3,7 +3,7 @@
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE____linux__
 int* GetErrno()
 {
    return &errno;
@@ -13,7 +13,7 @@ int* GetErrno()
 FileSystem::FileSystem()
    // Function Callers
    : _call_fclose(::fclose)
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE____linux__
    , _call_errno(GetErrno)
    , _call_fopen(::fopen)
 #elif _WIN32
@@ -42,7 +42,7 @@ void FileSystem::CreateBinaryFile(const fs::path& filePath, const char* bytes, s
 
 FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
 {
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    FILE* openedFile = _call_fopen(filePath.string().c_str(), fileOpenMode);
    if (openedFile == nullptr)
    {

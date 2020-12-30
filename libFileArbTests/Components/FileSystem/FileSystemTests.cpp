@@ -7,7 +7,7 @@
 
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFunctionPointers)
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE____linux__
 AFACT(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
 AFACT(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 #elif _WIN32
@@ -20,7 +20,7 @@ EVIDENCE
 
 FileSystem _fileSystem;
 // Function Callers
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
 #elif _WIN32
 METALMOCK_NONVOID3_FREE(errno_t, fopen_s, FILE**, const char*, const char*)
@@ -35,7 +35,7 @@ ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 STARTUP
 {
    // Function Callers
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    _fileSystem._call_fopen = BIND_2ARG_METALMOCK_OBJECT(fopenMock);
 #elif _WIN32
    _fileSystem._call_fopen_s = BIND_3ARG_METALMOCK_OBJECT(fopen_sMock);
@@ -52,7 +52,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    FileSystem fileSystem;
    // Function Callers
    STD_FUNCTION_TARGETS(fclose, fileSystem._call_fclose);
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(GetErrno, fileSystem._call_errno);
    STD_FUNCTION_TARGETS(fopen, fileSystem._call_fopen);
 #elif _WIN32
@@ -95,7 +95,7 @@ FILE* fopen_CallInsteadFunction(const char* filePath, const char* fileOpenMode)
    return _fopen_CallHistory.returnValue;
 }
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 
 TEST(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
 {

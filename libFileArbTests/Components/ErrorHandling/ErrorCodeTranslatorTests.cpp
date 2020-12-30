@@ -2,7 +2,7 @@
 #include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
 
 TESTS(ErrorCodeTranslatorTests)
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 AFACT(GetLinuxErrno_ReturnsAddressOfErrno)
 #endif
 
@@ -10,13 +10,13 @@ AFACT(DefaultConstructor_SetsFunctionPointers)
 AFACT(GetErrnoValue_ReturnsResultOfCallingErrnoFunction)
 AFACT(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 AFACT(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 #elif _WIN32
 AFACT(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 #endif
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 AFACT(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
 #elif _WIN32
 AFACT(GetSystemErrorDescriptionOnWindows_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
@@ -26,7 +26,7 @@ EVIDENCE
 
 ErrorCodeTranslator _errorCodeTranslator;
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 METALMOCK_NONVOID3_FREE(char*, strerror_r, int, char*, size_t)
 #elif _WIN32
 METALMOCK_NONVOID3_FREE(errno_t, strerror_s, char*, size_t, int)
@@ -37,7 +37,7 @@ METALMOCK_NONVOID0_FREE(int*, _call_errno)
 STARTUP
 {
    _errorCodeTranslator._call_errno = BIND_0ARG_METALMOCK_OBJECT(_call_errnoMock);
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    _errorCodeTranslator._call_strerror_r = BIND_3ARG_METALMOCK_OBJECT(strerror_rMock);
 #elif _WIN32
    _errorCodeTranslator._call_strerror_s = BIND_3ARG_METALMOCK_OBJECT(strerror_sMock);
@@ -45,7 +45,7 @@ STARTUP
 #endif
 }
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 TEST(GetLinuxErrno_ReturnsAddressOfErrno)
 {
    const int* const linuxErrno = GetLinuxErrno();
@@ -56,7 +56,7 @@ TEST(GetLinuxErrno_ReturnsAddressOfErrno)
 TEST(DefaultConstructor_SetsFunctionPointers)
 {
    ErrorCodeTranslator errorCodeTranslator;
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(GetLinuxErrno, errorCodeTranslator._call_errno);
    STD_FUNCTION_TARGETS(strerror_r, errorCodeTranslator._call_strerror_r);
 #elif _WIN32
@@ -148,7 +148,7 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
 
 #endif
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 
 struct strerror_r_CallHistory
 {
@@ -253,7 +253,7 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 
 #endif
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 
 TEST(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
 {

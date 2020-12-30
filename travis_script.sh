@@ -1,7 +1,9 @@
 #!/bin/bash
 set -euv
 
-free --human
+if [ "$TRAVIS_OS_NAME" -ne "osx" ]; then
+   free --human
+fi
 clang++ --version
 g++ --version
 cmake --version

@@ -13,7 +13,7 @@ endif()
 
 install(TARGETS FileArb DESTINATION "bin")
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
    target_link_libraries(FileArb stdc++fs)
    if(CodeCovMode)
      target_link_libraries(FileArb CodeCovLibraryInterface)

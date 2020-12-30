@@ -44,7 +44,7 @@ source_group("" FILES ${Sources})
 add_executable(libFileArbTests ${Sources})
 
 target_link_libraries(libFileArbTests libFileArb)
-if(UNIX)
+if(UNIX AND NOT APPLE)
    target_link_libraries(libFileArbTests stdc++fs)
    if(CodeCovMode)
      target_link_libraries(libFileArbTests CodeCovLibraryInterface)

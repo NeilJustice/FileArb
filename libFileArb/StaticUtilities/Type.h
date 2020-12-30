@@ -1,5 +1,5 @@
 #pragma once
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 #include <atomic>
 #include <cxxabi.h>
 #endif
@@ -44,7 +44,7 @@ private:
       return cachedDemangledTypeName;
    }
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    static std::string Demangle(const char* mangledTypeName)
    {
       int demangleStatus = -1;

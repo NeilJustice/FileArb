@@ -1,15 +1,23 @@
 #!/bin/bash
-set -eux
+set -euv
 
+free --human
 clang++ --version
 g++ --version
+cmake --version
 ninja --version
 python3 --version
 
-if [ "$CODE_COV_MODE" == "ON" ];
-then
-  gcov --version
-  lcov --version
+if [ "$CODE_COV_MODE" = "ON" ]; then
+   export LCOV_ROOT="$HOME/lcov"
+   mkdir -p "$LCOV_ROOT"
+   wget https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15.tar.gz --output-document="$LCOV_ROOT/lcov.tar.gz"
+   tar xf "$LCOV_ROOT/lcov.tar.gz" --strip-components=1 -C $LCOV_ROOT
+   export PATH="$LCOV_ROOT/bin:$PATH"
+   which lcov
+   lcov --version
+   which gcov
+   gcov --version
 fi
 
 mkdir build && cd build
@@ -18,3 +26,9 @@ curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenU
 curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnit/MetalMock.h --create-dirs -o "$TRAVIS_BUILD_DIR/ZenUnit/MetalMock.h"
 ninja -v
 ./libFileArbTests/libFileArbTests --test-runs=5 --random-test-ordering --exit-1-if-tests-skipped
+
+if [ "$CODE_COV_MODE" == "ON" ]; then
+  lcov --directory . --capture --output-file coverage.info
+  lcov --list coverage.info
+  bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
+fi

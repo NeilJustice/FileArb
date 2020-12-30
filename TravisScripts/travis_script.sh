@@ -3,7 +3,6 @@ set -eux
 
 clang++ --version
 g++ --version
-cmake --version
 ninja --version
 python3 --version
 

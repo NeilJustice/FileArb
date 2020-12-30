@@ -13,8 +13,10 @@ htmlcov/
 coverage.xml
 .coverage
 
+# Linux
+build.ninja
+
 # Windows
-.axoCover/
 .vs/
 x64/
 *.bin

@@ -4,7 +4,7 @@
 
 FileArb is a C++ command line program for quickly creating in parallel an arbitrary number of text files or binary files for performance testing FileRevisor and file systems in general.
 
-|Build|Build Status|
+|Build Type|Build Status|
 |----------|------------|
 |Travis CI Linux Clang 9.0.1, Linux GCC 9.3.0, and macOS AppleClang 12.0.0 Debug and Release|[![Build Status](https://travis-ci.com/NeilJustice/FileArb.svg?branch=main)](https://travis-ci.com/NeilJustice/FileArb)|
 |AppVeyor Windows (Visual Studio 2019 x64)|<a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"/></a>|

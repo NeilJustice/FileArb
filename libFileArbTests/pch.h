@@ -5,6 +5,8 @@
 #include <fstream>
 #include <filesystem>
 #include <regex>
+#include <unordered_map>
+#include <unordered_set>
 
 #if defined __linux__
    #if defined __GNUG__ && !defined __clang__

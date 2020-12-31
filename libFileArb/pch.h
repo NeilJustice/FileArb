@@ -10,6 +10,7 @@
 #include <unordered_set>
 #include <regex>
 #include <sstream>
+#include <string.h>
 
 #if defined __linux__
    #if defined __GNUG__ && !defined __clang__

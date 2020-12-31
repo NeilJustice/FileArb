@@ -5,6 +5,7 @@
 #include <fstream>
 #include <filesystem>
 #include <regex>
+#include <string.h>
 #include <unordered_map>
 #include <unordered_set>
 

@@ -29,7 +29,7 @@ curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenU
 curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnit/MetalMock.h --create-dirs -o "$TRAVIS_BUILD_DIR/ZenUnit/MetalMock.h"
 if [ "$TRAVIS_COMPILER" = "gcc" ]; then
    # Travis GCC runs out of memory when ninja is run with full parallelism
-   ninja -v -j2
+   ninja -v -j3
 else
    ninja -v
 fi

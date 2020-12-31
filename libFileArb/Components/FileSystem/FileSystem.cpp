@@ -3,7 +3,7 @@
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
 
-#if defined __linux__ || defined __APPLE____linux__
+#if defined __linux__ || defined __APPLE__
 int* GetErrno()
 {
    return &errno;
@@ -13,7 +13,7 @@ int* GetErrno()
 FileSystem::FileSystem()
    // Function Callers
    : _call_fclose(::fclose)
-#if defined __linux__ || defined __APPLE____linux__
+#if defined __linux__ || defined __APPLE__
    , _call_errno(GetErrno)
    , _call_fopen(::fopen)
 #elif _WIN32

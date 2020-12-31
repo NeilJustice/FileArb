@@ -7,7 +7,7 @@
 
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFunctionPointers)
-#if defined __linux__ || defined __APPLE____linux__
+#if defined __linux__ || defined __APPLE__
 AFACT(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
 AFACT(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 #elif _WIN32

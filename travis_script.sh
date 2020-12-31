@@ -2,7 +2,7 @@
 set -euv
 
 env
-if [ "$TRAVIS_OS_NAME" -ne "osx" ]; then
+if [ "$TRAVIS_OS_NAME" != "osx" ]; then
    free --human
 fi
 clang++ --version

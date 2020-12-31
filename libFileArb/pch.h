@@ -1,27 +1,21 @@
 #pragma once
 #include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
 
+#include <filesystem>
 #include <functional>
 #include <iostream>
 #include <map>
-#if defined(__clang__)
-#include <numeric> // std::iota
-#endif
+#include <numeric>
 #include <unordered_set>
 #include <regex>
 #include <sstream>
-using namespace std;
 
 #if defined __linux__
-   #include <experimental/filesystem>
-   namespace fs = std::experimental::filesystem;
    #if defined(__GNUG__) && !defined(__clang__)
    #include <parallel/algorithm>
    #endif
 #elif defined _WIN32 || defined __APPLE__
    #include <execution>
-   #include <filesystem>
-   namespace fs = std::filesystem;
 #endif
 
 #ifdef _WIN32
@@ -30,6 +24,9 @@ using namespace std;
    #define NOMINMAX
    #include "Windows.h"
 #endif
+
+using namespace std;
+namespace fs = std::filesystem;
 
 // libFileArb Compiler
 #include "libFileArb/Compiler/CompilerMacros.h"

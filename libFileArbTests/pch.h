@@ -3,20 +3,19 @@
 
 #include <array>
 #include <fstream>
+#include <filesystem>
 #include <regex>
-using namespace std;
 
 #if defined __linux__
-   #include <experimental/filesystem>
-   namespace fs = std::experimental::filesystem;
-   #if defined(__GNUG__) && !defined(__clang__)
+   #if defined __GNUG__ && !defined __clang__
       #include <parallel/algorithm>
    #endif
 #elif defined _WIN32 || defined __APPLE__
    #include <execution>
-   #include <filesystem>
-   namespace fs = std::filesystem;
 #endif
+
+namespace fs = std::filesystem;
+using namespace std;
 
 #include "ZenUnit/ZenUnit.h"
 #include "ZenUnit/MetalMock.h"

@@ -12,10 +12,10 @@
 #include <sstream>
 
 #if defined __linux__
-   #if defined(__GNUG__) && !defined(__clang__)
+   #if defined __GNUG__ && !defined __clang__
    #include <parallel/algorithm>
    #endif
-#elif defined _WIN32 || defined __APPLE__
+#elif defined _WIN32
    #include <execution>
 #endif
 

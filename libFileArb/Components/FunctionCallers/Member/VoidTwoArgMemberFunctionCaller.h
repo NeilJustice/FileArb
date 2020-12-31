@@ -26,7 +26,7 @@ public:
    {
       vector<size_t> callIndexElements(numberOfCalls);
       std::iota(begin(callIndexElements), end(callIndexElements), 0ull);
-#if defined(__GNUG__) && !defined(__clang__)
+#if defined __GNUG__ && !defined __clang__
       __gnu_parallel::_Settings settings;
       settings.algorithm_strategy = __gnu_parallel::force_parallel;
       __gnu_parallel::_Settings::set(settings);
@@ -36,7 +36,7 @@ public:
          cbegin(callIndexElements),
          cend(callIndexElements),
          nonConstMemberFunctionBoundWithArg1AndArg2Bound);
-#elif defined(_WIN32)
+#elif defined _WIN32
       const auto nonConstMemberFunctionBoundWithArg1AndArg2Bound =
          std::bind(nonConstMemberFunction, nonConstClassPointer, std::placeholders::_1, arg1, arg2);
       std::for_each(

@@ -6,7 +6,7 @@ class VoidOneArgMemberFunctionCaller
 public:
    virtual void CallNonConstMemberFunctionNTimes(
       size_t numberOfCalls,
-      void (ClassType::* nonConstMemberFunction)(ArgType),
+      void (ClassType::*nonConstMemberFunction)(ArgType),
       ClassType* nonConstClassPointer,
       ArgType arg) const
    {

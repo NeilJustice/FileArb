@@ -2,8 +2,8 @@
 #include "libFileArb/Components/Docopt/DocoptParser.h"
 
 DocoptParser::DocoptParser()
-   : _call_docopt_docopt(docopt::docopt)
-   , _call_StaticGetRequiredSizeT(StaticGetRequiredSizeT)
+   : _call_docopt_docopt(docopt::docopt),
+     _call_StaticGetRequiredSizeT(StaticGetRequiredSizeT)
 {
 }
 

@@ -10,12 +10,12 @@ int* GetLinuxErrno()
 
 ErrorCodeTranslator::ErrorCodeTranslator()
 #if defined __linux__ || defined __APPLE__
-   : _call_errno(GetLinuxErrno)
-   , _call_strerror_r(strerror_r)
+   : _call_errno(GetLinuxErrno),
+     _call_strerror_r(strerror_r)
 #elif _WIN32
-   : _call_errno(::_errno)
-   , _call_strerror_s(static_cast<strerror_s_function_type>(strerror_s))
-   , _call_GetLastError(GetLastError)
+   : _call_errno(::_errno),
+     _call_strerror_s(static_cast<strerror_s_function_type>(strerror_s)),
+     _call_GetLastError(GetLastError)
 #endif
 {
 }
@@ -83,7 +83,7 @@ string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {
 #pragma warning(push)
-#pragma warning(disable: 6255) // _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead.
+#pragma warning(disable : 6255) // _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead.
    char* const errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
 #pragma warning(pop)
    const errno_t strErrorSReturnValue = _call_strerror_s(errnoDescriptionChars, maximumErrnoDescriptionLength, errnoValue);

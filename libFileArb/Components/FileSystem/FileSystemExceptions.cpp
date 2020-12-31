@@ -31,7 +31,6 @@ FileCreateException::FileCreateException(const fs::path& filePath, int errnoValu
 FileMalformedException::FileMalformedException(const fs::path& filePath, const std::string& reason)
    : runtime_error(filePath.string() + ":\n" + reason)
 {
-
 }
 
 FileMalformedException::FileMalformedException(const fs::path& filePath, size_t lineNumber, const string& reason)

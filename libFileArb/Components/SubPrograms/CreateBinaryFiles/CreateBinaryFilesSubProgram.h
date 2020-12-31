@@ -5,10 +5,11 @@ class FileCreator;
 
 class CreateBinaryFilesSubProgram : public FileArbSubProgram
 {
-   friend class CreateBinaryFilesSubProgramTests;
 private:
+   friend class CreateBinaryFilesSubProgramTests;
    unique_ptr<const BinaryFileBytesGenerator> _binaryFileBytesGenerator;
    unique_ptr<FileCreator> _fileCreator;
+
 public:
    CreateBinaryFilesSubProgram();
    virtual ~CreateBinaryFilesSubProgram();

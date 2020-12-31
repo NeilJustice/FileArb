@@ -2,7 +2,6 @@
 
 class BinaryFileBytesGenerator
 {
-   friend class BinaryFileBytesGeneratorTests;
 public:
    BinaryFileBytesGenerator();
    virtual ~BinaryFileBytesGenerator() = default;

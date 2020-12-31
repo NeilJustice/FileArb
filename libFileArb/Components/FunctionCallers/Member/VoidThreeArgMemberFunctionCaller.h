@@ -6,7 +6,7 @@ class VoidThreeArgMemberFunctionCaller
 public:
    virtual void CallNonConstMemberFunctionNTimes(
       size_t numberOfCalls,
-      void (ClassType::* nonConstMemberFunction)(size_t, Arg1Type, Arg2Type, Arg3Type),
+      void (ClassType::*nonConstMemberFunction)(size_t, Arg1Type, Arg2Type, Arg3Type),
       ClassType* nonConstClassPointer,
       Arg1Type arg1,
       Arg2Type arg2,

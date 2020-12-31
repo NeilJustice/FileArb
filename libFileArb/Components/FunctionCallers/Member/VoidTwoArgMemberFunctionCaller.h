@@ -6,7 +6,7 @@ class VoidTwoArgMemberFunctionCaller
 public:
    virtual void CallNonConstMemberFunctionNTimes(
       size_t numberOfCalls,
-      void (ClassType::* nonConstMemberFunction)(size_t, Arg1Type, Arg2Type),
+      void (ClassType::*nonConstMemberFunction)(size_t, Arg1Type, Arg2Type),
       ClassType* nonConstClassPointer,
       Arg1Type arg1,
       Arg2Type arg2) const
@@ -19,7 +19,7 @@ public:
 
    virtual void ParallelCallNonConstMemberFunctionNTimes(
       size_t numberOfCalls,
-      void (ClassType::* nonConstMemberFunction)(size_t, Arg1Type, Arg2Type),
+      void (ClassType::*nonConstMemberFunction)(size_t, Arg1Type, Arg2Type),
       ClassType* nonConstClassPointer,
       Arg1Type arg1,
       Arg2Type arg2) const
@@ -53,4 +53,4 @@ public:
    }
 
    virtual ~VoidTwoArgMemberFunctionCaller() = default;
-   };
+};

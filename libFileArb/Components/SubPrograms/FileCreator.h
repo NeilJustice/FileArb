@@ -10,8 +10,8 @@ struct FileArbArgs;
 
 class FileCreator
 {
-   friend class FileCreatorTests;
 private:
+   friend class FileCreatorTests;
    // Function Callers
    using VoidTwoArgMemberFunctionCallerType =
       VoidTwoArgMemberFunctionCaller<FileCreator, const FileArbArgs&, const string&>;
@@ -25,10 +25,12 @@ private:
    unique_ptr<const Console> _console;
    unique_ptr<const FileSystem> _fileSystem;
    unique_ptr<const StopwatchFactory> _stopwatchFactory;
+
 public:
    FileCreator();
    virtual ~FileCreator();
    virtual void WriteFiles(const FileArbArgs& args, const string& fileTextOrBytes);
+
 private:
    void CreateSequentiallyNumberedFilesInNumberedDirectory(
       size_t callIndex, const FileArbArgs& args, const string& fileTextOrBytes);

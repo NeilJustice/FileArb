@@ -4,8 +4,8 @@
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 
 FileArbSubProgram::FileArbSubProgram()
-   : _protected_console(make_unique<Console>())
-   , _protected_fileSystem(make_unique<FileSystem>())
+   : _protected_console(make_unique<Console>()),
+     _protected_fileSystem(make_unique<FileSystem>())
 {
 }
 

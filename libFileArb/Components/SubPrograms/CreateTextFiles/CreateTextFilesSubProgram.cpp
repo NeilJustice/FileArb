@@ -4,8 +4,8 @@
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 
 CreateTextFilesSubProgram::CreateTextFilesSubProgram()
-   : _textFileLinesGenerator(make_unique<TextFileLinesGenerator>())
-   , _fileCreator(make_unique<FileCreator>())
+   : _textFileLinesGenerator(make_unique<TextFileLinesGenerator>()),
+     _fileCreator(make_unique<FileCreator>())
 {
 }
 

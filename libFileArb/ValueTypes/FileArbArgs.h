@@ -21,9 +21,9 @@ struct FileArbArgs
 };
 
 #ifdef _WIN32
-   #ifdef _DEBUG
-      static_assert(sizeof(FileArbArgs) == 176);
-   #else
-      static_assert(sizeof(FileArbArgs) == 152);
-   #endif
+#ifdef _DEBUG
+static_assert(sizeof(FileArbArgs) == 176);
+#else
+static_assert(sizeof(FileArbArgs) == 152);
+#endif
 #endif

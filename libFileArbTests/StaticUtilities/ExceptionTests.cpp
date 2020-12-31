@@ -16,7 +16,7 @@ TEST(GetClassNameAndMessage_ReturnsExceptionClassNameColonSpaceWhatText)
 
    const string what = ZenUnit::Random<string>();
    const runtime_error ex2(what);
-	ARE_EQUAL("std::runtime_error: " + what, Exception::GetClassNameAndMessage(&ex2));
+   ARE_EQUAL("std::runtime_error: " + what, Exception::GetClassNameAndMessage(&ex2));
 }
 
 RUN_TESTS(ExceptionTests)

@@ -6,9 +6,9 @@ class TryCatchCaller
 public:
    virtual int TryCatchCall(
       ClassType* classPointer,
-      int (ClassType::* nonConstMemberFunction)(ArgumentType),
+      int (ClassType::*nonConstMemberFunction)(ArgumentType),
       ArgumentType argument,
-      int (ClassType::* exceptionHandlerMemberFunction)(const exception&, ArgumentType)) const
+      int (ClassType::*exceptionHandlerMemberFunction)(const exception&, ArgumentType)) const
    {
       try
       {

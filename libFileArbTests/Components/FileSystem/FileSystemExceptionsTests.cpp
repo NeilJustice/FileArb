@@ -20,7 +20,7 @@ const string _expectedDirectoryWhat = _directoryPath.string() + ". Reason: " + _
 TEST(FileCreateException_WhatReturnsExpected)
 {
    const FileCreateException ex(_filePath, _errnoValue);
-	ARE_EQUAL(_expectedFileWhat, ex.what());
+   ARE_EQUAL(_expectedFileWhat, ex.what());
 }
 
 TEST(FileOpenException_WhatReturnsExpected)
@@ -53,7 +53,7 @@ TEST(FileMalformedException_LineNumberOverload_WhatReturnsExpected)
    const FileMalformedException e(_filePath, lineNumber, reason);
    //
    const string expectedWhat = _filePath.string() + "(" + to_string(lineNumber) + "):\n" + reason;
-	ARE_EQUAL(expectedWhat, e.what());
+   ARE_EQUAL(expectedWhat, e.what());
 }
 
 RUN_TESTS(FileSystemExceptionsTests)

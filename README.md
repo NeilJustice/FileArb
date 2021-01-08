@@ -2,7 +2,7 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileArb) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileArb)
 
-FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of text files or binary files containing arbitrary text or arbitrary bytes for the purpose of performance testing <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> and the speed of file creation in general.
+FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of text files or binary files containing arbitrary text or arbitrary bytes for the purpose of performance testing <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> or the speed of file creation in general.
 
 |Build Type|Build Status|
 |----------|------------|
@@ -16,10 +16,11 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 * [FileArb Program Modes](#filearb-program-modes)
    * [create-text-files](#create-text-files)
    * [create-binary-files](#create-binary-files)
-* [Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](#linux-jenkins-jobs-which-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearb)
-* [Windows Jenkins Jobs Which Compile FileArb](#windows-jenkins-jobs-which-compile-filearb)
-* [Four Steps To Compile And Install FileArb On Linux](#four-steps-to-compile-and-install-filearb-on-linux)
-* [Four Steps To Compile And Install FileArb On Windows](#four-steps-to-compile-and-install-filearb-on-windows)
+* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearb)
+* [Windows Jenkins Jobs Which Build FileArb](#windows-jenkins-jobs-which-build-filearb)
+* [How To Build Binary filearb On Linux With Clang](#how-to-build-binary-filearb-on-linux-with-clang)
+* [How To Build Executable FileArb.exe On Windows With Visual Studio 2019](#how-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)
+* [FileArb Roadmap](#filearb-roadmap)
 
 ## FileArb Command Line Usage
 
@@ -66,11 +67,11 @@ FileArb program mode `create-binary-files` creates at a specified directory a sp
 
 ![create-binary-files](Screenshots/create-binary-files.png)
 
-## Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb
+## Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 31:
 
-![Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](Screenshots/LinuxJenkinsJobsForFileArb.png)
+![Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](Screenshots/LinuxJenkinsJobsForFileArb.png)
 
 ## Windows Jenkins Jobs Which Compile FileArb
 
@@ -78,7 +79,7 @@ A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on
 
 ![Windows Jenkins Jobs Which Compile FileArb](Screenshots/WindowsJenkinsJobsForFileArb.png)
 
-## Four Steps To Compile And Install FileArb On Linux
+## How To Build Binary filearb On Linux With Clang
 
 ```
 git clone https://github.com/NeilJustice/FileArb
@@ -87,7 +88,7 @@ CXX=clang++ cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install # Compiles then copies binary 'filearb' to /usr/local/bin/filearb
 ```
 
-## Four Steps To Compile And Install FileArb On Windows
+## How To Build Executable FileArb.exe On Windows With Visual Studio 2019
 
 ```
 git clone https://github.com/NeilJustice/FileArb
@@ -95,3 +96,14 @@ cd FileArb
 cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install # Builds then copies FileArb.exe to C:\bin\FileArb.exe
 ```
+
+## FileArb Roadmap
+
+|Future FileArb Feature|Estimated Delivery Month|Implementation Status|
+|----------------------|------------------------|---------------------|
+|create-binary-files mode optionally reads from /dev/urandom on Linux to populate binary files|January 2021|Awaiting implementation|
+|GitHub Actions build|February 2021|Awaiting implementation|
+|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|Awaiting implementation|
+|SonarCloud static analysis badge|February 2021|Awaiting implementation|
+|Coverity static analysis badge|February 2021|Awaiting implementation|
+|Automated acceptance testing for FileArb|May 2021|Awaiting implementation|

@@ -10,7 +10,7 @@ string TextFileLinesGenerator::MakeFileText(size_t numberOfCharactersPerLine, si
 {
    string lineToWrite(numberOfCharactersPerLine + 1, '0');
    lineToWrite[lineToWrite.size() - 1] = '\n';
-   const string fileText = _call_ReplicateLineNTimes(lineToWrite, numberOfLinesPerFile);
+   string fileText = _call_ReplicateLineNTimes(lineToWrite, numberOfLinesPerFile);
    return fileText;
 }
 

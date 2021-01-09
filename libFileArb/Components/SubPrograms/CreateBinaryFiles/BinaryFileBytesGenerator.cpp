@@ -7,6 +7,6 @@ BinaryFileBytesGenerator::BinaryFileBytesGenerator()
 
 string BinaryFileBytesGenerator::MakeFileBytes(size_t numberOfBytesPerFile) const
 {
-   const string fileBytes(numberOfBytesPerFile, 0);
+   string fileBytes(numberOfBytesPerFile, 0);
    return fileBytes;
 }

@@ -61,11 +61,8 @@ ProgramMode FileArbArgsParser::DetermineProgramMode(bool isCreateTextFilesMode, 
    {
       return ProgramMode::CreateTextFiles;
    }
-   else
-   {
-      release_assert(isCreateBinaryFilesMode);
-      return ProgramMode::CreateBinaryFiles;
-   }
+   release_assert(isCreateBinaryFilesMode);
+   return ProgramMode::CreateBinaryFiles;
 }
 
 string FileArbArgsParser::DetermineFileExtension(bool isCreateTextFilesMode, bool isCreateBinaryFilesMode)
@@ -74,11 +71,8 @@ string FileArbArgsParser::DetermineFileExtension(bool isCreateTextFilesMode, boo
    {
       return ".txt"s;
    }
-   else
-   {
-      release_assert(isCreateBinaryFilesMode);
-      return ".bin"s;
-   }
+   release_assert(isCreateBinaryFilesMode);
+   return ".bin"s;
 }
 
 void FileArbArgsParser::PrintPreamble(const FileArbArgs& args) const

@@ -167,7 +167,7 @@ struct strerror_r_CallHistory
       return returnValue;
    }
 
-   void AssertCalledOnceWith(int expectedErrnoValue, size_t expectedOutErrnoDescriptionCharsSize)
+   void AssertCalledOnceWith(int expectedErrnoValue, size_t expectedOutErrnoDescriptionCharsSize) const
    {
       ARE_EQUAL(1ull, numberOfCalls);
       ARE_EQUAL(expectedErrnoValue, errnoValueArgument);

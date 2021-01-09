@@ -81,7 +81,7 @@ struct fopen_CallHistory
       fileOpenModeArgument = fileOpenMode;
    }
 
-   void AssertCalledOnceWith(const fs::path& expectedFilePath, const char* expectedFileOpenMode)
+   void AssertCalledOnceWith(const fs::path& expectedFilePath, const char* expectedFileOpenMode) const
    {
       ARE_EQUAL(1, numberOfCalls);
       ARE_EQUAL(expectedFilePath, filePathArgument);

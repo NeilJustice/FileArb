@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "libFileArb/Components/FileArb/FileArbArgsParser.h"
 #include "libFileArb/Components/FileArb/FileArbProgram.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/Exception/MetalMock/TryCatchCallerMock.h"
 #include "libFileArbTests/Components/FileArb/MetalMock/FileArbArgsParserMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramFactoryMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
-#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
-#include "libFileArbTests/Components/Exception/MetalMock/TryCatchCallerMock.h"
 #include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileArbProgramTests)

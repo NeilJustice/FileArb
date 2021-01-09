@@ -3,6 +3,6 @@
 
 string Exception::GetClassNameAndMessage(const exception* ex)
 {
-   const string exceptionClassNameAndMessage = *Type::GetName(*ex) + ": " + ex->what();
+   string exceptionClassNameAndMessage = *Type::GetName(*ex) + ": " + ex->what();
    return exceptionClassNameAndMessage;
 }

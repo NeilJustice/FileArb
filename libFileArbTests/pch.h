@@ -20,8 +20,8 @@
 namespace fs = std::filesystem;
 using namespace std;
 
-#include "ZenUnit/ZenUnit.h"
-#include "ZenUnit/MetalMock.h"
+#include "ZenUnitAndMetalMock/ZenUnit.h"
+#include "ZenUnitAndMetalMock/MetalMock.h"
 
 // libFileArb Compiler
 #include "libFileArb/Compiler/CompilerMacros.h"

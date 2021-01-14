@@ -17,9 +17,9 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
    * [create-text-files](#create-text-files)
    * [create-binary-files](#create-binary-files)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearb)
-* [Windows Jenkins Jobs Which Build FileArb](#windows-jenkins-jobs-which-build-filearb)
+* [Windows Jenkins Jobs Which Build FileArb On Windows With Visual Studio 2019](#windows-jenkins-jobs-which-build-filearb-on-windows-with-visual-studio-2019)
 * [How To Build Binary filearb On Linux With Clang](#how-to-build-binary-filearb-on-linux-with-clang)
-* [How To Build Executable FileArb.exe On Windows With Visual Studio 2019](#how-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)
+* [How To Build FileArb.exe On Windows With Visual Studio 2019](#how-to-build-filearbexe-on-windows-with-visual-studio-2019)
 * [FileArb Roadmap](#filearb-roadmap)
 
 ## FileArb Command Line Usage
@@ -69,11 +69,11 @@ FileArb program mode `create-binary-files` creates at a specified directory a sp
 
 ## Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb
 
-A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 31:
+A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 33:
 
 ![Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](Screenshots/LinuxJenkinsJobsForFileArb.png)
 
-## Windows Jenkins Jobs Which Compile FileArb
+## Windows Jenkins Jobs Which Build FileArb On Windows With Visual Studio 2019
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Windows:
 
@@ -81,20 +81,22 @@ A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on
 
 ## How To Build Binary filearb On Linux With Clang
 
-```
+```bash
 git clone https://github.com/NeilJustice/FileArb
 cd FileArb && mkdir Release && cd Release
 CXX=clang++ cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release
-sudo cmake --build . --target install # Compiles then copies binary 'filearb' to /usr/local/bin/filearb
+# Builds then copies binary filearb to /usr/local/bin/filearb
+sudo cmake --build . --target install
 ```
 
-## How To Build Executable FileArb.exe On Windows With Visual Studio 2019
+## How To Build FileArb.exe On Windows With Visual Studio 2019
 
-```
+```powershell
 git clone https://github.com/NeilJustice/FileArb
 cd FileArb
 cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
-cmake --build . --config Release --target install # Builds then copies FileArb.exe to C:\bin\FileArb.exe
+# Builds then copies FileArb.exe to C:\bin\FileArb.exe
+cmake --build . --config Release --target install
 ```
 
 ## FileArb Roadmap

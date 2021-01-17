@@ -18,8 +18,9 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
    * [create-binary-files](#create-binary-files)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearb)
 * [Windows Jenkins Jobs Which Build FileArb On Windows With Visual Studio 2019](#windows-jenkins-jobs-which-build-filearb-on-windows-with-visual-studio-2019)
+* [FileArb Code Structure As It Appears In Visual Studio 2019](#filearb-code-structure-as-it-appears-in-visual-studio-2019)
 * [How To Build Binary filearb On Linux With Clang](#how-to-build-binary-filearb-on-linux-with-clang)
-* [How To Build FileArb.exe On Windows With Visual Studio 2019](#how-to-build-filearbexe-on-windows-with-visual-studio-2019)
+* [How To Build Executable FileArb.exe On Windows With Visual Studio 2019](#how-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)
 * [FileArb Roadmap](#filearb-roadmap)
 
 ## FileArb Command Line Usage
@@ -79,6 +80,10 @@ A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on
 
 ![Windows Jenkins Jobs Which Compile FileArb](Screenshots/WindowsJenkinsJobsForFileArb.png)
 
+## FileArb Code Structure As It Appears In Visual Studio 2019
+
+![FileArb Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileArbCodeStructureAsItAppearsInVisualStudio2019.png)
+
 ## How To Build Binary filearb On Linux With Clang
 
 ```bash
@@ -89,7 +94,7 @@ CXX=clang++ cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-## How To Build FileArb.exe On Windows With Visual Studio 2019
+## How To Build Executable FileArb.exe On Windows With Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/FileArb
@@ -103,7 +108,7 @@ cmake --build . --config Release --target install
 
 |Future FileArb Feature|Estimated Delivery Month|Implementation Status|
 |----------------------|------------------------|---------------------|
-|create-binary-files mode optionally reads from /dev/urandom on Linux to populate binary files|January 2021|Awaiting implementation|
+|create-binary-files mode optionally reads from `/dev/urandom` on Linux to populate binary files|January 2021|Awaiting implementation|
 |GitHub Actions build|February 2021|Awaiting implementation|
 |Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|Awaiting implementation|
 |SonarCloud static analysis badge|February 2021|Awaiting implementation|

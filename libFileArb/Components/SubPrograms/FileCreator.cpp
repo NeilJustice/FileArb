@@ -11,12 +11,12 @@
 
 FileCreator::FileCreator()
    // Function Callers
-   : _caller_CreateSequentiallyNumberedFilesInNumberedDirectory(make_unique<VoidTwoArgMemberFunctionCallerType>()),
-     _caller_CreateNumberedFileInDirectory(make_unique<VoidThreeArgMemberFunctionCallerType>()),
-     // Constant Components
-     _console(make_unique<Console>()),
-     _fileSystem(make_unique<FileSystem>()),
-     _stopwatchFactory(make_unique<StopwatchFactory>())
+   : _caller_CreateSequentiallyNumberedFilesInNumberedDirectory(make_unique<VoidTwoArgMemberFunctionCallerType>())
+   , _caller_CreateNumberedFileInDirectory(make_unique<VoidThreeArgMemberFunctionCallerType>())
+   // Constant Components
+   , _console(make_unique<Console>())
+   , _fileSystem(make_unique<FileSystem>())
+   , _stopwatchFactory(make_unique<StopwatchFactory>())
 {
 }
 

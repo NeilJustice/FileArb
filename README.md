@@ -27,9 +27,6 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 
 ```
 FileArb v0.9.0
-Creates an arbitrary number of text or binary files
-containing an arbitrary number of lines, characters, or bytes
-for performance testing FileRevisor or file systems in general.
 https://github.com/NeilJustice/FileArb
 
 Usage:
@@ -41,6 +38,7 @@ Usage:
       --characters=<CharactersPerLine>
       [--parallel]
       [--verbose]
+
    filearb create-binary-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -103,6 +101,10 @@ cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 # Builds then copies FileArb.exe to C:\bin\FileArb.exe
 cmake --build . --config Release --target install
 ```
+
+Resulting executable FileArb.exe:
+
+![Resulting executable FileArb.exe](Screenshots/Windows/FileArbDotExe.png)
 
 ## FileArb Roadmap
 

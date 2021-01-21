@@ -92,6 +92,10 @@ CXX=clang++ cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
+Resulting binary `/usr/local/bin/filearb`:
+
+![Resulting binary filearb](Screenshots/Linux/filearbBinaryOnLinux.png)
+
 ## How To Build Executable FileArb.exe On Windows With Visual Studio 2019
 
 ```powershell
@@ -102,7 +106,7 @@ cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 
-Resulting executable FileArb.exe:
+Resulting executable `C:\bin\FileArb.exe`:
 
 ![Resulting executable FileArb.exe](Screenshots/Windows/FileArbDotExe.png)
 

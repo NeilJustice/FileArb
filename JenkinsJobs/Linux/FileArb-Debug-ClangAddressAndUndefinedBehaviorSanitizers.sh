@@ -8,5 +8,5 @@ python -u PyUtils/BuildAndInstallCPlusPlusProgram.py \
    --solution-name=FileArb \
    --cmake-build-type=Debug \
    --tests-project-name=libFileArbTests \
-   --cmake-definitions="-DClangSanitizerMode_AddressAndUndefined=ON" \
+   --cmake-definitions="-DClangSanitizerMode_AddressAndUndefinedBehavior=ON" \
    --no-install

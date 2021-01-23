@@ -18,7 +18,7 @@ FACTS(GetProgramModeSpecificRequiredSizeT_ProgramModeIsNotContainedWithinTheProg
 FACTS(GetProgramModeSpecificRequiredSizeT_ProgramModeIsTheProgramModeThatRequiresTheSizeT_ReturnsResultOfCallingStaticGetRequiredSizeT)
 AFACT(GetRequiredSizeT_ArgNotInMap_ThrowsInvalidArgumentException)
 AFACT(GetRequiredSizeT_ArgInMapAsEmptyValue_ThrowsInvalidArgumentException)
-AFACT(GetRequiredSizeT_ArgInMapAsANonNegativeLong_ReturnsLongValueAsSizeTValue)
+AFACT(GetRequiredSizeT_ArgInMapAsANon0SizeT_ReturnsSizeTValueAsSizeTValue)
 EVIDENCE
 
 DocoptParser _docoptParser;
@@ -188,9 +188,9 @@ TEST(GetRequiredSizeT_ArgInMapAsEmptyValue_ThrowsInvalidArgumentException)
       invalid_argument, expectedExceptionMessage);
 }
 
-TEST(GetRequiredSizeT_ArgInMapAsANonNegativeLong_ReturnsLongValueAsSizeTValue)
+TEST(GetRequiredSizeT_ArgInMapAsANon0SizeT_ReturnsSizeTValueAsSizeTValue)
 {
-   const size_t sizeTValue = ZenUnit::Random<size_t>();
+   const size_t sizeTValue = ZenUnit::RandomNon0<size_t>();
    _docoptArgs[_argName] = docopt::Value(sizeTValue);
    //
    const size_t returnedSizeTValue = _docoptParser.GetRequiredSizeT(_docoptArgs, _argName);

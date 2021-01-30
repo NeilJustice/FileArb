@@ -3,7 +3,7 @@
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FunctionCallers/Member/VoidThreeArgMemberFunctionCaller.h"
 #include "libFileArb/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileArb/Components/Misc/IncreasingIntegerSequence.h"
+#include "libFileArb/Components/Misc/AtomicIncreasingIntegerSequence.h"
 #include "libFileArb/Components/SubPrograms/CreateTextFiles/TextFileLinesGenerator.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 #include "libFileArb/Components/Time/Stopwatch.h"

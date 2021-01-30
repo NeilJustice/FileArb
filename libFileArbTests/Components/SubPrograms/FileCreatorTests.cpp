@@ -4,7 +4,7 @@
 #include "libFileArbTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libFileArbTests/Components/FunctionCallers/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
 #include "libFileArbTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileArbTests/Components/Misc/MetalMock/IncreasingIntegerSequenceMock.h"
+#include "libFileArbTests/Components/Misc/MetalMock/AtomicIncreasingIntegerSequenceMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
 #include "libFileArbTests/Components/Time/MetalMock/StopwatchFactoryMock.h"
 #include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"

@@ -22,6 +22,7 @@ AFACT(GetRequiredSizeT_ArgInMapAsANon0SizeT_ReturnsSizeTValueAsSizeTValue)
 EVIDENCE
 
 DocoptParser _docoptParser;
+// Function Pointers
 METALMOCK_NONVOID5_FREE(map<string COMMA docopt::Value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
 METALMOCK_NONVOID2_STATIC(size_t, DocoptParser, StaticGetRequiredSizeT, map<string COMMA docopt::Value>, const string&)
 
@@ -31,6 +32,7 @@ string _expectedKeyNotFoundExceptionMessage;
 
 STARTUP
 {
+   // Function Pointers
    _docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
    _docoptParser._call_StaticGetRequiredSizeT = BIND_2ARG_METALMOCK_OBJECT(StaticGetRequiredSizeTMock);
 
@@ -42,6 +44,7 @@ STARTUP
 TEST(DefaultConstructor_SetsFunctions)
 {
    const DocoptParser docoptParser;
+   // Function Pointers
    STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
    STD_FUNCTION_TARGETS(DocoptParser::StaticGetRequiredSizeT, docoptParser._call_StaticGetRequiredSizeT);
 }

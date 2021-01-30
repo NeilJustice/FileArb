@@ -4,7 +4,7 @@
 #include "libFileArb/Components/FileArb/FileArbArgsParser.h"
 
 FileArbArgsParser::FileArbArgsParser()
-   // Function Callers
+   // Function Pointers
    : _call_DetermineProgramMode(FileArbArgsParser::DetermineProgramMode)
    , _call_DetermineFileExtension(FileArbArgsParser::DetermineFileExtension)
    // Constant Components

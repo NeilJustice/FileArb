@@ -27,6 +27,8 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 
 ```
 FileArb v0.9.0
+Creates an arbitrary number of text files or binary files
+containing an arbitrary number of lines, characters, or bytes.
 https://github.com/NeilJustice/FileArb
 
 Usage:

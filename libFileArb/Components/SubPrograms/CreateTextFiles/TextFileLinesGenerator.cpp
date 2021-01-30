@@ -2,6 +2,7 @@
 #include "libFileArb/Components/SubPrograms/CreateTextFiles/TextFileLinesGenerator.h"
 
 TextFileLinesGenerator::TextFileLinesGenerator()
+   // Function Pointers
    : _call_ReplicateLineNTimes(ReplicateLineNTimes)
 {
 }

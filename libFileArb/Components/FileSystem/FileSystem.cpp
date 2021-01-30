@@ -11,7 +11,7 @@ int* GetErrno()
 #endif
 
 FileSystem::FileSystem()
-   // Function Callers
+   // Function Pointers
    : _call_fclose(::fclose)
 #if defined __linux__ || defined __APPLE__
    , _call_errno(GetErrno)

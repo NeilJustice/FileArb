@@ -14,7 +14,7 @@ AFACT(PrintPreamble_WritesRunningCommandLineMessageToConsole)
 EVIDENCE
 
 FileArbArgsParser _fileArbArgsParser;
-// Function Callers
+// Function Pointers
 METALMOCK_NONVOID2_STATIC(ProgramMode, FileArbArgsParser, DetermineProgramMode, bool, bool)
 METALMOCK_NONVOID2_STATIC(string, FileArbArgsParser, DetermineFileExtension, bool, bool)
 // Constant Components
@@ -25,7 +25,7 @@ using DocoptMapType = map<string, docopt::Value>;
 
 STARTUP
 {
-   // Function Callers
+   // Function Pointers
    _fileArbArgsParser._call_DetermineProgramMode = BIND_2ARG_METALMOCK_OBJECT(DetermineProgramModeMock);
    _fileArbArgsParser._call_DetermineFileExtension = BIND_2ARG_METALMOCK_OBJECT(DetermineFileExtensionMock);
    // Constant Components
@@ -36,7 +36,7 @@ STARTUP
 TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
    FileArbArgsParser fileArbArgsParser;
-   // Function Callers
+   // Function Pointers
    STD_FUNCTION_TARGETS(FileArbArgsParser::DetermineProgramMode, fileArbArgsParser._call_DetermineProgramMode);
    STD_FUNCTION_TARGETS(FileArbArgsParser::DetermineFileExtension, fileArbArgsParser._call_DetermineFileExtension);
    // Constant Components

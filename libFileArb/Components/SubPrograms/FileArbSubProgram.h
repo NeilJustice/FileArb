@@ -5,11 +5,11 @@ struct FileArbArgs;
 
 class FileArbSubProgram
 {
-protected:
    friend class FileArbSubProgramTests;
+protected:
+   // Constant Components
    unique_ptr<const Console> _protected_console;
    unique_ptr<const FileSystem> _protected_fileSystem;
-
 public:
    FileArbSubProgram();
    virtual ~FileArbSubProgram();

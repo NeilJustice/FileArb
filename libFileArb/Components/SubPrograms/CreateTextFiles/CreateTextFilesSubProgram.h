@@ -9,7 +9,6 @@ private:
    friend class CreateTextFilesSubProgramTests;
    unique_ptr<const TextFileLinesGenerator> _textFileLinesGenerator;
    unique_ptr<FileCreator> _fileCreator;
-
 public:
    CreateTextFilesSubProgram();
    virtual ~CreateTextFilesSubProgram();

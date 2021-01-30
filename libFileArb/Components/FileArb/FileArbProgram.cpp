@@ -9,7 +9,7 @@
 #include "libFileArb/Components/Time/Stopwatch.h"
 
 FileArbProgram::FileArbProgram()
-   // Function Callers
+   // Function Pointers
    : _call_Utils_Exception_ClassNameAndMessage(Exception::GetClassNameAndMessage)
    , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
    // Constant Components

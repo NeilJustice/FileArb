@@ -9,6 +9,7 @@ int* GetLinuxErrno()
 #endif
 
 ErrorCodeTranslator::ErrorCodeTranslator()
+   // Function Pointers
 #if defined __linux__ || defined __APPLE__
    : _call_errno(GetLinuxErrno),
      _call_strerror_r(strerror_r)

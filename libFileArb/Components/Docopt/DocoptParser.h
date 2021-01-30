@@ -6,6 +6,7 @@ class DocoptParser
 {
    friend class ::DocoptParserTests;
 private:
+   // Function Pointers
    function<map<string, docopt::Value>(string, const vector<string>&, bool help, string, bool)> _call_docopt_docopt;
    function<size_t(const map<string, docopt::Value>&, const string&)> _call_StaticGetRequiredSizeT;
 public:

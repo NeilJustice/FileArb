@@ -3,15 +3,16 @@ class StopwatchTests;
 
 class Stopwatch
 {
+   friend class StopwatchTests;
 private:
-   friend class ::StopwatchTests;
+   // Function Pointers
    std::function<std::chrono::time_point<std::chrono::high_resolution_clock>()> _call_now;
+   // Mutable Fields
    std::chrono::time_point<std::chrono::high_resolution_clock> _startTime;
-
 public:
    Stopwatch();
+   virtual ~Stopwatch() = default;
    virtual void Start();
    virtual std::string StopAndGetElapsedSeconds();
    virtual long long StopAndGetElapsedMilliseconds();
-   virtual ~Stopwatch() = default;
 };

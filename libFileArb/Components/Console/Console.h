@@ -3,7 +3,7 @@ class ConsoleTests;
 
 class Console
 {
-   friend class ::ConsoleTests;
+   friend class ConsoleTests;
 public:
    virtual ~Console();
    virtual void Write(string_view message) const;

@@ -15,7 +15,7 @@ class FileArbProgram
 {
 private:
    friend class FileArbProgramTests;
-   // Function Callers
+   // Function Pointers
    std::function<std::string(const std::exception*)> _call_Utils_Exception_ClassNameAndMessage;
    std::function<std::vector<std::string>(int, char**)> _call_Utils_Vector_FromArgcArgv;
    // Constant Components
@@ -26,12 +26,10 @@ private:
    // Mutable Components
    std::unique_ptr<FileCreator> _fileCreator;
    std::unique_ptr<Stopwatch> _stopwatch;
-
 public:
    FileArbProgram();
    virtual ~FileArbProgram();
    int Main(int argc, char* argv[]);
-
 private:
    int Run(const std::vector<std::string>& stringArgs);
    int ExceptionHandler(const std::exception& ex, const std::vector<std::string>& stringArgs);

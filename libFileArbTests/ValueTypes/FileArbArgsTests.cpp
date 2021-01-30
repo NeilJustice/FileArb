@@ -28,9 +28,8 @@ TEST(Usage_IsExpectedString)
 {
    ARE_EQUAL(
 R"(FileArb v0.9.0
-Creates an arbitrary number of text or binary files
-containing an arbitrary number of lines, characters, or bytes
-for performance testing FileRevisor or file systems in general.
+Creates an arbitrary number of text files or binary files
+containing an arbitrary number of lines, characters, or bytes.
 https://github.com/NeilJustice/FileArb
 
 Usage:

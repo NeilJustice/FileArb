@@ -1,12 +1,12 @@
 #pragma once
 class Console;
 class FileSystem;
+struct FileArbArgs;
 class StopwatchFactory;
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
 template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
 class VoidThreeArgMemberFunctionCaller;
-struct FileArbArgs;
 
 class FileCreator
 {
@@ -25,12 +25,10 @@ private:
    unique_ptr<const Console> _console;
    unique_ptr<const FileSystem> _fileSystem;
    unique_ptr<const StopwatchFactory> _stopwatchFactory;
-
 public:
    FileCreator();
    virtual ~FileCreator();
    virtual void WriteFiles(const FileArbArgs& args, const string& fileTextOrBytes);
-
 private:
    void CreateSequentiallyNumberedFilesInNumberedDirectory(
       size_t callIndex, const FileArbArgs& args, const string& fileTextOrBytes);

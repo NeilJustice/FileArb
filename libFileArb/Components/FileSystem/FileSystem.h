@@ -9,7 +9,7 @@ class FileSystem
 {
 private:
    friend class FileSystemTests;
-   // Function Callers
+   // Function Pointers
    std::function<int(FILE*)> _call_fclose;
    std::function<int*()> _call_errno;
 #if defined __linux__ || defined __APPLE__
@@ -21,13 +21,11 @@ private:
    std::function<bool(const fs::path&, error_code&)> _call_fs_create_directories;
    // Constant Callers
    unique_ptr<const ErrorCodeTranslator> _errorCodeTranslator;
-
 public:
    FileSystem();
    virtual ~FileSystem();
    virtual void CreateTextFile(const fs::path& filePath, string_view text) const;
    virtual void CreateBinaryFile(const fs::path& filePath, const char* bytes, size_t bytesSize) const;
-
 private:
    virtual FILE* OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
    virtual void CloseFile(const fs::path& filePath, FILE* filePointer) const;

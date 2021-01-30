@@ -16,7 +16,6 @@ public:
    }
 
    String() = delete;
-
 private:
    static std::string ToAllLowercase(std::string_view str);
 };

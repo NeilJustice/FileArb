@@ -37,7 +37,7 @@ TEST(Run_CreateBinaryFiles_Returns0)
    //
    const int exitCode = _createBinaryFilesSubProgram.Run(args);
    //
-   METALMOCK(_binaryFileBytesGeneratorMock->MakeFileBytesMock.CalledOnceWith(args.numberOfBytesPerFile));
+   METALMOCK(_binaryFileBytesGeneratorMock->MakeFileBytesMock.CalledOnceWith(args.numberOfBytesPerFile, args.randomBytes));
    METALMOCK(_fileCreatorMock->WriteFilesMock.CalledOnceWith(args, fileBytes));
    IS_ZERO(exitCode);
 }

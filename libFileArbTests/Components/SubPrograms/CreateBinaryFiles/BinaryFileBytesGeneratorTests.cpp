@@ -10,8 +10,9 @@ BinaryFileBytesGenerator _binaryFileBytesGenerator;
 TEST(MakeFileBytes_ReturnsStringWithLengthNumberOfBytesPerFileAllSetTo0)
 {
    const unsigned numberOfBytesPerFile = ZenUnit::RandomBetween<unsigned>(0, 3);
+   const bool randomBytes = ZenUnit::Random<bool>();
    //
-   const string fileBytes = _binaryFileBytesGenerator.MakeFileBytes(numberOfBytesPerFile);
+   const string fileBytes = _binaryFileBytesGenerator.MakeFileBytes(numberOfBytesPerFile, randomBytes);
    //
    const string expectedFileBytes(numberOfBytesPerFile, 0);
    ARE_EQUAL(expectedFileBytes, fileBytes);

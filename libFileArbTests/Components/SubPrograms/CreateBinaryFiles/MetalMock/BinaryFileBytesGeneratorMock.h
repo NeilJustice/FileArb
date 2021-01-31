@@ -4,5 +4,5 @@
 class BinaryFileBytesGeneratorMock : public Metal::Mock<BinaryFileBytesGenerator>
 {
 public:
-   METALMOCK_NONVOID1_CONST(string, MakeFileBytes, size_t)
+   METALMOCK_NONVOID2_CONST(string, MakeFileBytes, size_t, bool)
 };

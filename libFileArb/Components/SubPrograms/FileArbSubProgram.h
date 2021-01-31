@@ -7,7 +7,7 @@ class FileArbSubProgram
 {
    friend class FileArbSubProgramTests;
 protected:
-   // Constant Components
+   // Baseclass Constant Components
    unique_ptr<const Console> _protected_console;
    unique_ptr<const FileSystem> _protected_fileSystem;
 public:

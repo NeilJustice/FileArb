@@ -38,14 +38,14 @@ TEST(Constructor_NewsComponents)
 
 TEST(Run_CreateBinaryFiles_Returns0)
 {
-   const string fileBytes = _binaryFileBytesGeneratorMock->MakeFileBytesMock.ReturnRandom();
-   _fileCreatorMock->WriteFilesMock.Expect();
+   const string bytesString = _binaryFileBytesGeneratorMock->MakeBytesStringMock.ReturnRandom();
+   _fileCreatorMock->CreateFilesMock.Expect();
    const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    //
    const int exitCode = _createBinaryFilesSubProgram.Run(args);
    //
-   METALMOCK(_binaryFileBytesGeneratorMock->MakeFileBytesMock.CalledOnceWith(args.numberOfBytesPerFile, args.randomBytes));
-   METALMOCK(_fileCreatorMock->WriteFilesMock.CalledOnceWith(args, fileBytes));
+   METALMOCK(_binaryFileBytesGeneratorMock->MakeBytesStringMock.CalledOnceWith(args.numberOfBytesPerFile, args.randomBytes));
+   METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(args, bytesString));
    IS_ZERO(exitCode);
 }
 

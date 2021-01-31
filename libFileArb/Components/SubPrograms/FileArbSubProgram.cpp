@@ -4,7 +4,7 @@
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 
 FileArbSubProgram::FileArbSubProgram()
-   // Constant Components
+   // Baseclass Constant Components
    : _protected_console(make_unique<Console>())
    , _protected_fileSystem(make_unique<FileSystem>())
 {

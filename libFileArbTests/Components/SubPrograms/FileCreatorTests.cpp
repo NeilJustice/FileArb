@@ -11,8 +11,8 @@
 
 TESTS(FileCreatorTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(WriteFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
-AFACT(WriteFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
+AFACT(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
+AFACT(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 AFACT(CreateSequentiallyNumberedFilesInNumberedDirectory_DoesSo)
 AFACT(CreateNumberedFileInDirectory_VerboseTrue_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)
 AFACT(CreateNumberedFileInDirectory_VerboseFalse_CreatesFile_DoesNotWriteWroteFileMessage)
@@ -57,14 +57,14 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(fileCreator._stopwatchFactory);
 }
 
-TEST(WriteFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
+TEST(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 {
    _caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->ParallelCallNonConstMemberFunctionNTimesMock.Expect();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.parallel = true;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
-   _fileCreator.WriteFiles(args, fileTextOrBytes);
+   _fileCreator.CreateFiles(args, fileTextOrBytes);
    //
    METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->
       ParallelCallNonConstMemberFunctionNTimesMock.CalledOnceWith(
@@ -73,14 +73,14 @@ TEST(WriteFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesC
          &_fileCreator, args, fileTextOrBytes));
 }
 
-TEST(WriteFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
+TEST(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 {
    _caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->CallNonConstMemberFunctionNTimesMock.Expect();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.parallel = false;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
-   _fileCreator.WriteFiles(args, fileTextOrBytes);
+   _fileCreator.CreateFiles(args, fileTextOrBytes);
    //
    METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->
       CallNonConstMemberFunctionNTimesMock.CalledOnceWith(

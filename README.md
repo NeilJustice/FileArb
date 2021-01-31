@@ -46,6 +46,7 @@ Usage:
       --directories=<NumberOfDirectories>
       --files=<NumberOfFiles>
       --bytes=<BytesPerFile>
+      [--random-bytes]
       [--parallel]
       [--verbose]
 ```

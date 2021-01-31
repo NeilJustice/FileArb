@@ -18,6 +18,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfLinesPerFile, ZenUnit::RandomNon0<size_t>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfCharactersPerLine, ZenUnit::RandomNon0<size_t>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfBytesPerFile, ZenUnit::RandomNon0<size_t>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, randomBytes, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, parallel, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, verbose, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, fileExtension, ZenUnit::Random<string>());
@@ -47,9 +48,10 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
       numberOfCharactersPerLine,
       numberOfBytesPerFile);
 
+   const bool randomBytes = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool verbose = ZenUnit::Random<bool>();
-   randomGeneratorMock.BoolMock.ReturnValues(parallel, verbose);
+   randomGeneratorMock.BoolMock.ReturnValues(randomBytes, parallel, verbose);
    //
    const FileArbArgs randomFileArbArgs = TestableFileArbArgs(&randomGeneratorMock);
    //
@@ -57,7 +59,7 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
    METALMOCK(randomGeneratorMock.EnumMock.CalledOnceWith(static_cast<int>(ProgramMode::MaxValue)));
    METALMOCK(randomGeneratorMock.FilesystemPathMock.CalledOnce());
    METALMOCK(randomGeneratorMock.SizeTMock.CalledNTimes(5));
-   METALMOCK(randomGeneratorMock.BoolMock.CalledNTimes(2));
+   METALMOCK(randomGeneratorMock.BoolMock.CalledNTimes(3));
    FileArbArgs expectedRandomFileArbArgs;
    expectedRandomFileArbArgs.commandLine = commandLine;
    expectedRandomFileArbArgs.programMode = programMode;
@@ -68,6 +70,7 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
    expectedRandomFileArbArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
    expectedRandomFileArbArgs.numberOfBytesPerFile = numberOfBytesPerFile;
    expectedRandomFileArbArgs.targetDirectoryPath = targetDirectoryPath;
+   expectedRandomFileArbArgs.randomBytes = randomBytes;
    expectedRandomFileArbArgs.parallel = parallel;
    expectedRandomFileArbArgs.verbose = verbose;
    expectedRandomFileArbArgs.fileExtension = fileExtension;

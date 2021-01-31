@@ -13,6 +13,7 @@ struct FileArbArgs
    size_t numberOfLinesPerFile = 0;
    size_t numberOfCharactersPerLine = 0;
    size_t numberOfBytesPerFile = 0;
+   bool randomBytes = false;
    bool parallel = false;
    bool verbose = false;
 

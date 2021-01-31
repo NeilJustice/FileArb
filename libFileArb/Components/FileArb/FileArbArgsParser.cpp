@@ -50,8 +50,9 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
    args.numberOfBytesPerFile = _docoptParser->GetProgramModeSpecificRequiredSizeT(
       docoptValues, "--bytes", programModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFiles) });
 
-   args.parallel = _docoptParser->GetRequiredBool(docoptValues, "--parallel");
-   args.verbose = _docoptParser->GetRequiredBool(docoptValues, "--verbose");
+   args.randomBytes = _docoptParser->GetOptionalBool(docoptValues, "--random-bytes");
+   args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");
+   args.verbose = _docoptParser->GetOptionalBool(docoptValues, "--verbose");
    return args;
 }
 

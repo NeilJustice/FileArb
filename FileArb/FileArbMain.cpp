@@ -4,8 +4,8 @@
 // create-text-files --target=C:\FileRevisorTesting\Test --directories=3 --files=3 --lines=3 --characters=3 --verbose
 // create-text-files --target=C:\FileRevisorTesting\Test --directories=32 --files=1000 --lines=100 --characters=100 --parallel --verbose
 
-// create-binary-files --target=C:\FileRevisorTesting\Test --directories=3 --files=3 --bytes=3 --verbose
-// create-binary-files --target=C:\FileRevisorTesting\Test --directories=32 --files=1000 --bytes=1000 --parallel --verbose
+// create-binary-files --target=C:\FileRevisorTesting\Test --directories=3 --files=3 --bytes=3 --verbose --random-bytes
+// create-binary-files --target=C:\FileRevisorTesting\Test --directories=32 --files=1000 --bytes=1000 --parallel --verbose --random-bytes
 
 int main(int argc, char* argv[])
 {

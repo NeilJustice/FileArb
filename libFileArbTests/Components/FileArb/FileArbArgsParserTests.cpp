@@ -69,9 +69,10 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
       numberOfCharactersPerLine,
       numberOfBytesPerFile);
 
+   const bool randomBytes = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool verbose = ZenUnit::Random<bool>();
-   _docoptParserMock->GetRequiredBoolMock.ReturnValues(parallel, verbose);
+   _docoptParserMock->GetOptionalBoolMock.ReturnValues(randomBytes, parallel, verbose);
 
    const int randomProgramModeInt = ZenUnit::RandomBetween<int>(0, 2);
    const ProgramMode programMode = static_cast<ProgramMode>(randomProgramModeInt);
@@ -98,7 +99,11 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
    {
       { docoptValues, "create-text-files" },
-      { docoptValues, "create-binary-files" },
+      { docoptValues, "create-binary-files" }
+   }));
+   METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledAsFollows(
+   {
+      { docoptValues, "--random-bytes" },
       { docoptValues, "--parallel" },
       { docoptValues, "--verbose" }
    }));
@@ -125,6 +130,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    expectedArgs.numberOfLinesPerFile = numberOfLinesPerFile;
    expectedArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
    expectedArgs.numberOfBytesPerFile = numberOfBytesPerFile;
+   expectedArgs.randomBytes = randomBytes;
    expectedArgs.parallel = parallel;
    expectedArgs.verbose = verbose;
    ARE_EQUAL(expectedArgs, args);

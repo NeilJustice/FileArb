@@ -3,7 +3,7 @@
 
 TESTS(FileArbArgsTests)
 AFACT(DefaultConstructor_SetsFieldsTo0)
-AFACT(Usage_IsExpectedString)
+AFACT(CommandLineUsage_IsExpectedString)
 EVIDENCE
 
 TEST(DefaultConstructor_SetsFieldsTo0)
@@ -18,13 +18,14 @@ TEST(DefaultConstructor_SetsFieldsTo0)
    expectedDefaultFileArbArgs.numberOfLinesPerFile = 0;
    expectedDefaultFileArbArgs.numberOfCharactersPerLine = 0;
    expectedDefaultFileArbArgs.numberOfBytesPerFile = 0;
+   expectedDefaultFileArbArgs.randomBytes = false;
    expectedDefaultFileArbArgs.parallel = false;
    expectedDefaultFileArbArgs.verbose = false;
    expectedDefaultFileArbArgs.fileExtension = "";
    ARE_EQUAL(expectedDefaultFileArbArgs, defaultFileArbArgs);
 }
 
-TEST(Usage_IsExpectedString)
+TEST(CommandLineUsage_IsExpectedString)
 {
    ARE_EQUAL(
 R"(FileArb v0.9.0
@@ -46,6 +47,7 @@ Usage:
       --directories=<NumberOfDirectories>
       --files=<NumberOfFiles>
       --bytes=<BytesPerFile>
+      [--random-bytes]
       [--parallel]
       [--verbose]
 )", FileArbArgs::CommandLineUsage);

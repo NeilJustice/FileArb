@@ -15,9 +15,8 @@ AFACT(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrno
 AFACT(OpenFile_FOpenSReturns0_ReturnsOpenedFile)
 AFACT(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 #endif
-//FACTS(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException)
-//AFACT(CloseFile_fcloseReturnValueIs0_Returns)
-AFACT(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes)
+AFACT(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes_FCloseReturns0_Returns)
+FACTS(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes_FCloseReturnsNot0_ThrowsFileCloseException)
 EVIDENCE
 
 FileSystem _fileSystem;
@@ -225,7 +224,7 @@ TEST(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValu
 
 #endif
 
-TEST(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes)
+TEST(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes_FCloseReturns0_Returns)
 {
    _call_fs_create_directoriesMock.ReturnRandom();
 
@@ -254,26 +253,44 @@ TEST(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpec
    METALMOCK(_call_fcloseMock.CalledOnceWith(&filePointer));
 }
 
-//TEST1X1(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException,
-//   int fcloseReturnValue,
-//   -2,
-//   -1,
-//   1,
-//   2)
-//{
-//   _call_fcloseMock.Return(fcloseReturnValue);
-//
-//   int errnoValue = ZenUnit::Random<int>();
-//   _call_errnoMock.Return(&errnoValue);
-//
-//   const fs::path filePath = ZenUnit::Random<fs::path>();
-//   FILE* const file = nullptr;
-//   //
-//   const string expectedExceptionWhat = MakeFileSystemExceptionMessage(filePath, errnoValue);
-//   THROWS_EXCEPTION(_fileSystem.CloseFile(filePath, file), FileCloseException, expectedExceptionWhat);
-//   //
-//   METALMOCK(_call_fcloseMock.CalledOnceWith(file));
-//   METALMOCK(_call_errnoMock.CalledOnce());
-//}
+TEST1X1(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes_FCloseReturnsNot0_ThrowsFileCloseException,
+   int fcloseReturnValue,
+   -2,
+   -1,
+   1,
+   2)
+{
+   _call_fs_create_directoriesMock.ReturnRandom();
+
+   FILE filePointer{};
+   _caller_OpenFileMock->CallConstMemberFunctionMock.Return(&filePointer);
+
+   const size_t numberOfBytesWritten = _call_fwriteMock.ReturnRandom();
+
+   _asserterMock->ThrowIfSizeTValuesNotEqualMock.Expect();
+
+   _call_fcloseMock.Return(fcloseReturnValue);
+
+   int errnoValue = ZenUnit::Random<int>();
+   _call_errnoMock.Return(&errnoValue);
+
+   const fs::path filePath = ZenUnit::Random<fs::path>();
+   const char* const fileOpenMode = ZenUnit::Random<const char*>();
+   const string bytes = ZenUnit::Random<string>();
+   //
+   const string expectedExceptionWhat = MakeFileSystemExceptionMessage(filePath, errnoValue);
+   THROWS_EXCEPTION(_fileSystem.CreateBinaryOrTextFile(filePath, fileOpenMode, bytes.data(), bytes.size()),
+      FileCloseException, expectedExceptionWhat);
+   //
+   const fs::path expectedParentDirectoryPath = filePath.parent_path();
+   METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath));
+   METALMOCK(_caller_OpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_fileSystem, &FileSystem::OpenFile, filePath, fileOpenMode));
+   METALMOCK(_call_fwriteMock.CalledOnceWith(bytes.data(), 1, bytes.size(), &filePointer));
+   METALMOCK(_asserterMock->ThrowIfSizeTValuesNotEqualMock.CalledOnceWith(
+      numberOfBytesWritten, bytes.size(), "fwrite unexpectedly did not return bytesSize"));
+   METALMOCK(_call_fcloseMock.CalledOnceWith(&filePointer));
+   METALMOCK(_call_errnoMock.CalledOnce());
+}
 
 RUN_TESTS(FileSystemTests)

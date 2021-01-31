@@ -70,7 +70,7 @@ void FileCreator::CreateNumberedFileInDirectory(
    {
       const long long millisecondsToWriteFile = threadUniqueCreateFileStopwatch->StopAndGetElapsedMilliseconds();
       const string wroteFileMessage = String::Concat(
-         "[FileArb] Wrote file ", filePath.string(), " [", millisecondsToWriteFile, " ms]\n");
-      _console->Write(wroteFileMessage);
+         "[FileArb] Wrote file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
+      _console->WriteLine(wroteFileMessage);
    }
 }

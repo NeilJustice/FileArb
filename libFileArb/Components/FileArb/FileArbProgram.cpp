@@ -34,22 +34,33 @@ int FileArbProgram::Main(int argc, char* argv[])
       _console->WriteLine(FileArbArgs::CommandLineUsage);
       return 0;
    }
-   _stopwatch->Start();
    const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
-   const int exitCode = _tryCatchCaller->TryCatchCall(
+   const int subProgramExitCode = _tryCatchCaller->TryCatchCall(
       this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
+
    const string runtimeInSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string durationLine = "[FileArb] Duration: " + runtimeInSeconds + " seconds";
+   const string durationLine = String::Concat("[FileArb] Duration: ", runtimeInSeconds, " seconds");
    _console->WriteLine(durationLine);
-   const string exitCodeLine = "[FileArb] ExitCode: " + to_string(exitCode);
+
+   const string exitCodeLine = String::Concat("[FileArb] ExitCode: ", subProgramExitCode);
    _console->WriteLine(exitCodeLine);
-   return exitCode;
+
+   return subProgramExitCode;
 }
 
 int FileArbProgram::Run(const vector<string>& stringArgs)
 {
+   _stopwatch->Start();
    const FileArbArgs args = _argsParser->ParseArgs(stringArgs);
-   _argsParser->PrintPreamble(args);
+   const string runningMessage = "[FileArb] Running: " + args.commandLine;
+   _console->WriteLine(runningMessage);
+
+   //auto f = []()
+   //{
+   //   throw exception();
+   //};
+   //f();
+
    const shared_ptr<FileArbSubProgram> fileArbSubProgram = _fileArbSubProgramFactory->NewFileArbSubProgram(args.programMode);
    const int exitCode = fileArbSubProgram->Run(args);
    return exitCode;

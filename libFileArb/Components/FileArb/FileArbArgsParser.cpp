@@ -75,9 +75,3 @@ string FileArbArgsParser::DetermineFileExtension(bool isCreateTextFilesMode, boo
    release_assert(isCreateBinaryFilesMode);
    return ".bin"s;
 }
-
-void FileArbArgsParser::PrintPreamble(const FileArbArgs& args) const
-{
-   const string runningMessage = "[FileArb] Running: " + args.commandLine;
-   _console->WriteLine(runningMessage);
-}

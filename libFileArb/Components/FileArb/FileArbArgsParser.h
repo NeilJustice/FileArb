@@ -20,7 +20,6 @@ public:
    FileArbArgsParser();
    virtual ~FileArbArgsParser();
    virtual FileArbArgs ParseArgs(const vector<string>& stringArgs) const;
-   virtual void PrintPreamble(const FileArbArgs& args) const;
 private:
    static ProgramMode DetermineProgramMode(bool isCreateTextFilesMode, bool isCreateBinaryFilesMode);
    static string DetermineFileExtension(bool isCreateTextFilesMode, bool isCreateBinaryFilesMode);

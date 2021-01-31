@@ -116,7 +116,7 @@ TEST(CreateNumberedFileInDirectory_VerboseTrue_CreatesFile_WritesWroteFileMessag
 
    _fileSystemMock->CreateBinaryFileMock.Expect();
 
-   _consoleMock->WriteMock_string.Expect();
+   _consoleMock->WriteLineMock.Expect();
 
    const size_t callIndex = ZenUnit::Random<size_t>();
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
@@ -135,8 +135,8 @@ TEST(CreateNumberedFileInDirectory_VerboseTrue_CreatesFile_WritesWroteFileMessag
       expectedFilePath, fileTextOrBytes.data(), fileTextOrBytes.size()));
    METALMOCK(threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    const string expectedWroteFileMessage = String::Concat(
-      "[FileArb] Wrote file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]\n");
-   METALMOCK(_consoleMock->WriteMock_string.CalledOnceWith(expectedWroteFileMessage));
+      "[FileArb] Wrote file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
 
 TEST(CreateNumberedFileInDirectory_VerboseFalse_CreatesFile_DoesNotWriteWroteFileMessage)

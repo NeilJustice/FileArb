@@ -10,7 +10,6 @@ AFACT(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
 FACTS(DetermineProgramMode_ReturnsExpectedProgramModeDependingOnProgramModeBoolValues)
 AFACT(DetermineFileExtension_IsCreateTextFilesModeIsTrue_ReturnsDotTxt)
 AFACT(DetermineFileExtension_IsCreateTextFilesModeIsFalse_IsCreateBinaryFilesModeIsTrue_ReturnsDotBin)
-AFACT(PrintPreamble_WritesRunningCommandLineMessageToConsole)
 EVIDENCE
 
 FileArbArgsParser _fileArbArgsParser;
@@ -156,17 +155,6 @@ TEST(DetermineFileExtension_IsCreateTextFilesModeIsFalse_IsCreateBinaryFilesMode
 {
    const string fileExtension = FileArbArgsParser::DetermineFileExtension(false, true);
    ARE_EQUAL(".bin"s, fileExtension);
-}
-
-TEST(PrintPreamble_WritesRunningCommandLineMessageToConsole)
-{
-   _consoleMock->WriteLineMock_string.Expect();
-   const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
-   //
-   _fileArbArgsParser.PrintPreamble(args);
-   //
-   const string expectedRunningMessage = "[FileArb] Running: " + args.commandLine;
-   METALMOCK(_consoleMock->WriteLineMock_string.CalledOnceWith(expectedRunningMessage));
 }
 
 RUN_TESTS(FileArbArgsParserTests)

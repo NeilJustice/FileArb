@@ -11,21 +11,28 @@ AFACT(Run_CreateBinaryFiles_Returns0)
 EVIDENCE
 
 CreateBinaryFilesSubProgram _createBinaryFilesSubProgram;
+// Constant Components
 BinaryFileBytesGeneratorMock* _binaryFileBytesGeneratorMock = nullptr;
+// Mutable Components
 FileCreatorMock* _fileCreatorMock = nullptr;
 
 STARTUP
 {
+   // Constant Components
    _createBinaryFilesSubProgram._binaryFileBytesGenerator.reset(_binaryFileBytesGeneratorMock = new BinaryFileBytesGeneratorMock);
+   // Mutable Components
    _createBinaryFilesSubProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
 }
 
 TEST(Constructor_NewsComponents)
 {
    CreateBinaryFilesSubProgram createBinaryFilesSubProgram;
+   // Base Constant Components
    DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._protected_fileSystem);
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._binaryFileBytesGenerator);
+   // Mutable Components
    DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._fileCreator);
 }
 

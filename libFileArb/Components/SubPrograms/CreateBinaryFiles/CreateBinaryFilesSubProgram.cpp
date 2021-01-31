@@ -4,7 +4,9 @@
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 
 CreateBinaryFilesSubProgram::CreateBinaryFilesSubProgram()
+   // Constant Components
    : _binaryFileBytesGenerator(make_unique<BinaryFileBytesGenerator>())
+   // Mutable Components
    , _fileCreator(make_unique<FileCreator>())
 {
 }

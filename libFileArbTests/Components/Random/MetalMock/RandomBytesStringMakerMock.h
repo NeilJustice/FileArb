@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/Random/RandomFileBytesMaker.h"
+#include "libFileArb/Components/Random/RandomBytesStringMaker.h"
 
 class RandomFileBytesMakerMock : public Metal::Mock<RandomBytesStringMaker>
 {

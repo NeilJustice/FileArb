@@ -146,7 +146,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessageInRed_Returns1)
    const string exceptionClassNameAndMessage = ZenUnit::Random<string>();
    GetClassNameAndMessageMock.Return(exceptionClassNameAndMessage);
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLineColorMock.Expect();
    const exception ex;
    const vector<string> args = { ZenUnit::Random<string>() };
    //
@@ -154,7 +154,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessageInRed_Returns1)
    //
    METALMOCK(GetClassNameAndMessageMock.CalledOnceWith(&ex));
    const string expectedExceptionErrorMessage = "[FileArb] Error: Exception thrown: " + exceptionClassNameAndMessage;
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExceptionErrorMessage));
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedExceptionErrorMessage, Color::Red));
    ARE_EQUAL(1, exitCode);
 }
 

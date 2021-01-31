@@ -27,10 +27,15 @@ using namespace std;
 #include "libFileArb/Compiler/CompilerMacros.h"
 
 // libFileArb Enums
+#include "libFileArb/Enums/Color.h"
 #include "libFileArb/Enums/ProgramMode.h"
+#include "libFileArb/Enums/WindowsColor.h"
 
 // libFileArb ValueTypes
 #include "libFileArb/ValueTypes/FileArbArgs.h"
+
+// libFileArbTests Components Misc MetalMock
+#include "libFileArbTests/Components/Misc/MetalMock/AsserterMock.h"
 
 // libFileArb StaticUtilities
 #include "libFileArb/StaticUtilities/Exception.h"

@@ -24,6 +24,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOGDI
 #define NOMINMAX
+#include <io.h> // _isatty()
 #include "Windows.h"
 #endif
 
@@ -33,8 +34,13 @@ namespace fs = std::filesystem;
 // libFileArb Compiler
 #include "libFileArb/Compiler/CompilerMacros.h"
 
+// libFileArb Components Misc
+#include "libFileArb/Components/Misc/Asserter.h"
+
 // libFileArb Enums
+#include "libFileArb/Enums/Color.h"
 #include "libFileArb/Enums/ProgramMode.h"
+#include "libFileArb/Enums/WindowsColor.h"
 
 // libFileArb ValueTypes
 #include "libFileArb/ValueTypes/FileArbArgs.h"

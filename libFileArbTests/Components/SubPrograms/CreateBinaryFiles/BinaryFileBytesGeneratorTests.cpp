@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/CreateBinaryFiles/BinaryFileBytesGenerator.h"
-#include "libFileArbTests/Components/Random/MetalMock/RandomFileBytesMakerMock.h"
+#include "libFileArbTests/Components/Random/MetalMock/RandomBytesStringMakerMock.h"
 
 TESTS(BinaryFileBytesGeneratorTests)
 AFACT(DefaultConstructor_NewsComponents)

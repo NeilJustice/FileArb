@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Random/RandomFileBytesMaker.h"
+#include "libFileArb/Components/Random/RandomBytesStringMaker.h"
 #include "libFileArb/Components/SubPrograms/CreateBinaryFiles/BinaryFileBytesGenerator.h"
 
 BinaryFileBytesGenerator::BinaryFileBytesGenerator()

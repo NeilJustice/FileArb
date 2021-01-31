@@ -1,8 +1,19 @@
 #include "pch.h"
+#include "libFileArb/Components/Random/RandomByteGenerator.h"
 #include "libFileArb/Components/Random/RandomBytesStringMaker.h"
 
-string RandomBytesStringMaker::MakeRandomBytesString(size_t numberOfRandomBytes) const
+RandomBytesStringMaker::RandomBytesStringMaker()
+   // Constant Components
+   : _randomByteGenerator(make_unique<RandomByteGenerator>())
 {
-   string randomBytes(numberOfRandomBytes, 0);
-   return randomBytes;
+}
+
+RandomBytesStringMaker::~RandomBytesStringMaker()
+{
+}
+
+string RandomBytesStringMaker::MakeRandomBytesString(size_t /*numberOfRandomBytes*/) const
+{
+   string randomBytesString;
+   return randomBytesString;
 }

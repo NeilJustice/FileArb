@@ -13,7 +13,7 @@ TEST(MakeRandomBytesString_ReturnsStringWithSizeEqualToNumberOfRandomBytes)
    //
    const string randomBytesString = _randomBytesStringMaker.MakeRandomBytesString(numberOfRandomBytes);
    //
-   const string expectedRandomBytesString(numberOfRandomBytes, 0);
+   const string expectedRandomBytesString;
    ARRAYS_ARE_EQUAL(expectedRandomBytesString.data(), randomBytesString.data(), numberOfRandomBytes);
 }
 

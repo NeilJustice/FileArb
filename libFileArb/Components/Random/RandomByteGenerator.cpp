@@ -3,11 +3,9 @@
 
 char RandomByteGenerator::NextRandomByte() const
 {
-   //uniform_int_distribution<int> uniformLongLongDistribution(0, 255);
-   //static default_random_engine defaultRandomEngine;
-   //const int randomInt = uniformLongLongDistribution(defaultRandomEngine);
-   //const char randomChar = static_cast<char>(randomInt);
-
-   const char nextRandomByte = 0;
+   uniform_int_distribution<int> uniformLongLongDistribution(CHAR_MIN, CHAR_MAX);
+   static default_random_engine defaultRandomEngine;
+   const int nextRandomInt = uniformLongLongDistribution(defaultRandomEngine);
+   const char nextRandomByte = static_cast<char>(nextRandomInt);
    return nextRandomByte;
 }

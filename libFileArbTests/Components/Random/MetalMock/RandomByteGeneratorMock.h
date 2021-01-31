@@ -3,6 +3,6 @@
 
 class RandomByteGeneratorMock : public Metal::Mock<RandomByteGenerator>
 {
-private:
+public:
    METALMOCK_NONVOID0_CONST(char, NextRandomByte)
 };

@@ -12,8 +12,13 @@ RandomBytesStringMaker::~RandomBytesStringMaker()
 {
 }
 
-string RandomBytesStringMaker::MakeRandomBytesString(size_t /*numberOfRandomBytes*/) const
+string RandomBytesStringMaker::MakeRandomBytesString(size_t numberOfRandomBytes) const
 {
-   string randomBytesString;
+   string randomBytesString(numberOfRandomBytes, 0);
+   for (size_t i = 0; i < numberOfRandomBytes; ++i)
+   {
+      const char nextRandomByte = _randomByteGenerator->NextRandomByte();
+      randomBytesString[i] = nextRandomByte;
+   }
    return randomBytesString;
 }

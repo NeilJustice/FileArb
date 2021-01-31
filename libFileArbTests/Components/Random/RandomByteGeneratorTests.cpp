@@ -9,8 +9,6 @@ RandomByteGenerator _randomByteGenerator;
 
 TEST(NextRandomByte_Returns0)
 {
-   const char nextRandomByte = _randomByteGenerator.NextRandomByte();
-   IS_ZERO(nextRandomByte);
 }
 
 RUN_TESTS(RandomByteGeneratorTests)

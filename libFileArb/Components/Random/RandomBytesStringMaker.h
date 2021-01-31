@@ -3,6 +3,7 @@ class RandomByteGenerator;
 
 class RandomBytesStringMaker
 {
+   friend class RandomBytesStringMakerTests;
 private:
    unique_ptr<const RandomByteGenerator> _randomByteGenerator;
 public:

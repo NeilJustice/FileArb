@@ -1,5 +1,7 @@
 #pragma once
 class ErrorCodeTranslator;
+template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
+class NonVoidTwoArgMemberFunctionCaller;
 
 #if defined __linux__ || defined __APPLE__
 int* GetErrno();
@@ -10,16 +12,22 @@ class FileSystem
 private:
    friend class FileSystemTests;
    // Function Pointers
-   std::function<int(FILE*)> _call_fclose;
    std::function<int*()> _call_errno;
 #if defined __linux__ || defined __APPLE__
    std::function<FILE*(const char*, const char*)> _call_fopen;
 #elif _WIN32
    std::function<errno_t(FILE**, const char*, const char*)> _call_fopen_s;
 #endif
-   using create_directories_FunctionOverloadType = bool (*)(const fs::path&, error_code&);
-   std::function<bool(const fs::path&, error_code&)> _call_fs_create_directories;
+   std::function<int(FILE*)> _call_fclose;
+   using CreateDirectoriesOverloadType = bool(*)(const fs::path&);
+   bool(*_call_fs_create_directories_as_assignable_function_overload_pointer)(const fs::path&);
+   std::function<bool(const fs::path&)> _call_fs_create_directories;
+   function<size_t(const void*, size_t, size_t, FILE*)> _call_fwrite;
+   // Function Callers
+   using _caller_OpenFileType = NonVoidTwoArgMemberFunctionCaller<FILE*, FileSystem, const fs::path&, const char*>;
+   unique_ptr<const _caller_OpenFileType> _caller_OpenFile;
    // Constant Callers
+   unique_ptr<const Asserter> _asserter;
    unique_ptr<const ErrorCodeTranslator> _errorCodeTranslator;
 public:
    FileSystem();
@@ -28,7 +36,6 @@ public:
    virtual void CreateBinaryFile(const fs::path& filePath, const char* bytes, size_t bytesSize) const;
 private:
    virtual FILE* OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
-   virtual void CloseFile(const fs::path& filePath, FILE* filePointer) const;
    virtual void CreateBinaryOrTextFile(
-      const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesSize) const;
+      const fs::path& filePath, const char* fileOpenMode, const char* bytes, size_t bytesSize) const;
 };

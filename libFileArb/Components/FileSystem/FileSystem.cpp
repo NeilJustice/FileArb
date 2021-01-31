@@ -2,6 +2,7 @@
 #include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
+#include "libFileArb/Components/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
 
 #if defined __linux__ || defined __APPLE__
 int* GetErrno()
@@ -12,18 +13,23 @@ int* GetErrno()
 
 FileSystem::FileSystem()
    // Function Pointers
-   : _call_fclose(::fclose)
 #if defined __linux__ || defined __APPLE__
-   , _call_errno(GetErrno)
+   : _call_errno(GetErrno)
    , _call_fopen(::fopen)
 #elif _WIN32
-   , _call_errno(::_errno)
+   : _call_errno(::_errno)
    , _call_fopen_s(::fopen_s)
-   , _call_fs_create_directories(static_cast<create_directories_FunctionOverloadType>(fs::create_directories))
 #endif
+   , _call_fclose(::fclose)
+   , _call_fs_create_directories_as_assignable_function_overload_pointer(fs::create_directories)
+   , _call_fwrite(fwrite)
+   // Function Callers
+   , _caller_OpenFile(make_unique<_caller_OpenFileType>())
    // Constant Components
+   , _asserter(make_unique<Asserter>())
    , _errorCodeTranslator(make_unique<ErrorCodeTranslator>())
 {
+   _call_fs_create_directories = _call_fs_create_directories_as_assignable_function_overload_pointer;
 }
 
 FileSystem::~FileSystem()
@@ -32,17 +38,18 @@ FileSystem::~FileSystem()
 
 void FileSystem::CreateTextFile(const fs::path& filePath, string_view text) const
 {
-   CreateBinaryOrTextFile(filePath, false, text.data(), text.size());
+   CreateBinaryOrTextFile(filePath, "w", text.data(), text.size());
 }
 
 void FileSystem::CreateBinaryFile(const fs::path& filePath, const char* bytes, size_t bytesSize) const
 {
-   CreateBinaryOrTextFile(filePath, true, bytes, bytesSize);
+   CreateBinaryOrTextFile(filePath, "wb", bytes, bytesSize);
 }
+
+#if defined __linux__ || defined __APPLE__
 
 FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
 {
-#if defined __linux__ || defined __APPLE__
    FILE* openedFile = _call_fopen(filePath.string().c_str(), fileOpenMode);
    if (openedFile == nullptr)
    {
@@ -55,7 +62,12 @@ FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) c
       throw runtime_error(exceptionMessage);
    }
    return openedFile;
+}
+
 #elif _WIN32
+
+FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
+{
    FILE* openedFile = nullptr;
    const errno_t fopensReturnValue = _call_fopen_s(&openedFile, filePath.string().c_str(), fileOpenMode);
    if (fopensReturnValue != 0)
@@ -69,30 +81,22 @@ FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) c
       throw runtime_error(exceptionMessage);
    }
    return openedFile;
-#endif
 }
 
-void FileSystem::CloseFile(const fs::path& filePath, FILE* filePointer) const
+#endif
+
+void FileSystem::CreateBinaryOrTextFile(
+   const fs::path& filePath, const char* fileOpenMode, const char* bytes, size_t bytesSize) const
 {
+   const fs::path parentDirectoryPath = filePath.parent_path();
+   _call_fs_create_directories(parentDirectoryPath);
+   FILE* const filePointer = _caller_OpenFile->CallConstMemberFunction(this, &FileSystem::OpenFile, filePath, fileOpenMode);
+   const size_t numberOfBytesWritten = _call_fwrite(bytes, 1, bytesSize, filePointer);
+   _asserter->ThrowIfSizeTValuesNotEqual(numberOfBytesWritten, bytesSize, "fwrite unexpectedly did not return bytesSize");
    const int fcloseReturnValue = _call_fclose(filePointer);
    if (fcloseReturnValue != 0)
    {
       const int errnoValue = *_call_errno();
       throw FileCloseException(filePath, errnoValue);
    }
-}
-
-void FileSystem::CreateBinaryOrTextFile(
-   const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesSize) const
-{
-   const fs::path parentDirectoryPath = filePath.parent_path();
-   fs::create_directories(parentDirectoryPath);
-   FILE* const file = OpenFile(filePath, trueBinaryFalseText ? "wb" : "w");
-#ifdef _WIN32
-   const size_t numberOfBytesWritten = _fwrite_nolock(bytes, 1, bytesSize, file);
-#else
-   const size_t numberOfBytesWritten = fwrite(bytes, 1, bytesSize, file);
-#endif
-   release_assert(numberOfBytesWritten == bytesSize);
-   CloseFile(filePath, file);
 }

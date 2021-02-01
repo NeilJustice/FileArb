@@ -16,7 +16,7 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 * [FileArb Program Modes](#filearb-program-modes)
    * [create-text-files](#create-text-files)
    * [create-binary-files](#create-binary-files)
-* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearb)
+* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize and UndefinedBehaviorSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-filearb)
 * [Windows Jenkins Jobs Which Build FileArb On Windows With Visual Studio 2019](#windows-jenkins-jobs-which-build-filearb-on-windows-with-visual-studio-2019)
 * [FileArb Code Structure As It Appears In Visual Studio Code](#filearb-code-structure-as-it-appears-in-visual-studio-code)
 * [FileArb Code Structure As It Appears In Visual Studio 2019](#filearb-code-structure-as-it-appears-in-visual-studio-2019)
@@ -70,7 +70,7 @@ FileArb program mode `create-binary-files` creates at a specified `--target` dir
 
 ![create-binary-files](Screenshots/create-binary-files.png)
 
-## Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb
+## Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize and UndefinedBehaviorSanitize FileArb
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 33:
 

@@ -66,7 +66,7 @@ FileArb program mode `create-text-files` creates at a specified directory a spec
 
 ### create-binary-files
 
-FileArb program mode `create-binary-files` creates at a specified directory a specified number of subdirectories containing a specified number of binary files each containing binary 0 bytes.
+FileArb program mode `create-binary-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of bytes, either 0 bytes or `[--random-bytes]`.
 
 ![create-binary-files](Screenshots/create-binary-files.png)
 
@@ -122,9 +122,9 @@ Resulting executable `C:\bin\FileArb.exe`:
 
 |Future FileArb Feature|Estimated Delivery Month|Implementation Status|
 |----------------------|------------------------|---------------------|
-|create-binary-files mode [--random-bytes] which reads from `/dev/urandom` on Linux|January 2021|Implemented|
+|create-binary-files option [--random-bytes] which reads from `/dev/urandom` on Linux|January 2021|Implemented|
+|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|In progress|
 |GitHub Actions build|February 2021|Awaiting implementation|
-|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|Awaiting implementation|
 |SonarCloud static analysis badge|February 2021|Awaiting implementation|
 |Coverity static analysis badge|February 2021|Awaiting implementation|
 |Automated acceptance testing for FileArb|May 2021|Awaiting implementation|

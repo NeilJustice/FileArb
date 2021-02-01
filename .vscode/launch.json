@@ -2,12 +2,11 @@
    "version": "0.2.0",
    "configurations": [
    {
-         "name": "Debug libFileArbTests",
+         "name": "Debug FileArb",
          "type": "cppdbg",
          "request": "launch",
-         //"program": "${workspaceRoot}/Debug/FileArb/FileArb",
-         "program": "${workspaceRoot}/Debug/libFileArbTests/libFileArbTests",
-         "args": [],
+         "program": "${workspaceRoot}/Debug/FileArb/filearb",
+         "args": [ "create-binary-files", "--target=.", "--directories=1", "--files=1", "--bytes=3", "--random-bytes" ],
          "stopAtEntry": false,
          "cwd": "${workspaceFolder}",
          "environment": [],

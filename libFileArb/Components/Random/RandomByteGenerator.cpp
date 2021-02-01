@@ -1,17 +1,17 @@
 #include "pch.h"
 #include "libFileArb/Components/Random/RandomByteGenerator.h"
 
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
 
 char RandomByteGenerator::NextRandomByte() const
 {
    FILE* const devUrandomFilePointer = fopen("/dev/urandom", "r");
-   char randomByte[1]{};
-   const size_t numberOfBytesRead = fread(randomByte, 1, 1, devUrandomFilePointer);
+   char nextRandomByte{};
+   const size_t numberOfBytesRead = fread(reinterpret_cast<void*>(&nextRandomByte), 1, 1, devUrandomFilePointer);
    release_assert(numberOfBytesRead == 1);
    const int fcloseReturnValue = fclose(devUrandomFilePointer);
    release_assert(fcloseReturnValue == 0);
-   return 0;
+   return nextRandomByte;
 }
 
 #elif defined _WIN32

@@ -14,11 +14,12 @@
 #include <string.h>
 
 #if defined __linux__
-#if defined __GNUG__ && !defined __clang__
-#include <parallel/algorithm>
-#endif
+   #if defined __GNUG__ && !defined __clang__
+      #include <parallel/algorithm>
+      #include <unistd.h>
+   #endif
 #elif defined _WIN32
-#include <execution>
+   #include <execution>
 #endif
 
 #ifdef _WIN32

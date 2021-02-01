@@ -23,7 +23,7 @@ string String::ToAllLowercase(string_view str)
    for (size_t i = 0; i < strSize; ++i)
    {
       const int c = static_cast<int>(str[i]);
-      const char lowercaseCharacter = static_cast<char>(::tolower(c));
+      const char lowercaseCharacter = static_cast<char>(tolower(c));
       lowercaseString[i] = lowercaseCharacter;
    }
    return lowercaseString;

@@ -15,12 +15,12 @@ FileSystem::FileSystem()
    // Function Pointers
 #if defined __linux__ || defined __APPLE__
    : _call_errno(GetErrno)
-   , _call_fopen(::fopen)
+   , _call_fopen(fopen)
 #elif _WIN32
-   : _call_errno(::_errno)
-   , _call_fopen_s(::fopen_s)
+   : _call_errno(_errno)
+   , _call_fopen_s(fopen_s)
 #endif
-   , _call_fclose(::fclose)
+   , _call_fclose(fclose)
    , _call_fs_create_directories_as_assignable_function_overload_pointer(fs::create_directories)
    , _call_fwrite(fwrite)
    // Function Callers

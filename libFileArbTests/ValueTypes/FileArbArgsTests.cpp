@@ -28,7 +28,7 @@ TEST(DefaultConstructor_SetsFieldsTo0)
 TEST(CommandLineUsage_IsExpectedString)
 {
    ARE_EQUAL(
-R"(FileArb v0.9.0
+R"(FileArb v0.9.1
 Creates an arbitrary number of text files or binary files
 containing an arbitrary number of lines, characters, or bytes.
 https://github.com/NeilJustice/FileArb

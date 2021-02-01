@@ -2,13 +2,14 @@
 #include "libFileArb/Components/Random/RandomByteGenerator.h"
 
 TESTS(RandomByteGeneratorTests)
-AFACT(NextRandomByte_Returns0)
+AFACT(NextRandomByte_CodeCoverage)
 EVIDENCE
 
 RandomByteGenerator _randomByteGenerator;
 
-TEST(NextRandomByte_Returns0)
+TEST(NextRandomByte_CodeCoverage)
 {
+   _randomByteGenerator.NextRandomByte();
 }
 
 RUN_TESTS(RandomByteGeneratorTests)

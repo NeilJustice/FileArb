@@ -6,8 +6,14 @@
       "label": "Build Debug",
       "options": { "cwd": "${workspaceRoot}/Debug" },
       "command": "ninja",
-      "problemMatcher": [ "$gcc" ],
-      "group": { "kind": "build", "isDefault": true }
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": {
+         "base" : "$gcc",
+         "fileLocation": [
+            "relative",
+            "${workspaceRoot}/Debug"
+         ]
+      }
    },
    {
       "type": "shell",
@@ -15,7 +21,13 @@
       "command": "ninja",
       "args": [ "-v" ],
       "options": { "cwd": "${workspaceRoot}/Release" },
-      "problemMatcher": [ "$gcc" ]
+      "problemMatcher": {
+         "base" : "$gcc",
+         "fileLocation": [
+            "relative",
+            "${workspaceRoot}/Debug"
+         ]
+      }
    },
    {
       "type": "shell",

@@ -24,7 +24,7 @@ FileSystem _fileSystem;
 METALMOCK_NONVOID0_FREE(int*, _call_errno)
 METALMOCK_NONVOID1_FREE(int, _call_fclose, FILE*)
 #if defined __linux__ || defined __APPLE__
-METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
+METALMOCK_NONVOID2_FREE(FILE*, _call_fopen, const char*, const char*)
 #elif _WIN32
 METALMOCK_NONVOID3_FREE(errno_t, _call_fopen_s, FILE**, const char*, const char*)
 #endif
@@ -60,12 +60,12 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
 {
    FileSystem fileSystem;
    // Function Pointers
-   STD_FUNCTION_TARGETS(_errno, fileSystem._call_errno);
    STD_FUNCTION_TARGETS(fclose, fileSystem._call_fclose);
 #if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(GetErrno, fileSystem._call_errno);
    STD_FUNCTION_TARGETS(fopen, fileSystem._call_fopen);
 #elif _WIN32
+   STD_FUNCTION_TARGETS(_errno, fileSystem._call_errno);
    STD_FUNCTION_TARGETS(fopen_s, fileSystem._call_fopen_s);
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CreateDirectoriesOverloadType, fs::create_directories, fileSystem._call_fs_create_directories);
 #endif
@@ -113,7 +113,7 @@ TEST(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
 {
    FILE openedFile;
    _fopen_CallHistory.returnValue = &openedFile;
-   fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInsteadFunction, this, placeholders::_1, placeholders::_2));
+   _call_fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInsteadFunction, this, placeholders::_1, placeholders::_2));
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
    //
@@ -126,10 +126,10 @@ TEST(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
 TEST(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 {
    _fopen_CallHistory.returnValue = nullptr;
-   fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInsteadFunction, this, placeholders::_1, placeholders::_2));
+   _call_fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInsteadFunction, this, placeholders::_1, placeholders::_2));
 
    int errnoValue = ZenUnit::Random<int>();
-   _errnoMock.Return(&errnoValue);
+   _call_errnoMock.Return(&errnoValue);
 
    const string errnoDescription = _errorCodeTranslatorMock->GetErrnoDescriptionMock.ReturnRandom();
 
@@ -144,7 +144,7 @@ TEST(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoV
       runtime_error, expectedExceptionMessage);
    //
    _fopen_CallHistory.AssertCalledOnceWith(filePath.string().c_str(), fileOpenMode);
-   METALMOCK(_errnoMock.CalledOnce());
+   METALMOCK(_call_errnoMock.CalledOnce());
    METALMOCK(_errorCodeTranslatorMock->GetErrnoDescriptionMock.CalledOnceWith(errnoValue));
 }
 

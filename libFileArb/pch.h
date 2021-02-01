@@ -16,8 +16,8 @@
 #if defined __linux__
    #if defined __GNUG__ && !defined __clang__
       #include <parallel/algorithm>
-      #include <unistd.h>
    #endif
+   #include <unistd.h>
 #elif defined _WIN32
    #include <execution>
 #endif

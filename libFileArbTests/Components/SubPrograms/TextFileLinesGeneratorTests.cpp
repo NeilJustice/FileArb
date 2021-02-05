@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/SubPrograms/CreateTextFiles/TextFileLinesGenerator.h"
+#include "libFileArb/Components/SubPrograms/TextFileLinesGenerator.h"
 
 TESTS(TextFileLinesGeneratorTests)
 AFACT(DefaultConstructor_SetsReplicateLineNTimesFunction)

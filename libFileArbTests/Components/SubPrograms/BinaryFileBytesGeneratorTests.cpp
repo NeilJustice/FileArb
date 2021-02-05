@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/SubPrograms/CreateBinaryFiles/BinaryFileBytesGenerator.h"
+#include "libFileArb/Components/SubPrograms/BinaryFileBytesGenerator.h"
 #include "libFileArbTests/Components/Random/MetalMock/RandomBytesStringMakerMock.h"
 
 TESTS(BinaryFileBytesGeneratorTests)

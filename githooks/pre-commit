@@ -5,7 +5,7 @@ osname="$(uname --operating-system)"
 if [[ "$osname" == *"Linux" ]]; then
    sudo JenkinsJobs/Linux/FileArb-Debug-Clang.sh
 elif [ "$osname" == "Msys" ]; then
-   powershell.exe JenkinsJobs/Windows/FileArbDebug.ps1
+   powershell.exe JenkinsJobs/Windows/FileArb-Debug.ps1
 fi
 jenkinsJobExitCode=$?
 if [ "$jenkinsJobExitCode" -ne 0 ]; then

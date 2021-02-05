@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/SubPrograms/CreateBinaryFiles/BinaryFileBytesGenerator.h"
+#include "libFileArb/Components/SubPrograms/BinaryFileBytesGenerator.h"
 
 class BinaryFileBytesGeneratorMock : public Metal::Mock<BinaryFileBytesGenerator>
 {

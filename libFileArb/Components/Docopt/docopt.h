@@ -1409,7 +1409,21 @@ namespace docopt
 		// a newline to anchor our matching, we have to avoid matching the final newline of each grouping.
 		// Therefore, our regex is adjusted from the docopt Python one to use ?= to match the newlines before
 		// the following lines, rather than after.
-		std::regex const re_section_pattern
+		//const std::regex re_section_pattern
+		//{
+		//	"(?:^|\\n)"  // anchored at a linebreak (or start of string)
+		//	"("
+		//	"[^\\n]*" + name + "[^\\n]*(?=\\n?)" // a line that contains the name
+		//	"(?:\\n[ \\t].*?(?=\\n|$))*"         // followed by any number of lines that are indented
+		//	")",
+		//	std::regex::icase
+		//};
+
+		// ECMAScript regex only has "?=" for a non-matching lookahead. In order to make sure we always have
+		// a newline to anchor our matching, we have to avoid matching the final newline of each grouping.
+		// Therefore, our regex is adjusted from the docopt Python one to use ?= to match the newlines before
+		// the following lines, rather than after.
+		const std::regex re_section_pattern
 		{
 			"(?:^|\\n)"  // anchored at a linebreak (or start of string)
 			"("
@@ -1418,11 +1432,13 @@ namespace docopt
 			")",
 			std::regex::icase
 		};
+
 		std::vector<std::string> ret;
 		std::for_each(std::sregex_iterator(source.begin(), source.end(), re_section_pattern),
 			std::sregex_iterator(),
 			[&](const std::smatch& match)
 		{
+			const string match1 = match[1].str();
 			ret.push_back(trim(match[1].str()));
 		});
 		return ret;
@@ -1862,7 +1878,8 @@ namespace docopt
 #endif
 	static std::pair<RequiredBranchPattern, std::vector<OptionLeafPattern>> create_pattern_tree(const std::string& doc)
 	{
-		const std::vector<std::string> usage_sections = ParseSection("usage:", doc);
+		const std::vector<std::string> usage_sections = ParseSection("Usage:", doc);
+		//const std::vector<std::string> usage_sections = ParseSection("usage:", doc);
 		if (usage_sections.empty())
 		{
 			throw DocoptLanguageError("'usage:' (case-insensitive) not found.");

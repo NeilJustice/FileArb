@@ -8,7 +8,7 @@ FileArb is a cross-platform C++ command line program for quickly creating in par
 |----------|------------|
 |Travis CI Linux Clang 9.0.1 and Linux GCC 9.3.0 Debug and Release|[![Build Status](https://travis-ci.com/NeilJustice/FileArb.svg?branch=main)](https://travis-ci.com/NeilJustice/FileArb)|
 |AppVeyor Windows Visual Studio 2019 x64 Debug and Release|<a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"/></a>|
-|Code Coverage For The Travis CI Linux GCC 9.3.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/main/graph/badge.svg)](https://codecov.io/gh/NeilJustice/FileArb)|
+|Code Coverage for the Travis CI Linux GCC 9.3.0 Release build|[![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/main/graph/badge.svg)](https://codecov.io/gh/NeilJustice/FileArb)|
 
 FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
@@ -28,7 +28,8 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 ```
 FileArb v0.9.0
 Creates an arbitrary number of text files or binary files
-containing an arbitrary number of lines, characters, or bytes.
+containing an arbitrary number of lines, characters, or bytes
+for performance testing FileRevisor or filesystems in general.
 https://github.com/NeilJustice/FileArb
 
 Usage:
@@ -40,7 +41,10 @@ Usage:
       --characters=<CharactersPerLine>
       [--parallel]
       [--verbose]
-
+   filearb create-binary-file
+      --target=<TargetDirectoryPath>
+      --bytes=<NumberOfBytes>
+      [--random-bytes]
    filearb create-binary-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>

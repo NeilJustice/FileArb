@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileArb/Components/SubPrograms/CreateTextFiles/CreateTextFilesSubProgram.h"
-#include "libFileArb/Components/SubPrograms/CreateTextFiles/TextFileLinesGenerator.h"
+#include "libFileArb/Components/SubPrograms/CreateTextFilesSubProgram.h"
+#include "libFileArb/Components/SubPrograms/TextFileLinesGenerator.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 
 CreateTextFilesSubProgram::CreateTextFilesSubProgram()

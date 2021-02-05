@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileArb/Components/SubPrograms/CreateBinaryFiles/BinaryFileBytesGenerator.h"
-#include "libFileArb/Components/SubPrograms/CreateBinaryFiles/CreateBinaryFilesSubProgram.h"
+#include "libFileArb/Components/SubPrograms/BinaryFileBytesGenerator.h"
+#include "libFileArb/Components/SubPrograms/CreateBinaryFilesSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 
 CreateBinaryFilesSubProgram::CreateBinaryFilesSubProgram()

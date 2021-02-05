@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileArb/Components/SubPrograms/CreateBinaryFiles/CreateBinaryFilesSubProgram.h"
-#include "libFileArb/Components/SubPrograms/CreateTextFiles/CreateTextFilesSubProgram.h"
+#include "libFileArb/Components/SubPrograms/CreateBinaryFilesSubProgram.h"
+#include "libFileArb/Components/SubPrograms/CreateTextFilesSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgramFactory.h"
 
 TESTS(FileArbSubProgramFactoryTests)

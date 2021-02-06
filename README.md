@@ -16,9 +16,10 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 * [FileArb Program Modes](#filearb-program-modes)
    * [create-text-files](#create-text-files)
    * [create-binary-files](#create-binary-files)
-* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearb)
-* [Windows Jenkins Jobs Which Build FileArb On Windows With Visual Studio 2019](#windows-jenkins-jobs-which-build-filearb-on-windows-with-visual-studio-2019)
+* [FileArb Code Structure As It Appears In Visual Studio Code](#filearb-code-structure-as-it-appears-in-visual-studio-code)
 * [FileArb Code Structure As It Appears In Visual Studio 2019](#filearb-code-structure-as-it-appears-in-visual-studio-2019)
+* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize and UndefinedBehaviorSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-filearb)
+* [Windows Jenkins Jobs Which Build FileArb On Windows With Visual Studio 2019](#windows-jenkins-jobs-which-build-filearb-on-windows-with-visual-studio-2019)
 * [How To Build Binary filearb On Linux With Clang](#how-to-build-binary-filearb-on-linux-with-clang)
 * [How To Build Executable FileArb.exe On Windows With Visual Studio 2019](#how-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)
 * [FileArb Roadmap](#filearb-roadmap)
@@ -26,7 +27,7 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 ## FileArb Command Line Usage
 
 ```
-FileArb v0.9.0
+FileArb v0.9.1
 Creates an arbitrary number of text files or binary files
 containing an arbitrary number of lines, characters, or bytes
 for performance testing FileRevisor or filesystems in general.
@@ -70,25 +71,29 @@ FileArb program mode `create-text-files` creates at a specified directory a spec
 
 ### create-binary-files
 
-FileArb program mode `create-binary-files` creates at a specified directory a specified number of subdirectories containing a specified number of binary files each containing binary 0 bytes.
+FileArb program mode `create-binary-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of bytes, either 0 bytes or `[--random-bytes]`.
 
 ![create-binary-files](Screenshots/create-binary-files.png)
 
-## Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb
+## FileArb Code Structure As It Appears in Visual Studio Code
+
+![FileArb Code Structure As It Appears In Visual Studio Code](Screenshots/Linux/FileArbCodeStructureAsItAppearsInVisualStudioCode.png)
+
+## FileArb Code Structure As It Appears In Visual Studio 2019
+
+![FileArb Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileArbCodeStructureAsItAppearsInVisualStudio2019.png)
+
+## Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize and UndefinedBehaviorSanitize FileArb
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 33:
 
-![Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](Screenshots/LinuxJenkinsJobsForFileArb.png)
+![Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](Screenshots/Linux/LinuxFileArbJenkinsJobs.png)
 
 ## Windows Jenkins Jobs Which Build FileArb On Windows With Visual Studio 2019
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Windows:
 
 ![Windows Jenkins Jobs Which Compile FileArb](Screenshots/WindowsJenkinsJobsForFileArb.png)
-
-## FileArb Code Structure As It Appears In Visual Studio 2019
-
-![FileArb Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileArbCodeStructureAsItAppearsInVisualStudio2019.png)
 
 ## How To Build Binary filearb On Linux With Clang
 
@@ -122,9 +127,9 @@ Resulting executable `C:\bin\FileArb.exe`:
 
 |Future FileArb Feature|Estimated Delivery Month|Implementation Status|
 |----------------------|------------------------|---------------------|
-|create-binary-files mode optionally reads from `/dev/urandom` on Linux to populate binary files|January 2021|Awaiting implementation|
+|create-binary-files option [--random-bytes] which reads from `/dev/urandom` on Linux|January 2021|Implemented|
+|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|In progress|
 |GitHub Actions build|February 2021|Awaiting implementation|
-|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|Awaiting implementation|
 |SonarCloud static analysis badge|February 2021|Awaiting implementation|
 |Coverity static analysis badge|February 2021|Awaiting implementation|
 |Automated acceptance testing for FileArb|May 2021|Awaiting implementation|

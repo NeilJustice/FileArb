@@ -19,9 +19,6 @@ string BinaryFileBytesGenerator::MakeBytesString(size_t numberOfBytesPerFile, bo
       string randomBytesString = _randomBytesStringMaker->MakeRandomBytesString(numberOfBytesPerFile);
       return randomBytesString;
    }
-   else
-   {
-      string nonRandomBytesString(numberOfBytesPerFile, 0);
-      return nonRandomBytesString;
-   }
+   string nonRandomBytesString(numberOfBytesPerFile, 0);
+   return nonRandomBytesString;
 }

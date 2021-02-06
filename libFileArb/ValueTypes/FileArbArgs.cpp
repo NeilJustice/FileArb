@@ -2,7 +2,7 @@
 #include "libFileArb/ValueTypes/FileArbArgs.h"
 
 const string FileArbArgs::CommandLineUsage =
-R"(FileArb v0.9.0
+R"(FileArb v0.9.1
 Creates an arbitrary number of text files or binary files
 containing an arbitrary number of lines, characters, or bytes
 for performance testing FileRevisor or filesystems in general.

@@ -11,6 +11,7 @@ public:
 
    METALMOCK_NONVOID2_CONST(string, GetOptionalString, const DocoptMapType&, const string&)
    METALMOCK_NONVOID2_CONST(string, GetRequiredString, const DocoptMapType&, const string&)
+   METALMOCK_NONVOID4_CONST(string, GetProgramModeSpecificRequiredString, const DocoptMapType&, const string&, int, int)
 
    METALMOCK_NONVOID4_CONST(size_t, GetProgramModeSpecificRequiredSizeT, const DocoptMapType&, const string&, int, const vector<int>&)
    METALMOCK_NONVOID2_CONST(size_t, GetRequiredSizeT, const DocoptMapType&, const string&)

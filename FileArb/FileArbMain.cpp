@@ -6,6 +6,7 @@
 
 // create-binary-file --target=C:\FileArbTesting\Test --bytes=3 --random-bytes
 
+// create-binary-files --target=C:\FileRevisorTesting\Test --directories=1 --files=1 --bytes=3 --verbose --random-bytes
 // create-binary-files --target=C:\FileRevisorTesting\Test --directories=3 --files=3 --bytes=3 --verbose --random-bytes
 // create-binary-files --target=C:\FileRevisorTesting\Test --directories=32 --files=1000 --bytes=1000 --parallel --verbose --random-bytes
 

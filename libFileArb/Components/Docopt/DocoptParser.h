@@ -20,6 +20,11 @@ public:
 
    virtual string GetOptionalString(const map<string, docopt::Value>& docoptArgs, const string& argName) const;
    virtual string GetRequiredString(const map<string, docopt::Value>& docoptArgs, const string& argName) const;
+   virtual string GetProgramModeSpecificRequiredString(
+      const map<string, docopt::Value>& docoptArgs,
+      const string& argName,
+      int fieldIsRequiredIfProgramModeIntEqualsThisValue,
+      int programModeAsInt) const;
 
    virtual size_t GetProgramModeSpecificRequiredSizeT(
       const map<string, docopt::Value>& docoptArgs,

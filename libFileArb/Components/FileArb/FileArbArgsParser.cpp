@@ -47,6 +47,8 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
    args.numberOfCharactersPerLine = _docoptParser->GetProgramModeSpecificRequiredSizeT(
       docoptValues, "--characters", programModeAsInt, { static_cast<int>(ProgramMode::CreateTextFiles) });
 
+   //const string numberOfBytesPerFileString = _docoptParser->GetProgramModeSpecificRequiredString(
+   //   docoptValues, "--bytes", programModeAsInt, {static_cast<int>(ProgramMode::CreateBinaryFiles)});
    args.numberOfBytesPerFile = _docoptParser->GetProgramModeSpecificRequiredSizeT(
       docoptValues, "--bytes", programModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFiles) });
 

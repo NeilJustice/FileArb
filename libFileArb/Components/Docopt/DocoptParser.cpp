@@ -55,6 +55,21 @@ string DocoptParser::GetRequiredString(const map<string, docopt::Value>& docoptA
    return stringArg;
 }
 
+string DocoptParser::GetProgramModeSpecificRequiredString(
+   const map<string, docopt::Value>& docoptArgs,
+   const string& argName,
+   int fieldIsRequiredIfProgramModeIntEqualsThisValue,
+   int programModeAsInt) const
+{
+   if (programModeAsInt == fieldIsRequiredIfProgramModeIntEqualsThisValue)
+   {
+      const docopt::Value docoptValue = Map::At(docoptArgs, argName);
+      const string& stringValue = docoptValue.AsString();
+      return stringValue;
+   }
+   return string();
+}
+
 size_t DocoptParser::GetProgramModeSpecificRequiredSizeT(
    const map<string, docopt::Value>& docoptArgs,
    const string& argumentName,
@@ -65,8 +80,8 @@ size_t DocoptParser::GetProgramModeSpecificRequiredSizeT(
       Vector::Contains(programModesThatRequiresArgument, programMode);
    if (programModeIsContainedInProgramModesThatRequiresArgument)
    {
-      const size_t argumentValueAsSizeT = _call_StaticGetRequiredSizeT(docoptArgs, argumentName);
-      return argumentValueAsSizeT;
+      const size_t sizeTArgumentValue = _call_StaticGetRequiredSizeT(docoptArgs, argumentName);
+      return sizeTArgumentValue;
    }
    return 0;
 }

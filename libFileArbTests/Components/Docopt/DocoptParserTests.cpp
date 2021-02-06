@@ -14,6 +14,9 @@ AFACT(GetOptionalString_ArgInMapWithStringValue_ReturnsValue)
 AFACT(GetOptionalString_ArgInMapWithEmptyValue_ReturnsEmptyString)
 AFACT(GetRequiredString_ArgNotInMap_ThrowsOutOfRangeException)
 AFACT(GetRequiredString_ArgInMap_ReturnsValue)
+AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueDoesNotEqualComparisonProgramModeValue_ReturnsEmptyString)
+AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgIsNotInMap_ThrowsOutOfRange)
+AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgInMap_ReturnsValue)
 FACTS(GetProgramModeSpecificRequiredSizeT_ProgramModeIsNotContainedWithinTheProgramModesVectorThatRequiresArgument_Returns0)
 FACTS(GetProgramModeSpecificRequiredSizeT_ProgramModeIsTheProgramModeThatRequiresTheSizeT_ReturnsResultOfCallingStaticGetRequiredSizeT)
 AFACT(GetRequiredSizeT_ArgNotInMap_ThrowsInvalidArgumentException)
@@ -142,6 +145,40 @@ TEST(GetRequiredString_ArgInMap_ReturnsValue)
    const string returnedStringValue = _docoptParser.GetRequiredString(_docoptArgs, _argName);
    //
    ARE_EQUAL(stringValue, returnedStringValue);
+}
+
+TEST(GetProgramModeSpecificRequiredString_ProgramModeValueDoesNotEqualComparisonProgramModeValue_ReturnsEmptyString)
+{
+   const int programModeAsInt = ZenUnit::Random<int>();
+   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = programModeAsInt + 1;
+   //
+   const string argValue = _docoptParser.GetProgramModeSpecificRequiredString(
+      _docoptArgs, _argName, programModeAsInt, fieldIsRequiredIfProgramModeIntEqualsThisValue);
+   //
+   ARE_EQUAL(string(), argValue);
+}
+
+TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgIsNotInMap_ThrowsOutOfRange)
+{
+   const int programModeAsInt = ZenUnit::Random<int>();
+   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = programModeAsInt;
+   //
+   THROWS_EXCEPTION(_docoptParser.GetProgramModeSpecificRequiredString(
+      _docoptArgs, _argName, programModeAsInt, fieldIsRequiredIfProgramModeIntEqualsThisValue),
+      out_of_range, _expectedKeyNotFoundExceptionMessage);
+}
+
+TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgInMap_ReturnsValue)
+{
+   const int programModeAsInt = ZenUnit::Random<int>();
+   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = programModeAsInt;
+   const string argValue = ZenUnit::Random<string>();
+   _docoptArgs[_argName] = argValue;
+   //
+   const string returnedArgValue = _docoptParser.GetProgramModeSpecificRequiredString(
+      _docoptArgs, _argName, programModeAsInt, fieldIsRequiredIfProgramModeIntEqualsThisValue);
+   //
+   ARE_EQUAL(argValue, returnedArgValue);
 }
 
 TEST2X2(GetProgramModeSpecificRequiredSizeT_ProgramModeIsNotContainedWithinTheProgramModesVectorThatRequiresArgument_Returns0,

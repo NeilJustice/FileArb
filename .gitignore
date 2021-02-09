@@ -13,7 +13,7 @@ htmlcov/
 CodeCoverageHTMLReport/
 coverage.xml
 .coverage
-CoberturaCodeCoverageResults_CloudundancyPyUtilsTests.xml
+CoberturaCodeCoverageResults_FileArbPyUtilsTests.xml
 
 # Linux
 build.ninja

@@ -2,7 +2,7 @@
 set -eu
 export CXX=clang++
 export UBSAN_OPTIONS=halt_on_error=true
-python -u PyUtils/BuildAndInstallCPlusPlusProgram.py \
+python -u FileArbPyUtils/BuildAndInstallCPlusPlusProgram.py \
    --cmake-generator=Ninja \
    --cmake-architecture=x64 \
    --solution-name=FileArb \

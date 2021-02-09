@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 export CXX=/usr/bin/g++
-python -u PyUtils/BuildAndInstallCPlusPlusProgram.py \
+python -u FileArbPyUtils/BuildAndInstallCPlusPlusProgram.py \
    --cmake-generator=Ninja \
    --cmake-architecture=x64 \
    --solution-name=FileArb \

@@ -10,8 +10,10 @@ CMakeCache.txt
 # Python
 __pycache__/
 htmlcov/
+CodeCoverageHTMLReport/
 coverage.xml
 .coverage
+CoberturaCodeCoverageResults_CloudundancyPyUtilsTests.xml
 
 # Linux
 build.ninja

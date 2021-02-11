@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/CreateTextFilesSubProgram.h"
-#include "libFileArb/Components/SubPrograms/TextFileLinesGenerator.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
+#include "libFileArb/Components/SubPrograms/TextFileLinesGenerator.h"
 
 CreateTextFilesSubProgram::CreateTextFilesSubProgram()
    // Constant Components

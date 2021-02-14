@@ -9,6 +9,11 @@ Optional suffixes for --bytes=<BytesPerFile>: B, KB, MB, or GB
 https://github.com/NeilJustice/FileArb
 
 Usage:
+   filearb create-text-file
+      --target=<TargetDirectoryPath>
+      --lines=<LinesPerFile>
+      --characters=<CharactersPerLine>
+      [--verbose]
    filearb create-text-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -17,6 +22,10 @@ Usage:
       --characters=<CharactersPerLine>
       [--parallel]
       [--verbose]
+   filearb create-binary-file
+      --target=<TargetDirectoryPath>
+      --bytes=<BytesPerFile>
+      [--random-bytes]
    filearb create-binary-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>

@@ -1,5 +1,30 @@
 #pragma once
 
+#if defined _WIN32
+#pragma warning(push)
+#pragma warning(disable: 4365) // 'return': conversion from 'size_t' to 'ptrdiff_t', signed/unsigned mismatch
+#pragma warning(disable: 4643) // Forward declaring 'allocator' in namespace std is not permitted by the C++ Standard.
+#pragma warning(disable: 4800) // Implicit conversion from 'int' to bool. Possible information loss
+#pragma warning(disable: 26812) // The enum type 'boost::detail::local_counted_base::count_type' is unscoped. Prefer 'enum class' over 'enum'
+#endif
+#include <boost/regex.hpp>
+#if defined _WIN32
+#pragma warning(pop)
+#endif
+
+namespace std
+{
+	using boost::regex;
+   using boost::sregex_iterator;
+	using boost::sregex_token_iterator;
+   using boost::smatch;
+   using boost::regex_search;
+   namespace regex_constants
+	{
+		using boost::regex_constants::match_not_null;
+	}
+}
+
 template<typename T>
 inline void hash_combine(size_t& seed, const T& v)
 {

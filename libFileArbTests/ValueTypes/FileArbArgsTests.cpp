@@ -30,9 +30,8 @@ TEST(CommandLineUsage_IsExpectedString)
    ARE_EQUAL(
 R"(FileArb v0.9.1
 Creates an arbitrary number of text files or binary files
-containing an arbitrary number of lines, characters, or bytes
-for performance testing FileRevisor or filesystems in general.
---bytes=<BytesPerFile> optional suffixes: B, KB, MB, GB
+containing an arbitrary number of lines, characters, or bytes.
+Optional suffixes for --bytes=<BytesPerFile>: B, KB, MB, or GB
 https://github.com/NeilJustice/FileArb
 
 Usage:

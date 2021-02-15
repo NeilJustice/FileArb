@@ -24,6 +24,10 @@ FileCreator::~FileCreator()
 {
 }
 
+void FileCreator::CreateFile(const FileArbArgs& /*args*/, const string& /*fileTextOrBytes*/)
+{
+}
+
 void FileCreator::CreateFiles(const FileArbArgs& args, const string& fileTextOrBytes)
 {
    if (args.parallel)

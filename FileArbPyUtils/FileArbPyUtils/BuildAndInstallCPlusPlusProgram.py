@@ -47,5 +47,5 @@ def main():
 if __name__ == "__main__": # pragma nocover
    main()
 
-# --solution-name=Cloudundancy --cmake-generator="Visual Studio 16 2019" --cmake-build-type=Debug --tests-project=libCloudundancyTests --no-install
-# Working directory: C:\Code\Cloudundancy
+# --solution-name=FileArb --cmake-generator="Visual Studio 16 2019" --cmake-build-type=Debug --tests-project=libFileArbTests --no-install
+# Working directory: C:\Code\FileArb

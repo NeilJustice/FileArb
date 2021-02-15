@@ -6,14 +6,14 @@
     <ProjectGuid>7442c4b6-4d10-4aea-a009-421f7252d55e</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>BuildAndInstallCPlusPlusProgram.py</StartupFile>
+    <StartupFile>Python.py</StartupFile>
     <SearchPath>..\</SearchPath>
-    <WorkingDirectory>C:\Code\Cloudundancy</WorkingDirectory>
+    <WorkingDirectory>C:\Code\FileArb</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>PyUtils</Name>
     <RootNamespace>PyUtils</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>--solution-name=Cloudundancy --cmake-generator="Visual Studio 16 2019" --cmake-build-type=Debug --tests-project=libCloudundancyTests --no-install</CommandLineArguments>
+    <CommandLineArguments>--solution-name=FileArb --cmake-generator="Visual Studio 16 2019" --cmake-build-type=Debug --tests-project=libFileArbTests --no-install</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <IsWindowsApplication>False</IsWindowsApplication>
     <InterpreterArguments>

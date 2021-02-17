@@ -27,7 +27,6 @@ public:
    virtual int GetErrnoValue() const;
    virtual pair<int, string> GetErrnoWithDescription() const;
    virtual string GetErrnoDescription(int errnoValue) const;
-   virtual string GetSystemErrorDescription(int systemErrorValue) const;
 #ifdef _WIN32
    virtual pair<DWORD, string> GetWindowsLastErrorWithDescription() const;
    virtual string GetWindowsLastErrorDescription(DWORD windowsLastError) const;

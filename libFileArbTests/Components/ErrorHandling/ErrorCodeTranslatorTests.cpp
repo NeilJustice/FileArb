@@ -5,23 +5,14 @@ TESTS(ErrorCodeTranslatorTests)
 #if defined __linux__ || defined __APPLE__
 AFACT(GetLinuxErrno_ReturnsAddressOfErrno)
 #endif
-
 AFACT(DefaultConstructor_SetsFunctionPointers)
 AFACT(GetErrnoValue_ReturnsResultOfCallingErrnoFunction)
 AFACT(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
-
 #if defined __linux__ || defined __APPLE__
-AFACT(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
+AFACT(Linux__GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 #elif _WIN32
-AFACT(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
+AFACT(Windows__GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 #endif
-
-#if defined __linux__ || defined __APPLE__
-AFACT(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
-#elif _WIN32
-AFACT(GetSystemErrorDescriptionOnWindows_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
-#endif
-AFACT(GetSystemErrorDescription_SystemErrorIsNot32_ReturnsIntAsString)
 EVIDENCE
 
 ErrorCodeTranslator _errorCodeTranslator;
@@ -184,7 +175,7 @@ char* strerror_r_CallInstead(int errnoValue, char* outErrnoDescriptionChars, siz
    return returnValue;
 }
 
-TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
+TEST(Linux__GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 {
    const string errnoDescription = ZenUnit::Random<string>();
    _strerror_r_CallHistory.returnValue = const_cast<char*>(errnoDescription.c_str());
@@ -240,7 +231,7 @@ errno_t _strerror_s_CallInstead(char* outErrnoDescriptionChars, size_t outErrnoD
    return returnValue;
 }
 
-TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
+TEST(Windows__GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 {
    _strerror_s_CallHistory.outErrnoDescriptionCharsReturnValue = ZenUnit::Random<string>();
    strerror_sMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::_strerror_s_CallInstead,
@@ -254,35 +245,5 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 }
 
 #endif
-
-#if defined __linux__ || defined __APPLE__
-
-TEST(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
-{
-   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(32);
-   //
-   const string expectedSystemErrorDescription = to_string(32);
-   ARE_EQUAL(expectedSystemErrorDescription, systemErrorDescription);
-}
-
-#elif _WIN32
-
-TEST(GetSystemErrorDescriptionOnWindows_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
-{
-   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(ERROR_SHARING_VIOLATION);
-   ARE_EQUAL("The process cannot access the file because it is being used by another process.", systemErrorDescription);
-}
-
-#endif
-
-TEST(GetSystemErrorDescription_SystemErrorIsNot32_ReturnsIntAsString)
-{
-   const int systemErrorValue = ZenUnit::RandomBetween<int>(0, 31);
-   //
-   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(systemErrorValue);
-   //
-   const string expectedSystemErrorDescription = to_string(systemErrorValue);
-   ARE_EQUAL(expectedSystemErrorDescription, systemErrorDescription);
-}
 
 RUN_TESTS(ErrorCodeTranslatorTests)

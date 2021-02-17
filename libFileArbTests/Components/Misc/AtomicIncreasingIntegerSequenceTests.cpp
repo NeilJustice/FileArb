@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Misc/AtomicIncreasingIntegerSequence.h"
+#include "libFileArb/UtilityComponents/Misc/AtomicIncreasingIntegerSequence.h"
 
 TESTS(AtomicIncreasingIntegerSequenceTests)
 AFACT(NextInteger_Return1Onward)

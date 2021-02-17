@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
-#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libFileArbTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(FileArbSubProgramTests)

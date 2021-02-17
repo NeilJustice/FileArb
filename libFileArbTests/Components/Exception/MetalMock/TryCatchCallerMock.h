@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/Exception/TryCatchCaller.h"
+#include "libFileArb/UtilityComponents/Exception/TryCatchCaller.h"
 
 template<typename ClassType, typename ArgumentType>
 class TryCatchCallerMock : public Metal::Mock<TryCatchCaller<ClassType, ArgumentType>>

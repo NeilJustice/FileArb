@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileArb/Components/Console/Console.h"
-#include "libFileArb/Components/Docopt/DocoptParser.h"
+#include "libFileArb/UtilityComponents/Console/Console.h"
+#include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
 #include "libFileArb/Components/FileArb/FileArbArgsParser.h"
 
 FileArbArgsParser::FileArbArgsParser()

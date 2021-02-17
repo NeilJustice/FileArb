@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Time/Stopwatch.h"
+#include "libFileArb/UtilityComponents/Time/Stopwatch.h"
 
 TESTS(StopwatchTests)
 AFACT(DefaultConstructor_SetsNowFunctionPointer)

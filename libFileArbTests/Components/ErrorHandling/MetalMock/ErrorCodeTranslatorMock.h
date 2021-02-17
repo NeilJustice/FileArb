@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
+#include "libFileArb/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 
 class ErrorCodeTranslatorMock : public Metal::Mock<ErrorCodeTranslator>
 {

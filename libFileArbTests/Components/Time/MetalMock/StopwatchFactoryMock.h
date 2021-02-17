@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/Time/StopwatchFactory.h"
+#include "libFileArb/UtilityComponents/Time/StopwatchFactory.h"
 
 class StopwatchFactoryMock : public Metal::Mock<StopwatchFactory>
 {

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Exception/TryCatchCaller.h"
+#include "libFileArb/UtilityComponents/Exception/TryCatchCaller.h"
 
 template<typename ArgumentType, typename ExceptionType>
 TEMPLATE_TESTS(TryCatchCallerTests, ArgumentType, ExceptionType)

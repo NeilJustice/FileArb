@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileArb/UtilityComponents/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 
 template<typename Arg1Type, typename Arg2Type>
 TEMPLATE_TESTS(VoidTwoArgMemberFunctionCallerTests, Arg1Type, Arg2Type)

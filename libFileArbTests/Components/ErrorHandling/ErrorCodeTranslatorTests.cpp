@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
+#include "libFileArb/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 
 TESTS(ErrorCodeTranslatorTests)
 #if defined __linux__ || defined __APPLE__

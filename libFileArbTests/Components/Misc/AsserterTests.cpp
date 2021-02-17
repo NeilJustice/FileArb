@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Misc/Asserter.h"
+#include "libFileArb/UtilityComponents/Misc/Asserter.h"
 
 TESTS(AsserterTests)
 AFACT(ThrowIfIntsNotEqual_IntsAreEqual_DoesNotThrowException)

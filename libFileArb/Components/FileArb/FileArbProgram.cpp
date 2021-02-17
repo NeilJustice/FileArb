@@ -1,12 +1,12 @@
 #include "pch.h"
-#include "libFileArb/Components/Console/Console.h"
-#include "libFileArb/Components/Exception/TryCatchCaller.h"
 #include "libFileArb/Components/FileArb/FileArbArgsParser.h"
 #include "libFileArb/Components/FileArb/FileArbProgram.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgramFactory.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
-#include "libFileArb/Components/Time/Stopwatch.h"
+#include "libFileArb/UtilityComponents/Console/Console.h"
+#include "libFileArb/UtilityComponents/Exception/TryCatchCaller.h"
+#include "libFileArb/UtilityComponents/Time/Stopwatch.h"
 
 FileArbProgram::FileArbProgram()
    // Function Pointers

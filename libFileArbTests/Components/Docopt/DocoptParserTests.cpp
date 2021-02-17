@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Docopt/DocoptParser.h"
+#include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
 
 TESTS(DocoptParserTests)
 AFACT(DefaultConstructor_SetsFunctions)

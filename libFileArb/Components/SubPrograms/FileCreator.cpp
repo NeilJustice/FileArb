@@ -1,13 +1,13 @@
 #include "pch.h"
-#include "libFileArb/Components/Console/Console.h"
-#include "libFileArb/Components/FileSystem/FileSystem.h"
-#include "libFileArb/Components/FunctionCallers/Member/VoidThreeArgMemberFunctionCaller.h"
-#include "libFileArb/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileArb/Components/Misc/AtomicIncreasingIntegerSequence.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 #include "libFileArb/Components/SubPrograms/TextFileLinesGenerator.h"
-#include "libFileArb/Components/Time/Stopwatch.h"
-#include "libFileArb/Components/Time/StopwatchFactory.h"
+#include "libFileArb/UtilityComponents/Console/Console.h"
+#include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
+#include "libFileArb/UtilityComponents/FunctionCallers/Member/VoidThreeArgMemberFunctionCaller.h"
+#include "libFileArb/UtilityComponents/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileArb/UtilityComponents/Misc/AtomicIncreasingIntegerSequence.h"
+#include "libFileArb/UtilityComponents/Time/Stopwatch.h"
+#include "libFileArb/UtilityComponents/Time/StopwatchFactory.h"
 
 FileCreator::FileCreator()
    // Function Callers

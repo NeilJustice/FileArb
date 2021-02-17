@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/Misc/AtomicIncreasingIntegerSequence.h"
+#include "libFileArb/UtilityComponents/Misc/AtomicIncreasingIntegerSequence.h"
 
 class AtomicIncreasingIntegerSequenceMock : public Metal::Mock<AtomicIncreasingIntegerSequence>
 {

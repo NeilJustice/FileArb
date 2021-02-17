@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/Docopt/DocoptParser.h"
+#include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
 
 class DocoptParserMock : public Metal::Mock<DocoptParser>
 {

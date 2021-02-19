@@ -2,7 +2,9 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileArb) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileArb)
 
-FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of text files or binary files containing arbitrary text or arbitrary bytes for the purpose of performance testing <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> or the speed of file creation in general.
+FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of text files or binary files containing an arbitrary number of characters or bytes.
+
+FileArb can be used to performance test file write speeds across various storage hardware types such as NVMe drives vs. USB drives, across various file system settings such as cluster sizes and RAID settings, and for performance testing programs that process large numbers of files, such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a>.
 
 |Build Type|Build Status|
 |----------|------------|

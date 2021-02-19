@@ -2,7 +2,7 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileArb) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileArb)
 
-FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of text files or binary files containing an arbitrary number of characters or bytes.
+FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of text files or binary files containing an arbitrary number of lines, characters, or bytes.
 
 FileArb can be used to performance test file write speeds across various storage hardware types such as NVMe drives vs. USB drives, across various file system settings such as cluster sizes and RAID settings, and for performance testing programs that process large numbers of files, such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a>.
 
@@ -36,6 +36,18 @@ Optional suffixes for --bytes=<BytesPerFile>: B, KB, MB, or GB
 https://github.com/NeilJustice/FileArb
 
 Usage:
+   filearb create-binary-file
+      --target=<TargetDirectoryPath>
+      --bytes=<NumberOfBytes>
+      [--random-bytes]
+   filearb create-binary-files
+      --target=<TargetDirectoryPath>
+      --directories=<NumberOfDirectories>
+      --files=<NumberOfFiles>
+      --bytes=<BytesPerFile>
+      [--random-bytes]
+      [--parallel]
+      [--verbose]
    filearb create-text-file
       --target=<TargetDirectoryPath>
       --lines=<LinesPerFile>
@@ -47,18 +59,6 @@ Usage:
       --files=<FilesPerDirectory>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--parallel]
-      [--verbose]
-   filearb create-binary-file
-      --target=<TargetDirectoryPath>
-      --bytes=<NumberOfBytes>
-      [--random-bytes]
-   filearb create-binary-files
-      --target=<TargetDirectoryPath>
-      --directories=<NumberOfDirectories>
-      --files=<NumberOfFiles>
-      --bytes=<BytesPerFile>
-      [--random-bytes]
       [--parallel]
       [--verbose]
 ```

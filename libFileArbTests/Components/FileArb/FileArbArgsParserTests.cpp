@@ -2,7 +2,7 @@
 #include "libFileArb/Components/FileArb/FileArbArgsParser.h"
 #include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
+#include "libFileArbTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
 
 TESTS(FileArbArgsParserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)

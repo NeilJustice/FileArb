@@ -16,8 +16,10 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 
 * [FileArb Command Line Usage](#filearb-command-line-usage)
 * [FileArb Program Modes](#filearb-program-modes)
-   * [create-text-files](#create-text-files)
+   * [create-binary-file](#create-binary-file)
    * [create-binary-files](#create-binary-files)
+   * [create-text-file](#create-text-file)
+   * [create-text-files](#create-text-files)   
 * [FileArb Code Structure As It Appears In Visual Studio Code](#filearb-code-structure-as-it-appears-in-visual-studio-code)
 * [FileArb Code Structure As It Appears In Visual Studio 2019](#filearb-code-structure-as-it-appears-in-visual-studio-2019)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize and UndefinedBehaviorSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-filearb)
@@ -69,17 +71,25 @@ FileArb command line arguments are parsed using the excellent single-header libr
 
 ## FileArb Program Modes
 
-### create-text-files
+### create-binary-file
 
-FileArb program mode `create-text-files` creates at a specified directory a specified number of subdirectories containing a specified number of text files each containing '0' characters.
 
-![create-text-files](Screenshots/create-text-files.png)
+
+### create-text-file
+
+
 
 ### create-binary-files
 
 FileArb program mode `create-binary-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of bytes, either 0 bytes or `[--random-bytes]`.
 
 ![create-binary-files](Screenshots/create-binary-files.png)
+
+### create-text-files
+
+FileArb program mode `create-text-files` creates at a specified directory a specified number of subdirectories containing a specified number of text files each containing '0' characters.
+
+![create-text-files](Screenshots/create-text-files.png)
 
 ## FileArb Code Structure As It Appears in Visual Studio Code
 

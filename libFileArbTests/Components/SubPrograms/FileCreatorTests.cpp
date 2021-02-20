@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
-#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libFileArbTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libFileArbTests/Components/FunctionCallers/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
-#include "libFileArbTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileArbTests/Components/Misc/MetalMock/AtomicIncreasingIntegerSequenceMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
-#include "libFileArbTests/Components/Time/MetalMock/StopwatchFactoryMock.h"
-#include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
+#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileArbTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
+#include "libFileArbTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileArbTests/UtilityComponents/Misc/MetalMock/AtomicIncreasingIntegerSequenceMock.h"
+#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchFactoryMock.h"
+#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileCreatorTests)
 AFACT(DefaultConstructor_NewsComponents)

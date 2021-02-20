@@ -1,7 +1,6 @@
 #include "pch.h"
-#include "libFileArb/UtilityComponents/Console/Console.h"
-#include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
 #include "libFileArb/Components/SubPrograms/CreateTextFilesSubProgram.h"
+#include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/TextFileLinesGeneratorMock.h"
 
@@ -28,8 +27,7 @@ TEST(DefaultConstructor_NewsComponents)
 {
    CreateTextFilesSubProgram createTextFilesSubProgram;
    // Baseclass Constant Components
-   DELETE_TO_ASSERT_NEWED(createTextFilesSubProgram._protected_console);
-   DELETE_TO_ASSERT_NEWED(createTextFilesSubProgram._protected_fileSystem);
+   DELETE_TO_ASSERT_NEWED(createTextFilesSubProgram._fileSystem);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(createTextFilesSubProgram._textFileLinesGenerator);
    // Mutable Components

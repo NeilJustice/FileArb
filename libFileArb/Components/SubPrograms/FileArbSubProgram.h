@@ -8,8 +8,8 @@ class FileArbSubProgram
    friend class FileArbSubProgramTests;
 protected:
    // Baseclass Constant Components
-   unique_ptr<const Console> _protected_console;
-   unique_ptr<const FileSystem> _protected_fileSystem;
+   unique_ptr<const Console> _console;
+   unique_ptr<const FileSystem> _fileSystem;
 public:
    FileArbSubProgram();
    virtual ~FileArbSubProgram();

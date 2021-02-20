@@ -15,7 +15,7 @@ struct FileArbArgs
    size_t numberOfBytesPerFile = 0;
    bool randomBytes = false;
    bool parallel = false;
-   bool verbose = false;
+   bool minimal = false;
 
    // Calculated fields
    string fileExtension;

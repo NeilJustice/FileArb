@@ -20,7 +20,7 @@ TEST(DefaultConstructor_SetsFieldsTo0)
    expectedDefaultFileArbArgs.numberOfBytesPerFile = 0;
    expectedDefaultFileArbArgs.randomBytes = false;
    expectedDefaultFileArbArgs.parallel = false;
-   expectedDefaultFileArbArgs.verbose = false;
+   expectedDefaultFileArbArgs.minimal = false;
    expectedDefaultFileArbArgs.fileExtension = "";
    ARE_EQUAL(expectedDefaultFileArbArgs, defaultFileArbArgs);
 }
@@ -39,6 +39,7 @@ Usage:
       --target=<TargetDirectoryPath>
       --bytes=<BytesPerFile>
       [--random-bytes]
+      [--minimal]
    filearb create-binary-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -46,12 +47,12 @@ Usage:
       --bytes=<BytesPerFile>
       [--random-bytes]
       [--parallel]
-      [--verbose]
+      [--minimal]
    filearb create-text-file
       --target=<TargetDirectoryPath>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--verbose]
+      [--minimal]
    filearb create-text-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -59,7 +60,7 @@ Usage:
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
       [--parallel]
-      [--verbose]
+      [--minimal]
 )", FileArbArgs::CommandLineUsage);
 }
 

@@ -42,6 +42,7 @@ Usage:
       --target=<TargetDirectoryPath>
       --bytes=<NumberOfBytes>
       [--random-bytes]
+      [--minimal]
    filearb create-binary-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -49,12 +50,12 @@ Usage:
       --bytes=<BytesPerFile>
       [--random-bytes]
       [--parallel]
-      [--verbose]
+      [--minimal]
    filearb create-text-file
       --target=<TargetDirectoryPath>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--verbose]
+      [--minimal]
    filearb create-text-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -62,7 +63,7 @@ Usage:
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
       [--parallel]
-      [--verbose]
+      [--minimal]
 ```
 
 FileArb command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):

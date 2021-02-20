@@ -28,8 +28,8 @@ TEST(DefaultConstructor_NewsComponents)
 {
    CreateTextFileSubProgram createTextFileSubProgram;
    // Baseclass Constant Components
-   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._protected_console);
-   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._protected_fileSystem);
+   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._console);
+   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._fileSystem);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._textFileLinesGenerator);
    // Mutable Components

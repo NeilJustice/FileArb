@@ -1,14 +1,14 @@
 #include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
 #include "libFileArb/Components/FileArb/FileArbProgram.h"
 
-// create-text-files --target=C:\FileRevisorTesting\Test --directories=3 --files=3 --lines=3 --characters=3 --verbose
-// create-text-files --target=C:\FileRevisorTesting\Test --directories=32 --files=1000 --lines=100 --characters=100 --parallel --verbose
-
 // create-binary-file --target=C:\FileArbTesting\Test --bytes=3 --random-bytes
+// create-binary-files --target=C:\FileRevisorTesting\Test --directories=1 --files=1 --bytes=3 --random-bytes
+// create-binary-files --target=C:\FileRevisorTesting\Test --directories=3 --files=1000 --bytes=3 --random-bytes --minimal
+// create-binary-files --target=C:\FileRevisorTesting\Test --directories=32 --files=1000 --bytes=1000 --parallel --random-bytes
 
-// create-binary-files --target=C:\FileRevisorTesting\Test --directories=1 --files=1 --bytes=3 --verbose --random-bytes
-// create-binary-files --target=C:\FileRevisorTesting\Test --directories=3 --files=3 --bytes=3 --verbose --random-bytes
-// create-binary-files --target=C:\FileRevisorTesting\Test --directories=32 --files=1000 --bytes=1000 --parallel --verbose --random-bytes
+// create-text-file --target=C:\FileRevisorTesting\Test --lines=3 --characters=3
+// create-text-files --target=C:\FileRevisorTesting\Test --directories=3 --files=3 --lines=3 --characters=3
+// create-text-files --target=C:\FileRevisorTesting\Test --directories=32 --files=1000 --lines=100 --characters=100 --parallel
 
 int main(int argc, char* argv[])
 {

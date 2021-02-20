@@ -56,7 +56,7 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
 
    args.randomBytes = _docoptParser->GetOptionalBool(docoptValues, "--random-bytes");
    args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");
-   args.verbose = _docoptParser->GetOptionalBool(docoptValues, "--verbose");
+   args.minimal = _docoptParser->GetOptionalBool(docoptValues, "--minimal");
    return args;
 }
 

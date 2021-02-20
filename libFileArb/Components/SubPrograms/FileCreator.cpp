@@ -62,7 +62,7 @@ void FileCreator::CreateNumberedFileInDirectory(
 {
    const size_t fileNumber = callIndex + 1;
    shared_ptr<Stopwatch> threadUniqueCreateFileStopwatch;
-   if (args.verbose)
+   if (!args.minimal)
    {
       threadUniqueCreateFileStopwatch = _stopwatchFactory->NewStopwatch();
       threadUniqueCreateFileStopwatch->Start();
@@ -70,7 +70,7 @@ void FileCreator::CreateNumberedFileInDirectory(
    const string fileName = String::Concat("file", fileNumber, args.fileExtension);
    const fs::path filePath = directoryPath / fileName;
    _fileSystem->CreateBinaryFile(filePath, fileTextOrBytes.data(), fileTextOrBytes.size());
-   if (args.verbose)
+   if (!args.minimal)
    {
       const long long millisecondsToWriteFile = threadUniqueCreateFileStopwatch->StopAndGetElapsedMilliseconds();
       const string wroteFileMessage = String::Concat(

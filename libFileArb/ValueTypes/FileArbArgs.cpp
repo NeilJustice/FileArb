@@ -13,6 +13,7 @@ Usage:
       --target=<TargetDirectoryPath>
       --bytes=<BytesPerFile>
       [--random-bytes]
+      [--minimal]
    filearb create-binary-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -20,12 +21,12 @@ Usage:
       --bytes=<BytesPerFile>
       [--random-bytes]
       [--parallel]
-      [--verbose]
+      [--minimal]
    filearb create-text-file
       --target=<TargetDirectoryPath>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--verbose]
+      [--minimal]
    filearb create-text-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -33,5 +34,5 @@ Usage:
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
       [--parallel]
-      [--verbose]
+      [--minimal]
 )";

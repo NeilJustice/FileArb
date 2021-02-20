@@ -20,7 +20,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfBytesPerFile, ZenUnit::RandomNon0<size_t>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, randomBytes, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, parallel, true);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, verbose, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, minimal, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, fileExtension, ZenUnit::Random<string>());
 }
 
@@ -50,8 +50,8 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
 
    const bool randomBytes = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
-   const bool verbose = ZenUnit::Random<bool>();
-   randomGeneratorMock.BoolMock.ReturnValues(randomBytes, parallel, verbose);
+   const bool minimal = ZenUnit::Random<bool>();
+   randomGeneratorMock.BoolMock.ReturnValues(randomBytes, parallel, minimal);
    //
    const FileArbArgs randomFileArbArgs = TestableFileArbArgs(&randomGeneratorMock);
    //
@@ -72,7 +72,7 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
    expectedRandomFileArbArgs.targetDirectoryPath = targetDirectoryPath;
    expectedRandomFileArbArgs.randomBytes = randomBytes;
    expectedRandomFileArbArgs.parallel = parallel;
-   expectedRandomFileArbArgs.verbose = verbose;
+   expectedRandomFileArbArgs.minimal = minimal;
    expectedRandomFileArbArgs.fileExtension = fileExtension;
    ARE_EQUAL(expectedRandomFileArbArgs, randomFileArbArgs);
 }

@@ -71,8 +71,8 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
 
    const bool randomBytes = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
-   const bool verbose = ZenUnit::Random<bool>();
-   _docoptParserMock->GetOptionalBoolMock.ReturnValues(randomBytes, parallel, verbose);
+   const bool minimal = ZenUnit::Random<bool>();
+   _docoptParserMock->GetOptionalBoolMock.ReturnValues(randomBytes, parallel, minimal);
 
    const int randomProgramModeInt = ZenUnit::RandomBetween<int>(0, 2);
    const ProgramMode programMode = static_cast<ProgramMode>(randomProgramModeInt);
@@ -107,7 +107,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    {
       { docoptValues, "--random-bytes" },
       { docoptValues, "--parallel" },
-      { docoptValues, "--verbose" }
+      { docoptValues, "--minimal" }
    }));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
    static const vector<int> expectedBothProgramModesAsInts =
@@ -136,7 +136,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    expectedArgs.numberOfBytesPerFile = numberOfBytesPerFile;
    expectedArgs.randomBytes = randomBytes;
    expectedArgs.parallel = parallel;
-   expectedArgs.verbose = verbose;
+   expectedArgs.minimal = minimal;
    ARE_EQUAL(expectedArgs, args);
 }
 

@@ -18,13 +18,14 @@ struct FileArbArgs
    bool minimal = false;
 
    // Calculated fields
+   string fileNamePrefix;
    string fileExtension;
 };
 
 #ifdef _WIN32
 #ifdef _DEBUG
-static_assert(sizeof(FileArbArgs) == 176);
+static_assert(sizeof(FileArbArgs) == 216);
 #else
-static_assert(sizeof(FileArbArgs) == 152);
+static_assert(sizeof(FileArbArgs) == 184);
 #endif
 #endif

@@ -2,6 +2,7 @@
 class Console;
 class FileSystem;
 struct FileArbArgs;
+class Stopwatch;
 class StopwatchFactory;
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
@@ -25,10 +26,14 @@ private:
    unique_ptr<const Console> _console;
    unique_ptr<const FileSystem> _fileSystem;
    unique_ptr<const StopwatchFactory> _stopwatchFactory;
+
+   // Mutable Components
+   unique_ptr<Stopwatch> _stopwatch;
 public:
    FileCreator();
    virtual ~FileCreator();
-   virtual void CreateFile(const FileArbArgs& args, const string& fileTextOrBytes);
+   virtual void CreateBinaryFile(const FileArbArgs& args, const string& fileBytes);
+   virtual void CreateTextFile(const FileArbArgs& args, const string& fileText);
    virtual void CreateFiles(const FileArbArgs& args, const string& fileTextOrBytes);
 private:
    void CreateSequentiallyNumberedFilesInNumberedDirectory(

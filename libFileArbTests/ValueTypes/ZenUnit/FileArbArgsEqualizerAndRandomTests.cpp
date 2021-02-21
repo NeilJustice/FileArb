@@ -21,6 +21,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, randomBytes, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, parallel, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, minimal, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, fileNamePrefix, ZenUnit::Random<string>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, fileExtension, ZenUnit::Random<string>());
 }
 
@@ -29,8 +30,9 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
    ZenUnit::RandomGeneratorMock randomGeneratorMock;
 
    const string commandLine = ZenUnit::Random<string>();
+   const string fileNamePrefix = ZenUnit::Random<string>();
    const string fileExtension = ZenUnit::Random<string>();
-   randomGeneratorMock.StringMock.ReturnValues(commandLine, fileExtension);
+   randomGeneratorMock.StringMock.ReturnValues(commandLine, fileNamePrefix, fileExtension);
 
    const ProgramMode programMode = static_cast<ProgramMode>(randomGeneratorMock.EnumMock.ReturnRandom());
 
@@ -55,7 +57,7 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
    //
    const FileArbArgs randomFileArbArgs = TestableFileArbArgs(&randomGeneratorMock);
    //
-   METALMOCK(randomGeneratorMock.StringMock.CalledNTimes(2));
+   METALMOCK(randomGeneratorMock.StringMock.CalledNTimes(3));
    METALMOCK(randomGeneratorMock.EnumMock.CalledOnceWith(static_cast<int>(ProgramMode::MaxValue)));
    METALMOCK(randomGeneratorMock.FilesystemPathMock.CalledOnce());
    METALMOCK(randomGeneratorMock.SizeTMock.CalledNTimes(5));
@@ -73,6 +75,7 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
    expectedRandomFileArbArgs.randomBytes = randomBytes;
    expectedRandomFileArbArgs.parallel = parallel;
    expectedRandomFileArbArgs.minimal = minimal;
+   expectedRandomFileArbArgs.fileNamePrefix = fileNamePrefix;
    expectedRandomFileArbArgs.fileExtension = fileExtension;
    ARE_EQUAL(expectedRandomFileArbArgs, randomFileArbArgs);
 }

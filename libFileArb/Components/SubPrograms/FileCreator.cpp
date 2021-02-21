@@ -17,6 +17,8 @@ FileCreator::FileCreator()
    , _console(make_unique<Console>())
    , _fileSystem(make_unique<FileSystem>())
    , _stopwatchFactory(make_unique<StopwatchFactory>())
+   // Mutable Components
+   , _stopwatch(make_unique<Stopwatch>())
 {
 }
 
@@ -24,8 +26,26 @@ FileCreator::~FileCreator()
 {
 }
 
-void FileCreator::CreateFile(const FileArbArgs& /*args*/, const string& /*fileTextOrBytes*/)
+void FileCreator::CreateBinaryFile(const FileArbArgs& args, const string& fileBytes)
 {
+   _stopwatch->Start();
+   const fs::path filePath = args.targetDirectoryPath / "binaryfile.bin";
+   _fileSystem->CreateBinaryFile(filePath, fileBytes.data(), fileBytes.size());
+   const long long millisecondsToWriteFile = _stopwatch->StopAndGetElapsedMilliseconds();
+   const string wroteFileMessage = String::Concat(
+      "[FileArb] Wrote binary file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
+   _console->WriteLine(wroteFileMessage);
+}
+
+void FileCreator::CreateTextFile(const FileArbArgs& args, const string& fileText)
+{
+   _stopwatch->Start();
+   const fs::path filePath = args.targetDirectoryPath / "textfile.txt";
+   _fileSystem->CreateTextFile(filePath, fileText);
+   const long long millisecondsToWriteFile = _stopwatch->StopAndGetElapsedMilliseconds();
+   const string wroteFileMessage = String::Concat(
+      "[FileArb] Wrote text file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
+   _console->WriteLine(wroteFileMessage);
 }
 
 void FileCreator::CreateFiles(const FileArbArgs& args, const string& fileTextOrBytes)
@@ -53,8 +73,7 @@ void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(
    const string directoryName = "directory" + to_string(directoryNumber);
    const fs::path directoryPath = args.targetDirectoryPath / fs::path(directoryName);
    _caller_CreateNumberedFileInDirectory->CallNonConstMemberFunctionNTimes(
-      args.numberOfFilesToCreate, &FileCreator::CreateNumberedFileInDirectory,
-      this, directoryPath, args, fileTextOrBytes);
+      args.numberOfFilesToCreate, &FileCreator::CreateNumberedFileInDirectory, this, directoryPath, args, fileTextOrBytes);
 }
 
 void FileCreator::CreateNumberedFileInDirectory(

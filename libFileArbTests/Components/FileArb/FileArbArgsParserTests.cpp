@@ -8,13 +8,14 @@ TESTS(FileArbArgsParserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 AFACT(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
 FACTS(DetermineProgramMode_ReturnsExpectedProgramModeDependingOnProgramModeBoolValues)
-FACTS(DetermineFileExtension_ReturnsDotTxtForCreateTextFileOrFilesMode_ReturnsDotBinForCreateBinaryFileOrFilesMode)
+FACTS(GetFileNamePrefixAndFileExtension_ReturnsDotTxtForCreateTextFileOrFilesMode_ReturnsDotBinForCreateBinaryFileOrFilesMode)
 EVIDENCE
 
 FileArbArgsParser _fileArbArgsParser;
 // Function Pointers
 METALMOCK_NONVOID4_STATIC(ProgramMode, FileArbArgsParser, _call_DetermineProgramMode, bool, bool, bool, bool)
-METALMOCK_NONVOID4_STATIC(string, FileArbArgsParser, _call_DetermineFileExtension, bool, bool, bool, bool)
+using PairStringStringType = pair<string, string>;
+METALMOCK_NONVOID4_STATIC(PairStringStringType, FileArbArgsParser, _call_GetFileNamePrefixAndFileExtension, bool, bool, bool, bool)
 // Constant Components
 ConsoleMock* _consoleMock = nullptr;
 DocoptParserMock* _docoptParserMock = nullptr;
@@ -25,7 +26,7 @@ STARTUP
 {
    // Function Pointers
    _fileArbArgsParser._call_DetermineProgramMode = BIND_4ARG_METALMOCK_OBJECT(_call_DetermineProgramModeMock);
-   _fileArbArgsParser._call_DetermineFileExtension = BIND_4ARG_METALMOCK_OBJECT(_call_DetermineFileExtensionMock);
+   _fileArbArgsParser._call_GetFileNamePrefixAndFileExtension = BIND_4ARG_METALMOCK_OBJECT(_call_GetFileNamePrefixAndFileExtensionMock);
    // Constant Components
    _fileArbArgsParser._console.reset(_consoleMock = new ConsoleMock);
    _fileArbArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
@@ -36,7 +37,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    FileArbArgsParser fileArbArgsParser;
    // Function Pointers
    STD_FUNCTION_TARGETS(FileArbArgsParser::DetermineProgramMode, fileArbArgsParser._call_DetermineProgramMode);
-   STD_FUNCTION_TARGETS(FileArbArgsParser::DetermineFileExtension, fileArbArgsParser._call_DetermineFileExtension);
+   STD_FUNCTION_TARGETS(FileArbArgsParser::GetFileNamePrefixAndFileExtension, fileArbArgsParser._call_GetFileNamePrefixAndFileExtension);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(fileArbArgsParser._console);
    DELETE_TO_ASSERT_NEWED(fileArbArgsParser._docoptParser);
@@ -78,7 +79,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    const ProgramMode programMode = static_cast<ProgramMode>(randomProgramModeInt);
    _call_DetermineProgramModeMock.Return(programMode);
 
-   const string fileExtension = _call_DetermineFileExtensionMock.ReturnRandom();
+   const pair<string, string> fileNamePrefixAndFileExtension = _call_GetFileNamePrefixAndFileExtensionMock.ReturnRandom();
 
    const vector<string> stringArgs =
    {
@@ -94,7 +95,8 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    FileArbArgs expectedArgs;
    expectedArgs.commandLine = Vector::JoinWithSeparator(stringArgs, ' ');
    expectedArgs.programMode = programMode;
-   expectedArgs.fileExtension = fileExtension;
+   expectedArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
+   expectedArgs.fileExtension = fileNamePrefixAndFileExtension.second;
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs));
    METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
    {
@@ -127,7 +129,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
       { docoptValues, "--bytes", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) } }
    }));
    METALMOCK(_call_DetermineProgramModeMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
-   METALMOCK(_call_DetermineFileExtensionMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
+   METALMOCK(_call_GetFileNamePrefixAndFileExtensionMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
    expectedArgs.targetDirectoryPath = targetDirectoryPath;
    expectedArgs.numberOfDirectoriesToCreate = numberOfDirectoriesToCreate;
    expectedArgs.numberOfFilesToCreate = numberOfFilesToCreate;
@@ -152,16 +154,17 @@ TEST5X5(DetermineProgramMode_ReturnsExpectedProgramModeDependingOnProgramModeBoo
    ARE_EQUAL(expectedReturnValue, programMode);
 }
 
-TEST5X5(DetermineFileExtension_ReturnsDotTxtForCreateTextFileOrFilesMode_ReturnsDotBinForCreateBinaryFileOrFilesMode,
-   bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, const string& expectedReturnValue,
-   true, false, false, false, ".txt"s,
-   false, true, false, false, ".txt"s,
-   false, false, true, false, ".bin"s,
-   false, false, false, true, ".bin"s)
+TEST6X6(GetFileNamePrefixAndFileExtension_ReturnsDotTxtForCreateTextFileOrFilesMode_ReturnsDotBinForCreateBinaryFileOrFilesMode,
+   bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, const string& expectedFileNamePrefix, const string& expectedFileExtension,
+   true, false, false, false, "text", ".txt"s,
+   false, true, false, false, "text", ".txt"s,
+   false, false, true, false, "binary", ".bin"s,
+   false, false, false, true, "binary", ".bin"s)
 {
-   const string fileExtension = FileArbArgsParser::DetermineFileExtension(
+   const pair<string, string> fileNamePrefixAndFileExtension = FileArbArgsParser::GetFileNamePrefixAndFileExtension(
       isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
-   ARE_EQUAL(expectedReturnValue, fileExtension);
+   ARE_EQUAL(expectedFileNamePrefix, fileNamePrefixAndFileExtension.first);
+   ARE_EQUAL(expectedFileExtension, fileNamePrefixAndFileExtension.second);
 }
 
 RUN_TESTS(FileArbArgsParserTests)

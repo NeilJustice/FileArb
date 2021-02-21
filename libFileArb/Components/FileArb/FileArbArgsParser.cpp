@@ -6,7 +6,7 @@
 FileArbArgsParser::FileArbArgsParser()
    // Function Pointers
    : _call_DetermineProgramMode(FileArbArgsParser::DetermineProgramMode)
-   , _call_DetermineFileExtension(FileArbArgsParser::DetermineFileExtension)
+   , _call_GetFileNamePrefixAndFileExtension(FileArbArgsParser::GetFileNamePrefixAndFileExtension)
    // Constant Components
    , _console(make_unique<Console>())
    , _docoptParser(make_unique<DocoptParser>())
@@ -27,7 +27,12 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
    const bool isCreateBinaryFileMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-file");
    const bool isCreateBinaryFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-files");
    args.programMode = _call_DetermineProgramMode(isCreateTextFile, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
-   args.fileExtension = _call_DetermineFileExtension(isCreateTextFile, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
+
+   const pair<string, string> fileNamePrefixAndFileExtension = _call_GetFileNamePrefixAndFileExtension(
+      isCreateTextFile, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
+   args.fileNamePrefix = fileNamePrefixAndFileExtension.first;
+   args.fileExtension = fileNamePrefixAndFileExtension.second;
+
    args.targetDirectoryPath = _docoptParser->GetRequiredString(docoptValues, "--target");
 
    static const vector<int> allProgramModesAsInts =
@@ -79,21 +84,21 @@ ProgramMode FileArbArgsParser::DetermineProgramMode(
    return ProgramMode::CreateBinaryFiles;
 }
 
-string FileArbArgsParser::DetermineFileExtension(
+pair<string, string> FileArbArgsParser::GetFileNamePrefixAndFileExtension(
    bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode)
 {
    if (isCreateTextFileMode)
    {
-      return ".txt"s;
+      return make_pair("text", ".txt");
    }
    else if (isCreateTextFilesMode)
    {
-      return ".txt"s;
+      return make_pair("text", ".txt");
    }
    else if (isCreateBinaryFileMode)
    {
-      return ".bin"s;
+      return make_pair("binary", ".bin");
    }
    release_assert(isCreateBinaryFilesMode);
-   return ".bin"s;
+   return make_pair("binary", ".bin");
 }

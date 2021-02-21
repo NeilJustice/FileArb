@@ -39,13 +39,13 @@ TEST(DefaultConstructor_NewsComponents)
 TEST(Run_CreateTextFiles_Returns0)
 {
    const string fileText = _textFileLinesGeneratorMock->MakeFileTextMock.ReturnRandom();
-   _fileCreatorMock->CreateFilesMock.Expect();
+   _fileCreatorMock->CreateTextFileMock.Expect();
    const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    //
    const int exitCode = _createTextFileSubProgram.Run(args);
    //
    METALMOCK(_textFileLinesGeneratorMock->MakeFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine));
-   METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(args, fileText));
+   METALMOCK(_fileCreatorMock->CreateTextFileMock.CalledOnceWith(args, fileText));
    IS_ZERO(exitCode);
 }
 

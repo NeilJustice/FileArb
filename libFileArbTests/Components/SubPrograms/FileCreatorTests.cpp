@@ -11,6 +11,8 @@
 
 TESTS(FileCreatorTests)
 AFACT(DefaultConstructor_NewsComponents)
+AFACT(CreateBinaryFile_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBin)
+AFACT(CreateTextFile_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
 AFACT(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 AFACT(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 AFACT(CreateSequentiallyNumberedFilesInNumberedDirectory_DoesSo)
@@ -31,6 +33,8 @@ VoidThreeArgMemberFunctionCallerMockType* _caller_CreateNumberedFileInDirectoryM
 ConsoleMock* _consoleMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
+// Mutable Components
+StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
@@ -43,6 +47,8 @@ STARTUP
    _fileCreator._console.reset(_consoleMock = new ConsoleMock);
    _fileCreator._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    _fileCreator._stopwatchFactory.reset(_stopwatchFactoryMock = new StopwatchFactoryMock);
+   // Mutable Components
+   _fileCreator._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
@@ -55,6 +61,50 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(fileCreator._console);
    DELETE_TO_ASSERT_NEWED(fileCreator._fileSystem);
    DELETE_TO_ASSERT_NEWED(fileCreator._stopwatchFactory);
+   // Mutable Components
+   DELETE_TO_ASSERT_NEWED(fileCreator._stopwatch);
+}
+
+TEST(CreateBinaryFile_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBin)
+{
+   _stopwatchMock->StartMock.Expect();
+   _fileSystemMock->CreateBinaryFileMock.Expect();
+   const long long millisecondsToWriteFile = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+   _consoleMock->WriteLineMock.Expect();
+
+   const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   const string fileBytes = ZenUnit::Random<string>();
+   //
+   _fileCreator.CreateBinaryFile(args, fileBytes);
+   //
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   const fs::path expectedFilePath = args.targetDirectoryPath / "binaryfile.bin";
+   METALMOCK(_fileSystemMock->CreateBinaryFileMock.CalledOnceWith(expectedFilePath, fileBytes.data(), fileBytes.size()));
+   METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
+   const string expectedWroteFileMessage = String::Concat(
+      "[FileArb] Wrote binary file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
+}
+
+TEST(CreateTextFile_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
+{
+   _stopwatchMock->StartMock.Expect();
+   _fileSystemMock->CreateTextFileMock.Expect();
+   const long long millisecondsToWriteFile = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+   _consoleMock->WriteLineMock.Expect();
+
+   const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   const string fileText = ZenUnit::Random<string>();
+   //
+   _fileCreator.CreateTextFile(args, fileText);
+   //
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   const fs::path expectedFilePath = args.targetDirectoryPath / "textfile.txt";
+   METALMOCK(_fileSystemMock->CreateTextFileMock.CalledOnceWith(expectedFilePath, fileText));
+   METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
+   const string expectedWroteFileMessage = String::Concat(
+      "[FileArb] Wrote text file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
 
 TEST(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)

@@ -12,7 +12,7 @@ private:
    friend class FileArbArgsParserTests;
    // Function Pointers
    function<ProgramMode(bool, bool, bool, bool)> _call_DetermineProgramMode;
-   function<string(bool, bool, bool, bool)> _call_DetermineFileExtension;
+   function<pair<string, string>(bool, bool, bool, bool)> _call_GetFileNamePrefixAndFileExtension;
    // Constant Components
    unique_ptr<const Console> _console;
    unique_ptr<const DocoptParser> _docoptParser;
@@ -23,6 +23,6 @@ public:
 private:
    static ProgramMode DetermineProgramMode(
       bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode);
-   static string DetermineFileExtension(
+   static pair<string, string> GetFileNamePrefixAndFileExtension(
       bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode);
 };

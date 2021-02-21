@@ -2,7 +2,7 @@
 #include "libFileArb/ValueTypes/FileArbArgs.h"
 
 const string FileArbArgs::CommandLineUsage =
-R"(FileArb v0.9.1
+R"(FileArb v0.10.0
 Creates an arbitrary number of text files or binary files
 containing an arbitrary number of lines, characters, or bytes.
 Optional suffixes for --bytes=<BytesPerFile>: B, KB, MB, or GB
@@ -13,7 +13,6 @@ Usage:
       --target=<TargetDirectoryPath>
       --bytes=<BytesPerFile>
       [--random-bytes]
-      [--minimal]
    filearb create-binary-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -26,7 +25,6 @@ Usage:
       --target=<TargetDirectoryPath>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--minimal]
    filearb create-text-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>

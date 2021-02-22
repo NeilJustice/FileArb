@@ -1,7 +1,7 @@
 #include "pch.h"
+#include "libFileArb/Components/FileArb/FileArbArgsParser.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
-#include "libFileArb/Components/FileArb/FileArbArgsParser.h"
 
 FileArbArgsParser::FileArbArgsParser()
    // Function Pointers
@@ -87,18 +87,10 @@ ProgramMode FileArbArgsParser::DetermineProgramMode(
 pair<string, string> FileArbArgsParser::GetFileNamePrefixAndFileExtension(
    bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode)
 {
-   if (isCreateTextFileMode)
+   if (isCreateTextFileMode || isCreateTextFilesMode)
    {
       return make_pair("text", ".txt");
    }
-   else if (isCreateTextFilesMode)
-   {
-      return make_pair("text", ".txt");
-   }
-   else if (isCreateBinaryFileMode)
-   {
-      return make_pair("binary", ".bin");
-   }
-   release_assert(isCreateBinaryFilesMode);
+   release_assert(isCreateBinaryFileMode || isCreateBinaryFilesMode);
    return make_pair("binary", ".bin");
 }

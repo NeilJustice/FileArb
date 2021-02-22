@@ -1,7 +1,7 @@
 #include "pch.h"
+#include "libFileArb/Components/SubPrograms/CreateTextFileSubProgram.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
-#include "libFileArb/Components/SubPrograms/CreateTextFileSubProgram.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/TextFileLinesGeneratorMock.h"
 

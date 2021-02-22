@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "libFileArbTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileArbTests/UtilityComponents/Misc/MetalMock/AsserterMock.h"
-#include "libFileArbTests/UtilityComponents/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libFileArb/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystemExceptions.h"
+#include "libFileArbTests/UtilityComponents/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
+#include "libFileArbTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileArbTests/UtilityComponents/Misc/MetalMock/AsserterMock.h"
 
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFunctionPointers)

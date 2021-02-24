@@ -1,5 +1,6 @@
 #include "pch.h"
-#include "libFileArb/Components/FileArb/FileArbArgsParser.h"
+#include "libFileArb/Components/Args/BytesStringConverter.h"
+#include "libFileArb/Components/Args/FileArbArgsParser.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
 
@@ -8,6 +9,7 @@ FileArbArgsParser::FileArbArgsParser()
    : _call_DetermineProgramMode(FileArbArgsParser::DetermineProgramMode)
    , _call_GetFileNamePrefixAndFileExtension(FileArbArgsParser::GetFileNamePrefixAndFileExtension)
    // Constant Components
+   , _bytesStringConverter(make_unique<BytesStringConverter>())
    , _console(make_unique<Console>())
    , _docoptParser(make_unique<DocoptParser>())
 {
@@ -56,8 +58,10 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
    args.numberOfCharactersPerLine = _docoptParser->GetProgramModeSpecificRequiredSizeT(
       docoptValues, "--characters", programModeAsInt, { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) });
 
-   args.numberOfBytesPerFile = _docoptParser->GetProgramModeSpecificRequiredSizeT(
+   const string bytesString = _docoptParser->GetProgramModeSpecificRequiredString(
       docoptValues, "--bytes", programModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) });
+   args.numberOfBytesPerFile = 0;
+   //args.numberOfBytesPerFile = _bytesStringConverter->BytesStringToNumberOfBytes(numberOfBytesPerFileArgValue);
 
    args.randomBytes = _docoptParser->GetOptionalBool(docoptValues, "--random-bytes");
    args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");

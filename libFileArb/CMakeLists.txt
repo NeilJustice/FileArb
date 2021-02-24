@@ -19,6 +19,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 folder_source_group(Compiler)
 folder_source_group(Components)
+folder_source_group_subfolder(Components Args)
 folder_source_group_subfolder(Components FileArb)
 folder_source_group_subfolder(Components Random)
 folder_source_group_subfolder(Components SubPrograms)

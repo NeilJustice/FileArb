@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/FileArb/FileArbArgsParser.h"
+#include "libFileArb/Components/Args/FileArbArgsParser.h"
 
 class FileArbArgsParserMock : public Metal::Mock<FileArbArgsParser>
 {

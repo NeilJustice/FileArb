@@ -37,7 +37,7 @@ namespace docopt
 {
 	struct Value
 	{
-	private:
+	public:
 		enum class Kind
 		{
 			Empty,
@@ -47,7 +47,7 @@ namespace docopt
 			String,
 			StringList
 		};
-
+	private:
 		struct Variant
 		{
 			bool boolValue = false;
@@ -130,18 +130,18 @@ namespace docopt
 
 		size_t AsSizeT() const
 		{
-			if (kind == Kind::String)
+			if (kind != Kind::String)
 			{
-				const string& str = variant.strValue;
-				size_t pos;
-				const size_t ret = stoull(str, &pos);
-				if (pos != str.length())
-				{
-					throw runtime_error(str + " contains non-numeric characters");
-				}
-				return ret;
+				throw invalid_argument("AsSizeT() called with kind != Kind::String: " + to_string(static_cast<int>(kind)));
 			}
-			return variant.sizeTValue;
+			const string& str = variant.strValue;
+			size_t pos;
+			const size_t sizeTValue = stoull(str, &pos);
+			if (pos != str.length())
+			{
+				throw invalid_argument(str + " contains non-numeric characters");
+			}
+			return sizeTValue;
 		}
 
 		const string& AsString() const

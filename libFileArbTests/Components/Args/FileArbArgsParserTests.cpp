@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "libFileArb/Components/FileArb/FileArbArgsParser.h"
+#include "libFileArb/Components/Args/FileArbArgsParser.h"
 #include "libFileArb/StaticUtilities/Vector.h"
+#include "libFileArbTests/Components/Args/MetalMock/BytesStringConverterMock.h"
 #include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libFileArbTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
 
@@ -17,6 +18,7 @@ METALMOCK_NONVOID4_STATIC(ProgramMode, FileArbArgsParser, _call_DetermineProgram
 using PairStringStringType = pair<string, string>;
 METALMOCK_NONVOID4_STATIC(PairStringStringType, FileArbArgsParser, _call_GetFileNamePrefixAndFileExtension, bool, bool, bool, bool)
 // Constant Components
+BytesStringConverterMock* _bytesStringConverterMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 DocoptParserMock* _docoptParserMock = nullptr;
 
@@ -28,6 +30,7 @@ STARTUP
    _fileArbArgsParser._call_DetermineProgramMode = BIND_4ARG_METALMOCK_OBJECT(_call_DetermineProgramModeMock);
    _fileArbArgsParser._call_GetFileNamePrefixAndFileExtension = BIND_4ARG_METALMOCK_OBJECT(_call_GetFileNamePrefixAndFileExtensionMock);
    // Constant Components
+   _fileArbArgsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
    _fileArbArgsParser._console.reset(_consoleMock = new ConsoleMock);
    _fileArbArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
 }
@@ -39,6 +42,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    STD_FUNCTION_TARGETS(FileArbArgsParser::DetermineProgramMode, fileArbArgsParser._call_DetermineProgramMode);
    STD_FUNCTION_TARGETS(FileArbArgsParser::GetFileNamePrefixAndFileExtension, fileArbArgsParser._call_GetFileNamePrefixAndFileExtension);
    // Constant Components
+   DELETE_TO_ASSERT_NEWED(fileArbArgsParser._bytesStringConverter);
    DELETE_TO_ASSERT_NEWED(fileArbArgsParser._console);
    DELETE_TO_ASSERT_NEWED(fileArbArgsParser._docoptParser);
 }
@@ -62,13 +66,13 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    const size_t numberOfFilesToCreate = ZenUnit::Random<size_t>();
    const size_t numberOfLinesPerFile = ZenUnit::Random<size_t>();
    const size_t numberOfCharactersPerLine = ZenUnit::Random<size_t>();
-   const size_t numberOfBytesPerFile = ZenUnit::Random<size_t>();
    _docoptParserMock->GetProgramModeSpecificRequiredSizeTMock.ReturnValues(
       numberOfDirectoriesToCreate,
       numberOfFilesToCreate,
       numberOfLinesPerFile,
-      numberOfCharactersPerLine,
-      numberOfBytesPerFile);
+      numberOfCharactersPerLine);
+
+   const string bytesString = _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnRandom();
 
    const bool randomBytes = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
@@ -126,8 +130,9 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
       { docoptValues, "--files", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateTextFiles), static_cast<int>(ProgramMode::CreateBinaryFiles) } },
       { docoptValues, "--lines", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) } },
       { docoptValues, "--characters", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) } },
-      { docoptValues, "--bytes", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) } }
    }));
+   METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledOnceWith(
+      docoptValues, "--bytes", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) }));
    METALMOCK(_call_DetermineProgramModeMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
    METALMOCK(_call_GetFileNamePrefixAndFileExtensionMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
    expectedArgs.targetDirectoryPath = targetDirectoryPath;
@@ -135,7 +140,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    expectedArgs.numberOfFilesToCreate = numberOfFilesToCreate;
    expectedArgs.numberOfLinesPerFile = numberOfLinesPerFile;
    expectedArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
-   expectedArgs.numberOfBytesPerFile = numberOfBytesPerFile;
+   expectedArgs.numberOfBytesPerFile = 0;
    expectedArgs.randomBytes = randomBytes;
    expectedArgs.parallel = parallel;
    expectedArgs.minimal = minimal;

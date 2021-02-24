@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileArb/Components/FileArb/FileArbArgsParser.h"
-#include "libFileArb/Components/FileArb/FileArbProgram.h"
+#include "libFileArb/Components/Args/FileArbArgsParser.h"
+#include "libFileArb/Components/FileArbProgram.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgramFactory.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"

@@ -5,7 +5,7 @@ const string FileArbArgs::CommandLineUsage =
 R"(FileArb v0.10.0
 Creates an arbitrary number of text files or binary files
 containing an arbitrary number of lines, characters, or bytes.
-Optional suffixes for --bytes=<BytesPerFile>: B, KB, MB, or GB
+Optional suffixes for --bytes=<BytesPerFile>: B, KB, MB, GB, or TB
 https://github.com/NeilJustice/FileArb
 
 Usage:

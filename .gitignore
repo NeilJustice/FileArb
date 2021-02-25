@@ -33,6 +33,8 @@ x64/
 *.filters
 *.ipch
 *.lib
+!BoostRegex/Windows/lib/libboost_regex-vc142-mt-gd-x64-1_75.lib
+!BoostRegex/Windows/lib/libboost_regex-vc142-mt-x64-1_75.lib
 *.exe
 *.obj
 *.pdb

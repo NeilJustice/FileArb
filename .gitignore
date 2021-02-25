@@ -1,6 +1,7 @@
 # CMake
 CMakeFiles/
 Debug/
+!BoostRegex/Windows/include/boost/preprocessor/debug/
 Release/
 ReleaseCI/
 *.cmake

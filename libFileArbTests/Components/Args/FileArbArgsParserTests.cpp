@@ -73,6 +73,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
       numberOfCharactersPerLine);
 
    const string bytesString = _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnRandom();
+   const size_t numberOfBytesPerFile = _bytesStringConverterMock->ConvertBytesStringToBytesMock.ReturnRandom();
 
    const bool randomBytes = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
@@ -133,6 +134,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    }));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledOnceWith(
       docoptValues, "--bytes", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) }));
+   METALMOCK(_bytesStringConverterMock->ConvertBytesStringToBytesMock.CalledOnceWith(bytesString));
    METALMOCK(_call_DetermineProgramModeMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
    METALMOCK(_call_GetFileNamePrefixAndFileExtensionMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
    expectedArgs.targetDirectoryPath = targetDirectoryPath;
@@ -140,7 +142,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    expectedArgs.numberOfFilesToCreate = numberOfFilesToCreate;
    expectedArgs.numberOfLinesPerFile = numberOfLinesPerFile;
    expectedArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
-   expectedArgs.numberOfBytesPerFile = 0;
+   expectedArgs.numberOfBytesPerFile = numberOfBytesPerFile;
    expectedArgs.randomBytes = randomBytes;
    expectedArgs.parallel = parallel;
    expectedArgs.minimal = minimal;

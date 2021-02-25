@@ -9,13 +9,13 @@ bool String::ContainsSubstring(string_view stringView, string_view substring)
 
 bool String::CaseInsensitiveContainsSubstring(string_view stringView, string_view substring)
 {
-   const string lowercaseStr = String::ToAllLowercase(stringView);
-   const string lowercaseSubstring = String::ToAllLowercase(substring);
+   const string lowercaseStr = ToLowercase(stringView);
+   const string lowercaseSubstring = ToLowercase(substring);
    const bool strContainsSubstring = ContainsSubstring(lowercaseStr, lowercaseSubstring);
    return strContainsSubstring;
 }
 
-string String::ToAllLowercase(string_view str)
+string String::ToLowercase(string_view str)
 {
    string lowercaseString;
    const size_t strSize = str.size();
@@ -27,4 +27,17 @@ string String::ToAllLowercase(string_view str)
       lowercaseString[i] = lowercaseCharacter;
    }
    return lowercaseString;
+}
+
+size_t String::ToSizeT(string_view str)
+{
+   size_t sizeTValue{};
+   from_chars_result fromCharsResult = from_chars(str.data(), str.data() + str.size(), sizeTValue, 10);
+   if (fromCharsResult.ec != errc{})
+   {
+      const string exceptionMessage = String::Concat(
+         "String::ToSizeT(string_view str) called with str not converted to size_t: \"", str, "\"");
+      throw invalid_argument(exceptionMessage);
+   }
+   return sizeTValue;
 }

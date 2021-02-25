@@ -1,6 +1,7 @@
 #pragma once
 #include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
 
+#include <charconv>
 #include <filesystem>
 #include <functional>
 #include <iostream>
@@ -20,6 +21,18 @@
    #include <unistd.h>
 #elif defined _WIN32
    #include <execution>
+#endif
+
+#if defined _WIN32
+#pragma warning(push)
+#pragma warning(disable: 4365) // 'return': conversion from 'size_t' to 'ptrdiff_t', signed/unsigned mismatch
+#pragma warning(disable: 4643) // Forward declaring 'allocator' in namespace std is not permitted by the C++ Standard.
+#pragma warning(disable: 4800) // Implicit conversion from 'int' to bool. Possible information loss
+#pragma warning(disable: 26812) // The enum type 'boost::detail::local_counted_base::count_type' is unscoped. Prefer 'enum class' over 'enum'
+#endif
+#include <boost/regex.hpp>
+#if defined _WIN32
+#pragma warning(pop)
 #endif
 
 #ifdef _WIN32

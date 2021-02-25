@@ -60,8 +60,7 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
 
    const string bytesString = _docoptParser->GetProgramModeSpecificRequiredString(
       docoptValues, "--bytes", programModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) });
-   args.numberOfBytesPerFile = 0;
-   //args.numberOfBytesPerFile = _bytesStringConverter->BytesStringToNumberOfBytes(numberOfBytesPerFileArgValue);
+   args.numberOfBytesPerFile = _bytesStringConverter->ConvertBytesStringToBytes(bytesString);
 
    args.randomBytes = _docoptParser->GetOptionalBool(docoptValues, "--random-bytes");
    args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");

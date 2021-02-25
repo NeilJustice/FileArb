@@ -2,7 +2,8 @@
 
 class BytesStringConverter
 {
+   friend class BytesStringConverterTests;
 public:
    virtual ~BytesStringConverter() = default;
-   virtual size_t ConvertBytesStringToBytes(string_view bytesString) const;
+   virtual size_t ConvertBytesStringToBytes(const string& bytesString) const;
 };

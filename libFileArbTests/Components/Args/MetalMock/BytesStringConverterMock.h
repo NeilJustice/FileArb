@@ -4,5 +4,5 @@
 class BytesStringConverterMock : public Metal::Mock<BytesStringConverter>
 {
 public:
-   METALMOCK_NONVOID1_CONST(size_t, ConvertBytesStringToBytes, string_view)
+   METALMOCK_NONVOID1_CONST(size_t, ConvertBytesStringToBytes, const string&)
 };

@@ -5,6 +5,8 @@ class String
 public:
    static bool ContainsSubstring(std::string_view stringView, std::string_view substring);
    static bool CaseInsensitiveContainsSubstring(std::string_view stringView, std::string_view substring);
+   static std::string ToLowercase(std::string_view str);
+   static size_t ToSizeT(string_view str);
 
    template<typename... Types>
    static std::string Concat(Types&&... values)
@@ -16,6 +18,4 @@ public:
    }
 
    String() = delete;
-private:
-   static std::string ToAllLowercase(std::string_view str);
 };

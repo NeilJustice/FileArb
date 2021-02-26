@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
 #include "libFileArb/StaticUtilities/Map.h"
 #include "libFileArb/StaticUtilities/Vector.h"
+#include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
 
 DocoptParser::DocoptParser()
    // Function Pointers

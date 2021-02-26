@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/BytesStringConverter.h"
+#if defined __linux__
+#include <climits>
+#endif
 
 TESTS(BytesStringConverterTests)
 FACTS(ConvertBytesStringToBytes_BytesStringEndsWithBOrb_ReturnsReturnsBytesStringConvertedToSizeT)
@@ -20,7 +23,7 @@ TEST2X2(ConvertBytesStringToBytes_BytesStringEndsWithBOrb_ReturnsReturnsBytesStr
    "1b", 1ULL,
    "100b", 100ULL,
    "1024b", 1024ULL,
-   to_string(MAXULONGLONG) + "b", MAXULONGLONG)
+   to_string(ULLONG_MAX) + "b", ULLONG_MAX)
 {
    const size_t bytes = _bytesStringConverter.ConvertBytesStringToBytes(bytesString);
    ARE_EQUAL(expectedReturnValue, bytes);
@@ -67,7 +70,7 @@ TEST2X2(ConvertBytesStringToBytes_BytesStringDoesNotEndWithSuffix_BytesStringIsC
    "0", 0ULL,
    "1", 1ULL,
    "123", 123ULL,
-   to_string(MAXULONGLONG), MAXULONGLONG)
+   to_string(ULLONG_MAX), ULLONG_MAX)
 {
    const size_t bytes = _bytesStringConverter.ConvertBytesStringToBytes(bytesString);
    ARE_EQUAL(expectedReturnValue, bytes);

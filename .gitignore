@@ -22,6 +22,7 @@ build.ninja
 # Windows
 .vs/
 x64/
+*.dir/
 *.bin
 *.tlog
 *.dat

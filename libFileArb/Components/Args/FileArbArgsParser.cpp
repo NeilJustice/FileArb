@@ -24,14 +24,14 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
    FileArbArgs args;
    args.commandLine = Vector::JoinWithSeparator(stringArgs, ' ');
    const map<string, docopt::Value> docoptValues = _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage, stringArgs);
-   const bool isCreateTextFile = _docoptParser->GetRequiredBool(docoptValues, "create-text-file");
+   const bool isCreateTextFileMode = _docoptParser->GetRequiredBool(docoptValues, "create-text-file");
    const bool isCreateTextFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-text-files");
    const bool isCreateBinaryFileMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-file");
    const bool isCreateBinaryFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-files");
-   args.programMode = _call_DetermineProgramMode(isCreateTextFile, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
+   args.programMode = _call_DetermineProgramMode(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
 
    const pair<string, string> fileNamePrefixAndFileExtension = _call_GetFileNamePrefixAndFileExtension(
-      isCreateTextFile, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
+      isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
    args.fileNamePrefix = fileNamePrefixAndFileExtension.first;
    args.fileExtension = fileNamePrefixAndFileExtension.second;
 
@@ -63,6 +63,7 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
    args.numberOfBytesPerFile = _bytesStringConverter->ConvertBytesStringToBytes(bytesString);
 
    args.randomBytes = _docoptParser->GetOptionalBool(docoptValues, "--random-bytes");
+   args.randomChars = _docoptParser->GetOptionalBool(docoptValues, "--random-chars");
    args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");
    args.minimal = _docoptParser->GetOptionalBool(docoptValues, "--minimal");
    return args;

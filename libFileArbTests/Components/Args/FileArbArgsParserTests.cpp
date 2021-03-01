@@ -76,9 +76,10 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    const size_t numberOfBytesPerFile = _bytesStringConverterMock->ConvertBytesStringToBytesMock.ReturnRandom();
 
    const bool randomBytes = ZenUnit::Random<bool>();
+   const bool randomChars = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool minimal = ZenUnit::Random<bool>();
-   _docoptParserMock->GetOptionalBoolMock.ReturnValues(randomBytes, parallel, minimal);
+   _docoptParserMock->GetOptionalBoolMock.ReturnValues(randomBytes, randomChars, parallel, minimal);
 
    const int randomProgramModeInt = ZenUnit::RandomBetween<int>(0, 2);
    const ProgramMode programMode = static_cast<ProgramMode>(randomProgramModeInt);
@@ -113,6 +114,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledAsFollows(
    {
       { docoptValues, "--random-bytes" },
+      { docoptValues, "--random-chars" },
       { docoptValues, "--parallel" },
       { docoptValues, "--minimal" }
    }));
@@ -144,6 +146,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    expectedArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
    expectedArgs.numberOfBytesPerFile = numberOfBytesPerFile;
    expectedArgs.randomBytes = randomBytes;
+   expectedArgs.randomChars = randomChars;
    expectedArgs.parallel = parallel;
    expectedArgs.minimal = minimal;
    ARE_EQUAL(expectedArgs, args);

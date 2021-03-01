@@ -55,12 +55,14 @@ Usage:
       --target=<TargetDirectoryPath>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
+      [--random-chars]
    filearb create-text-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
       --files=<FilesPerDirectory>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
+      [--random-chars]
       [--parallel]
       [--minimal]
 ```
@@ -73,11 +75,19 @@ FileArb command line arguments are parsed using the excellent single-header libr
 
 ### create-binary-file
 
+FileArb program mode `create-binary-file` creates at a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
 
+`create-binary-file` example on Windows:
+
+![create-binary-file example on Windows](Screenshots/Windows/CreateBinaryFileConsoleOutput.png)
+
+![create-binary-file Windows Explorer](Screenshots/Windows/CreateBinaryFileWindowsExplorer.png)
+
+![create-binary-file 2GB File Properties](Screenshots/Windows/CreateBinaryFile2GBFileProperties.png)
 
 ### create-text-file
 
-
+FileArb program mode `create-text-file` creates at a specified `--target` directory a file containing `--lines` number of lines each containing `--characters` number of '0' characters per line.
 
 ### create-binary-files
 

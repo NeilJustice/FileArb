@@ -75,6 +75,13 @@ FileArb command line arguments are parsed using the excellent single-header libr
 
 ### create-binary-file
 
+```
+filearb create-binary-file
+      --target=<TargetDirectoryPath>
+      --bytes=<NumberOfBytes>
+      [--random-bytes]
+```
+
 FileArb program mode `create-binary-file` creates at a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
 
 `create-binary-file` example on Windows:
@@ -85,11 +92,32 @@ FileArb program mode `create-binary-file` creates at a specified `--target` dire
 
 ![create-binary-file 2GB File Properties](Screenshots/Windows/CreateBinaryFile2GBFileProperties.png)
 
+![Binary file in HxD](Screenshots/Windows/BinaryFileInHxD.png)
+
 ### create-text-file
+
+```
+filearb create-text-file
+   --target=<TargetDirectoryPath>
+   --lines=<LinesPerFile>
+   --characters=<CharactersPerLine>
+   [--random-chars]
+```
 
 FileArb program mode `create-text-file` creates at a specified `--target` directory a file containing `--lines` number of lines each containing `--characters` number of '0' characters per line.
 
 ### create-binary-files
+
+```
+filearb create-binary-files
+      --target=<TargetDirectoryPath>
+      --directories=<NumberOfDirectories>
+      --files=<NumberOfFiles>
+      --bytes=<BytesPerFile>
+      [--random-bytes]
+      [--parallel]
+      [--minimal]
+```
 
 FileArb program mode `create-binary-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of bytes, either 0 bytes or `[--random-bytes]`.
 

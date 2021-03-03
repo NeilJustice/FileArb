@@ -7,7 +7,7 @@
 
 TESTS(FileArbArgsParserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)
-AFACT(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
+FACTS(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
 FACTS(DetermineProgramMode_ReturnsExpectedProgramModeDependingOnProgramModeBoolValues)
 FACTS(GetFileNamePrefixAndFileExtension_ReturnsDotTxtForCreateTextFileOrFilesMode_ReturnsDotBinForCreateBinaryFileOrFilesMode)
 EVIDENCE
@@ -47,7 +47,12 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    DELETE_TO_ASSERT_NEWED(fileArbArgsParser._docoptParser);
 }
 
-TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
+TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
+   ProgramMode programMode, bool expectCallToConvertBytesStringToNumberOfBytes,
+   ProgramMode::CreateTextFile, false,
+   ProgramMode::CreateTextFiles, false,
+   ProgramMode::CreateBinaryFile, true,
+   ProgramMode::CreateBinaryFiles, true)
 {
    map<string, docopt::Value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
@@ -73,7 +78,11 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
       numberOfCharactersPerLine);
 
    const string bytesString = _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnRandom();
-   const size_t numberOfBytesPerFile = _bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.ReturnRandom();
+   size_t numberOfBytesPerFile = 0;
+   if (expectCallToConvertBytesStringToNumberOfBytes)
+   {
+      numberOfBytesPerFile = _bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.ReturnRandom();
+   }
 
    const bool randomBytes = ZenUnit::Random<bool>();
    const bool randomChars = ZenUnit::Random<bool>();
@@ -81,8 +90,6 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    const bool minimal = ZenUnit::Random<bool>();
    _docoptParserMock->GetOptionalBoolMock.ReturnValues(randomBytes, randomChars, parallel, minimal);
 
-   const int randomProgramModeInt = ZenUnit::RandomBetween<int>(0, 2);
-   const ProgramMode programMode = static_cast<ProgramMode>(randomProgramModeInt);
    _call_DetermineProgramModeMock.Return(programMode);
 
    const pair<string, string> fileNamePrefixAndFileExtension = _call_GetFileNamePrefixAndFileExtensionMock.ReturnRandom();
@@ -136,7 +143,10 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
    }));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledOnceWith(
       docoptValues, "--bytes", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) }));
-   METALMOCK(_bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.CalledOnceWith(bytesString));
+   if (expectCallToConvertBytesStringToNumberOfBytes)
+   {
+      METALMOCK(_bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.CalledOnceWith(bytesString));
+   }
    METALMOCK(_call_DetermineProgramModeMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
    METALMOCK(_call_GetFileNamePrefixAndFileExtensionMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
    expectedArgs.targetDirectoryPath = targetDirectoryPath;

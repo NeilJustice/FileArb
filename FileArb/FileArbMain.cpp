@@ -9,14 +9,14 @@
 #endif
 #endif
 
-// create-binary-file --target=C:\FileArbTesting\Test --bytes=3 --random-bytes
-// create-binary-files --target=C:\FileRevisorTesting\Test --directories=1 --files=1 --bytes=3 --random-bytes
-// create-binary-files --target=C:\FileRevisorTesting\Test --directories=3 --files=1000 --bytes=3 --random-bytes --minimal
-// create-binary-files --target=C:\FileRevisorTesting\Test --directories=32 --files=1000 --bytes=1000 --parallel --random-bytes
+// create-binary-file --target=C:\FileArbTesting --bytes=3 --random-bytes
+// create-binary-files --target=C:\FileArbTesting --directories=1 --files=1 --bytes=3 --random-bytes
+// create-binary-files --target=C:\FileArbTesting --directories=3 --files=1000 --bytes=3 --random-bytes --minimal
+// create-binary-files --target=C:\FileArbTesting --directories=32 --files=1000 --bytes=1000 --parallel --random-bytes
 
-// create-text-file --target=C:\FileRevisorTesting\Test --lines=3 --characters=3
-// create-text-files --target=C:\FileRevisorTesting\Test --directories=3 --files=3 --lines=3 --characters=3
-// create-text-files --target=C:\FileRevisorTesting\Test --directories=32 --files=1000 --lines=100 --characters=100 --parallel
+// create-text-file --target=C:\FileArbTesting --lines=3 --characters=3 --random-chars
+// create-text-files --target=C:\FileArbTesting --directories=3 --files=3 --lines=3 --characters=3
+// create-text-files --target=C:\FileArbTesting --directories=32 --files=1000 --lines=100 --characters=100 --parallel
 
 int main(int argc, char* argv[])
 {

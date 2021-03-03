@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/BytesStringConverter.h"
 
-size_t BytesStringConverter::ConvertBytesStringToBytes(const string& bytesString) const
+size_t BytesStringConverter::ConvertBytesStringToNumberOfBytes(const string& bytesString) const
 {
    const string bytesStringAsLowercase = String::ToLowercase(bytesString);
    if (boost::regex_match(bytesStringAsLowercase, boost::regex("^\\d+kb$")))
@@ -37,7 +37,6 @@ size_t BytesStringConverter::ConvertBytesStringToBytes(const string& bytesString
       return bytes;
    }
    const string exceptionMessage = String::Concat(
-      "BytesStringConverter::ConvertBytesStringToBytes(string_view bytesString) called with invalid bytesString: \"",
-      bytesString, "\"");
+      "BytesStringConverter::ConvertBytesStringToNumberOfBytes(string_view bytesString) called with invalid bytesString: \"", bytesString, "\"");
    throw invalid_argument(exceptionMessage);
 }

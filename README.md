@@ -177,13 +177,12 @@ Resulting executable `C:\bin\FileArb.exe`:
 
 ## FileArb Roadmap
 
-|Future FileArb Feature|Implementation Status|
-|----------------------|---------------------|
-|create-binary-files option [--random-bytes] which reads from `/dev/urandom` on Linux|Implemented|
+|Future FileArb Feature|Implementation Status As Of 3/5/2021|
+|----------------------|------------------------------------|
+|Linux and Windows SonarQube Python static analysis Jenkins jobs|In progress|
 |GitHub Actions build|Awaiting implementation|
-|Linux and Windows SonarQube Python static analysis Jenkins jobs|Awaiting implementation|
-|Linux and Windows SonarQube C++ static analysis Jenkins jobs|Awaiting implementation|
 |SonarCloud Python static analysis badge|Awaiting implementation|
+|Linux and Windows SonarQube C++ static analysis Jenkins jobs|Awaiting implementation|
 |SonarCloud C++ static analysis badge|Awaiting implementation|
 |Coverity static analysis badge|Awaiting implementation|
 |Automated acceptance testing|Awaiting implementation|

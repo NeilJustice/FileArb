@@ -145,9 +145,9 @@ A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on
 
 ## Windows Jenkins Jobs Which Build FileArb On Windows With Visual Studio 2019
 
-A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Windows:
+A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Windows 10:
 
-![Windows Jenkins Jobs Which Compile FileArb](Screenshots/WindowsJenkinsJobsForFileArb.png)
+![Windows Jenkins Jobs Which Compile FileArb](Screenshots/Windows/WindowsJenkinsJobs.png)
 
 ## How To Build Binary filearb On Linux With Clang
 

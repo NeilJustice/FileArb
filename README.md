@@ -155,7 +155,6 @@ A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on
 git clone https://github.com/NeilJustice/FileArb
 cd FileArb && mkdir Release && cd Release
 CXX=clang++ cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release
-# Builds then copies binary filearb to /usr/local/bin/filearb
 sudo cmake --build . --target install
 ```
 
@@ -169,7 +168,6 @@ Resulting binary `/usr/local/bin/filearb`:
 git clone https://github.com/NeilJustice/FileArb
 cd FileArb
 cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
-# Builds then copies FileArb.exe to C:\bin\FileArb.exe
 cmake --build . --config Release --target install
 ```
 

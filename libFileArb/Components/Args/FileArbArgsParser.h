@@ -24,7 +24,7 @@ public:
    virtual FileArbArgs ParseArgs(const vector<string>& stringArgs) const;
 private:
    static ProgramMode DetermineProgramMode(
-      bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode);
+      bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode);
    static pair<string, string> GetFileNamePrefixAndFileExtension(
-      bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode);
+      bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode);
 };

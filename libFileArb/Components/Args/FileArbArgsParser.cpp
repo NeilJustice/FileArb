@@ -24,14 +24,14 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
    FileArbArgs args;
    args.commandLine = Vector::JoinWithSeparator(stringArgs, ' ');
    const map<string, docopt::Value> docoptValues = _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage, stringArgs);
-   const bool isCreateTextFileMode = _docoptParser->GetRequiredBool(docoptValues, "create-text-file");
-   const bool isCreateTextFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-text-files");
    const bool isCreateBinaryFileMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-file");
    const bool isCreateBinaryFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-files");
-   args.programMode = _call_DetermineProgramMode(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
+   const bool isCreateTextFileMode = _docoptParser->GetRequiredBool(docoptValues, "create-text-file");
+   const bool isCreateTextFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-text-files");
+   args.programMode = _call_DetermineProgramMode(isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode);
 
    const pair<string, string> fileNamePrefixAndFileExtension = _call_GetFileNamePrefixAndFileExtension(
-      isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
+      isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode);
    args.fileNamePrefix = fileNamePrefixAndFileExtension.first;
    args.fileExtension = fileNamePrefixAndFileExtension.second;
 
@@ -39,10 +39,10 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
 
    static const vector<int> allProgramModesAsInts =
    {
-      static_cast<int>(ProgramMode::CreateTextFile),
-      static_cast<int>(ProgramMode::CreateTextFiles),
       static_cast<int>(ProgramMode::CreateBinaryFile),
-      static_cast<int>(ProgramMode::CreateBinaryFiles)
+      static_cast<int>(ProgramMode::CreateBinaryFiles),
+      static_cast<int>(ProgramMode::CreateTextFile),
+      static_cast<int>(ProgramMode::CreateTextFiles)
    };
    const int programModeAsInt = static_cast<int>(args.programMode);
 
@@ -73,31 +73,31 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
 }
 
 ProgramMode FileArbArgsParser::DetermineProgramMode(
-   bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode)
+   bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode)
 {
-   if (isCreateTextFileMode)
-   {
-      return ProgramMode::CreateTextFile;
-   }
-   else if (isCreateTextFilesMode)
-   {
-      return ProgramMode::CreateTextFiles;
-   }
-   else if (isCreateBinaryFileMode)
+   if (isCreateBinaryFileMode)
    {
       return ProgramMode::CreateBinaryFile;
    }
-   release_assert(isCreateBinaryFilesMode);
-   return ProgramMode::CreateBinaryFiles;
+   else if (isCreateBinaryFilesMode)
+   {
+      return ProgramMode::CreateBinaryFiles;
+   }
+   else if (isCreateTextFileMode)
+   {
+      return ProgramMode::CreateTextFile;
+   }
+   release_assert(isCreateTextFilesMode);
+   return ProgramMode::CreateTextFiles;
 }
 
 pair<string, string> FileArbArgsParser::GetFileNamePrefixAndFileExtension(
-   bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode)
+   bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode)
 {
-   if (isCreateTextFileMode || isCreateTextFilesMode)
+   if (isCreateBinaryFileMode || isCreateBinaryFilesMode)
    {
-      return make_pair("text", ".txt");
+      return make_pair("binary", ".bin");
    }
-   release_assert(isCreateBinaryFileMode || isCreateBinaryFilesMode);
-   return make_pair("binary", ".bin");
+   release_assert(isCreateTextFileMode || isCreateTextFilesMode);
+   return make_pair("text", ".txt");
 }

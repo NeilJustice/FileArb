@@ -49,21 +49,21 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 
 TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
    ProgramMode programMode, bool expectCallToConvertBytesStringToNumberOfBytes,
-   ProgramMode::CreateTextFile, false,
-   ProgramMode::CreateTextFiles, false,
    ProgramMode::CreateBinaryFile, true,
-   ProgramMode::CreateBinaryFiles, true)
+   ProgramMode::CreateBinaryFiles, true,
+   ProgramMode::CreateTextFile, false,
+   ProgramMode::CreateTextFiles, false)
 {
    map<string, docopt::Value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
    _docoptParserMock->ParseArgsMock.Return(docoptValues);
 
-   const bool isCreateTextFileMode = ZenUnit::Random<bool>();
-   const bool isCreateTextFilesMode = ZenUnit::Random<bool>();
    const bool isCreateBinaryFileMode = ZenUnit::Random<bool>();
    const bool isCreateBinaryFilesMode = ZenUnit::Random<bool>();
+   const bool isCreateTextFileMode = ZenUnit::Random<bool>();
+   const bool isCreateTextFilesMode = ZenUnit::Random<bool>();
    _docoptParserMock->GetRequiredBoolMock.ReturnValues(
-      isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
+      isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode);
 
    const string targetDirectoryPath = _docoptParserMock->GetRequiredStringMock.ReturnRandom();
 
@@ -113,10 +113,10 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs));
    METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
    {
-      { docoptValues, "create-text-file" },
-      { docoptValues, "create-text-files" },
       { docoptValues, "create-binary-file" },
-      { docoptValues, "create-binary-files" }
+      { docoptValues, "create-binary-files" },
+      { docoptValues, "create-text-file" },
+      { docoptValues, "create-text-files" }
    }));
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledAsFollows(
    {
@@ -128,10 +128,10 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
    static const vector<int> expectedBothProgramModesAsInts =
    {
-      static_cast<int>(ProgramMode::CreateTextFile),
-      static_cast<int>(ProgramMode::CreateTextFiles),
       static_cast<int>(ProgramMode::CreateBinaryFile),
-      static_cast<int>(ProgramMode::CreateBinaryFiles)
+      static_cast<int>(ProgramMode::CreateBinaryFiles),
+      static_cast<int>(ProgramMode::CreateTextFile),
+      static_cast<int>(ProgramMode::CreateTextFiles)
    };
    const int expectedProgramModeAsInt = static_cast<int>(args.programMode);
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredSizeTMock.CalledAsFollows(
@@ -147,8 +147,8 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
    {
       METALMOCK(_bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.CalledOnceWith(bytesString));
    }
-   METALMOCK(_call_DetermineProgramModeMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
-   METALMOCK(_call_GetFileNamePrefixAndFileExtensionMock.CalledOnceWith(isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode));
+   METALMOCK(_call_DetermineProgramModeMock.CalledOnceWith(isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode));
+   METALMOCK(_call_GetFileNamePrefixAndFileExtensionMock.CalledOnceWith(isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode));
    expectedArgs.targetDirectoryPath = targetDirectoryPath;
    expectedArgs.numberOfDirectoriesToCreate = numberOfDirectoriesToCreate;
    expectedArgs.numberOfFilesToCreate = numberOfFilesToCreate;
@@ -163,26 +163,26 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
 }
 
 TEST5X5(DetermineProgramMode_ReturnsExpectedProgramModeDependingOnProgramModeBoolValues,
-   bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, ProgramMode expectedReturnValue,
-   true, false, false, false, ProgramMode::CreateTextFile,
-   false, true, false, false, ProgramMode::CreateTextFiles,
-   false, false, true, false, ProgramMode::CreateBinaryFile,
-   false, false, false, true, ProgramMode::CreateBinaryFiles)
+   bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode, ProgramMode expectedReturnValue,
+   true, false, false, false, ProgramMode::CreateBinaryFile,
+   false, true, false, false, ProgramMode::CreateBinaryFiles,
+   false, false, true, false, ProgramMode::CreateTextFile,
+   false, false, false, true, ProgramMode::CreateTextFiles)
 {
    const ProgramMode programMode = FileArbArgsParser::DetermineProgramMode(
-      isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
+      isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode);
    ARE_EQUAL(expectedReturnValue, programMode);
 }
 
 TEST6X6(GetFileNamePrefixAndFileExtension_ReturnsDotTxtForCreateTextFileOrFilesMode_ReturnsDotBinForCreateBinaryFileOrFilesMode,
-   bool isCreateTextFileMode, bool isCreateTextFilesMode, bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, const string& expectedFileNamePrefix, const string& expectedFileExtension,
-   true, false, false, false, "text", ".txt"s,
-   false, true, false, false, "text", ".txt"s,
-   false, false, true, false, "binary", ".bin"s,
-   false, false, false, true, "binary", ".bin"s)
+   bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode, const string& expectedFileNamePrefix, const string& expectedFileExtension,
+   true, false, false, false, "binary", ".bin"s,
+   false, true, false, false, "binary", ".bin"s,
+   false, false, true, false, "text", ".txt"s,
+   false, false, false, true, "text", ".txt"s)
 {
    const pair<string, string> fileNamePrefixAndFileExtension = FileArbArgsParser::GetFileNamePrefixAndFileExtension(
-      isCreateTextFileMode, isCreateTextFilesMode, isCreateBinaryFileMode, isCreateBinaryFilesMode);
+      isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode);
    ARE_EQUAL(expectedFileNamePrefix, fileNamePrefixAndFileExtension.first);
    ARE_EQUAL(expectedFileExtension, fileNamePrefixAndFileExtension.second);
 }

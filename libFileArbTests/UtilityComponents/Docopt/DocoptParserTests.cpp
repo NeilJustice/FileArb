@@ -32,7 +32,7 @@ METALMOCK_NONVOID5_FREE(DocoptMapType, _call_docopt, const string&, const vector
 METALMOCK_NONVOID2_STATIC(size_t, DocoptParser, _call_StaticGetRequiredSizeT, map<string COMMA docopt::Value>, const string&)
 METALMOCK_NONVOID2_STATIC(string, DocoptParser, _call_StaticGetRequiredString, map<string COMMA docopt::Value>, const string&)
 
-map<string, docopt::Value> _docoptArgs = ZenUnit::RandomMap<string, docopt::Value>();
+map<string, docopt::Value> _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
 const string _argName = ZenUnit::Random<string>() + "_argName";
 const string ExpectedKeyNotFoundWhat = "Key not found in map: [" + _argName + "]";
 
@@ -64,7 +64,7 @@ TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 
 TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 {
-   const map<string, docopt::Value> docoptReturnValue = ZenUnit::RandomMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptReturnValue = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    _call_docoptMock.Return(docoptReturnValue);
 
    const string usage = ZenUnit::Random<string>();

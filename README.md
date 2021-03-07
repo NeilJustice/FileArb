@@ -94,6 +94,10 @@ FileArb program mode `create-binary-file` creates at a specified `--target` dire
 
 ![Binary file in HxD](Screenshots/Windows/BinaryFileInHxD.png)
 
+Resulting random binary file after running `filearb create-binary-file --target=C:\FileArbTesting --bytes=64 --random-bytes`:
+
+![Random binary file in HxD](Screenshots/Windows/RandomBinaryFileInHxD.png)
+
 ### create-text-file
 
 ```

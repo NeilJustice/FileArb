@@ -23,7 +23,7 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 * [FileArb Code Structure As It Appears In Visual Studio Code](#filearb-code-structure-as-it-appears-in-visual-studio-code)
 * [FileArb Code Structure As It Appears In Visual Studio 2019](#filearb-code-structure-as-it-appears-in-visual-studio-2019)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize and UndefinedBehaviorSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-filearb)
-* [Windows Jenkins Jobs Which Build FileArb On Windows With Visual Studio 2019](#windows-jenkins-jobs-which-build-filearb-on-windows-with-visual-studio-2019)
+* [Windows Jenkins Jobs Which Build FileArb And SonarQube Scan FileArb's Python Code](#windows-jenkins-jobs-which-build-filearb-and-sonarqube-scan-filearbs-python-code)
 * [How To Build Binary filearb On Linux With Clang](#how-to-build-binary-filearb-on-linux-with-clang)
 * [How To Build Executable FileArb.exe On Windows With Visual Studio 2019](#how-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)
 * [FileArb Roadmap](#filearb-roadmap)
@@ -147,7 +147,7 @@ A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on
 
 ![Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](Screenshots/Linux/LinuxFileArbJenkinsJobs.png)
 
-## Windows Jenkins Jobs Which Build FileArb On Windows With Visual Studio 2019
+## Windows Jenkins Jobs Which Build FileArb And SonarQube Scan FileArb's Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Windows 10:
 

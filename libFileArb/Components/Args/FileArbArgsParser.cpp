@@ -37,13 +37,6 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
 
    args.targetDirectoryPath = _docoptParser->GetRequiredString(docoptValues, "--target");
 
-   static const vector<int> allProgramModesAsInts =
-   {
-      static_cast<int>(ProgramMode::CreateBinaryFile),
-      static_cast<int>(ProgramMode::CreateBinaryFiles),
-      static_cast<int>(ProgramMode::CreateTextFile),
-      static_cast<int>(ProgramMode::CreateTextFiles)
-   };
    const int programModeAsInt = static_cast<int>(args.programMode);
 
    args.numberOfDirectoriesToCreate = _docoptParser->GetProgramModeSpecificRequiredSizeT(

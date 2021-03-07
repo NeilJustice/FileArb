@@ -126,13 +126,6 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
       { docoptValues, "--minimal" }
    }));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
-   static const vector<int> expectedBothProgramModesAsInts =
-   {
-      static_cast<int>(ProgramMode::CreateBinaryFile),
-      static_cast<int>(ProgramMode::CreateBinaryFiles),
-      static_cast<int>(ProgramMode::CreateTextFile),
-      static_cast<int>(ProgramMode::CreateTextFiles)
-   };
    const int expectedProgramModeAsInt = static_cast<int>(args.programMode);
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredSizeTMock.CalledAsFollows(
    {

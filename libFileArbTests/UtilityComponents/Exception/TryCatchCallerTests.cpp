@@ -20,10 +20,10 @@ public:
 
    Class()
       : doThrowException(false)
+      , exitCode(ZenUnit::Random<int>())
+      , exceptionWhat(ZenUnit::Random<string>())
+      , exceptionHandlerExitCode(ZenUnit::Random<int>())
    {
-      exitCode = ZenUnit::Random<int>();
-      exceptionWhat = ZenUnit::Random<string>();
-      exceptionHandlerExitCode = ZenUnit::Random<int>();
    }
 
    int NonConstMemberFunction(ArgumentType argument)

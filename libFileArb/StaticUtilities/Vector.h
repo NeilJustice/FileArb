@@ -28,7 +28,7 @@ public:
    }
 
    template<typename T>
-   static bool Contains(const std::vector<T> v, const T& element)
+   static bool Contains(const std::vector<T>& v, const T& element)
    {
       const size_t size = v.size();
       for (size_t i = 0; i < size; ++i)

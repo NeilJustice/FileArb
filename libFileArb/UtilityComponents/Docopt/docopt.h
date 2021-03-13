@@ -62,7 +62,7 @@ namespace docopt
 	public:
 		Value() = default;
 		Value(string);
-		Value(vector<string>);
+		explicit Value(vector<string>);
 
 		explicit Value(bool);
 		explicit Value(long);
@@ -770,7 +770,7 @@ namespace docopt
 	class CommandArgumentLeafPattern : public ArgumentLeafPattern
 	{
 	public:
-		CommandArgumentLeafPattern(string name, Value v = Value{ false })
+		explicit CommandArgumentLeafPattern(string name, Value v = Value{ false })
 			: ArgumentLeafPattern(move(name), move(v))
 		{
 		}
@@ -1125,7 +1125,7 @@ namespace docopt
 			auto arg = dynamic_cast<ArgumentLeafPattern const*>(left[i].get());
 			if (arg)
 			{
-				if (Name() == arg->getValue())
+				if (Value{Name()} == arg->getValue())
 				{
 					ret.first = i;
 					ret.second = make_shared<CommandArgumentLeafPattern>(Name(), Value{ true });
@@ -1194,7 +1194,7 @@ namespace docopt
          static const regex regexPattern{ "\\[default: (.*)\\]", regex::icase };
 			if (regex_search(options_end, option_description.end(), match, regexPattern))
 			{
-				val = match[1].str();
+				val = Value{match[1].str()};
 			}
 		}
 		return { move(shortOption), move(longOption), argcount, move(val) };
@@ -1315,7 +1315,7 @@ namespace docopt
 		size_t fIndex = 0;
 		bool fIsParsingArgv;
 	public:
-		Tokens(vector<string> tokens, bool isParsingArgv = true)
+		explicit Tokens(vector<string> tokens, bool isParsingArgv = true)
 			: fTokens(move(tokens))
 			, fIsParsingArgv(isParsingArgv)
 		{
@@ -1481,9 +1481,11 @@ namespace docopt
 	static vector<shared_ptr<Pattern>> parse_long(Tokens& tokens, vector<OptionLeafPattern>& outOptions)
 	{
 		// long ::= '--' chars [ ( ' ' | '=' ) chars ] ;
-		string longOpt, equal;
-		Value val;
-		tie(longOpt, equal, val) = partition(tokens.pop(), "=");
+		const tuple<string, string, string> longOpt_equal_val = partition(tokens.pop(), "=");
+		const string longOpt = get<0>(longOpt_equal_val);
+		const string equal = get<1>(longOpt_equal_val);
+		string valString = get<2>(longOpt_equal_val);
+		Value val = Value{valString};
       release_assert(starts_with(longOpt, "--"));
 		if (equal.empty())
 		{
@@ -1554,7 +1556,7 @@ namespace docopt
 						string error = o->longOption() + " requires an argument";
 						throw Tokens::OptionError(move(error));
 					}
-					val = tokens.pop();
+					val = Value{tokens.pop()};
 				}
 			}
 			if (tokens.isParsingArgv())
@@ -1617,12 +1619,12 @@ namespace docopt
 							string error = shortOpt + " requires an argument";
 							throw Tokens::OptionError(move(error));
 						}
-						val = tokens.pop();
+						val = Value{tokens.pop()};
 					}
 					else
 					{
 						// consume all the rest
-						val = string{ i, token.end() };
+						val = Value{string{ i, token.end() }};
 						i = token.end();
 					}
 				}
@@ -1646,7 +1648,7 @@ namespace docopt
 		vector<shared_ptr<Pattern>> ret;
 		if (token == "[")
 		{
-         const string popResult = tokens.pop();
+         tokens.pop();
 			auto expr = parse_expr(tokens, outOptions);
 			auto trailing = tokens.pop();
 			if (trailing != "]")
@@ -1657,7 +1659,7 @@ namespace docopt
 		}
 		else if (token == "(")
 		{
-         const string popResult = tokens.pop();
+         tokens.pop();
 			auto expr = parse_expr(tokens, outOptions);
 			auto trailing = tokens.pop();
 			if (trailing != ")")
@@ -1668,7 +1670,7 @@ namespace docopt
 		}
 		else if (token == "options")
 		{
-         const string popResult = tokens.pop();
+         tokens.pop();
 			ret.emplace_back(make_shared<OptionsShortcutOptionalBranchPattern>());
 		}
 		else if (starts_with(token, "--") && token != "--")
@@ -1705,7 +1707,7 @@ namespace docopt
 			if (tokens.current() == "...")
 			{
 				ret.emplace_back(make_shared<OneOrMoreBranchPattern>(move(atom)));
-            const string popResult = tokens.pop();
+            tokens.pop();
 			}
 			else
 			{
@@ -1745,7 +1747,7 @@ namespace docopt
 		ret.emplace_back(maybe_collapse_to_required(move(seq)));
 		while (tokens.current() == "|")
 		{
-			const string popResult = tokens.pop();
+			tokens.pop();
 			seq = parse_seq(tokens, outOptions);
 			ret.emplace_back(maybe_collapse_to_required(move(seq)));
 		}

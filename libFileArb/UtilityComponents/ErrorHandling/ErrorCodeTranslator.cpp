@@ -83,10 +83,7 @@ string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 
 string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {
-#pragma warning(push)
-#pragma warning(disable : 6255) // _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead.
    array<char, MaximumErrnoDescriptionLength> errnoDescriptionChars{};
-#pragma warning(pop)
    const errno_t strErrorSReturnValue = _call_strerror_s(errnoDescriptionChars.data(), MaximumErrnoDescriptionLength, errnoValue);
    release_assert(strErrorSReturnValue == 0);
    string errnoDescription(errnoDescriptionChars.data());

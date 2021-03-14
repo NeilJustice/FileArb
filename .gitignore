@@ -47,3 +47,9 @@ x64/
 *.psess
 *.vspx
 install_manifest.txt
+
+# Cppcheck
+*.a1
+*.a2
+cppcheck_results.txt
+

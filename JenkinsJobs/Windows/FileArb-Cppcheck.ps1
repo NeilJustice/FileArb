@@ -2,6 +2,8 @@ Set-PSDebug -Trace 1
 
 cppcheck.exe `
    --enable=all `
+   --cppcheck-build-dir=Cppcheck `
+   -D_WIN32 `
    -DTEST `
    -DTESTS `
    -DMETALMOCK_NONVOID1_FREE `
@@ -12,6 +14,8 @@ cppcheck.exe `
    -I libFileArb `
    -I . `
    -j 64 `
+   --output-file=cppcheck_results.txt `
+   --error-exitcode=1 `
    .
 
 Set-PSDebug -Trace 0

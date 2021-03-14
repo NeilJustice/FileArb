@@ -3,9 +3,11 @@ Set-PSDebug -Trace 1
 cppcheck.exe `
    --enable=all `
    --cppcheck-build-dir=Cppcheck `
+   --suppressions-list=CppcheckSuppressions.txt `
    -D_WIN32 `
    -DTEST `
    -DTESTS `
+   -DMETALMOCK_NONVOID0_FREE `
    -DMETALMOCK_NONVOID1_FREE `
    -DMETALMOCK_NONVOID2_STATIC `
    -DMETALMOCK_NONVOID4_STATIC `

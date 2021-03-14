@@ -67,14 +67,14 @@ string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastErro
 }
 #endif
 
-constexpr size_t maximumErrnoDescriptionLength = 64ull;
+constexpr size_t MaximumErrnoDescriptionLength = 64ull;
 
 #if defined __linux__ || defined __APPLE__
 
 string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {
-   char* errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
-   errnoDescriptionChars = _call_strerror_r(errnoValue, errnoDescriptionChars, maximumErrnoDescriptionLength);
+   char* errnoDescriptionChars = static_cast<char*>(alloca(MaximumErrnoDescriptionLength));
+   errnoDescriptionChars = _call_strerror_r(errnoValue, errnoDescriptionChars, MaximumErrnoDescriptionLength);
    string errnoDescription(errnoDescriptionChars);
    return errnoDescription;
 }
@@ -85,11 +85,11 @@ string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {
 #pragma warning(push)
 #pragma warning(disable : 6255) // _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead.
-   char* const errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
+   array<char, MaximumErrnoDescriptionLength> errnoDescriptionChars{};
 #pragma warning(pop)
-   const errno_t strErrorSReturnValue = _call_strerror_s(errnoDescriptionChars, maximumErrnoDescriptionLength, errnoValue);
+   const errno_t strErrorSReturnValue = _call_strerror_s(errnoDescriptionChars.data(), MaximumErrnoDescriptionLength, errnoValue);
    release_assert(strErrorSReturnValue == 0);
-   string errnoDescription(errnoDescriptionChars);
+   string errnoDescription(errnoDescriptionChars.data());
    return errnoDescription;
 }
 

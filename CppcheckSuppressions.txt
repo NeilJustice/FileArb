@@ -1,0 +1,13 @@
+noExplicitConstructor:libFileArb\UtilityComponents\Docopt\docopt.h:64
+accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:1424
+accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:1434
+accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:2538
+accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:2567
+accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:2634
+accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:3180
+accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:3593
+accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:4005
+noExplicitConstructor:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h:1585
+noExplicitConstructor:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h:1686
+noExplicitConstructor:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h:1695
+useStlAlgorithm:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h:1261

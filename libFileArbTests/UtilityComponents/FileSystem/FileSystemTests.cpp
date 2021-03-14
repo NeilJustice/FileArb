@@ -101,13 +101,13 @@ struct fopen_CallHistory
    }
 } _fopen_CallHistory;
 
+#if defined __linux__ || defined __APPLE__
+
 FILE* fopen_CallInsteadFunction(const char* filePath, const char* fileOpenMode)
 {
    _fopen_CallHistory.RecordFunctionCall(filePath, fileOpenMode);
    return _fopen_CallHistory.returnValue;
 }
-
-#if defined __linux__ || defined __APPLE__
 
 TEST(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
 {

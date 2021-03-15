@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu
+set -ev
 
 cd FileArbPyUtils
 export PYTHONPATH='.'

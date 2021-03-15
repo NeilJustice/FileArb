@@ -1,5 +1,6 @@
 #!/bin/bash
-set -eu
+set -ev
+
 export CXX=/usr/bin/clang++
 export PYTHONPATH=FileArbPyUtils
 python -u FileArbPyUtils/FileArbPyUtils/BuildAndInstallCPlusPlusProgram.py \

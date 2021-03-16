@@ -19,10 +19,10 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
    * [create-binary-file](#create-binary-file)
    * [create-binary-files](#create-binary-files)
    * [create-text-file](#create-text-file)
-   * [create-text-files](#create-text-files)   
+   * [create-text-files](#create-text-files)
 * [FileArb Code Structure As It Appears In Visual Studio Code](#filearb-code-structure-as-it-appears-in-visual-studio-code)
 * [FileArb Code Structure As It Appears In Visual Studio 2019](#filearb-code-structure-as-it-appears-in-visual-studio-2019)
-* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize and UndefinedBehaviorSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-filearb)
+* [Linux Jenkins Jobs Which Build, clang-tidy, Cppcheck, AddressSanitize, and UndefinedBehaviorSanitize FileArb](#linux-jenkins-jobs-which-build-clang-tidy-cppcheck-addresssanitize-and-undefinedbehaviorsanitize-filearb)
 * [Windows Jenkins Jobs Which Build FileArb And SonarQube Scan FileArb's Python Code](#windows-jenkins-jobs-which-build-filearb-and-sonarqube-scan-filearbs-python-code)
 * [How To Build Binary filearb On Linux With Clang](#how-to-build-binary-filearb-on-linux-with-clang)
 * [How To Build Executable FileArb.exe On Windows With Visual Studio 2019](#how-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)
@@ -141,17 +141,17 @@ FileArb program mode `create-text-files` creates at a specified directory a spec
 
 ![FileArb Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileArbCodeStructureAsItAppearsInVisualStudio2019.png)
 
-## Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize and UndefinedBehaviorSanitize FileArb
+## Linux Jenkins Jobs Which Build, clang-tidy, Cppcheck, AddressSanitize, and UndefinedBehaviorSanitize FileArb
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 33:
 
-![Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](Screenshots/Linux/LinuxFileArbJenkinsJobs.png)
+![Linux FileArb Jenkins Jobs](Screenshots/Linux/LinuxFileArbJenkinsJobs.png)
 
 ## Windows Jenkins Jobs Which Build FileArb And SonarQube Scan FileArb's Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Windows 10:
 
-![Windows Jenkins Jobs Which Compile FileArb](Screenshots/Windows/WindowsJenkinsJobs.png)
+![Windows FileArb Jenkins Jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
 ## How To Build Binary filearb On Linux With Clang
 
@@ -181,12 +181,10 @@ Resulting executable `C:\bin\FileArb.exe`:
 
 ## FileArb Roadmap
 
-|Future FileArb Feature|Implementation Status As Of 3/5/2021|
+|Future FileArb Feature|Implementation Status As Of 3/15/2021|
 |----------------------|------------------------------------|
-|Linux and Windows SonarQube Python static analysis Jenkins jobs|In progress|
 |GitHub Actions build|Awaiting implementation|
-|SonarCloud Python static analysis badge|Awaiting implementation|
-|Linux and Windows SonarQube C++ static analysis Jenkins jobs|Awaiting implementation|
-|SonarCloud C++ static analysis badge|Awaiting implementation|
-|Coverity static analysis badge|Awaiting implementation|
+|SonarCloud Python badge for FileArbPyUtils|Awaiting implementation|
+|SonarCloud C++ badge|Awaiting implementation|
+|Coverity C++ static analysis badge|Awaiting implementation|
 |Automated acceptance testing|Awaiting implementation|

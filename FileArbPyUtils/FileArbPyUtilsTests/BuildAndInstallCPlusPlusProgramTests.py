@@ -35,7 +35,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       @patch('platform.system', spec_set=True)
       @patch('FileArbPyUtils.BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install', spec_set=True)
       @patch('FileArbPyUtils.BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install', spec_set=True)
-      def testcase(platformSystem, trueExpectLinuxFalseExpectWindows, _1, _2, _3, _4, _5):
+      def testcase(platformSystem, trueExpectLinuxFalseExpectWindows, _1, _2, _3, _4, printMock):
          with self.subTest(f'{platformSystem, trueExpectLinuxFalseExpectWindows}'):
             docopt.docopt.return_value =\
             {
@@ -51,7 +51,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
             BuildAndInstallCPlusPlusProgram.main()
             #
             expectedRunningSysArgvMessage = f'Running {sys.argv}\n'
-            print.assert_called_once_with(expectedRunningSysArgvMessage)
+            printMock.assert_called_once_with(expectedRunningSysArgvMessage)
             docopt.docopt.assert_called_once_with(BuildAndInstallCPlusPlusProgram.__doc__)
             platform.system.assert_called_once_with()
             if trueExpectLinuxFalseExpectWindows:

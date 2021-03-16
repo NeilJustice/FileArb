@@ -20,8 +20,8 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
    * [create-binary-files](#create-binary-files)
    * [create-text-file](#create-text-file)
    * [create-text-files](#create-text-files)
-* [FileArb Code Structure As It Appears In Visual Studio Code](#filearb-code-structure-as-it-appears-in-visual-studio-code)
-* [FileArb Code Structure As It Appears In Visual Studio 2019](#filearb-code-structure-as-it-appears-in-visual-studio-2019)
+* [FileArb Code Structure As It Appears In Visual Studio Code On Linux](#filearb-code-structure-as-it-appears-in-visual-studio-code-on-linux)
+* [FileArb Code Structure As It Appears In Visual Studio 2019 On Windows](#filearb-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
 * [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize FileArb](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-filearb)
 * [Windows Jenkins Jobs Which Build and Cppcheck FileArb](#windows-jenkins-jobs-which-build-and-cppcheck-filearb)
 * [How To Build Binary filearb On Linux With Clang](#how-to-build-binary-filearb-on-linux-with-clang)
@@ -133,17 +133,17 @@ FileArb program mode `create-text-files` creates at a specified directory a spec
 
 ![create-text-files](Screenshots/create-text-files.png)
 
-## FileArb Code Structure As It Appears in Visual Studio Code
+## FileArb Code Structure As It Appears in Visual Studio Code On Linux
 
 ![FileArb Code Structure As It Appears In Visual Studio Code](Screenshots/Linux/FileArbCodeStructureAsItAppearsInVisualStudioCode.png)
 
-## FileArb Code Structure As It Appears In Visual Studio 2019
+## FileArb Code Structure As It Appears In Visual Studio 2019 On Windows
 
 ![FileArb Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileArbCodeStructureAsItAppearsInVisualStudio2019.png)
 
 ## Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize FileArb
 
-A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 33:
+A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 33 with Clang 11.0.0 and GCC 10.2.1:
 
 ![Linux FileArb Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 

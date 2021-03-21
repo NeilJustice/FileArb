@@ -94,7 +94,9 @@ FileArb program mode `create-binary-file` creates at a specified `--target` dire
 
 ![Binary file in HxD](Screenshots/Windows/BinaryFileInHxD.png)
 
-Resulting random binary file after running `filearb create-binary-file --target=C:\FileArbTesting --bytes=64 --random-bytes`:
+`--random-bytes` can be speecified to create a binary file containing random bytes sampled from `std::random_device`.
+
+Resulting file from running `filearb create-binary-file --target=C:\FileArbTesting --bytes=64 --random-bytes`:
 
 ![Random binary file in HxD](Screenshots/Windows/RandomBinaryFileInHxD.png)
 

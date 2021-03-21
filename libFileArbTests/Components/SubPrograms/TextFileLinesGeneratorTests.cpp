@@ -3,31 +3,40 @@
 
 TESTS(TextFileLinesGeneratorTests)
 AFACT(DefaultConstructor_SetsReplicateLineNTimesFunction)
-AFACT(MakeFileText_ReturnsStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
+AFACT(MakeFileText_GenerateRandomCharsIsTrue_ReturnsRandomCharsStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
+AFACT(MakeFileText_GenerateRandomCharsIsFalse_ReturnsAllZerosStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
 FACTS(ReplicateLineNTimes_ReturnsLineReplicatedNTimes)
 EVIDENCE
 
 TextFileLinesGenerator _textFileLinesGenerator;
+// Function Pointers
 METALMOCK_NONVOID2_STATIC(string, FileTextGenerator, ReplicateLineNTimes, const string&, size_t)
 
 STARTUP
 {
+   // Function Pointers
    _textFileLinesGenerator._call_ReplicateLineNTimes = BIND_2ARG_METALMOCK_OBJECT(ReplicateLineNTimesMock);
 }
 
 TEST(DefaultConstructor_SetsReplicateLineNTimesFunction)
 {
    const TextFileLinesGenerator textFileLinesGenerator;
+   // Function Pointers
    STD_FUNCTION_TARGETS(TextFileLinesGenerator::ReplicateLineNTimes, textFileLinesGenerator._call_ReplicateLineNTimes);
 }
 
-TEST(MakeFileText_ReturnsStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
+TEST(MakeFileText_GenerateRandomCharsIsTrue_ReturnsRandomCharsStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
+{
+
+}
+
+TEST(MakeFileText_GenerateRandomCharsIsFalse_ReturnsAllZerosStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
 {
    const string fileText = ReplicateLineNTimesMock.ReturnRandom();
    const size_t numberOfCharactersPerLine = ZenUnit::RandomBetween<size_t>(0, 2);
    const size_t numberOfLinesPerFile = ZenUnit::RandomBetween<size_t>(0, 2);
    //
-   const string returnedFileText = _textFileLinesGenerator.MakeFileText(numberOfCharactersPerLine, numberOfLinesPerFile);
+   const string returnedFileText = _textFileLinesGenerator.MakeFileText(numberOfCharactersPerLine, numberOfLinesPerFile, false);
    //
    string expectedLineToWrite(numberOfCharactersPerLine + 1, '0');
    expectedLineToWrite[expectedLineToWrite.size() - 1] = '\n';

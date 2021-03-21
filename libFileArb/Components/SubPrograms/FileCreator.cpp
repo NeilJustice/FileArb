@@ -32,8 +32,7 @@ void FileCreator::CreateBinaryFile(const FileArbArgs& args, const string& fileBy
    const fs::path filePath = args.targetDirectoryPath / "binaryfile.bin";
    _fileSystem->CreateBinaryFile(filePath, fileBytes.data(), fileBytes.size());
    const long long millisecondsToWriteFile = _stopwatch->StopAndGetElapsedMilliseconds();
-   const string wroteFileMessage = String::Concat(
-      "[FileArb] Wrote binary file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
+   const string wroteFileMessage = String::Concat("[FileArb] Wrote binary file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
    _console->WriteLine(wroteFileMessage);
 }
 
@@ -43,8 +42,7 @@ void FileCreator::CreateTextFile(const FileArbArgs& args, const string& fileText
    const fs::path filePath = args.targetDirectoryPath / "textfile.txt";
    _fileSystem->CreateTextFile(filePath, fileText);
    const long long millisecondsToWriteFile = _stopwatch->StopAndGetElapsedMilliseconds();
-   const string wroteFileMessage = String::Concat(
-      "[FileArb] Wrote text file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
+   const string wroteFileMessage = String::Concat("[FileArb] Wrote text file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
    _console->WriteLine(wroteFileMessage);
 }
 
@@ -92,8 +90,7 @@ void FileCreator::CreateNumberedFileInDirectory(
    if (!args.minimal)
    {
       const long long millisecondsToWriteFile = threadUniqueCreateFileStopwatch->StopAndGetElapsedMilliseconds();
-      const string wroteFileMessage = String::Concat(
-         "[FileArb] Wrote file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
+      const string wroteFileMessage = String::Concat("[FileArb] Wrote file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
       _console->WriteLine(wroteFileMessage);
    }
 }

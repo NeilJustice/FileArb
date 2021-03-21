@@ -11,7 +11,7 @@ private:
 public:
    TextFileLinesGenerator();
    virtual ~TextFileLinesGenerator() = default;
-   virtual string MakeFileText(size_t numberOfCharactersPerLine, size_t numberOfLinesPerFile) const;
+   virtual string MakeFileText(size_t numberOfCharactersPerLine, size_t numberOfLinesPerFile, bool generateRandomChars) const;
 private:
    static string ReplicateLineNTimes(const string& line, size_t n);
 };

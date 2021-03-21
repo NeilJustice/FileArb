@@ -18,8 +18,8 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfLinesPerFile, ZenUnit::RandomNon0<size_t>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfCharactersPerLine, ZenUnit::RandomNon0<size_t>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfBytesPerFile, ZenUnit::RandomNon0<size_t>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, randomBytes, true);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, randomChars, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, generateRandomBytes, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, generateRandomChars, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, parallel, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, minimal, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, fileNamePrefix, ZenUnit::Random<string>());
@@ -51,11 +51,11 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
       numberOfCharactersPerLine,
       numberOfBytesPerFile);
 
-   const bool randomBytes = ZenUnit::Random<bool>();
-   const bool randomChars = ZenUnit::Random<bool>();
+   const bool generateRandomBytes = ZenUnit::Random<bool>();
+   const bool generateRandomChars = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool minimal = ZenUnit::Random<bool>();
-   randomGeneratorMock.BoolMock.ReturnValues(randomBytes, randomChars, parallel, minimal);
+   randomGeneratorMock.BoolMock.ReturnValues(generateRandomBytes, generateRandomChars, parallel, minimal);
    //
    const FileArbArgs randomFileArbArgs = TestableFileArbArgs(&randomGeneratorMock);
    //
@@ -74,8 +74,8 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
    expectedRandomFileArbArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
    expectedRandomFileArbArgs.numberOfBytesPerFile = numberOfBytesPerFile;
    expectedRandomFileArbArgs.targetDirectoryPath = targetDirectoryPath;
-   expectedRandomFileArbArgs.randomBytes = randomBytes;
-   expectedRandomFileArbArgs.randomChars = randomChars;
+   expectedRandomFileArbArgs.generateRandomBytes = generateRandomBytes;
+   expectedRandomFileArbArgs.generateRandomChars = generateRandomChars;
    expectedRandomFileArbArgs.parallel = parallel;
    expectedRandomFileArbArgs.minimal = minimal;
    expectedRandomFileArbArgs.fileNamePrefix = fileNamePrefix;

@@ -84,11 +84,11 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
       numberOfBytesPerFile = _bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.ReturnRandom();
    }
 
-   const bool randomBytes = ZenUnit::Random<bool>();
-   const bool randomChars = ZenUnit::Random<bool>();
+   const bool generateRandomBytes = ZenUnit::Random<bool>();
+   const bool generateRandomChars = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool minimal = ZenUnit::Random<bool>();
-   _docoptParserMock->GetOptionalBoolMock.ReturnValues(randomBytes, randomChars, parallel, minimal);
+   _docoptParserMock->GetOptionalBoolMock.ReturnValues(generateRandomBytes, generateRandomChars, parallel, minimal);
 
    _call_DetermineProgramModeMock.Return(programMode);
 
@@ -148,8 +148,8 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
    expectedArgs.numberOfLinesPerFile = numberOfLinesPerFile;
    expectedArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
    expectedArgs.numberOfBytesPerFile = numberOfBytesPerFile;
-   expectedArgs.randomBytes = randomBytes;
-   expectedArgs.randomChars = randomChars;
+   expectedArgs.generateRandomBytes = generateRandomBytes;
+   expectedArgs.generateRandomChars = generateRandomChars;
    expectedArgs.parallel = parallel;
    expectedArgs.minimal = minimal;
    ARE_EQUAL(expectedArgs, args);

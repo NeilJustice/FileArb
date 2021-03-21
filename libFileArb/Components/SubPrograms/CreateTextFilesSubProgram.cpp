@@ -17,7 +17,8 @@ CreateTextFilesSubProgram::~CreateTextFilesSubProgram()
 
 int CreateTextFilesSubProgram::Run(const FileArbArgs& args)
 {
-   const string fileText = _textFileLinesGenerator->MakeFileText(args.numberOfLinesPerFile, args.numberOfCharactersPerLine);
+   const string fileText = _textFileLinesGenerator->MakeFileText(
+      args.numberOfLinesPerFile, args.numberOfCharactersPerLine, args.generateRandomChars);
    _fileCreator->CreateFiles(args, fileText);
    return 0;
 }

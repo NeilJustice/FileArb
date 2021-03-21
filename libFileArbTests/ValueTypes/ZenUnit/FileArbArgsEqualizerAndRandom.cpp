@@ -13,8 +13,8 @@ namespace ZenUnit
       ARE_EQUAL(expectedFileArbArgs.numberOfLinesPerFile, actualFileArbArgs.numberOfLinesPerFile);
       ARE_EQUAL(expectedFileArbArgs.numberOfCharactersPerLine, actualFileArbArgs.numberOfCharactersPerLine);
       ARE_EQUAL(expectedFileArbArgs.numberOfBytesPerFile, actualFileArbArgs.numberOfBytesPerFile);
-      ARE_EQUAL(expectedFileArbArgs.randomBytes, actualFileArbArgs.randomBytes);
-      ARE_EQUAL(expectedFileArbArgs.randomChars, actualFileArbArgs.randomChars);
+      ARE_EQUAL(expectedFileArbArgs.generateRandomBytes, actualFileArbArgs.generateRandomBytes);
+      ARE_EQUAL(expectedFileArbArgs.generateRandomChars, actualFileArbArgs.generateRandomChars);
       ARE_EQUAL(expectedFileArbArgs.parallel, actualFileArbArgs.parallel);
       ARE_EQUAL(expectedFileArbArgs.minimal, actualFileArbArgs.minimal);
       ARE_EQUAL(expectedFileArbArgs.fileNamePrefix, actualFileArbArgs.fileNamePrefix);
@@ -32,8 +32,8 @@ namespace ZenUnit
       randomFileArbArgs.numberOfLinesPerFile = randomGenerator->SizeT();
       randomFileArbArgs.numberOfCharactersPerLine = randomGenerator->SizeT();
       randomFileArbArgs.numberOfBytesPerFile = randomGenerator->SizeT();
-      randomFileArbArgs.randomBytes = randomGenerator->Bool();
-      randomFileArbArgs.randomChars = randomGenerator->Bool();
+      randomFileArbArgs.generateRandomBytes = randomGenerator->Bool();
+      randomFileArbArgs.generateRandomChars = randomGenerator->Bool();
       randomFileArbArgs.parallel = randomGenerator->Bool();
       randomFileArbArgs.minimal = randomGenerator->Bool();
       randomFileArbArgs.fileNamePrefix = randomGenerator->String();

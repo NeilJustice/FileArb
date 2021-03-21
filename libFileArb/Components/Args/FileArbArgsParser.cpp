@@ -58,8 +58,8 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
       args.numberOfBytesPerFile = _bytesStringConverter->ConvertBytesStringToNumberOfBytes(bytesString);
    }
 
-   args.randomBytes = _docoptParser->GetOptionalBool(docoptValues, "--random-bytes");
-   args.randomChars = _docoptParser->GetOptionalBool(docoptValues, "--random-chars");
+   args.generateRandomBytes = _docoptParser->GetOptionalBool(docoptValues, "--random-bytes");
+   args.generateRandomChars = _docoptParser->GetOptionalBool(docoptValues, "--random-chars");
    args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");
    args.minimal = _docoptParser->GetOptionalBool(docoptValues, "--minimal");
    return args;

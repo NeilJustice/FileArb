@@ -18,8 +18,8 @@ TEST(DefaultConstructor_SetsFieldsTo0)
    expectedDefaultFileArbArgs.numberOfLinesPerFile = 0;
    expectedDefaultFileArbArgs.numberOfCharactersPerLine = 0;
    expectedDefaultFileArbArgs.numberOfBytesPerFile = 0;
-   expectedDefaultFileArbArgs.randomBytes = false;
-   expectedDefaultFileArbArgs.randomChars = false;
+   expectedDefaultFileArbArgs.generateRandomBytes = false;
+   expectedDefaultFileArbArgs.generateRandomChars = false;
    expectedDefaultFileArbArgs.parallel = false;
    expectedDefaultFileArbArgs.minimal = false;
    expectedDefaultFileArbArgs.fileNamePrefix = "";

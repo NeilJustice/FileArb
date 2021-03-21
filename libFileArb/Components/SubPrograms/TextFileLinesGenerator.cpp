@@ -7,12 +7,19 @@ TextFileLinesGenerator::TextFileLinesGenerator()
 {
 }
 
-string TextFileLinesGenerator::MakeFileText(size_t numberOfCharactersPerLine, size_t numberOfLinesPerFile) const
+string TextFileLinesGenerator::MakeFileText(size_t numberOfCharactersPerLine, size_t numberOfLinesPerFile, bool generateRandomChars) const
 {
-   string lineToWrite(numberOfCharactersPerLine + 1, '0');
-   lineToWrite[lineToWrite.size() - 1] = '\n';
-   string fileText = _call_ReplicateLineNTimes(lineToWrite, numberOfLinesPerFile);
-   return fileText;
+   if (generateRandomChars)
+   {
+      return string();
+   }
+   else
+   {
+      string allZerosLine(numberOfCharactersPerLine + 1, '0');
+      allZerosLine[allZerosLine.size() - 1] = '\n';
+      string allZerosFileText = _call_ReplicateLineNTimes(allZerosLine, numberOfLinesPerFile);
+      return allZerosFileText;
+   }
 }
 
 string TextFileLinesGenerator::ReplicateLineNTimes(const string& line, size_t n)

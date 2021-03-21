@@ -67,10 +67,6 @@ Usage:
       [--minimal]
 ```
 
-FileArb command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
-
-![FileArb arguments parsing](Screenshots/Windows/FileArbArgsParser.png)
-
 ## FileArb Program Modes
 
 ### create-binary-file
@@ -82,7 +78,7 @@ filearb create-binary-file
       [--random-bytes]
 ```
 
-FileArb program mode `create-binary-file` creates at a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
+Program mode `create-binary-file` creates at a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
 
 `create-binary-file` example on Windows:
 
@@ -110,7 +106,11 @@ filearb create-text-file
    [--random-letters]
 ```
 
-FileArb program mode `create-text-file` creates at a specified `--target` directory a file containing `--lines` number of lines each containing `--characters` number of '0' characters per line.
+Program mode `create-text-file` creates at a specified `--target` directory a file containing `--lines` number of lines each containing `--characters` number of '0' characters per line.
+
+`create-text-file` example on Windows with and without `--random-letters` specified:
+
+![create-text-file example on Windows](Screenshots/Windows/CreateTextFileExample.png)
 
 ### create-binary-files
 

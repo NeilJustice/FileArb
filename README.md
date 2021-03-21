@@ -31,7 +31,7 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 ## FileArb Command Line Usage
 
 ```
-FileArb v0.10.0
+FileArb v0.11.0
 Creates an arbitrary number of text files or binary files
 containing an arbitrary number of lines, characters, or bytes.
 Optional suffixes for --bytes=<BytesPerFile> argument:
@@ -43,6 +43,11 @@ Usage:
       --target=<TargetDirectoryPath>
       --bytes=<NumberOfBytes>
       [--random-bytes]
+   filearb create-text-file
+      --target=<TargetDirectoryPath>
+      --lines=<LinesPerFile>
+      --characters=<CharactersPerLine>
+      [--random-letters]
    filearb create-binary-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -51,11 +56,6 @@ Usage:
       [--random-bytes]
       [--parallel]
       [--minimal]
-   filearb create-text-file
-      --target=<TargetDirectoryPath>
-      --lines=<LinesPerFile>
-      --characters=<CharactersPerLine>
-      [--random-letters]
    filearb create-text-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>

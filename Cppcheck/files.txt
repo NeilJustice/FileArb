@@ -4,8 +4,8 @@ FileArbMain.a1::FileArb/FileArbMain.cpp
 BytesStringConverter.a1::libFileArb/Components/Args/BytesStringConverter.cpp
 FileArbArgsParser.a1::libFileArb/Components/Args/FileArbArgsParser.cpp
 FileArbProgram.a1::libFileArb/Components/FileArbProgram.cpp
-RandomByteGenerator.a1::libFileArb/Components/Random/RandomByteGenerator.cpp
-RandomBytesStringMaker.a1::libFileArb/Components/Random/RandomBytesStringMaker.cpp
+RandomCharacterGenerator.a1::libFileArb/Components/Random/RandomCharacterGenerator.cpp
+RandomStringMaker.a1::libFileArb/Components/Random/RandomStringMaker.cpp
 BinaryFileBytesGenerator.a1::libFileArb/Components/SubPrograms/BinaryFileBytesGenerator.cpp
 CreateBinaryFileSubProgram.a1::libFileArb/Components/SubPrograms/CreateBinaryFileSubProgram.cpp
 CreateBinaryFilesSubProgram.a1::libFileArb/Components/SubPrograms/CreateBinaryFilesSubProgram.cpp
@@ -42,8 +42,8 @@ pch.a1::libFileArb/pch.cpp
 BytesStringConverterTests.a1::libFileArbTests/Components/Args/BytesStringConverterTests.cpp
 FileArbArgsParserTests.a1::libFileArbTests/Components/Args/FileArbArgsParserTests.cpp
 FileArbProgramTests.a1::libFileArbTests/Components/FileArbProgramTests.cpp
-RandomByteGeneratorTests.a1::libFileArbTests/Components/Random/RandomByteGeneratorTests.cpp
-RandomBytesStringMakerTests.a1::libFileArbTests/Components/Random/RandomBytesStringMakerTests.cpp
+RandomCharacterGeneratorTests.a1::libFileArbTests/Components/Random/RandomCharacterGeneratorTests.cpp
+RandomStringMakerTests.a1::libFileArbTests/Components/Random/RandomStringMakerTests.cpp
 BinaryFileBytesGeneratorTests.a1::libFileArbTests/Components/SubPrograms/BinaryFileBytesGeneratorTests.cpp
 CreateBinaryFileSubProgramTests.a1::libFileArbTests/Components/SubPrograms/CreateBinaryFileSubProgramTests.cpp
 CreateBinaryFilesSubProgramTests.a1::libFileArbTests/Components/SubPrograms/CreateBinaryFilesSubProgramTests.cpp

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/FileArbArgsParser.h"
 #include "libFileArb/Components/FileArbProgram.h"
+#include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArbTests/Components/Args/MetalMock/FileArbArgsParserMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramFactoryMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramMock.h"

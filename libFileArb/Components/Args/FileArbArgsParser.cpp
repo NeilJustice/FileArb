@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/BytesStringConverter.h"
 #include "libFileArb/Components/Args/FileArbArgsParser.h"
+#include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
 

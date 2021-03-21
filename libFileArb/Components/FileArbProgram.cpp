@@ -4,6 +4,8 @@
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgramFactory.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
+#include "libFileArb/StaticUtilities/Exception.h"
+#include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/Exception/TryCatchCaller.h"
 #include "libFileArb/UtilityComponents/Time/Stopwatch.h"

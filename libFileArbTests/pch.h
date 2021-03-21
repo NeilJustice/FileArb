@@ -1,23 +1,11 @@
 #pragma once
 #include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
 
-#include <array>
-#include <fstream>
+#include <execution>
 #include <filesystem>
-#include <random>
-#include <string.h>
-#include <unordered_map>
-#include <unordered_set>
-
-#if defined __linux__
-   #if defined __GNUG__ && !defined __clang__
-      #include <parallel/algorithm>
-   #endif
+#if defined __linux__ || defined __APPLE__
    #include <unistd.h>
-#elif defined _WIN32
-   #include <execution>
 #endif
-
 namespace fs = std::filesystem;
 using namespace std;
 
@@ -40,11 +28,8 @@ using namespace std;
 
 // libFileArb StaticUtilities
 #include "libFileArb/StaticUtilities/Exception.h"
-#include "libFileArb/StaticUtilities/Map.h"
 #include "libFileArb/StaticUtilities/ReleaseAssert.h"
 #include "libFileArb/StaticUtilities/StringUtil.h"
-#include "libFileArb/StaticUtilities/Type.h"
-#include "libFileArb/StaticUtilities/Vector.h"
 
 // libFileArbtests ZenUnit Equalizers And Randoms
 #include "libFileArbTests/ValueTypes/ZenUnit/FileArbArgsEqualizerAndRandom.h"

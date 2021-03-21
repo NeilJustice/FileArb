@@ -19,7 +19,7 @@ TEST(DefaultConstructor_SetsFieldsTo0)
    expectedDefaultFileArbArgs.numberOfCharactersPerLine = 0;
    expectedDefaultFileArbArgs.numberOfBytesPerFile = 0;
    expectedDefaultFileArbArgs.generateRandomBytes = false;
-   expectedDefaultFileArbArgs.generateRandomChars = false;
+   expectedDefaultFileArbArgs.generateRandomLetters = false;
    expectedDefaultFileArbArgs.parallel = false;
    expectedDefaultFileArbArgs.minimal = false;
    expectedDefaultFileArbArgs.fileNamePrefix = "";
@@ -54,14 +54,14 @@ Usage:
       --target=<TargetDirectoryPath>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--random-chars]
+      [--random-letters]
    filearb create-text-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
       --files=<FilesPerDirectory>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--random-chars]
+      [--random-letters]
       [--parallel]
       [--minimal]
 )", FileArbArgs::CommandLineUsage);

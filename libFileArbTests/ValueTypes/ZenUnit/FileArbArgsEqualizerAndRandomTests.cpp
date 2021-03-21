@@ -19,7 +19,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfCharactersPerLine, ZenUnit::RandomNon0<size_t>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfBytesPerFile, ZenUnit::RandomNon0<size_t>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, generateRandomBytes, true);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, generateRandomChars, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, generateRandomLetters, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, parallel, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, minimal, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, fileNamePrefix, ZenUnit::Random<string>());
@@ -52,10 +52,10 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
       numberOfBytesPerFile);
 
    const bool generateRandomBytes = ZenUnit::Random<bool>();
-   const bool generateRandomChars = ZenUnit::Random<bool>();
+   const bool generateRandomLetters = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool minimal = ZenUnit::Random<bool>();
-   randomGeneratorMock.BoolMock.ReturnValues(generateRandomBytes, generateRandomChars, parallel, minimal);
+   randomGeneratorMock.BoolMock.ReturnValues(generateRandomBytes, generateRandomLetters, parallel, minimal);
    //
    const FileArbArgs randomFileArbArgs = TestableFileArbArgs(&randomGeneratorMock);
    //
@@ -75,7 +75,7 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
    expectedRandomFileArbArgs.numberOfBytesPerFile = numberOfBytesPerFile;
    expectedRandomFileArbArgs.targetDirectoryPath = targetDirectoryPath;
    expectedRandomFileArbArgs.generateRandomBytes = generateRandomBytes;
-   expectedRandomFileArbArgs.generateRandomChars = generateRandomChars;
+   expectedRandomFileArbArgs.generateRandomLetters = generateRandomLetters;
    expectedRandomFileArbArgs.parallel = parallel;
    expectedRandomFileArbArgs.minimal = minimal;
    expectedRandomFileArbArgs.fileNamePrefix = fileNamePrefix;

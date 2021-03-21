@@ -14,7 +14,7 @@ struct FileArbArgs
    size_t numberOfCharactersPerLine = 0;
    size_t numberOfBytesPerFile = 0;
    bool generateRandomBytes = false;
-   bool generateRandomChars = false;
+   bool generateRandomLetters = false;
    bool parallel = false;
    bool minimal = false;
 

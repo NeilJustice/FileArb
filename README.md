@@ -55,14 +55,14 @@ Usage:
       --target=<TargetDirectoryPath>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--random-chars]
+      [--random-letters]
    filearb create-text-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
       --files=<FilesPerDirectory>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--random-chars]
+      [--random-letters]
       [--parallel]
       [--minimal]
 ```
@@ -96,7 +96,7 @@ FileArb program mode `create-binary-file` creates at a specified `--target` dire
 
 `--random-bytes` can be speecified to create a binary file containing random bytes sampled from `std::random_device`.
 
-Resulting file from running `filearb create-binary-file --target=C:\FileArbTesting --bytes=64 --random-bytes`:
+Resulting binary file from running `filearb create-binary-file --target=C:\FileArbTesting --bytes=64 --random-bytes`:
 
 ![Random binary file in HxD](Screenshots/Windows/RandomBinaryFileInHxD.png)
 
@@ -107,7 +107,7 @@ filearb create-text-file
    --target=<TargetDirectoryPath>
    --lines=<LinesPerFile>
    --characters=<CharactersPerLine>
-   [--random-chars]
+   [--random-letters]
 ```
 
 FileArb program mode `create-text-file` creates at a specified `--target` directory a file containing `--lines` number of lines each containing `--characters` number of '0' characters per line.

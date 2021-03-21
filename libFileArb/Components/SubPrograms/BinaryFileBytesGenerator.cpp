@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "libFileArb/Components/Random/RandomBytesStringMaker.h"
+#include "libFileArb/Components/Random/RandomStringMaker.h"
 #include "libFileArb/Components/SubPrograms/BinaryFileBytesGenerator.h"
 
 BinaryFileBytesGenerator::BinaryFileBytesGenerator()
    // Constant Components
-   : _randomBytesStringMaker(make_unique<RandomBytesStringMaker>())
+   : _randomStringMaker(make_unique<RandomStringMaker>())
 {
 }
 
@@ -16,7 +16,7 @@ string BinaryFileBytesGenerator::MakeBytesString(size_t numberOfBytesPerFile, bo
 {
    if (generateRandomBytes)
    {
-      string randomBytesString = _randomBytesStringMaker->MakeRandomBytesString(numberOfBytesPerFile);
+      string randomBytesString = _randomStringMaker->MakeRandomBytesString(numberOfBytesPerFile);
       return randomBytesString;
    }
    string nonRandomBytesString(numberOfBytesPerFile, 0);

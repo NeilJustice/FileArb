@@ -43,7 +43,7 @@ TEST(Run_CreateTextFiles_Returns0)
    const int exitCode = _createTextFilesSubProgram.Run(args);
    //
    METALMOCK(_textFileLinesGeneratorMock->MakeFileTextMock.CalledOnceWith(
-      args.numberOfLinesPerFile, args.numberOfCharactersPerLine, args.generateRandomChars));
+      args.numberOfLinesPerFile, args.numberOfCharactersPerLine, args.generateRandomLetters));
    METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(args, fileText));
    IS_ZERO(exitCode);
 }

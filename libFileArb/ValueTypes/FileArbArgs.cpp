@@ -26,14 +26,14 @@ Usage:
       --target=<TargetDirectoryPath>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--random-chars]
+      [--random-letters]
    filearb create-text-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
       --files=<FilesPerDirectory>
       --lines=<LinesPerFile>
       --characters=<CharactersPerLine>
-      [--random-chars]
+      [--random-letters]
       [--parallel]
       [--minimal]
 )";

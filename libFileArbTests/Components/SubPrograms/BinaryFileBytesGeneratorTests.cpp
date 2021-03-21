@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/BinaryFileBytesGenerator.h"
-#include "libFileArbTests/Components/Random/MetalMock/RandomBytesStringMakerMock.h"
+#include "libFileArbTests/Components/Random/MetalMock/RandomStringMakerMock.h"
 
 TESTS(BinaryFileBytesGeneratorTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -10,29 +10,29 @@ EVIDENCE
 
 BinaryFileBytesGenerator _binaryFileBytesGenerator;
 // Constant Components
-RandomFileBytesMakerMock* _randomFileBytesMakerMock = nullptr;
+RandomStringMakerMock* _randomStringMakerMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _binaryFileBytesGenerator._randomBytesStringMaker.reset(_randomFileBytesMakerMock = new RandomFileBytesMakerMock);
+   _binaryFileBytesGenerator._randomStringMaker.reset(_randomStringMakerMock = new RandomStringMakerMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    BinaryFileBytesGenerator binaryFileBytesGenerator;
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(binaryFileBytesGenerator._randomBytesStringMaker);
+   DELETE_TO_ASSERT_NEWED(binaryFileBytesGenerator._randomStringMaker);
 }
 
 TEST(MakeBytesString_GenerateRandomBytesIsTrue_ReturnsStringWithLengthEqualToNumberOfBytesPerFileWithAllBytesSetTo0)
 {
-   const string randomFileBytes = _randomFileBytesMakerMock->MakeRandomBytesStringMock.ReturnRandom();
+   const string randomFileBytes = _randomStringMakerMock->MakeRandomBytesStringMock.ReturnRandom();
    const unsigned numberOfBytesPerFile = ZenUnit::RandomBetween<unsigned>(0, 3);
    //
    const string returnedRandomFileBytes = _binaryFileBytesGenerator.MakeBytesString(numberOfBytesPerFile, true);
    //
-   METALMOCK(_randomFileBytesMakerMock->MakeRandomBytesStringMock.CalledOnceWith(numberOfBytesPerFile));
+   METALMOCK(_randomStringMakerMock->MakeRandomBytesStringMock.CalledOnceWith(numberOfBytesPerFile));
    ARE_EQUAL(randomFileBytes.size(), returnedRandomFileBytes.size());
    ARRAYS_ARE_EQUAL(randomFileBytes, returnedRandomFileBytes, randomFileBytes.size());
 }

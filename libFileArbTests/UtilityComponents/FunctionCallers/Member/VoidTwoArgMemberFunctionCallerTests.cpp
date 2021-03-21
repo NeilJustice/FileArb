@@ -66,5 +66,5 @@ TEST(ParallelCallNonConstMemberFunctionNTimes_NIs2_CallsFunctionTwiceInParallel)
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFunctionArguments, _classInstance.functionArguments);
 }
 
-RUN_TEMPLATE_TESTS(VoidTwoArgMemberFunctionCallerTests, int, unsigned)
-THEN_RUN_TEMPLATE_TESTS(VoidTwoArgMemberFunctionCallerTests, string, char)
+RUN_TEMPLATE_TESTS(VoidTwoArgMemberFunctionCallerTests, int, size_t)
+THEN_RUN_TEMPLATE_TESTS(VoidTwoArgMemberFunctionCallerTests, string, string)

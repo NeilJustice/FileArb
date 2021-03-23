@@ -10,5 +10,5 @@ public:
    RandomStringMaker();
    virtual ~RandomStringMaker();
    virtual string MakeRandomBytesString(size_t numberOfRandomBytes) const;
-   virtual string MakeRandomCapitalLettersString(size_t numberOfRandomBytes) const;
+   virtual string MakeRandomCapitalLettersString(size_t numberOfRandomCapitalLetters) const;
 };

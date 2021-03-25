@@ -2,9 +2,7 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileArb) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileArb)
 
-FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of text files or binary files containing an arbitrary number of lines, characters, or bytes.
-
-FileArb can be used to performance test file write speeds across various storage hardware types such as NVMe drives vs. USB drives, across various file system settings such as cluster sizes and RAID settings, and for performance testing programs that process large numbers of files, such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a>.
+FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files for performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> or for performance testing the write speed of storage hardware such as USB drives and NVMe drives.
 
 |Build Type|Build Status|
 |----------|------------|
@@ -22,8 +20,8 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
    * [create-text-files](#create-text-files)
 * [FileArb Code Structure As It Appears In Visual Studio Code On Linux](#filearb-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileArb Code Structure As It Appears In Visual Studio 2019 On Windows](#filearb-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
-* [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearb)
-* [Windows Jenkins Jobs Which Build and Cppcheck FileArb](#windows-jenkins-jobs-which-build-and-cppcheck-filearb)
+* [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ Code and SonarQube Scan FileArb's Python Code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearbs-c++-code-and-sonarqube-scan-filearbs-python-code)
+* [Windows Jenkins Jobs Which Build and Cppcheck FileArb's C++ Code and SonarQube Scan FileArb's Python Code](#windows-jenkins-jobs-which-build-and-cppcheck-filearbs-c++-code-and-sonarqube-scan-filearbs-python-code)
 * [How To Build Binary filearb On Linux With Clang](#how-to-build-binary-filearb-on-linux-with-clang)
 * [How To Build Executable FileArb.exe On Windows With Visual Studio 2019](#how-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)
 * [FileArb Roadmap](#filearb-roadmap)
@@ -143,13 +141,13 @@ FileArb program mode `create-text-files` creates at a specified directory a spec
 
 ![FileArb Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileArbCodeStructureAsItAppearsInVisualStudio2019.png)
 
-## Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb
+## Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ Code and SonarQube Scan FileArb's Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 33 with Clang 11.0.0 and GCC 10.2.1:
 
 ![Linux FileArb Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
-## Windows Jenkins Jobs Which Build and Cppcheck FileArb
+## Windows Jenkins Jobs Which Build and Cppcheck FileArb's C++ Code and SonarQube Scan FileArb's Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Windows 10 with Visual Studio 2019:
 

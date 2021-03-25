@@ -78,6 +78,10 @@ filearb create-binary-file
 
 Program mode `create-binary-file` creates at a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
 
+`create-binary-file` example on Linux:
+
+![create-binary-file example on Linux](Screenshots/Linux/create-binary-file-example.png)
+
 `create-binary-file` example on Windows:
 
 ![create-binary-file example on Windows](Screenshots/Windows/CreateBinaryFileConsoleOutput.png)

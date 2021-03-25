@@ -143,6 +143,8 @@ FileArb program mode `create-text-files` creates at a specified directory a spec
 
 ## FileArb Code Structure As It Appears in Visual Studio Code On Linux
 
+Shown in this screenshot is function `FileArbArgsParser::ParseArgs` which uses the excellent single-header command line parsing library [docopt.cpp](https://github.com/docopt/docopt.cpp) to parse FileArb's command line arguments:
+
 ![FileArb Code Structure As It Appears In Visual Studio Code](Screenshots/Linux/FileArbCodeStructureAsItAppearsInVisualStudioCode.png)
 
 ## FileArb Code Structure As It Appears In Visual Studio 2019 On Windows
@@ -197,4 +199,4 @@ Resulting executable `C:\bin\FileArb.exe`:
 |SonarCloud Python badge for FileArbPyUtils|Awaiting implementation|
 |SonarCloud C++ badge|Awaiting implementation|
 |Coverity C++ static analysis badge|Awaiting implementation|
-|Automated acceptance testing|Awaiting implementation|
+|Automated acceptance testing of FileArb|Awaiting implementation|

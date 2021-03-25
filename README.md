@@ -108,9 +108,13 @@ filearb create-text-file
    [--random-letters]
 ```
 
-Program mode `create-text-file` creates at a specified `--target` directory a file containing `--lines` number of lines each containing `--characters` number of '0' characters per line.
+Program mode `create-text-file` creates at a specified `--target` directory a file containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letter characters if `--random-letters` is specified.
 
-`create-text-file` example on Windows with and without `--random-letters` specified:
+`create-text-file` example on Linux:
+
+![create-text-file example on Linux](Screenshots/Linux/create-text-file-example.png)
+
+`create-text-file` example on Windows:
 
 ![create-text-file example on Windows](Screenshots/Windows/CreateTextFileExample.png)
 

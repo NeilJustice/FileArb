@@ -147,6 +147,8 @@ FileArb program mode `create-text-files` creates at a specified directory a spec
 
 ## FileArb Code Structure As It Appears In Visual Studio 2019 On Windows
 
+Shown is this screenshot is the if-statement in function `FileCreator::WriteFiles` for determining whether to generate files sequentially or in parallel. Shown in the bottom half of the screenshot are corresponding ZenUnit and MetalMock unit tests for function `FileCreator::WriteFiles`.
+
 ![FileArb Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileArbCodeStructureAsItAppearsInVisualStudio2019.png)
 
 ## Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ Code and SonarQube Scan FileArb's Python Code

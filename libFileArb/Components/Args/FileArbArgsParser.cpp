@@ -41,19 +41,24 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
    const int programModeAsInt = static_cast<int>(args.programMode);
 
    args.numberOfDirectoriesToCreate = _docoptParser->GetProgramModeSpecificRequiredSizeT(
-      docoptValues, "--directories", programModeAsInt, { static_cast<int>(ProgramMode::CreateTextFiles), static_cast<int>(ProgramMode::CreateBinaryFiles) });
+      docoptValues, "--directories", programModeAsInt,
+      { static_cast<int>(ProgramMode::CreateTextFiles), static_cast<int>(ProgramMode::CreateBinaryFiles) });
 
    args.numberOfFilesToCreate = _docoptParser->GetProgramModeSpecificRequiredSizeT(
-      docoptValues, "--files", programModeAsInt, { static_cast<int>(ProgramMode::CreateTextFiles), static_cast<int>(ProgramMode::CreateBinaryFiles) });
+      docoptValues, "--files", programModeAsInt,
+      { static_cast<int>(ProgramMode::CreateTextFiles), static_cast<int>(ProgramMode::CreateBinaryFiles) });
 
    args.numberOfLinesPerFile = _docoptParser->GetProgramModeSpecificRequiredSizeT(
-      docoptValues, "--lines", programModeAsInt, { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) });
+      docoptValues, "--lines", programModeAsInt,
+      { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) });
 
    args.numberOfCharactersPerLine = _docoptParser->GetProgramModeSpecificRequiredSizeT(
-      docoptValues, "--characters", programModeAsInt, { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) });
+      docoptValues, "--characters", programModeAsInt,
+      { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) });
 
    const string bytesString = _docoptParser->GetProgramModeSpecificRequiredString(
-      docoptValues, "--bytes", programModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) });
+      docoptValues, "--bytes", programModeAsInt,
+      { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) });
    if (args.programMode == ProgramMode::CreateBinaryFile || args.programMode == ProgramMode::CreateBinaryFiles)
    {
       args.numberOfBytesPerFile = _bytesStringConverter->ConvertBytesStringToNumberOfBytes(bytesString);

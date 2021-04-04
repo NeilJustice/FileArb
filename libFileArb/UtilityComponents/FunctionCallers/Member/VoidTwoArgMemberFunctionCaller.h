@@ -21,7 +21,7 @@ public:
       ClassType* nonConstClassPointer, Arg1Type arg1, Arg2Type arg2) const
    {
       vector<size_t> callIndexElements(numberOfCalls);
-      std::iota(begin(callIndexElements), end(callIndexElements), 0ULL);
+      std::iota(callIndexElements.begin(), callIndexElements.end(), 0ULL);
 #if defined __GNUG__ && !defined __clang__
       __gnu_parallel::_Settings settings;
       settings.algorithm_strategy = __gnu_parallel::force_parallel;

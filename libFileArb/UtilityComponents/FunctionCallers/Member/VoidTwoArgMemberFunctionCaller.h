@@ -28,23 +28,13 @@ public:
       __gnu_parallel::_Settings::set(settings);
       const auto nonConstMemberFunctionBoundWithArg1AndArg2Bound =
          std::bind(nonConstMemberFunction, nonConstClassPointer, std::placeholders::_1, arg1, arg2);
-      __gnu_parallel::for_each(
-         cbegin(callIndexElements),
-         cend(callIndexElements),
-         nonConstMemberFunctionBoundWithArg1AndArg2Bound);
-#elif defined _WIN32
-      const auto nonConstMemberFunctionBoundWithArg1AndArg2Bound =
-         std::bind(nonConstMemberFunction, nonConstClassPointer, std::placeholders::_1, arg1, arg2);
-      std::for_each(
-         std::execution::par_unseq,
-         cbegin(callIndexElements),
-         cend(callIndexElements),
+      __gnu_parallel::for_each(callIndexElements.cbegin(), callIndexElements.cend(),
          nonConstMemberFunctionBoundWithArg1AndArg2Bound);
 #else
-      for (size_t callIndex = 0; callIndex < numberOfCalls; ++callIndex)
-      {
-         (nonConstClassPointer->*nonConstMemberFunction)(callIndex, arg1, arg2);
-      }
+      const auto nonConstMemberFunctionBoundWithArg1AndArg2Bound =
+         std::bind(nonConstMemberFunction, nonConstClassPointer, std::placeholders::_1, arg1, arg2);
+      std::for_each(std::execution::par_unseq, callIndexElements.cbegin(), callIndexElements.cend(),
+         nonConstMemberFunctionBoundWithArg1AndArg2Bound);
 #endif
    }
 

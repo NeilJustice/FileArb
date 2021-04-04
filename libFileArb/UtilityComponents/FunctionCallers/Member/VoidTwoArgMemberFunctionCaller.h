@@ -1,4 +1,8 @@
 #pragma once
+#if defined __GNUG__ && !defined __clang__
+#include <parallel/algorithm>
+#include <parallel/settings.h>
+#endif
 
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller

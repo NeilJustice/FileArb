@@ -51,8 +51,8 @@ namespace docopt
 		struct Variant
 		{
 			bool boolValue = false;
-			long longValue = 0l;
-			size_t sizeTValue = 0ull;
+			long longValue = 0L;
+			size_t sizeTValue = 0ULL;
 			string strValue;
 			vector<string> strList;
 		};

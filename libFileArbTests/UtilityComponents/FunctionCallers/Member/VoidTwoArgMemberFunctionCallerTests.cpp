@@ -25,7 +25,7 @@ Class _classInstance;
 TEST(CallNonConstMemberFunctionNTimes_NIs0_CallsFunctionZeroTimes)
 {
    _voidTwoArgMemberFunctionCaller.CallNonConstMemberFunctionNTimes(
-      0ull, &Class::NonConstTwoArgMemberFunction, &_classInstance, Arg1Type{}, Arg2Type{});
+      0ULL, &Class::NonConstTwoArgMemberFunction, &_classInstance, Arg1Type{}, Arg2Type{});
    IS_EMPTY(_classInstance.functionArguments);
 }
 
@@ -47,7 +47,7 @@ TEST(CallNonConstMemberFunctionNTimes_NIs2_CallsFunctionTwice)
 TEST(ParallelCallNonConstMemberFunctionNTimes_NIs0_CallsFunctionZeroTimes)
 {
    _voidTwoArgMemberFunctionCaller.ParallelCallNonConstMemberFunctionNTimes(
-      0ull, &Class::NonConstTwoArgMemberFunction, &_classInstance, Arg1Type{}, Arg2Type{});
+      0ULL, &Class::NonConstTwoArgMemberFunction, &_classInstance, Arg1Type{}, Arg2Type{});
    IS_EMPTY(_classInstance.functionArguments);
 }
 
@@ -58,7 +58,7 @@ TEST(ParallelCallNonConstMemberFunctionNTimes_NIs2_CallsFunctionTwiceInParallel)
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
    _voidTwoArgMemberFunctionCaller.ParallelCallNonConstMemberFunctionNTimes(
-      2ull, &Class::NonConstTwoArgMemberFunction, &_classInstance, arg1, arg2);
+      2ULL, &Class::NonConstTwoArgMemberFunction, &_classInstance, arg1, arg2);
    //
    vector<tuple<size_t, Arg1Type, Arg2Type>> expectedFunctionArguments;
    expectedFunctionArguments.push_back(make_tuple(0ull, arg1, arg2));

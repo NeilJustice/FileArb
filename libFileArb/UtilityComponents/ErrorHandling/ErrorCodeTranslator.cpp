@@ -67,7 +67,7 @@ string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastErro
 }
 #endif
 
-constexpr size_t MaximumErrnoDescriptionLength = 64ull;
+constexpr size_t MaximumErrnoDescriptionLength = 64ULL;
 
 #if defined __linux__ || defined __APPLE__
 

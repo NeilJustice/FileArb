@@ -145,11 +145,11 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
 
 struct strerror_r_CallHistory
 {
-   size_t numberOfCalls = 0ull;
+   size_t numberOfCalls = 0;
    char* returnValue = nullptr;
    int errnoValueArgument = 0;
    char* outErrnoDescriptionCharsArgument = nullptr;
-   size_t outErrnoDescriptionCharsSizeArgument = 0ull;
+   size_t outErrnoDescriptionCharsSizeArgument = 0;
 
    char* RecordFunctionCall(int errnoValue, char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize)
    {
@@ -193,10 +193,10 @@ TEST(Linux__GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue
 
 struct strerror_s_CallHistory
 {
-   size_t numberOfCalls = 0ull;
+   size_t numberOfCalls = 0;
    char* outErrnoDescriptionCharsArgument = nullptr;
    string outErrnoDescriptionCharsReturnValue;
-   size_t outErrnoDescriptionCharsSizeArgument = 0ull;
+   size_t outErrnoDescriptionCharsSizeArgument = 0;
    int errnoValueArgument = 0;
    errno_t returnValue = 0;
 

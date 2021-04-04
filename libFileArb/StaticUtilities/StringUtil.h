@@ -3,17 +3,17 @@
 class String
 {
 public:
-   static bool ContainsSubstring(std::string_view stringView, std::string_view substring);
-   static bool CaseInsensitiveContainsSubstring(std::string_view stringView, std::string_view substring);
-   static std::string ToLowercase(std::string_view str);
+   static bool ContainsSubstring(string_view stringView, string_view substring);
+   static bool CaseInsensitiveContainsSubstring(string_view stringView, string_view substring);
+   static string ToLowercase(string_view str);
    static size_t ToSizeT(string_view str);
 
    template<typename... Types>
-   static std::string Concat(Types&&... values)
+   static string Concat(Types&&... values)
    {
-      std::ostringstream oss;
-      (oss << ... << std::forward<Types>(values));
-      const std::string concatenatedValues = oss.str();
+      ostringstream oss;
+      (oss << ... << forward<Types>(values));
+      const string concatenatedValues = oss.str();
       return concatenatedValues;
    }
 

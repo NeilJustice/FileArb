@@ -27,9 +27,9 @@ STARTUP
 TEST(Constructor_NewsComponents)
 {
    CreateBinaryFileSubProgram createBinaryFileSubProgram;
-   // Base Constant Components
-   DELETE_TO_ASSERT_NEWED(createBinaryFileSubProgram._console);
-   DELETE_TO_ASSERT_NEWED(createBinaryFileSubProgram._fileSystem);
+   // Base Class Constant Components
+   DELETE_TO_ASSERT_NEWED(createBinaryFileSubProgram._protected_console);
+   DELETE_TO_ASSERT_NEWED(createBinaryFileSubProgram._protected_fileSystem);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(createBinaryFileSubProgram._binaryFileBytesGenerator);
    // Mutable Components

@@ -24,7 +24,7 @@ struct UserType
 };
 
 TEST3X3(ContainsSubstring_ReturnsTrueIfStringContainsSubstring,
-   bool expectedReturnValue, const string& str, const string& substring,
+   bool expectedReturnValue, string_view str, string_view substring,
    true, "", "",
    true, " ", "",
    true, " ", " ",
@@ -41,7 +41,7 @@ TEST3X3(ContainsSubstring_ReturnsTrueIfStringContainsSubstring,
 }
 
 TEST3X3(CaseInsensitiveContainsSubstring_ReturnsTrueIfStringCaseInsensitiveContainsSubstring,
-   bool expectedReturnValue, const string& str, const string& substring,
+   bool expectedReturnValue, string_view str, string_view substring,
    true, "", "",
    true, " ", "",
    true, " ", " ",

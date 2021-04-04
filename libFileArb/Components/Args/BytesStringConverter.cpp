@@ -4,31 +4,31 @@
 size_t BytesStringConverter::ConvertBytesStringToNumberOfBytes(const string& bytesString) const
 {
    const string bytesStringAsLowercase = String::ToLowercase(bytesString);
-   if (boost::regex_match(bytesStringAsLowercase, boost::regex("^\\d+kb$")))
+   if (boost::regex_match(bytesStringAsLowercase, boost::regex("^\\d+b$")))
    {
-      const string bytesStringSubstring = bytesString.substr(0, bytesString.size() - 2);
+      const string bytesStringSubstring = bytesString.substr(0, bytesString.size() - 1);
+      const size_t bytes = String::ToSizeT(bytesStringSubstring);
+      return bytes;
+   }
+   else if (boost::regex_match(bytesStringAsLowercase, boost::regex("^\\d+k$")))
+   {
+      const string bytesStringSubstring = bytesString.substr(0, bytesString.size() - 1);
       const size_t kilobytes = String::ToSizeT(bytesStringSubstring);
       const size_t bytes = kilobytes * 1024;
       return bytes;
    }
-   else if (boost::regex_match(bytesStringAsLowercase, boost::regex("^\\d+mb$")))
+   else if (boost::regex_match(bytesStringAsLowercase, boost::regex("^\\d+m$")))
    {
-      const string bytesStringSubstring = bytesString.substr(0, bytesString.size() - 2);
+      const string bytesStringSubstring = bytesString.substr(0, bytesString.size() - 1);
       const size_t megabytes = String::ToSizeT(bytesStringSubstring);
       const size_t bytes = megabytes * 1024 * 1024;
       return bytes;
    }
-   else if (boost::regex_match(bytesStringAsLowercase, boost::regex("^\\d+gb$")))
-   {
-      const string bytesStringSubstring = bytesString.substr(0, bytesString.size() - 2);
-      const size_t gigabytes = String::ToSizeT(bytesStringSubstring);
-      const size_t bytes = gigabytes * 1024 * 1024 * 1024;
-      return bytes;
-   }
-   else if (boost::regex_match(bytesStringAsLowercase, boost::regex("^\\d+b$")))
+   else if (boost::regex_match(bytesStringAsLowercase, boost::regex("^\\d+g$")))
    {
       const string bytesStringSubstring = bytesString.substr(0, bytesString.size() - 1);
-      const size_t bytes = String::ToSizeT(bytesStringSubstring);
+      const size_t gigabytes = String::ToSizeT(bytesStringSubstring);
+      const size_t bytes = gigabytes * 1024 * 1024 * 1024;
       return bytes;
    }
    else if (boost::regex_match(bytesStringAsLowercase, boost::regex("^\\d+$")))

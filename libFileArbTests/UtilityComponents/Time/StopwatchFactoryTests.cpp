@@ -7,10 +7,10 @@ EVIDENCE
 
 TEST(NewStopwatch_ReturnsNewStopwatch)
 {
-   StopwatchFactory stopwatchFactory;
+   const StopwatchFactory stopwatchFactory;
    //
-   shared_ptr<Stopwatch> stopwatch1 = stopwatchFactory.NewStopwatch();
-   shared_ptr<Stopwatch> stopwatch2 = stopwatchFactory.NewStopwatch();
+   const shared_ptr<Stopwatch> stopwatch1 = stopwatchFactory.NewStopwatch();
+   const shared_ptr<Stopwatch> stopwatch2 = stopwatchFactory.NewStopwatch();
    //
    ARE_NOT_EQUAL(stopwatch1.get(), stopwatch2.get());
 }

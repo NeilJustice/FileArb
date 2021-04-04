@@ -13,9 +13,9 @@ FileArbSubProgram _fileArbSubProgram;
 TEST(DefaultConstructor_NewsConsoleAndFileSystem)
 {
    FileArbSubProgram fileArbSubProgram;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileArbSubProgram._console);
-   DELETE_TO_ASSERT_NEWED(fileArbSubProgram._fileSystem);
+   // Base Class Constant Components
+   DELETE_TO_ASSERT_NEWED(fileArbSubProgram._protected_console);
+   DELETE_TO_ASSERT_NEWED(fileArbSubProgram._protected_fileSystem);
 }
 
 TEST(Run_Returns0)

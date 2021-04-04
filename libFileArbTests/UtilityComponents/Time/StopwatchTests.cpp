@@ -10,17 +10,21 @@ AFACT(StopAndGetElapsedMilliseconds_StartPreviouslyCalled_ReturnsElapsedMillisec
 EVIDENCE
 
 Stopwatch _stopwatch;
+// Function Pointers
 METALMOCK_NONVOID0_STATIC(chrono::time_point<chrono::high_resolution_clock>, chrono::high_resolution_clock, now)
 
 STARTUP
 {
+   // Function Pointers
    _stopwatch._call_now = BIND_0ARG_METALMOCK_OBJECT(nowMock);
 }
 
 TEST(DefaultConstructor_SetsNowFunctionPointer)
 {
    const Stopwatch stopwatch;
+   // Function Pointers
    STD_FUNCTION_TARGETS(chrono::high_resolution_clock::now, stopwatch._call_now);
+   // Mutable Fields
    ARE_EQUAL(chrono::time_point<chrono::high_resolution_clock>(), stopwatch._startTime);
 }
 

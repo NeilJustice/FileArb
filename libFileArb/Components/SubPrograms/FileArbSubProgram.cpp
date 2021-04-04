@@ -4,9 +4,9 @@
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
 
 FileArbSubProgram::FileArbSubProgram()
-   // Baseclass Constant Components
-   : _console(make_unique<Console>())
-   , _fileSystem(make_unique<FileSystem>())
+   // Base Class Constant Components
+   : _protected_console(make_unique<Console>())
+   , _protected_fileSystem(make_unique<FileSystem>())
 {
 }
 

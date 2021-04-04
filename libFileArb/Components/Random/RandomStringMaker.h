@@ -5,6 +5,7 @@ class RandomStringMaker
 {
    friend class RandomStringMakerTests;
 private:
+   // Constant Components
    unique_ptr<const RandomCharacterGenerator> _randomCharacterGenerator;
 public:
    RandomStringMaker();

@@ -27,6 +27,7 @@ AFACT(GetProgramModeSpecificRequiredSizeT_ProgramModeIsContainedInRequiredProgra
 EVIDENCE
 
 DocoptParser _docoptParser;
+// Function Pointers
 using DocoptMapType = map<string, docopt::Value>;
 METALMOCK_NONVOID5_FREE(DocoptMapType, _call_docopt, const string&, const vector<string>&, bool, const string&, bool)
 METALMOCK_NONVOID2_STATIC(size_t, DocoptParser, _call_StaticGetRequiredSizeT, map<string COMMA docopt::Value>, const string&)
@@ -46,7 +47,7 @@ STARTUP
 
 TEST(DefaultConstructor_NewsYearMonthParser)
 {
-   DocoptParser docoptParser;
+   const DocoptParser docoptParser;
    // Function Pointers
    STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt);
    STD_FUNCTION_TARGETS(DocoptParser::StaticGetRequiredSizeT, docoptParser._call_StaticGetRequiredSizeT);

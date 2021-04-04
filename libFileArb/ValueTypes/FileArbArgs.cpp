@@ -6,7 +6,7 @@ R"(FileArb v0.11.0
 Creates an arbitrary number of text files or binary files
 containing an arbitrary number of lines, characters, or bytes.
 Optional suffixes for --bytes=<BytesPerFile> argument:
-b or B, kb or KB, mb or MB, gb or GB.
+b or B, k or K, m or M, g or G.
 https://github.com/NeilJustice/FileArb
 
 Usage:

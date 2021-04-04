@@ -14,7 +14,7 @@ FACTS(ConvertBytesStringToNumberOfBytes_BytesStringDoesNotEndWithSuffix_BytesStr
 FACTS(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithInvalidSuffix_ThrowsInvalidArgument)
 EVIDENCE
 
-BytesStringConverter _bytesStringConverter;
+const BytesStringConverter _bytesStringConverter;
 
 TEST2X2(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithBOrb_ReturnsReturnsBytesStringConvertedToSizeT,
    const string& bytesString, size_t expectedReturnValue,
@@ -31,11 +31,11 @@ TEST2X2(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithBOrb_ReturnsReturns
 
 TEST2X2(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithKBOrkb_ReturnsReturnsBytesStringConvertedToSizeTMultipliedBy1024,
    const string& bytesString, size_t expectedReturnValue,
-   "0kb", 0ULL,
-   "1KB", 1024ULL,
-   "1Kb", 1024ULL,
-   "1kb", 1024ULL,
-   "10kb", 10240ULL)
+   "0k", 0ULL,
+   "1K", 1024ULL,
+   "1K", 1024ULL,
+   "1k", 1024ULL,
+   "10k", 10240ULL)
 {
    const size_t bytes = _bytesStringConverter.ConvertBytesStringToNumberOfBytes(bytesString);
    ARE_EQUAL(expectedReturnValue, bytes);
@@ -43,11 +43,11 @@ TEST2X2(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithKBOrkb_ReturnsRetur
 
 TEST2X2(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithMBOrmb_ReturnsReturnsBytesStringConvertedToSizeTMultipliedBy1024Times1024,
    const string& bytesString, size_t expectedReturnValue,
-   "0mb", 0ULL,
-   "1MB", 1024ULL * 1024ULL,
-   "1Mb", 1024ULL * 1024ULL,
-   "1mb", 1024ULL * 1024ULL,
-   "10mb", 10 * 1024ULL * 1024ULL)
+   "0m", 0ULL,
+   "1M", 1024ULL * 1024ULL,
+   "1M", 1024ULL * 1024ULL,
+   "1m", 1024ULL * 1024ULL,
+   "10m", 10 * 1024ULL * 1024ULL)
 {
    const size_t bytes = _bytesStringConverter.ConvertBytesStringToNumberOfBytes(bytesString);
    ARE_EQUAL(expectedReturnValue, bytes);
@@ -55,11 +55,11 @@ TEST2X2(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithMBOrmb_ReturnsRetur
 
 TEST2X2(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithGBOrgb_ReturnsReturnsBytesStringConvertedToSizeTMultipliedBy1024Times1024Times1024,
    const string& bytesString, size_t expectedReturnValue,
-   "0mb", 0ULL,
-   "1GB", 1024ULL * 1024ULL * 1024ULL,
-   "1Gb", 1024ULL * 1024ULL * 1024ULL,
-   "1gb", 1024ULL * 1024ULL * 1024ULL,
-   "10gb", 10 * 1024ULL * 1024ULL * 1024ULL)
+   "0g", 0ULL,
+   "1G", 1024ULL * 1024ULL * 1024ULL,
+   "1G", 1024ULL * 1024ULL * 1024ULL,
+   "1g", 1024ULL * 1024ULL * 1024ULL,
+   "10g", 10 * 1024ULL * 1024ULL * 1024ULL)
 {
    const size_t bytes = _bytesStringConverter.ConvertBytesStringToNumberOfBytes(bytesString);
    ARE_EQUAL(expectedReturnValue, bytes);

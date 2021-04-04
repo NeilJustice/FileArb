@@ -8,7 +8,7 @@ AFACT(ThrowIfSizeTValuesNotEqual_SizeTValuesAreEqual_DoesNothing)
 AFACT(ThrowIfSizeTValuesNotEqual_SizeTValuesAreNotEqual_ThrowsRuntimeError)
 EVIDENCE
 
-Asserter _asserter;
+const Asserter _asserter;
 
 TEST(ThrowIfIntsNotEqual_IntsAreEqual_DoesNotThrowException)
 {

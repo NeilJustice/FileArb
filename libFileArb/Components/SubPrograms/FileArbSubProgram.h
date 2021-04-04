@@ -1,15 +1,14 @@
 #pragma once
 class Console;
 class FileSystem;
-struct FileArbArgs;
 
 class FileArbSubProgram
 {
    friend class FileArbSubProgramTests;
 protected:
-   // Baseclass Constant Components
-   unique_ptr<const Console> _console;
-   unique_ptr<const FileSystem> _fileSystem;
+   // Base Class Constant Components
+   unique_ptr<const Console> _protected_console;
+   unique_ptr<const FileSystem> _protected_fileSystem;
 public:
    FileArbSubProgram();
    virtual ~FileArbSubProgram();

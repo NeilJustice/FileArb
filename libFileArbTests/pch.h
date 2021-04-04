@@ -4,6 +4,8 @@
 #include <execution>
 #include <filesystem>
 #if defined __linux__ || defined __APPLE__
+   #include <mutex>
+   #include <thread>
    #include <unistd.h>
 #endif
 namespace fs = std::filesystem;

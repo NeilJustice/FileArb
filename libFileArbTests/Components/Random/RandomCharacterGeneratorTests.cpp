@@ -6,7 +6,7 @@ AFACT(NextRandomByte_CodeCoverage)
 AFACT(NextRandomLetter_CodeCoverage)
 EVIDENCE
 
-const RandomCharacterGenerator _randomCharacterGenerator;
+RandomCharacterGenerator _randomCharacterGenerator;
 
 TEST(NextRandomByte_CodeCoverage)
 {

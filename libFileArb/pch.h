@@ -9,6 +9,8 @@
 #include <random>
 #if defined __linux__ || defined __APPLE__
    #include <limits.h>
+   #include <mutex>
+   #include <thread>
    #include <unistd.h>
 #elif defined _WIN32
 #define WIN32_LEAN_AND_MEAN

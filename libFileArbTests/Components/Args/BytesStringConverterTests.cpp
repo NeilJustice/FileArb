@@ -14,7 +14,7 @@ FACTS(ConvertBytesStringToNumberOfBytes_BytesStringDoesNotEndWithSuffix_BytesStr
 FACTS(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithInvalidSuffix_ThrowsInvalidArgument)
 EVIDENCE
 
-const BytesStringConverter _bytesStringConverter;
+BytesStringConverter _bytesStringConverter;
 
 TEST2X2(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithBOrb_ReturnsReturnsBytesStringConvertedToSizeT,
    const string& bytesString, size_t expectedReturnValue,

@@ -25,6 +25,6 @@ shared_ptr<FileArbSubProgram> FileArbSubProgramFactory::NewFileArbSubProgram(Pro
    {
       return make_shared<CreateBinaryFilesSubProgram>();
    }
-   default: throw invalid_argument("[FileArb] Invalid ProgramMode: " + to_string(static_cast<int>(programMode)));
+   default: throw invalid_argument("Invalid ProgramMode: " + to_string(static_cast<int>(programMode)));
    }
 }

@@ -101,8 +101,8 @@ TEST1X1(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExit
       &_fileArbProgram, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
 
-   const string expectedDurationLine = String::Concat("[FileArb] Duration: ", runtimeInSeconds, " seconds");
-   const string expectedExitCodeLine = String::Concat("[FileArb] ExitCode: ", subProgramExitCode);
+   const string expectedDurationLine = String::Concat("Duration: ", runtimeInSeconds, " seconds");
+   const string expectedExitCodeLine = String::Concat("ExitCode: ", subProgramExitCode);
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { expectedDurationLine },
@@ -137,7 +137,7 @@ TEST(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_Re
    METALMOCK(_argsParserMock->ParseArgsMock.CalledOnceWith(stringArgs));
    METALMOCK(_fileArbSubProgramFactoryMock->NewFileArbSubProgramMock.CalledOnceWith(args.programMode));
    METALMOCK(fileArbSubProgramMock->RunMock.CalledOnceWith(args));
-   const string expectedRunningMessage = "[FileArb] Running: " + args.commandLine;
+   const string expectedRunningMessage = "Running: " + args.commandLine;
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedRunningMessage));
    ARE_EQUAL(exitCode, returnedExitCode);
 }
@@ -154,7 +154,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessageInRed_Returns1)
    int exitCode = _fileArbProgram.ExceptionHandler(ex, args);
    //
    METALMOCK(GetClassNameAndMessageMock.CalledOnceWith(&ex));
-   const string expectedExceptionErrorMessage = "[FileArb] Error: Exception thrown: " + exceptionClassNameAndMessage;
+   const string expectedExceptionErrorMessage = "Error: Exception thrown: " + exceptionClassNameAndMessage;
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedExceptionErrorMessage, Color::Red));
    ARE_EQUAL(1, exitCode);
 }

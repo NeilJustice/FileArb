@@ -82,7 +82,7 @@ TEST(CreateBinaryFile_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBin)
    METALMOCK(_fileSystemMock->CreateBinaryFileMock.CalledOnceWith(expectedFilePath, fileBytes.data(), fileBytes.size()));
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    const string expectedWroteFileMessage = String::Concat(
-      "[FileArb] Wrote binary file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
+      "Wrote binary file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
 
@@ -103,7 +103,7 @@ TEST(CreateTextFile_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
    METALMOCK(_fileSystemMock->CreateTextFileMock.CalledOnceWith(expectedFilePath, fileText));
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    const string expectedWroteFileMessage = String::Concat(
-      "[FileArb] Wrote text file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
+      "Wrote text file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
 
@@ -185,7 +185,7 @@ TEST(CreateNumberedFileInDirectory_MinimalIsFalse_CreatesFile_WritesWroteFileMes
       expectedFilePath, fileTextOrBytes.data(), fileTextOrBytes.size()));
    METALMOCK(threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    const string expectedWroteFileMessage = String::Concat(
-      "[FileArb] Wrote file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
+      "Wrote file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
 

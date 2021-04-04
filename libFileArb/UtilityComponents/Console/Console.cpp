@@ -12,23 +12,16 @@ Console::~Console()
 {
 }
 
-void Console::Write(string_view message) const
-{
-   cout << message;
-}
-
-void Console::WriteInt(int value) const
-{
-   cout << value;
-}
-
 void Console::WriteLine(string_view message) const
 {
-   cout << message << '\n';
+   const thread::id threadId = this_thread::get_id();
+   scoped_lock<mutex> coutLock(_coutMutex);
+   cout << "[FileArb Thread " << threadId << "] " << message << '\n';
 }
 
 void Console::WriteLineColor(string_view message, Color color) const
 {
+   scoped_lock<mutex> coutLock(_coutMutex);
    const bool didSetTextColor = _consoleColorer->SetTextColor(color);
    cout << message << '\n';
    _consoleColorer->UnsetTextColor(didSetTextColor);

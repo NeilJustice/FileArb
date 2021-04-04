@@ -44,7 +44,7 @@ TEST1X1(NewFileArbSubProgram_ProgramModeIsInvalid_ThrowsInvalidArgumentException
    ProgramMode::Unset,
    static_cast<ProgramMode>(-1))
 {
-   const string expectedExceptionmessage = "[FileArb] Invalid ProgramMode: " + to_string(static_cast<int>(invalidProgramMode));
+   const string expectedExceptionmessage = "Invalid ProgramMode: " + to_string(static_cast<int>(invalidProgramMode));
    THROWS_EXCEPTION(const shared_ptr<FileArbSubProgram> fileArbSubProgram = _fileArbSubProgramFactory.NewFileArbSubProgram(invalidProgramMode),
       invalid_argument, expectedExceptionmessage);
 }

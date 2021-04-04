@@ -4,8 +4,6 @@
 
 TESTS(ConsoleTests)
 AFACT(DefaultConstructor_NewsConsoleColorer)
-AFACT(WriteInt_CodeCoverage)
-AFACT(Write_StringView_CodeCoverage)
 AFACT(WriteLine_StringView_CodeCoverage)
 AFACT(WriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
@@ -25,19 +23,6 @@ TEST(DefaultConstructor_NewsConsoleColorer)
    Console console;
    // Function Pointers
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
-}
-
-TEST(WriteInt_CodeCoverage)
-{
-   _console.WriteInt(ZenUnit::Random<int>());
-}
-
-TEST(Write_StringView_CodeCoverage)
-{
-   _console.Write("");
-   _console.Write(ZenUnit::Random<string>());
-   const string_view stringView;
-   _console.Write(stringView);
 }
 
 TEST(WriteLine_StringView_CodeCoverage)

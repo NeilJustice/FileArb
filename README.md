@@ -193,7 +193,7 @@ Resulting executable `C:\bin\FileArb.exe`:
 
 ## FileArb Roadmap
 
-|Future FileArb Feature|Implementation Status As Of 3/15/2021|
+|Future FileArb Feature|Implementation Status As Of 4/8/2021|
 |----------------------|------------------------------------|
 |GitHub Actions build|In progress|
 |SonarCloud Python badge for FileArbPyUtils|Awaiting implementation|

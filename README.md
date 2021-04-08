@@ -195,7 +195,7 @@ Resulting executable `C:\bin\FileArb.exe`:
 
 |Future FileArb Feature|Implementation Status As Of 3/15/2021|
 |----------------------|------------------------------------|
-|GitHub Actions build|Awaiting implementation|
+|GitHub Actions build|In progress|
 |SonarCloud Python badge for FileArbPyUtils|Awaiting implementation|
 |SonarCloud C++ badge|Awaiting implementation|
 |Coverity C++ static analysis badge|Awaiting implementation|

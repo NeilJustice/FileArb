@@ -29,7 +29,7 @@ x64/
 *.db
 *.opendb
 *.sln
-!PyUtils.sln
+!FileArbPyUtils.sln
 *.suo
 *.filters
 *.ipch

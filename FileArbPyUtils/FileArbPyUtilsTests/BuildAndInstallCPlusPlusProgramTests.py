@@ -4,7 +4,8 @@ import sys
 import unittest
 from unittest.mock import call, patch
 import docopt
-from FileArbPyUtils import CMake, BuildAndInstallCPlusPlusProgram, Process, Random, UnitTester
+from FileArbPyUtils import CMake, BuildAndInstallCPlusPlusProgram, Process
+from FileArbPyUtilsTests import Random, UnitTester
 
 testNames = [
 'docstring__IsExpectedString_test',
@@ -24,18 +25,18 @@ class BuildAndInstallCPlusPlusProgramTests(unittest.TestCase):
       self.doInstallProgram = Random.boolean()
 
    def docstring__IsExpectedString_test(self):
-      self.assertEqual("""BuildAndInstallCPlusPlusProgram.py - Builds and installs a C++ progarm on Linux or Windows.
+      self.assertEqual("""BuildAndInstallCPlusPlusProgram.py - Builds and installs a C++ program on Linux or Windows.
 
 Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-generator=<String> --cmake-build-type=<String> --tests-project-name=<String> [--cmake-definitions=<String>] (--install|--no-install)""",
       BuildAndInstallCPlusPlusProgram.__doc__)
 
    def main__ValidArgs_CMakes_Builds_RunsTests_InstallsIfInstallArgSpecified_test(self):
-      @patch('builtins.print', spec_set=True)
       @patch('docopt.docopt', spec_set=True)
       @patch('platform.system', spec_set=True)
       @patch('FileArbPyUtils.BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install', spec_set=True)
       @patch('FileArbPyUtils.BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install', spec_set=True)
-      def testcase(platformSystem, trueExpectLinuxFalseExpectWindows, _1, _2, _3, _4, printMock):
+      @patch('builtins.print', spec_set=True)
+      def testcase(platformSystem, trueExpectLinuxFalseExpectWindows, printMock, _1, _2, _3, _4):
          with self.subTest(f'{platformSystem, trueExpectLinuxFalseExpectWindows}'):
             docopt.docopt.return_value =\
             {
@@ -75,8 +76,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install(
          self.cmakeGenerator, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
       #
-      CMake.generate.assert_called_once_with(
-         self.cmakeBuildType, self.cmakeGenerator, self.cmakeBuildType, self.cmakeDefinitions, '..')
+      CMake.generate.assert_called_once_with(self.cmakeBuildType, self.cmakeGenerator, self.cmakeBuildType, self.cmakeDefinitions, '..')
       expectedZenUnitTestsProgramCommand = f'{self.testsProjectName}/{self.testsProjectName} --test-runs=2 --random --max-test-milliseconds=200 --exit-1-if-tests-skipped'
       self.assertEqual(2, len(Process.fail_fast_run.call_args_list))
       Process.fail_fast_run.assert_has_calls([

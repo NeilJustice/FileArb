@@ -21,7 +21,7 @@
       {
          "label": "Run All Tests",
          "type": "shell",
-         "command": "PYTHONPATH=ZenUnitPy python ZenUnitPyTests/RunAll.py",
+         "command": "PYTHONPATH=FileArbPyUtils python FileArbPyUtilsTests/RunAll.py",
          "options": {
             "cwd": "${workspaceRoot}"
          },

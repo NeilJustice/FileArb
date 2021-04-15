@@ -30,7 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BuildAndInstallCPlusPlusProgramTests.py" />
-    <Compile Include="CoverageLintInstallPythonLibraryTests.py">
+    <Compile Include="MypyFlake8PylintRunTestsWithCoverageTests.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CMakeTests.py">
@@ -38,12 +38,17 @@
     </Compile>
     <Compile Include="ProcessTests.py" />
     <Compile Include="PythonTests.py" />
+    <Compile Include="Random.py" />
     <Compile Include="RandomTests.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RunAll.py" />
     <Compile Include="RunAllWithCoverage.py" />
+    <Compile Include="UnitTester.py" />
     <Compile Include="UnitTesterTests.py" />
+    <Compile Include="__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

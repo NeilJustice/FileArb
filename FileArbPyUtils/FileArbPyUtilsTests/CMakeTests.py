@@ -2,7 +2,8 @@ import os
 import platform
 import unittest
 from unittest.mock import patch
-from FileArbPyUtils import CMake, UnitTester, Process, Random
+from FileArbPyUtils import CMake, Process
+from FileArbPyUtilsTests import Random, UnitTester
 
 testNames = [
 'generate_CreatesAndCdsToDirectory_RunsCMakeWithGeneratorAndBuildType_test'
@@ -16,12 +17,12 @@ class CMakeTests(unittest.TestCase):
       self.cmakeListsFolderPath = Random.string()
 
    def generate_CreatesAndCdsToDirectory_RunsCMakeWithGeneratorAndBuildType_test(self):
-      @patch('builtins.print', spec_set=True)
       @patch('os.makedirs', spec_set=True)
       @patch('os.chdir', spec_set=True)
       @patch('platform.system', spec_set=True)
       @patch('FileArbPyUtils.Process.fail_fast_run', spec_set=True)
-      def testcase(platformSystem, cmakeDefinitions, expectedCMakeCommand, _1, _2, _3, _4, printMock):
+      @patch('builtins.print', spec_set=True)
+      def testcase(platformSystem, cmakeDefinitions, expectedCMakeCommand, printMock, _2, _3, _4, _5):
          with self.subTest(f'{platformSystem, cmakeDefinitions, expectedCMakeCommand}'):
             platform.system.return_value = platformSystem
             #

@@ -12,21 +12,21 @@ FileArb is a cross-platform C++ command line program for quickly creating in par
 
 FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
-* [FileArb Command Line Usage](#filearb-command-line-usage)
-* [FileArb Program Modes](#filearb-program-modes)
+* [FileArb command line usage](#filearb-command-line-usage)
+* [FileArb program modes](#filearb-program-modes)
    * [create-binary-file](#create-binary-file)
    * [create-binary-files](#create-binary-files)
    * [create-text-file](#create-text-file)
    * [create-text-files](#create-text-files)
-* [FileArb Code Structure As It Appears In Visual Studio Code On Linux](#filearb-code-structure-as-it-appears-in-visual-studio-code-on-linux)
-* [FileArb Code Structure As It Appears In Visual Studio 2019 On Windows](#filearb-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
-* [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ Code and Mypy-Flake8-Pylint-SonarQube FileArb's CI/CD Python Code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearbs-c-code-and-mypy-flake8-pylint-sonarqube-filearbs-cicd-python-code)
-* [Windows Jenkins Jobs Which Build and Cppcheck FileArb's C++ Code and Mypy-Flake8-Pylint-SonarQube FileArb's CI/CD Python Code](#windows-jenkins-jobs-which-build-and-cppcheck-filearbs-c-code-and-mypy-flake8-pylint-sonarqube-filearbs-cicd-python-code)
-* [How To Build Binary filearb On Linux With Clang](#how-to-build-binary-filearb-on-linux-with-clang)
-* [How To Build Executable FileArb.exe On Windows With Visual Studio 2019](#how-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)
-* [FileArb Roadmap](#filearb-roadmap)
+* [FileArb code structure as it appears in Visual Studio Code on Linux](#filearb-code-structure-as-it-appears-in-visual-studio-code-on-linux)
+* [FileArb code structure as it appears in Visual Studio 2019 on Windows](#filearb-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
+* [Linux Jenkins jobs which build, cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ code and mypy-flake8-pylint-SonarQube FileArb's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearbs-c-code-and-mypy-flake8-pylint-sonarqube-filearbs-cicd-python-code)
+* [Windows Jenkins jobs which build and cppcheck FileArb's C++ code and mypy-flake8-pylint-SonarQube FileArb's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-filearbs-c-code-and-mypy-flake8-pylint-sonarqube-filearbs-cicd-python-code)
+* [How to build binary filearb on Linux with Clang](#how-to-build-binary-filearb-on-linux-with-clang)
+* [How to build executable FileArb.exe on Windows with Visual Studio 2019](#how-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)
+* [FileArb roadmap](#filearb-roadmap)
 
-## FileArb Command Line Usage
+## FileArb command line usage
 
 ```
 FileArb v0.12.0
@@ -65,7 +65,7 @@ Usage:
       [--minimal]
 ```
 
-## FileArb Program Modes
+## FileArb program modes
 
 ### create-binary-file
 
@@ -141,31 +141,31 @@ FileArb program mode `create-text-files` creates at a specified directory a spec
 
 ![create-text-files](Screenshots/create-text-files.png)
 
-## FileArb Code Structure As It Appears in Visual Studio Code On Linux
+## FileArb code structure as it appears in Visual Studio Code on Linux
 
 Shown in this screenshot is function `FileArbArgsParser::ParseArgs` which uses the excellent single-header command line parsing library [docopt.cpp](https://github.com/docopt/docopt.cpp) to parse FileArb's command line arguments:
 
-![FileArb Code Structure As It Appears In Visual Studio Code](Screenshots/Linux/FileArbCodeStructureAsItAppearsInVisualStudioCode.png)
+![FileArb code structure as it appears in Visual Studio Code](Screenshots/Linux/FileArbCodeStructureAsItAppearsInVisualStudioCode.png)
 
-## FileArb Code Structure As It Appears In Visual Studio 2019 On Windows
+## FileArb code structure as it appears in Visual Studio 2019 on Windows
 
 Shown is this screenshot is the if-statement in function `FileCreator::WriteFiles` for determining whether to generate files sequentially or in parallel. Shown in the bottom half of the screenshot are corresponding ZenUnit and MetalMock unit tests for function `FileCreator::WriteFiles`.
 
-![FileArb Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileArbCodeStructureAsItAppearsInVisualStudio2019.png)
+![FileArb code structure as it appears in Visual Studio 2019](Screenshots/Windows/FileArbCodeStructureAsItAppearsInVisualStudio2019.png)
 
-## Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ Code and Mypy-Flake8-Pylint-SonarQube FileArb's CI/CD Python Code
+## Linux Jenkins jobs which build, cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ code and mypy-flake8-pylint-SonarQube FileArb's CI/CD Python code
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 33 with Clang 11.0.0 and GCC 10.2.1:
 
-![Linux FileArb Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
+![Linux FileArb Jenkins jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
-## Windows Jenkins Jobs Which Build and Cppcheck FileArb's C++ Code and Mypy-Flake8-Pylint-SonarQube FileArb's CI/CD Python Code
+## Windows Jenkins Jobs which build and cppcheck FileArb's C++ code and mypy-flake8-pylint-SonarQube FileArb's CI/CD Python code
 
 A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Windows 10 with Visual Studio 2019:
 
-![Windows FileArb Jenkins Jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
+![Windows FileArb Jenkins jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
-## How To Build Binary filearb On Linux With Clang
+## How to build binary filearb on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/FileArb
@@ -178,7 +178,7 @@ Resulting binary `/usr/local/bin/filearb`:
 
 ![Resulting binary filearb](Screenshots/Linux/filearbBinaryOnLinux.png)
 
-## How To Build Executable FileArb.exe On Windows With Visual Studio 2019
+## How to build executable FileArb.exe on Windows with Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/FileArb
@@ -191,12 +191,10 @@ Resulting executable `C:\bin\FileArb.exe`:
 
 ![Resulting executable FileArb.exe](Screenshots/Windows/FileArbDotExe.png)
 
-## FileArb Roadmap
+## FileArb roadmap
 
-|Future FileArb Feature|Implementation Status As Of 4/8/2021|
-|----------------------|------------------------------------|
+|Future FileArb feature|Implementation status as of 4/17/2021|
+|----------------------|-------------------------------------|
 |GitHub Actions build|In progress|
 |SonarCloud Python badge for FileArbPyUtils|Awaiting implementation|
 |SonarCloud C++ badge|Awaiting implementation|
-|Coverity C++ static analysis badge|Awaiting implementation|
-|Automated acceptance testing of FileArb|Awaiting implementation|

@@ -4,8 +4,8 @@ import sys
 import unittest
 from unittest.mock import call, patch
 import docopt
-from FileArbPyUtils import CMake, BuildAndInstallCPlusPlusProgram, Process
-from FileArbPyUtilsTests import Random, UnitTester
+from FileArbDevOpsPython import CMake, BuildAndInstallCPlusPlusProgram, Process
+from FileArbDevOpsPythonTests import Random, UnitTester
 
 testNames = [
 'test_docstring__IsExpectedString',
@@ -33,8 +33,8 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
    def test_main__ValidArgs_CMakes_Builds_RunsTests_InstallsIfInstallArgSpecified(self):
       @patch('docopt.docopt', spec_set=True)
       @patch('platform.system', spec_set=True)
-      @patch('FileArbPyUtils.BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install', spec_set=True)
-      @patch('FileArbPyUtils.BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install', spec_set=True)
+      @patch('FileArbDevOpsPython.BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install', spec_set=True)
+      @patch('FileArbDevOpsPython.BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install', spec_set=True)
       @patch('builtins.print', spec_set=True)
       def testcase(platformSystem, trueExpectLinuxFalseExpectWindows, printMock, _1, _2, _3, _4):
          with self.subTest(f'{platformSystem, trueExpectLinuxFalseExpectWindows}'):
@@ -66,10 +66,10 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       testcase('Windows', False)
       testcase('OSX', False)
 
-   @patch('FileArbPyUtils.CMake.generate', spec_set=True)
-   @patch('FileArbPyUtils.Process.fail_fast_run', spec_set=True)
+   @patch('FileArbDevOpsPython.CMake.generate', spec_set=True)
+   @patch('FileArbDevOpsPython.Process.fail_fast_run', spec_set=True)
    @patch('os.chdir', spec_set=True)
-   @patch('FileArbPyUtils.BuildAndInstallCPlusPlusProgram.optionally_install_program', spec_set=True)
+   @patch('FileArbDevOpsPython.BuildAndInstallCPlusPlusProgram.optionally_install_program', spec_set=True)
    def test_linux_cmake_build_test_install__RunCMakeThenRunsNinja(self, _1, _2, _3, _4):
       doInstallProgram = Random.boolean()
       #
@@ -85,9 +85,9 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       os.chdir.assert_called_once_with('..')
       BuildAndInstallCPlusPlusProgram.optionally_install_program.assert_called_once_with(doInstallProgram, self.cmakeBuildType, self.cmakeBuildType)
 
-   @patch('FileArbPyUtils.CMake.generate', spec_set=True)
-   @patch('FileArbPyUtils.Process.fail_fast_run', spec_set=True)
-   @patch('FileArbPyUtils.BuildAndInstallCPlusPlusProgram.optionally_install_program', spec_set=True)
+   @patch('FileArbDevOpsPython.CMake.generate', spec_set=True)
+   @patch('FileArbDevOpsPython.Process.fail_fast_run', spec_set=True)
+   @patch('FileArbDevOpsPython.BuildAndInstallCPlusPlusProgram.optionally_install_program', spec_set=True)
    def test_windows_cmake_build_test_install__RunsCMakeThenRunsMSBuild(self, _1, _2, _3):
       doInstallProgram = Random.boolean()
       #
@@ -104,7 +104,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       BuildAndInstallCPlusPlusProgram.optionally_install_program.assert_called_once_with(doInstallProgram, '.', self.cmakeBuildType)
 
    def test_optionally_install_program__RunsCMakeInstallTargetIfInstallArgSpecified(self):
-      @patch('FileArbPyUtils.Process.fail_fast_run', spec_set=True)
+      @patch('FileArbDevOpsPython.Process.fail_fast_run', spec_set=True)
       def testcase(doInstallProgram, expectRunCMake, _1):
          with self.subTest(f'{doInstallProgram, expectRunCMake}'):
             cmakeBuildArgument = Random.string()

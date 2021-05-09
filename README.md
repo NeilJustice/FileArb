@@ -8,8 +8,8 @@ FileArb is a cross-platform C++ command line program for quickly creating in par
 |----------|------------|
 |GitHub Actions Debug build - ubuntu-latest Clang 10.0.0|[![FileArb](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml)|
 |AppVeyor Debug and Release build - Visual Studio 2019 x64|<a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"/></a>|
-|Codecov.io code coverage for FileArbPyUtils|[![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu)](https://codecov.io/gh/NeilJustice/FileArb)|
-|SonarCloud scan of FileArbPyUtils Python code|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileArb)|
+|Codecov.io code coverage for FileArbDevOpsPython|[![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu)](https://codecov.io/gh/NeilJustice/FileArb)|
+|SonarCloud scan of FileArbDevOpsPython Python code|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileArb)|
 
 FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
@@ -197,5 +197,5 @@ Resulting executable `C:\bin\FileArb.exe`:
 |Future FileArb feature|Implementation status as of 4/17/2021|
 |----------------------|-------------------------------------|
 |GitHub Actions build|In progress|
-|SonarCloud Python badge for FileArbPyUtils|Awaiting implementation|
+|SonarCloud Python badge for FileArbDevOpsPython|Awaiting implementation|
 |SonarCloud C++ badge|Awaiting implementation|

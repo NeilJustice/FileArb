@@ -14,7 +14,7 @@ htmlcov/
 CodeCoverageHTMLReport/
 coverage.xml
 .coverage
-CoberturaCodeCoverageResults_FileArbPyUtilsTests.xml
+CoberturaCodeCoverageResults_FileArbDevOpsPythonTests.xml
 
 # Linux
 build.ninja
@@ -29,7 +29,7 @@ x64/
 *.db
 *.opendb
 *.sln
-!FileArbPyUtils.sln
+!FileArbDevOpsPython.sln
 *.suo
 *.filters
 *.ipch

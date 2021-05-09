@@ -2,9 +2,9 @@
 set -ev
 
 export CXX=clang++
-export PYTHONPATH=FileArbPyUtils
+export PYTHONPATH=FileArbDevOpsPython
 export UBSAN_OPTIONS=halt_on_error=true
-python -u FileArbPyUtils/FileArbPyUtils/BuildAndInstallCPlusPlusProgram.py \
+python -u FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --cmake-generator=Ninja \
    --solution-name=FileArb \
    --cmake-build-type=Release \

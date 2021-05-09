@@ -1,6 +1,6 @@
 import os
 import platform
-from FileArbPyUtils import Process
+from FileArbDevOpsPython import Process
 
 def generate(folderPath: str, generator: str, buildType: str, cmakeDefinitions: str, cmakeListsFolderPath: str) -> None:
    os.makedirs(folderPath, exist_ok=True)

@@ -2,8 +2,8 @@ import os
 import platform
 import unittest
 from unittest.mock import patch
-from FileArbPyUtils import CMake, Process
-from FileArbPyUtilsTests import Random, UnitTester
+from FileArbDevOpsPython import CMake, Process
+from FileArbDevOpsPythonTests import Random, UnitTester
 
 testNames = [
 'test_generate_CreatesAndCdsToDirectory_RunsCMakeWithGeneratorAndBuildType'
@@ -20,7 +20,7 @@ class CMakeTests(unittest.TestCase):
       @patch('os.makedirs', spec_set=True)
       @patch('os.chdir', spec_set=True)
       @patch('platform.system', spec_set=True)
-      @patch('FileArbPyUtils.Process.fail_fast_run', spec_set=True)
+      @patch('FileArbDevOpsPython.Process.fail_fast_run', spec_set=True)
       @patch('builtins.print', spec_set=True)
       def testcase(platformSystem, cmakeDefinitions, expectedCMakeCommand, printMock, _2, _3, _4, _5):
          with self.subTest(f'{platformSystem, cmakeDefinitions, expectedCMakeCommand}'):

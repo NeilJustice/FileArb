@@ -6,10 +6,10 @@ FileArb is a cross-platform C++ command line program for quickly creating in par
 
 |Build Type|Build Status|
 |----------|------------|
-|GitHub Actions Debug build - ubuntu-latest Clang 10.0.0|[![FileArb](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml)|
+|GitHub Actions Debug and Release build - ubuntu-latest Clang 10.0.0 / GCC 10.2.0|[![FileArb](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml)|
 |AppVeyor Debug and Release build - Visual Studio 2019 x64|<a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"/></a>|
-|Codecov.io code coverage for FileArbDevOpsPython|[![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu)](https://codecov.io/gh/NeilJustice/FileArb)|
-|SonarCloud scan of FileArbDevOpsPython Python code|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileArb)|
+|Codecov.io code coverage for FileArb's C++ and FileArbDevOpsPython|[![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu)](https://codecov.io/gh/NeilJustice/FileArb)|
+|SonarCloud scan of FileArbDevOpsPython|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileArb)|
 
 FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 

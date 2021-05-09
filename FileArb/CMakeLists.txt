@@ -22,7 +22,7 @@ install(TARGETS FileArb DESTINATION "bin")
 
 if(UNIX AND NOT APPLE)
    target_link_libraries(FileArb stdc++fs)
-   if(CodeCovMode)
+   if(LCovCodeCoverageMode)
      target_link_libraries(FileArb CodeCovLibraryInterface)
    endif()
 endif()

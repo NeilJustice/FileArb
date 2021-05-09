@@ -34,7 +34,7 @@ add_library(libFileArb ${Sources})
 EnablePrecompiledHeadersIfMSVC()
 
 if(UNIX)
-   if(CodeCovMode)
+   if(LCovCodeCoverageMode)
      target_link_libraries(libFileArb CodeCovLibraryInterface)
    endif()
 endif()

@@ -45,7 +45,7 @@ add_executable(libFileArbTests ${Sources})
 
 if(UNIX)
    target_link_libraries(libFileArbTests libFileArb "${CMAKE_SOURCE_DIR}/BoostRegex/Linux/lib/libboost_regex.a")
-   if(CodeCovMode)
+   if(LCovCodeCoverageMode)
      target_link_libraries(libFileArbTests CodeCovLibraryInterface)
    endif()
 elseif(MSVC)

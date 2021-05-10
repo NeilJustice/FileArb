@@ -1,7 +1,7 @@
 {
    "version": "0.2.0",
    "configurations": [
-   {
+      {
          "name": "Debug FileArb",
          "type": "cppdbg",
          "request": "launch",
@@ -14,6 +14,18 @@
          "MIMode": "gdb",
          "miDebuggerPath": "/usr/bin/gdb",
          "preLaunchTask": "Build Debug"
+      },
+      {
+         "name": "Debug Python",
+         "type": "python",
+         "python": "/usr/bin/python",
+         "request": "launch",
+         "program": "${file}",
+         "args": [ "" ],
+         "env": { "PYTHONPATH": ".." },
+         "stopOnEntry": false,
+         "console": "integratedTerminal",
+         "cwd": "${fileDirname}"
       }
    ]
 }

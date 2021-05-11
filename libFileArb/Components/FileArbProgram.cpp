@@ -40,9 +40,9 @@ int FileArbProgram::Main(int argc, char* argv[])
    const int subProgramExitCode = _tryCatchCaller->TryCatchCall(
       this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
    const string runtimeInSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string durationLine = String::Concat("Duration: ", runtimeInSeconds, " seconds");
+   const string durationLine = String::ConcatStrings("Duration: ", runtimeInSeconds, " seconds");
    _console->WriteLine(durationLine);
-   const string exitCodeLine = String::Concat("ExitCode: ", subProgramExitCode);
+   const string exitCodeLine = String::ConcatValues("ExitCode: ", subProgramExitCode);
    _console->WriteLine(exitCodeLine);
    return subProgramExitCode;
 }

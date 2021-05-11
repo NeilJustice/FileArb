@@ -23,7 +23,7 @@ public:
             oss << separator;
          }
       }
-      const std::string joinedVectorString = oss.str();
+      std::string joinedVectorString = oss.str();
       return joinedVectorString;
    }
 

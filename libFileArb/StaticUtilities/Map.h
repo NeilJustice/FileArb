@@ -29,10 +29,10 @@ public:
       const typename MapType<KeyType, ValueType>::const_iterator findIter = m.find(key);
       if (findIter != m.end())
       {
-         const pair<bool, ValueType> trueAndValueInMap = {true, findIter->second};
+         pair<bool, ValueType> trueAndValueInMap = {true, findIter->second};
          return trueAndValueInMap;
       }
-      const pair<bool, ValueType> falseAndDefaultValue = {false, ValueType{}};
+      pair<bool, ValueType> falseAndDefaultValue = {false, ValueType{}};
       return falseAndDefaultValue;
    }
 

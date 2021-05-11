@@ -35,7 +35,7 @@ size_t String::ToSizeT(string_view str)
    from_chars_result fromCharsResult = from_chars(str.data(), str.data() + str.size(), sizeTValue, 10);
    if (fromCharsResult.ec != errc{})
    {
-      const string exceptionMessage = String::Concat(
+      const string exceptionMessage = String::ConcatStrings(
          "String::ToSizeT(string_view str) called with str not converted to size_t: \"", str, "\"");
       throw invalid_argument(exceptionMessage);
    }

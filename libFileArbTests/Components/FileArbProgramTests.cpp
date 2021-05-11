@@ -101,8 +101,8 @@ TEST1X1(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExit
       &_fileArbProgram, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
 
-   const string expectedDurationLine = String::Concat("Duration: ", runtimeInSeconds, " seconds");
-   const string expectedExitCodeLine = String::Concat("ExitCode: ", subProgramExitCode);
+   const string expectedDurationLine = String::ConcatValues("Duration: ", runtimeInSeconds, " seconds");
+   const string expectedExitCodeLine = String::ConcatValues("ExitCode: ", subProgramExitCode);
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { expectedDurationLine },

@@ -81,7 +81,7 @@ TEST1X1(ConvertBytesStringToNumberOfBytes_BytesStringDoesNotEndWithSuffix_BytesS
    "111111111111111111111",
    "999999999999999999999999999")
 {
-   const string expectedExceptionMessage = String::Concat(
+   const string expectedExceptionMessage = String::ConcatStrings(
       "String::ToSizeT(string_view str) called with str not converted to size_t: \"", invalidBytesString, "\"");
    THROWS_EXCEPTION(_bytesStringConverter.ConvertBytesStringToNumberOfBytes(invalidBytesString),
       invalid_argument, expectedExceptionMessage);
@@ -98,7 +98,7 @@ TEST1X1(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithInvalidSuffix_Throw
    "1TB",
    "1YB")
 {
-   const string expectedExceptionMessage = String::Concat(
+   const string expectedExceptionMessage = String::ConcatStrings(
       "BytesStringConverter::ConvertBytesStringToNumberOfBytes(string_view bytesString) called with invalid bytesString: \"", invalidBytesString, "\"");
    THROWS_EXCEPTION(_bytesStringConverter.ConvertBytesStringToNumberOfBytes(invalidBytesString),
       invalid_argument, expectedExceptionMessage);

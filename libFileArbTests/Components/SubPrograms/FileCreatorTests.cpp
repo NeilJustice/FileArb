@@ -81,7 +81,7 @@ TEST(CreateBinaryFile_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBin)
    const fs::path expectedFilePath = args.targetDirectoryPath / "binaryfile.bin";
    METALMOCK(_fileSystemMock->CreateBinaryFileMock.CalledOnceWith(expectedFilePath, fileBytes.data(), fileBytes.size()));
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
-   const string expectedWroteFileMessage = String::Concat(
+   const string expectedWroteFileMessage = String::ConcatValues(
       "Wrote binary file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
@@ -102,7 +102,7 @@ TEST(CreateTextFile_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
    const fs::path expectedFilePath = args.targetDirectoryPath / "textfile.txt";
    METALMOCK(_fileSystemMock->CreateTextFileMock.CalledOnceWith(expectedFilePath, fileText));
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
-   const string expectedWroteFileMessage = String::Concat(
+   const string expectedWroteFileMessage = String::ConcatValues(
       "Wrote text file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
@@ -179,12 +179,12 @@ TEST(CreateNumberedFileInDirectory_MinimalIsFalse_CreatesFile_WritesWroteFileMes
    METALMOCK(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce());
    METALMOCK(threadUniqueCreateFileStopwatchMock->StartMock.CalledOnce());
    const size_t expectedFileNumber = callIndex + 1;
-   const string expectedFileName = String::Concat("file", expectedFileNumber, args.fileExtension);
+   const string expectedFileName = String::ConcatValues("file", expectedFileNumber, args.fileExtension);
    const fs::path expectedFilePath = directoryPath / expectedFileName;
    METALMOCK(_fileSystemMock->CreateBinaryFileMock.CalledOnceWith(
       expectedFilePath, fileTextOrBytes.data(), fileTextOrBytes.size()));
    METALMOCK(threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
-   const string expectedWroteFileMessage = String::Concat(
+   const string expectedWroteFileMessage = String::ConcatValues(
       "Wrote file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
@@ -202,7 +202,7 @@ TEST(CreateNumberedFileInDirectory_MinimalIsTrue_CreatesFile_DoesNotWriteWroteFi
    _fileCreator.CreateNumberedFileInDirectory(callIndex, directoryPath, args, fileTextOrBytes);
    //
    const size_t expectedFileNumber = callIndex + 1;
-   const string expectedFileName = String::Concat("file", expectedFileNumber, args.fileExtension);
+   const string expectedFileName = String::ConcatValues("file", expectedFileNumber, args.fileExtension);
    const fs::path expectedFilePath = directoryPath / expectedFileName;
    METALMOCK(_fileSystemMock->CreateBinaryFileMock.CalledOnceWith(
       expectedFilePath, fileTextOrBytes.data(), fileTextOrBytes.size()));

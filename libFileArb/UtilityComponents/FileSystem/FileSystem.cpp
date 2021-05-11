@@ -74,7 +74,7 @@ FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) c
    {
       const int errnoValue = *_call_errno();
       const string errnoDescription = _errorCodeTranslator->GetErrnoDescription(errnoValue);
-      const string exceptionMessage = String::Concat(
+      const string exceptionMessage = String::ConcatValues(
          "fopen_s(&openedFile, filePath.string().c_str(), fileOpenMode) returned non-0: ", fopensReturnValue,
          ". filePath=\"", filePath.string(), "\". fileOpenMode=\"", fileOpenMode,
          "\". errno=", errnoValue, " (", errnoDescription, ").");

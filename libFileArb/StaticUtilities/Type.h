@@ -53,7 +53,7 @@ private:
          abi::__cxa_demangle(mangledTypeName, nullptr, nullptr, &demangleStatus),
          free);
       release_assert(demangleStatus == 0);
-      const string demangledTypeName(demangledTypeNamePointer.get());
+      string demangledTypeName(demangledTypeNamePointer.get());
       return demangledTypeName;
    }
 #elif _WIN32

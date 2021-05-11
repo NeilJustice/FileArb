@@ -6,7 +6,7 @@ string MakeFileSystemExceptionMessage(const fs::path& filePath, int errnoValue)
 {
    ErrorCodeTranslator errorCodeTranslator;
    const string errnoDescription = errorCodeTranslator.GetErrnoDescription(errnoValue);
-   string exceptionWhat = String::Concat(filePath.string(), ". Reason: ", errnoDescription, ". errno=", errnoValue);
+   string exceptionWhat = String::ConcatValues(filePath.string(), ". Reason: ", errnoDescription, ". errno=", errnoValue);
 #ifdef _WIN32
    _set_errno(0);
 #endif
@@ -40,6 +40,6 @@ FileMalformedException::FileMalformedException(const fs::path& filePath, size_t 
 
 string FileMalformedException::MakeExceptionMessage(const fs::path& filePath, size_t lineNumber, const std::string& reason)
 {
-   string exceptionMessage = String::Concat(filePath.string(), "(", lineNumber, "):\n", reason);
+   string exceptionMessage = String::ConcatValues(filePath.string(), "(", lineNumber, "):\n", reason);
    return exceptionMessage;
 }

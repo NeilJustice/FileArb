@@ -23,10 +23,12 @@ struct FileArbArgs
    string fileExtension;
 };
 
-#ifdef _WIN32
-#ifdef _DEBUG
+#if defined _WIN32
+#if defined _DEBUG
 static_assert(sizeof(FileArbArgs) == 216);
 #else
 static_assert(sizeof(FileArbArgs) == 184);
 #endif
+#else
+static_assert(sizeof() == 0);
 #endif

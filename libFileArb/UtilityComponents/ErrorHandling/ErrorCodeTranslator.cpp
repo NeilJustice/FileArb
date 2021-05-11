@@ -61,8 +61,7 @@ string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastErro
       windowsLastErrorDescriptionChars,
       sizeof(windowsLastErrorDescriptionChars),
       nullptr);
-   windowsLastErrorDescription.assign(
-      windowsLastErrorDescriptionChars, windowsLastErrorDescriptionChars + numberOfMessageCharacters);
+   windowsLastErrorDescription.assign(windowsLastErrorDescriptionChars, windowsLastErrorDescriptionChars + numberOfMessageCharacters);
    return windowsLastErrorDescription;
 }
 #endif

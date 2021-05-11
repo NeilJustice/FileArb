@@ -2,7 +2,9 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileArb) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileArb)
 
-FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files for performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> or for performance testing the write speed of storage hardware such as USB drives and NVMe drives.
+FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
+
+FileArb can be used for performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> and for performance testing the write speed of hardware such as USB drives and NVMe drives.
 
 |Build Type|Build Status|
 |----------|------------|
@@ -77,7 +79,7 @@ filearb create-binary-file
       [--random-bytes]
 ```
 
-Program mode `create-binary-file` creates at a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
+`filearb create-binary-file` creates at a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
 
 `create-binary-file` example on Linux:
 
@@ -95,7 +97,7 @@ Program mode `create-binary-file` creates at a specified `--target` directory a 
 
 `--random-bytes` can be speecified to create a binary file containing random bytes sampled from `std::random_device`.
 
-Resulting binary file from running `filearb create-binary-file --target=C:\FileArbTesting --bytes=64 --random-bytes`:
+Here are the contents of one potential random binary file after running `filearb create-binary-file --target=C:\FileArbTesting --bytes=64 --random-bytes`:
 
 ![Random binary file in HxD](Screenshots/Windows/RandomBinaryFileInHxD.png)
 
@@ -109,7 +111,7 @@ filearb create-text-file
    [--random-letters]
 ```
 
-Program mode `create-text-file` creates at a specified `--target` directory a file containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letter characters if `--random-letters` is specified.
+`file arb create-text-file` creates at a specified `--target` directory a file containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letter characters if `--random-letters` is specified.
 
 `create-text-file` example on Linux:
 
@@ -132,13 +134,13 @@ filearb create-binary-files
       [--minimal]
 ```
 
-FileArb program mode `create-binary-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of bytes, either 0 bytes or `[--random-bytes]`.
+`filearb create-binary-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of bytes, either 0 bytes or `[--random-bytes]`.
 
 ![create-binary-files](Screenshots/create-binary-files.png)
 
 ### create-text-files
 
-FileArb program mode `create-text-files` creates at a specified directory a specified number of subdirectories containing a specified number of text files each containing '0' characters.
+`filearb create-text-files` creates at a specified directory a specified number of subdirectories containing a specified number of text files each containing '0' characters.
 
 ![create-text-files](Screenshots/create-text-files.png)
 
@@ -194,8 +196,6 @@ Resulting executable `C:\bin\FileArb.exe`:
 
 ## FileArb roadmap
 
-|Future FileArb feature|Implementation status as of 4/17/2021|
+|Future FileArb feature|Implementation status as of 5/10/2021|
 |----------------------|-------------------------------------|
 |GitHub Actions build|In progress|
-|SonarCloud Python badge for FileArbDevOpsPython|Awaiting implementation|
-|SonarCloud C++ badge|Awaiting implementation|

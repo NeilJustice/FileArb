@@ -117,14 +117,10 @@
             "panel": "dedicated",
             "showReuseMessage": false,
             "clear": true
-         },
-         "group": {
-            "kind": "test",
-            "isDefault": true
          }
       },
       {
-         "label": "Run All Tests",
+         "label": "Run All Python Tests",
          "type": "shell",
          "command": "PYTHONPATH=FileArbDevOpsPython python FileArbDevOpsPythonTests/RunAll.py",
          "options": {
@@ -134,10 +130,6 @@
             "panel": "dedicated",
             "showReuseMessage": false,
             "clear": true
-         },
-         "group": {
-            "kind": "build",
-            "isDefault": true
          }
       },
       {

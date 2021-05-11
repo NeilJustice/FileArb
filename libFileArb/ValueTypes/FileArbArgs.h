@@ -30,5 +30,5 @@ static_assert(sizeof(FileArbArgs) == 216);
 static_assert(sizeof(FileArbArgs) == 184);
 #endif
 #else
-static_assert(sizeof() == 0);
+static_assert(sizeof(FileArbArgs) == 192);
 #endif

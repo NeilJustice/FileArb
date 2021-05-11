@@ -136,7 +136,7 @@ TEST(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoV
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
    //
-   const string expectedExceptionMessage = String::Concat(
+   const string expectedExceptionMessage = String::ConcatValues(
       "fopen(filePath.string().c_str(), fileOpenMode) returned nullptr. ",
       "filePath=\"", filePath.string(), "\". fileOpenMode=\"", fileOpenMode,
       "\". errno=", errnoValue, " (", errnoDescription, ").");

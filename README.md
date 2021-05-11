@@ -32,7 +32,7 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 ## FileArb command line usage
 
 ```
-FileArb v0.12.0
+FileArb v0.13.0
 Creates an arbitrary number of text files or binary files
 containing an arbitrary number of lines, characters, or bytes.
 Optional suffixes for --bytes=<BytesPerFile>:

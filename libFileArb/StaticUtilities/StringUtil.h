@@ -3,11 +3,6 @@
 class String
 {
 public:
-   static bool ContainsSubstring(string_view stringView, string_view substring);
-   static bool CaseInsensitiveContainsSubstring(string_view stringView, string_view substring);
-   static string ToLowercase(string_view str);
-   static size_t ToSizeT(string_view str);
-
    template<typename... Types>
 	static string ConcatStrings(Types&&... values)
 	{
@@ -35,6 +30,11 @@ public:
 		string ossConcatenatedValues = oss.str();
 		return ossConcatenatedValues;
 	}
+
+   static bool ContainsSubstring(string_view stringView, string_view substring);
+   static bool CaseInsensitiveContainsSubstring(string_view stringView, string_view substring);
+   static string ToLowercase(string_view str);
+   static size_t ToSizeT(string_view str);
 
    String() = delete;
 };

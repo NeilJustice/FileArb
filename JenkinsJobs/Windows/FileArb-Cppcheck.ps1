@@ -13,7 +13,7 @@ cppcheck.exe `
    -I C:\include\ZenUnitAndMetalMock `
    -I libFileArb `
    -I . `
-   -j 64 `
+   -j 48 `
    --output-file=cppcheck_results.txt `
    --error-exitcode=1 `
    .

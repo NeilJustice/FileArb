@@ -6,6 +6,7 @@ python.exe -u FileArbDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --cmake-generator="Visual Studio 16 2019" `
    --cmake-build-type=Debug `
    --tests-project=libFileArbTests `
+   --cmake-definitions="-DFastWindowsDebugBuildMode=ON" `
    --no-install
 
 Set-PSDebug -Trace 0

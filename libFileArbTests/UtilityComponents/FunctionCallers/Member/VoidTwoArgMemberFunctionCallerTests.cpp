@@ -9,8 +9,9 @@ AFACT(ParallelCallNonConstMemberFunctionNTimes_NIs0_CallsFunctionZeroTimes)
 AFACT(ParallelCallNonConstMemberFunctionNTimes_NIs2_CallsFunctionTwiceInParallel)
 EVIDENCE
 
-struct Class
+class Class
 {
+public:
    vector<tuple<size_t, Arg1Type, Arg2Type>> functionArguments;
 
    void NonConstTwoArgMemberFunction(size_t callIndex, Arg1Type arg1, Arg2Type arg2)

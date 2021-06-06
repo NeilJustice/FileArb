@@ -7,8 +7,9 @@ AFACT(CallNonConstMemberFunctionNTimes_NIs0_CallsFunctionZeroTimes)
 AFACT(CallNonConstMemberFunctionNTimes_NIs2_CallsFunctionTwice)
 EVIDENCE
 
-struct Class
+class Class
 {
+public:
    vector<ArgType> functionArguments;
 
    void NonConstMemberFunction(ArgType arg)

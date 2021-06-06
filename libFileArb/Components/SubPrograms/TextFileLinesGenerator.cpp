@@ -14,11 +14,6 @@ TextFileLinesGenerator::~TextFileLinesGenerator()
 {
 }
 
-string GenerateRandomCapitalLetterLine()
-{
-   return string();
-}
-
 string TextFileLinesGenerator::MakeFileText(size_t numberOfLines, size_t numberOfCharactersPerLine, bool generateRandomLetters) const
 {
    if (generateRandomLetters)

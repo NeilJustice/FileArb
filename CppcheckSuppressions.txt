@@ -1,8 +1,12 @@
 *:*ZenUnit.h
 *:*MetalMock.h
-allocaCalled:*
 noExplicitConstructor:libFileArb/UtilityComponents/Docopt/docopt.h:64
+unmatchedSuppression:
+
+# Windows
+ctuOneDefinitionRuleViolation:*
 
 # Linux
+allocaCalled:*
 preprocessorErrorDirective:/usr/include/c++/v1/__config:104
 syntaxError:*

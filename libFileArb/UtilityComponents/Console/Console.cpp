@@ -16,7 +16,8 @@ Console::~Console()
 void Console::WriteLine(string_view message) const
 {
    const thread::id threadId = this_thread::get_id();
-   std::osyncstream{cout} << "[FileArb Thread " << threadId << "] " << message << '\n';
+   scoped_lock<mutex> coutLock(_coutMutex);
+   cout << "[FileArb Thread " << threadId << "] " << message << '\n';
 }
 
 void Console::WriteLineColor(string_view message, Color color) const

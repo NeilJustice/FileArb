@@ -1,9 +1,8 @@
+*:*ZenUnit.h
+*:*MetalMock.h
+allocaCalled:*
 noExplicitConstructor:libFileArb/UtilityComponents/Docopt/docopt.h:64
 
 # Linux
 preprocessorErrorDirective:/usr/include/c++/v1/__config:104
-
-# Windows
-*:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h
-*:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h
-
+syntaxError:*

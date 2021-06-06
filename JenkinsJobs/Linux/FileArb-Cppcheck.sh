@@ -6,7 +6,12 @@ cppcheck \
    --cppcheck-build-dir=Cppcheck \
    --suppressions-list=CppcheckSuppressions.txt \
    -D__linux__ \
+   -DMETALMOCK_NONVOID1_FREE \
+   -DMETALMOCK_NONVOID2_STATIC \
+   -DMETALMOCK_NONVOID4_STATIC \
+   -DMETALMOCK_NONVOID5_FREE \
    -DTEST \
+   -DTESTS \
    -DTHEN_RUN_TEMPLATE_TESTS \
    -I /usr/include/c++/v1 \
    -I /usr/local/include/ZenUnitAndMetalMock \

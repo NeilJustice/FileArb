@@ -27,7 +27,6 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 * [Windows Jenkins jobs which build and Cppcheck FileArb's C++ code and Mypy-Flake8-Pylint-SonarQube scan FileArb's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-filearbs-c-code-and-mypy-flake8-pylint-sonarqube-scan-filearbs-cicd-python-code)
 * [How to build binary filearb on Linux with Clang](#how-to-build-binary-filearb-on-linux-with-clang)
 * [How to build executable FileArb.exe on Windows with Visual Studio 2019](#how-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)
-* [FileArb roadmap](#filearb-roadmap)
 
 ## FileArb command line usage
 
@@ -193,9 +192,3 @@ cmake --build . --config Release --target install
 Resulting executable `C:\bin\FileArb.exe`:
 
 ![Resulting executable FileArb.exe](Screenshots/Windows/FileArbDotExe.png)
-
-## FileArb roadmap
-
-|Future FileArb feature|Implementation status as of 5/10/2021|
-|----------------------|-------------------------------------|
-|GitHub Actions build|In progress|

@@ -1,5 +1,4 @@
 #include "pch.h"
-#include <syncstream>
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/Console/ConsoleColorer.h"
 

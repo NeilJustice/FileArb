@@ -8,4 +8,5 @@ python -u FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --cmake-generator=Ninja \
    --cmake-build-type=Debug \
    --tests-project-name=libFileArbTests \
+   --cmake-definitions="-DFastLinuxDebugBuildMode=ON" \
    --no-install

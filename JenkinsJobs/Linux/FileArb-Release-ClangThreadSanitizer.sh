@@ -8,5 +8,5 @@ python -u FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --solution-name=FileArb \
    --cmake-build-type=Release \
    --tests-project-name=libFileArbTests \
-   --cmake-definitions="-DClangThreadSanitizerMode=ON" \
+   --cmake-definitions="-DClangThreadSanitizerMode=ON -DFastLinuxReleaseBuildMode=ON" \
    --no-install

@@ -2,6 +2,8 @@
 class ErrorCodeTranslator;
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
 class NonVoidTwoArgMemberFunctionCaller;
+template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type, typename Arg4Type>
+class VoidFourArgMemberFunctionCaller;
 
 #if defined __linux__ || defined __APPLE__
 int* GetErrno();
@@ -24,6 +26,9 @@ private:
    std::function<bool(const fs::path&)> _call_fs_create_directories;
    function<size_t(const void*, size_t, size_t, FILE*)> _call_fwrite;
    // Function Callers
+   using _caller_CreateBinaryOrTextFileType = VoidFourArgMemberFunctionCaller<FileSystem, const fs::path&, const char*, const char*, size_t>;
+   unique_ptr<const _caller_CreateBinaryOrTextFileType> _caller_CreateBinaryOrTextFile;
+
    using _caller_OpenFileType = NonVoidTwoArgMemberFunctionCaller<shared_ptr<FILE>, FileSystem, const fs::path&, const char*>;
    unique_ptr<const _caller_OpenFileType> _caller_OpenFile;
    // Constant Callers
@@ -35,6 +40,6 @@ public:
    virtual void CreateTextFile(const fs::path& filePath, string_view text) const;
    virtual void CreateBinaryFile(const fs::path& filePath, const char* bytes, size_t bytesSize) const;
 private:
-   virtual shared_ptr<FILE> OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
-   virtual void CreateBinaryOrTextFile(const fs::path& filePath, const char* fileOpenMode, const char* bytes, size_t bytesSize) const;
+   void CreateBinaryOrTextFile(const fs::path& filePath, const char* fileOpenMode, const char* bytes, size_t bytesSize) const;
+   shared_ptr<FILE> OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
 };

@@ -2,10 +2,10 @@
 #include "libFileArb/UtilityComponents/Misc/AtomicIncreasingIntegerSequence.h"
 
 TESTS(AtomicIncreasingIntegerSequenceTests)
-AFACT(NextInteger_Return1Onward)
+AFACT(NextInteger_Returns1Onward)
 EVIDENCE
 
-TEST(NextInteger_Return1Onward)
+TEST(NextInteger_Returns1Onward)
 {
    AtomicIncreasingIntegerSequence atomicIncreasingIntegerSequence;
    ARE_EQUAL(1, atomicIncreasingIntegerSequence.NextInteger());

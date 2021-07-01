@@ -9,14 +9,13 @@
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFunctionPointers)
 #if defined __linux__ || defined __APPLE__
+AFACT(OpenFile_FOpenReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 AFACT(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
-AFACT(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 #elif _WIN32
 AFACT(OpenFile_FOpenSReturns0_ReturnsOpenedFile)
 AFACT(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 #endif
-AFACT(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes_FCloseReturns0_Returns)
-FACTS(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes_FCloseReturnsNot0_ThrowsFileCloseException)
+AFACT(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes)
 EVIDENCE
 
 FileSystem _fileSystem;
@@ -31,7 +30,7 @@ METALMOCK_NONVOID3_FREE(errno_t, _call_fopen_s, FILE**, const char*, const char*
 METALMOCK_NONVOID1_FREE(bool, _call_fs_create_directories, const fs::path&)
 METALMOCK_NONVOID4_FREE(size_t, _call_fwrite, const void*, size_t, size_t, FILE*)
 // Function Callers
-using _caller_OpenFileMockType = NonVoidTwoArgMemberFunctionCallerMock<FILE*, FileSystem, const fs::path&, const char*>;
+using _caller_OpenFileMockType = NonVoidTwoArgMemberFunctionCallerMock<shared_ptr<FILE>, FileSystem, const fs::path&, const char*>;
 _caller_OpenFileMockType* _caller_OpenFileMock = nullptr;
 // Constant Components
 AsserterMock* _asserterMock = nullptr;
@@ -109,21 +108,7 @@ FILE* fopen_CallInsteadFunction(const char* filePath, const char* fileOpenMode)
    return _fopen_CallHistory.returnValue;
 }
 
-TEST(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
-{
-   FILE openedFile;
-   _fopen_CallHistory.returnValue = &openedFile;
-   _call_fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInsteadFunction, this, placeholders::_1, placeholders::_2));
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   const char* const fileOpenMode = ZenUnit::Random<const char*>();
-   //
-   const FILE* const returnedOpenedFile = _fileSystem.OpenFile(filePath, fileOpenMode);
-   //
-   _fopen_CallHistory.AssertCalledOnceWith(filePath.string().c_str(), fileOpenMode);
-   ARE_EQUAL(&openedFile, returnedOpenedFile);
-}
-
-TEST(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
+TEST(OpenFile_FOpenReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 {
    _fopen_CallHistory.returnValue = nullptr;
    _call_fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInsteadFunction, this, placeholders::_1, placeholders::_2));
@@ -148,22 +133,38 @@ TEST(OpenFile_FOpenSReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoV
    METALMOCK(_errorCodeTranslatorMock->GetErrnoDescriptionMock.CalledOnceWith(errnoValue));
 }
 
+TEST(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
+{
+   FILE* const rawFilePointer = tmpfile();
+   _fopen_CallHistory.returnValue = rawFilePointer;
+
+   _call_fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInsteadFunction, this, placeholders::_1, placeholders::_2));
+   const fs::path filePath = ZenUnit::Random<fs::path>();
+   const char* const fileOpenMode = ZenUnit::Random<const char*>();
+   //
+   const shared_ptr<FILE> returnedOpenedFile = _fileSystem.OpenFile(filePath, fileOpenMode);
+   //
+   _fopen_CallHistory.AssertCalledOnceWith(filePath.string().c_str(), fileOpenMode);
+   ARE_EQUAL(rawFilePointer, returnedOpenedFile.get());
+}
+
 #elif _WIN32
 
 struct fopen_s_CallHistory
 {
    size_t numberOfCalls = 0;
    errno_t returnValue = 0;
-   FILE** outFileArgument = nullptr;
+   FILE** outRawFilePointerArgument = nullptr;
    FILE* outFileReturnValue = nullptr;
    fs::path filePathArgument;
    const char* fileOpenModeArgument = nullptr;
 
-   void RecordFunctionCall(FILE** outFile, const fs::path& filePath, const char* fileOpenMode)
+   void RecordFunctionCall(FILE** outRawFilePointer, const fs::path& filePath, const char* fileOpenMode)
    {
       ++numberOfCalls;
-      outFileArgument = outFile;
-      *outFile = outFileReturnValue;
+      outRawFilePointerArgument = outRawFilePointer;
+      tmpfile_s(&outFileReturnValue);
+      *outRawFilePointer = outFileReturnValue;
       filePathArgument = filePath;
       fileOpenModeArgument = fileOpenMode;
    }
@@ -171,7 +172,7 @@ struct fopen_s_CallHistory
    void AssertCalledOnceWith(const char* expectedFilePath, const char* expectedFileOpenMode)
    {
       ARE_EQUAL(1, numberOfCalls);
-      IS_NOT_NULLPTR(outFileArgument);
+      IS_NOT_NULLPTR(outRawFilePointerArgument);
       ARE_EQUAL(expectedFilePath, filePathArgument);
       ARE_EQUAL(expectedFileOpenMode, fileOpenModeArgument);
    }
@@ -185,22 +186,20 @@ errno_t fopen_s_CallInsteadFunction(FILE** outFile, const char* filePath, const 
 
 TEST(OpenFile_FOpenSReturns0_ReturnsOpenedFile)
 {
-   _call_fopen_sMock.CallInstead(std::bind(&FileSystemTests::fopen_s_CallInsteadFunction,
-      this, placeholders::_1, placeholders::_2, placeholders::_3));
+   _call_fopen_sMock.CallInstead(std::bind(&FileSystemTests::fopen_s_CallInsteadFunction, this, placeholders::_1, placeholders::_2, placeholders::_3));
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
    //
-   const FILE* const openedFile = _fileSystem.OpenFile(filePath, fileOpenMode);
+   const shared_ptr<FILE> openedFile = _fileSystem.OpenFile(filePath, fileOpenMode);
    //
    _fopen_s_CallHistory.AssertCalledOnceWith(filePath.string().c_str(), fileOpenMode);
-   ARE_EQUAL(_fopen_s_CallHistory.outFileReturnValue, openedFile);
+   ARE_EQUAL(_fopen_s_CallHistory.outFileReturnValue, openedFile.get());
 }
 
 TEST(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 {
    _fopen_s_CallHistory.returnValue = ZenUnit::RandomNon0<int>();
-   _call_fopen_sMock.CallInstead(std::bind(&FileSystemTests::fopen_s_CallInsteadFunction,
-      this, placeholders::_1, placeholders::_2, placeholders::_3));
+   _call_fopen_sMock.CallInstead(std::bind(&FileSystemTests::fopen_s_CallInsteadFunction, this, placeholders::_1, placeholders::_2, placeholders::_3));
 
    int errnoValue = ZenUnit::Random<int>();
    _call_errnoMock.Return(&errnoValue);
@@ -224,18 +223,16 @@ TEST(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValu
 
 #endif
 
-TEST(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes_FCloseReturns0_Returns)
+TEST(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes)
 {
    _call_fs_create_directoriesMock.ReturnRandom();
 
-   FILE filePointer{};
-   _caller_OpenFileMock->CallConstMemberFunctionMock.Return(&filePointer);
+   const shared_ptr<FILE> filePointer = make_shared<FILE>();
+   _caller_OpenFileMock->CallConstMemberFunctionMock.Return(filePointer);
 
    const size_t numberOfBytesWritten = _call_fwriteMock.ReturnRandom();
 
    _asserterMock->ThrowIfSizeTValuesNotEqualMock.Expect();
-
-   _call_fcloseMock.Return(0);
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
@@ -245,52 +242,9 @@ TEST(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpec
    //
    const fs::path expectedParentDirectoryPath = filePath.parent_path();
    METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath));
-   METALMOCK(_caller_OpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::OpenFile, filePath, fileOpenMode));
-   METALMOCK(_call_fwriteMock.CalledOnceWith(bytes.data(), 1, bytes.size(), &filePointer));
-   METALMOCK(_asserterMock->ThrowIfSizeTValuesNotEqualMock.CalledOnceWith(
-      numberOfBytesWritten, bytes.size(), "fwrite unexpectedly did not return bytesSize"));
-   METALMOCK(_call_fcloseMock.CalledOnceWith(&filePointer));
-}
-
-TEST1X1(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes_FCloseReturnsNot0_ThrowsFileCloseException,
-   int fcloseReturnValue,
-   -2,
-   -1,
-   1,
-   2)
-{
-   _call_fs_create_directoriesMock.ReturnRandom();
-
-   FILE filePointer{};
-   _caller_OpenFileMock->CallConstMemberFunctionMock.Return(&filePointer);
-
-   const size_t numberOfBytesWritten = _call_fwriteMock.ReturnRandom();
-
-   _asserterMock->ThrowIfSizeTValuesNotEqualMock.Expect();
-
-   _call_fcloseMock.Return(fcloseReturnValue);
-
-   int errnoValue = ZenUnit::Random<int>();
-   _call_errnoMock.Return(&errnoValue);
-
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   const char* const fileOpenMode = ZenUnit::Random<const char*>();
-   const string bytes = ZenUnit::Random<string>();
-   //
-   const string expectedExceptionWhat = MakeFileSystemExceptionMessage(filePath, errnoValue);
-   THROWS_EXCEPTION(_fileSystem.CreateBinaryOrTextFile(filePath, fileOpenMode, bytes.data(), bytes.size()),
-      FileCloseException, expectedExceptionWhat);
-   //
-   const fs::path expectedParentDirectoryPath = filePath.parent_path();
-   METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath));
-   METALMOCK(_caller_OpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::OpenFile, filePath, fileOpenMode));
-   METALMOCK(_call_fwriteMock.CalledOnceWith(bytes.data(), 1, bytes.size(), &filePointer));
-   METALMOCK(_asserterMock->ThrowIfSizeTValuesNotEqualMock.CalledOnceWith(
-      numberOfBytesWritten, bytes.size(), "fwrite unexpectedly did not return bytesSize"));
-   METALMOCK(_call_fcloseMock.CalledOnceWith(&filePointer));
-   METALMOCK(_call_errnoMock.CalledOnce());
+   METALMOCK(_caller_OpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &FileSystem::OpenFile, filePath, fileOpenMode));
+   METALMOCK(_call_fwriteMock.CalledOnceWith(bytes.data(), 1, bytes.size(), filePointer.get()));
+   METALMOCK(_asserterMock->ThrowIfSizeTValuesNotEqualMock.CalledOnceWith(numberOfBytesWritten, bytes.size(), "fwrite unexpectedly did not return bytesSize"));
 }
 
 RUN_TESTS(FileSystemTests)

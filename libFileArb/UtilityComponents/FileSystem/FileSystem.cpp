@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileArb/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
+#include "libFileArb/UtilityComponents/FileSystem/FCloseDeleter.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystemExceptions.h"
 #include "libFileArb/UtilityComponents/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
@@ -48,10 +49,10 @@ void FileSystem::CreateBinaryFile(const fs::path& filePath, const char* bytes, s
 
 #if defined __linux__ || defined __APPLE__
 
-FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
+shared_ptr<FILE> FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
 {
-   FILE* openedFile = _call_fopen(filePath.string().c_str(), fileOpenMode);
-   if (openedFile == nullptr)
+   FILE* rawFilePointer = _call_fopen(filePath.string().c_str(), fileOpenMode);
+   if (rawFilePointer == nullptr)
    {
       const int errnoValue = *_call_errno();
       const string errnoDescription = _errorCodeTranslator->GetErrnoDescription(errnoValue);
@@ -61,15 +62,16 @@ FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) c
          "\". errno=", errnoValue, " (", errnoDescription, ").");
       throw runtime_error(exceptionMessage);
    }
-   return openedFile;
+   shared_ptr<FILE> autoClosingFilePointer(rawFilePointer, FCloseDeleter());
+   return autoClosingFilePointer;
 }
 
 #elif _WIN32
 
-FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
+shared_ptr<FILE> FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
 {
-   FILE* openedFile = nullptr;
-   const errno_t fopensReturnValue = _call_fopen_s(&openedFile, filePath.string().c_str(), fileOpenMode);
+   FILE* rawFilePointer = nullptr;
+   const errno_t fopensReturnValue = _call_fopen_s(&rawFilePointer, filePath.string().c_str(), fileOpenMode);
    if (fopensReturnValue != 0)
    {
       const int errnoValue = *_call_errno();
@@ -80,23 +82,17 @@ FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) c
          "\". errno=", errnoValue, " (", errnoDescription, ").");
       throw runtime_error(exceptionMessage);
    }
-   return openedFile;
+   shared_ptr<FILE> autoClosingFilePointer(rawFilePointer, FCloseDeleter());
+   return autoClosingFilePointer;
 }
 
 #endif
 
-void FileSystem::CreateBinaryOrTextFile(
-   const fs::path& filePath, const char* fileOpenMode, const char* bytes, size_t bytesSize) const
+void FileSystem::CreateBinaryOrTextFile(const fs::path& filePath, const char* fileOpenMode, const char* bytes, size_t bytesSize) const
 {
    const fs::path parentDirectoryPath = filePath.parent_path();
    _call_fs_create_directories(parentDirectoryPath);
-   FILE* const filePointer = _caller_OpenFile->CallConstMemberFunction(this, &FileSystem::OpenFile, filePath, fileOpenMode);
-   const size_t numberOfBytesWritten = _call_fwrite(bytes, 1, bytesSize, filePointer);
+   const shared_ptr<FILE> filePointer = _caller_OpenFile->CallConstMemberFunction(this, &FileSystem::OpenFile, filePath, fileOpenMode);
+   const size_t numberOfBytesWritten = _call_fwrite(bytes, 1, bytesSize, filePointer.get());
    _asserter->ThrowIfSizeTValuesNotEqual(numberOfBytesWritten, bytesSize, "fwrite unexpectedly did not return bytesSize");
-   const int fcloseReturnValue = _call_fclose(filePointer);
-   if (fcloseReturnValue != 0)
-   {
-      const int errnoValue = *_call_errno();
-      throw FileCloseException(filePath, errnoValue);
-   }
 }

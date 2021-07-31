@@ -14,22 +14,22 @@ EVIDENCE
 
 struct UserType
 {
-	int x;
-	explicit UserType(int x) : x(x) {}
+   int x;
+   explicit UserType(int x) : x(x) {}
 
-	friend ostream& operator<<(ostream& os, const UserType& userType)
-	{
-		os << userType.x;
-		return os;
-	}
+   friend ostream& operator<<(ostream& os, const UserType& userType)
+   {
+      os << userType.x;
+      return os;
+   }
 };
 
 TEST(ConcatStrings_ReturnsStringsConcatenatedIntoAString)
 {
    ARE_EQUAL("", String::ConcatStrings(""));
-	ARE_EQUAL("1", String::ConcatStrings("1"));
-	ARE_EQUAL("12", String::ConcatStrings("1", "2"));
-	ARE_EQUAL("123", String::ConcatStrings("1", "2", "3"));
+   ARE_EQUAL("1", String::ConcatStrings("1"));
+   ARE_EQUAL("12", String::ConcatStrings("1", "2"));
+   ARE_EQUAL("123", String::ConcatStrings("1", "2", "3"));
 
    const string str1 = "str1";
    string_view str2 = "str2";
@@ -39,15 +39,15 @@ TEST(ConcatStrings_ReturnsStringsConcatenatedIntoAString)
 
 TEST(ConcatValues_ReturnsValuesConcatenatedIntoAString)
 {
-	ARE_EQUAL("", String::ConcatValues(""));
-	ARE_EQUAL("1", String::ConcatValues("1"));
-	ARE_EQUAL("12", String::ConcatValues("1", "2"));
-	ARE_EQUAL("123", String::ConcatValues("1", "2", "3"));
+   ARE_EQUAL("", String::ConcatValues(""));
+   ARE_EQUAL("1", String::ConcatValues("1"));
+   ARE_EQUAL("12", String::ConcatValues("1", "2"));
+   ARE_EQUAL("123", String::ConcatValues("1", "2", "3"));
 
    const UserType userType1(1);
    const string str = "hello";
    const UserType userType3(3);
-	ARE_EQUAL("1hello3", String::ConcatValues(userType1, str, userType3));
+   ARE_EQUAL("1hello3", String::ConcatValues(userType1, str, userType3));
 }
 
 TEST3X3(ContainsSubstring_ReturnsTrueIfStringContainsSubstring,
@@ -101,7 +101,7 @@ TEST1X1(ToSizeT_StringIsNotConvertibleToSizeT_ThrowsInvalidArgument,
 {
    const string expectedExceptionMessage = String::ConcatStrings(
       "String::ToSizeT(string_view str) called with str not converted to size_t: \"", str, "\"");
-	THROWS_EXCEPTION(String::ToSizeT(str), invalid_argument, expectedExceptionMessage);
+   THROWS_EXCEPTION(String::ToSizeT(str), invalid_argument, expectedExceptionMessage);
 }
 
 TEST1X1(ToSizeT_StringLengthIsGreaterThan20_ThrowsInvalidArgument,

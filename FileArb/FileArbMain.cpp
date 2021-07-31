@@ -20,7 +20,7 @@
 
 int main(int argc, char* argv[])
 {
-	FileArbProgram fileArbProgram;
-	const int exitCode = fileArbProgram.Main(argc, argv);
-	return exitCode;
+   FileArbProgram fileArbProgram;
+   const int exitCode = fileArbProgram.Main(argc, argv);
+   return exitCode;
 }

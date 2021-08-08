@@ -42,7 +42,6 @@ if(MSVC)
    link_directories(libFileArbTests "${CMAKE_SOURCE_DIR}/BoostRegex/Windows/lib")
 endif()
 add_executable(libFileArbTests ${Sources})
-
 if(UNIX)
    target_link_libraries(libFileArbTests libFileArb "${CMAKE_SOURCE_DIR}/BoostRegex/Linux/lib/libboost_regex.a")
    if(LCovCodeCoverageMode)
@@ -52,6 +51,6 @@ elseif(MSVC)
    target_link_libraries(libFileArbTests libFileArb)
 endif()
 
-EnablePrecompiledHeadersIfMSVC()
+IfMSVCEnablePrecompiledHeaders()
 IfMSVCAddRunTestsPostBuildStep()
 

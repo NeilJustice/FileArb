@@ -30,8 +30,17 @@ file(GLOB_RECURSE Sources *.h *.cpp *.ui)
 source_group("" FILES ${Sources})
 
 add_library(libFileArb ${Sources})
+if(UNIX)
+   set_target_properties(libFileArb PROPERTIES DEBUG_OUTPUT_NAME "FileArbDebug")
+   set_target_properties(libFileArb PROPERTIES RELEASE_OUTPUT_NAME "FileArbRelease")
+   set_target_properties(libFileArb PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "FileArbRelWithDebInfo")
+elseif(MSVC)
+   set_target_properties(libFileArb PROPERTIES DEBUG_OUTPUT_NAME "libFileArbDebug")
+   set_target_properties(libFileArb PROPERTIES RELEASE_OUTPUT_NAME "libFileArbRelease")
+   set_target_properties(libFileArb PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libFileArbRelWithDebInfo")
+endif()
 
-EnablePrecompiledHeadersIfMSVC()
+IfMSVCEnablePrecompiledHeaders()
 
 if(UNIX)
    if(LCovCodeCoverageMode)

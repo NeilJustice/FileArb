@@ -2,16 +2,16 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileArb) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileArb)
 
-FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
+FileArb is a cross-platform C++ command line program for quickly creating in parallel a configurable number of text files or binary files containing a configurable number of characters or bytes.
 
-FileArb can be used for performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> and for performance testing the write speed of hardware such as USB drives and NVMe drives.
+FileArb can be used for performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> and for performance testing the write speed of storage hardware such as USB drives, NVMe drives, and network file shares.
 
 |Build Type|Build Status|
 |----------|------------|
 |GitHub Actions Debug and Release build - ubuntu-latest Clang 10.0.0 / GCC 10.2.0|[![FileArb](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml)|
 |AppVeyor Debug and Release build - Visual Studio 2019 x64|<a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"/></a>|
 |Codecov.io code coverage for FileArb's C++ and FileArbDevOpsPython|[![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu)](https://codecov.io/gh/NeilJustice/FileArb)|
-|SonarCloud scan of FileArbDevOpsPython|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileArb)|
+|SonarCloud scan of FileArbDevOpsPython - the Python code which build and tests FileArb|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileArb)|
 
 FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
@@ -30,13 +30,9 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 
 ## FileArb command line usage
 
-```
-FileArb v0.13.0
-Creates an arbitrary number of text files or binary files
-containing an arbitrary number of lines, characters, or bytes.
-Optional suffixes for --bytes=<BytesPerFile>:
-b or B, k or K, m or M, g or G.
-https://github.com/NeilJustice/FileArb
+```cpp
+FileArb v0.13.0 - Creates arbitrarily large text files or binary files.
+Optional suffixes for --bytes arguments: b or B, k or K, m or M, and g or G.
 
 Usage:
    filearb create-binary-file

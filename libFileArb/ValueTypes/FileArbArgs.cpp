@@ -2,12 +2,8 @@
 #include "libFileArb/ValueTypes/FileArbArgs.h"
 
 const string FileArbArgs::CommandLineUsage =
-R"(FileArb v0.13.0
-Creates an arbitrary number of text files or binary files
-containing an arbitrary number of lines, characters, or bytes.
-Optional suffixes for --bytes=<BytesPerFile>:
-b or B, k or K, m or M, g or G.
-https://github.com/NeilJustice/FileArb
+R"(FileArb v0.13.0 - Creates arbitrarily large text files or binary files.
+Optional suffixes for --bytes arguments: b or B, k or K, m or M, and g or G.
 
 Usage:
    filearb create-binary-file

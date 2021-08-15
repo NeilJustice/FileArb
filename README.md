@@ -76,11 +76,11 @@ filearb create-binary-file
 
 `filearb create-binary-file` creates at a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
 
-`create-binary-file` example on Linux:
+`filearb create-binary-file --target=. --bytes=2G` console output on Linux:
 
-![create-binary-file example on Linux](Screenshots/Linux/create-binary-file-example.png)
+![create-binary-file example on Linux](Screenshots/Linux/create-binary-file.png)
 
-`create-binary-file` example on Windows:
+`filearb create-binary-file --target=. --bytes=2G` console output on Windows:
 
 ![create-binary-file example on Windows](Screenshots/Windows/CreateBinaryFileConsoleOutput.png)
 
@@ -106,9 +106,11 @@ filearb create-text-file
    [--random-letters]
 ```
 
-`file arb create-text-file` creates a text file at a specified `--target` directory containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letter characters if `--random-letters` is specified.
+`filearb create-text-file` creates a text file at a specified `--target` directory containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letter characters if `--random-letters` is specified.
 
-![create-text-file example on Linux](Screenshots/Linux/create-text-file-example.png)
+`filearb create-text-file --target=. --lines=5 --characters=10` console output:
+
+![create-text-file example on Linux](Screenshots/Linux/create-text-file.png)
 
 ### create-binary-files
 
@@ -125,7 +127,7 @@ filearb create-binary-files
 
 `filearb create-binary-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of bytes, either 0 bytes or `[--random-bytes]`.
 
-![create-binary-files](Screenshots/create-binary-files.png)
+![create-binary-files](Screenshots/Linux/create-binary-files.png)
 
 ### create-text-files
 
@@ -143,19 +145,19 @@ filearb create-text-files
 
 `filearb create-text-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` containing `0` characters or `--random-letters`.
 
-![create-text-files](Screenshots/create-text-files.png)
+![create-text-files](Screenshots/Linux/create-text-files.png)
 
 ## FileArb code structure as it appears in Visual Studio Code on Linux
 
 Shown in this screenshot is function `FileArbArgsParser::ParseArgs` which uses the excellent single-header command line parsing library [docopt.cpp](https://github.com/docopt/docopt.cpp) to parse FileArb's command line arguments:
 
-![FileArb code structure as it appears in Visual Studio Code](Screenshots/Linux/FileArbCodeStructureAsItAppearsInVisualStudioCode.png)
+![FileArb code structure as it appears in Visual Studio Code](Screenshots/Linux/FileArbCodeExampleInVSCode.png)
 
 ## FileArb code structure as it appears in Visual Studio 2019 on Windows
 
 Shown is this screenshot is the if-statement in function `FileCreator::WriteFiles` for determining whether to generate files sequentially or in parallel. Shown in the bottom half of the screenshot are corresponding ZenUnit and MetalMock unit tests for function `FileCreator::WriteFiles`.
 
-![FileArb code structure as it appears in Visual Studio 2019](Screenshots/Windows/FileArbCodeStructureAsItAppearsInVisualStudio2019.png)
+![FileArb code structure as it appears in Visual Studio 2019](Screenshots/Windows/FileArbCodeExampleInVisualStudio2019.png)
 
 ## Linux Jenkins jobs which build, cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ code and mypy-flake8-pylint-SonarQube scan FileArb's CI/CD Python code
 

@@ -18,8 +18,8 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 * [FileArb command line usage](#filearb-command-line-usage)
 * [FileArb program modes](#filearb-program-modes)
    * [create-binary-file](#create-binary-file)
-   * [create-binary-files](#create-binary-files)
    * [create-text-file](#create-text-file)
+   * [create-binary-files](#create-binary-files)
    * [create-text-files](#create-text-files)
 * [FileArb code structure as it appears in Visual Studio Code on Linux](#filearb-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileArb code structure as it appears in Visual Studio 2019 on Windows](#filearb-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
@@ -106,7 +106,7 @@ filearb create-text-file
    [--random-letters]
 ```
 
-`file arb create-text-file` creates at a specified `--target` directory a file containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letter characters if `--random-letters` is specified.
+`file arb create-text-file` creates a text file at a specified `--target` directory containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letter characters if `--random-letters` is specified.
 
 ![create-text-file example on Linux](Screenshots/Linux/create-text-file-example.png)
 
@@ -129,7 +129,19 @@ filearb create-binary-files
 
 ### create-text-files
 
-`filearb create-text-files` creates at a specified directory a specified number of subdirectories containing a specified number of text files each containing '0' characters.
+```cpp
+filearb create-text-files
+   --target=<DirectoryPath>
+   --directories=<NumberOfDirectories>
+   --files=<FilesPerDirectory>
+   --lines=<LinesPerFile>
+   --characters=<CharactersPerLine>
+   [--random-letters]
+   [--parallel]
+   [--minimal]
+```
+
+`filearb create-text-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` containing `0` characters or `--random-letters`.
 
 ![create-text-files](Screenshots/create-text-files.png)
 

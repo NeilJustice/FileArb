@@ -2,9 +2,13 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileArb) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileArb)
 
-FileArb is a cross-platform C++ command line program for quickly creating in parallel a configurable number of text files or binary files containing a configurable number of characters or bytes.
+FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
 
-FileArb can be used for performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> and for performance testing the write speed of storage hardware such as USB drives, NVMe drives, and network file shares.
+Use cases for FileArb:
+
+1. Performance testing the write speed of storage hardware such as USB drives, NVMe drives, and network file shares.
+2. Performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> which perform operations such as text replacement on a large number of files.
+3. Learning the true cost of cloud storage resources by way of writing, for example, 100 1-GB files to an Azure file share followed by examining the Azure bill.
 
 |Build Type|Build Status|
 |----------|------------|
@@ -30,8 +34,8 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 
 ## FileArb command line usage
 
-```cpp
-FileArb v0.13.0 - Creates arbitrarily large text files or binary files.
+```prolog
+FileArb v0.13.0 - Creates arbitrarily many arbitrarily large text files or binary files.
 Optional suffixes for --bytes arguments: b or B, k or K, m or M, and g or G.
 
 Usage:
@@ -67,7 +71,7 @@ Usage:
 
 ### create-binary-file
 
-```cpp
+```prolog
 filearb create-binary-file
       --target=<TargetDirectoryPath>
       --bytes=<NumberOfBytes>
@@ -76,11 +80,11 @@ filearb create-binary-file
 
 `filearb create-binary-file` creates at a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
 
-`filearb create-binary-file --target=. --bytes=2G` console output on Linux:
+Console output for `filearb create-binary-file --target=. --bytes=2G` on Linux:
 
 ![create-binary-file example on Linux](Screenshots/Linux/create-binary-file.png)
 
-`filearb create-binary-file --target=. --bytes=2G` console output on Windows:
+Console output for `FileArb.exe create-binary-file --target=. --bytes=2G` on Windows:
 
 ![create-binary-file example on Windows](Screenshots/Windows/CreateBinaryFileConsoleOutput.png)
 
@@ -98,7 +102,7 @@ Here are the contents of one potential random binary file after running `filearb
 
 ### create-text-file
 
-```cpp
+```prolog
 filearb create-text-file
    --target=<TargetDirectoryPath>
    --lines=<LinesPerFile>
@@ -108,13 +112,13 @@ filearb create-text-file
 
 `filearb create-text-file` creates a text file at a specified `--target` directory containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letter characters if `--random-letters` is specified.
 
-`filearb create-text-file --target=. --lines=5 --characters=10` console output:
+Console output for `filearb create-text-file --target=. --lines=5 --characters=10` on Linux:
 
 ![create-text-file example on Linux](Screenshots/Linux/create-text-file.png)
 
 ### create-binary-files
 
-```cpp
+```prolog
 filearb create-binary-files
       --target=<TargetDirectoryPath>
       --directories=<NumberOfDirectories>
@@ -127,11 +131,13 @@ filearb create-binary-files
 
 `filearb create-binary-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of bytes, either 0 bytes or `[--random-bytes]`.
 
+Console output for `filearb create-binary-files --target=. --directories=5 --files=3 --bytes=1024 --random-bytes --parallel` on Linux:
+
 ![create-binary-files](Screenshots/Linux/create-binary-files.png)
 
 ### create-text-files
 
-```cpp
+```prolog
 filearb create-text-files
    --target=<DirectoryPath>
    --directories=<NumberOfDirectories>
@@ -144,6 +150,8 @@ filearb create-text-files
 ```
 
 `filearb create-text-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` containing `0` characters or `--random-letters`.
+
+Console output for `filearb create-text-files --target=target_dir --directories=5 --files=3 --lines=3 --characters=64 --random-letters --parallel` on Linux:
 
 ![create-text-files](Screenshots/Linux/create-text-files.png)
 

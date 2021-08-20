@@ -70,7 +70,7 @@ TEST(CreateBinaryFile_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBin)
    _stopwatchMock->StartMock.Expect();
    _fileSystemMock->CreateBinaryFileMock.Expect();
    const long long millisecondsToWriteFile = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    const string fileBytes = ZenUnit::Random<string>();
@@ -83,7 +83,7 @@ TEST(CreateBinaryFile_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBin)
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    const string expectedWroteFileMessage = String::ConcatValues(
       "Wrote binary file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
 
 TEST(CreateTextFile_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
@@ -91,7 +91,7 @@ TEST(CreateTextFile_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
    _stopwatchMock->StartMock.Expect();
    _fileSystemMock->CreateTextFileMock.Expect();
    const long long millisecondsToWriteFile = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    const string fileText = ZenUnit::Random<string>();
@@ -104,7 +104,7 @@ TEST(CreateTextFile_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    const string expectedWroteFileMessage = String::ConcatValues(
       "Wrote text file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
 
 TEST(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
@@ -166,7 +166,7 @@ TEST(CreateNumberedFileInDirectory_MinimalIsFalse_CreatesFile_WritesWroteFileMes
 
    _fileSystemMock->CreateBinaryFileMock.Expect();
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    const size_t callIndex = ZenUnit::Random<size_t>();
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
@@ -186,7 +186,7 @@ TEST(CreateNumberedFileInDirectory_MinimalIsFalse_CreatesFile_WritesWroteFileMes
    METALMOCK(threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    const string expectedWroteFileMessage = String::ConcatValues(
       "Wrote file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedWroteFileMessage));
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedWroteFileMessage));
 }
 
 TEST(CreateNumberedFileInDirectory_MinimalIsTrue_CreatesFile_DoesNotWriteWroteFileMessage)

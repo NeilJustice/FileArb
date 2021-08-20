@@ -63,14 +63,14 @@ TEST(DefaultConstructor_SetsFunctionPointer_NewsComponents)
 
 TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
 {
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->NakedWriteLineMock.Expect();
    const string exePath = ZenUnit::Random<string>();
    const string fileArbIniPath = ZenUnit::Random<string>();
    const char* argv[] = { exePath.c_str(), fileArbIniPath.c_str() };
    //
    const int exitCode = _fileArbProgram.Main(1, const_cast<char**>(argv));
    //
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(FileArbArgs::CommandLineUsage));
+   METALMOCK(_consoleMock->NakedWriteLineMock.CalledOnceWith(FileArbArgs::CommandLineUsage));
    ARE_EQUAL(0, exitCode);
 }
 
@@ -88,7 +88,7 @@ TEST1X1(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExit
 
    const string runtimeInSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    const string exePath = ZenUnit::Random<string>();
    const string fileArbIniPath = ZenUnit::Random<string>();
@@ -103,7 +103,7 @@ TEST1X1(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExit
 
    const string expectedDurationLine = String::ConcatValues("Duration: ", runtimeInSeconds, " seconds");
    const string expectedExitCodeLine = String::ConcatValues("ExitCode: ", subProgramExitCode);
-   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledAsFollows(
    {
       { expectedDurationLine },
       { expectedExitCodeLine }
@@ -122,7 +122,7 @@ TEST(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_Re
    const int exitCode = fileArbSubProgramMock->RunMock.ReturnRandom();
    _fileArbSubProgramFactoryMock->NewFileArbSubProgramMock.Return(fileArbSubProgramMock);
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    const vector<string> stringArgs =
    {
@@ -138,7 +138,7 @@ TEST(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_Re
    METALMOCK(_fileArbSubProgramFactoryMock->NewFileArbSubProgramMock.CalledOnceWith(args.programMode));
    METALMOCK(fileArbSubProgramMock->RunMock.CalledOnceWith(args));
    const string expectedRunningMessage = "Running: " + args.commandLine;
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedRunningMessage));
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedRunningMessage));
    ARE_EQUAL(exitCode, returnedExitCode);
 }
 
@@ -147,7 +147,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessageInRed_Returns1)
    const string exceptionClassNameAndMessage = ZenUnit::Random<string>();
    GetClassNameAndMessageMock.Return(exceptionClassNameAndMessage);
 
-   _consoleMock->WriteLineColorMock.Expect();
+   _consoleMock->ThreadIdWriteLineColorMock.Expect();
    const exception ex;
    const vector<string> args = { ZenUnit::Random<string>() };
    //
@@ -155,7 +155,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessageInRed_Returns1)
    //
    METALMOCK(GetClassNameAndMessageMock.CalledOnceWith(&ex));
    const string expectedExceptionErrorMessage = "Error: Exception thrown: " + exceptionClassNameAndMessage;
-   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedExceptionErrorMessage, Color::Red));
+   METALMOCK(_consoleMock->ThreadIdWriteLineColorMock.CalledOnceWith(expectedExceptionErrorMessage, Color::Red));
    ARE_EQUAL(1, exitCode);
 }
 

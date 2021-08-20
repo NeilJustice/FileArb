@@ -33,7 +33,7 @@ int FileArbProgram::Main(int argc, char* argv[])
 {
    if (argc == 1)
    {
-      _console->WriteLine(FileArbArgs::CommandLineUsage);
+      _console->NakedWriteLine(FileArbArgs::CommandLineUsage);
       return 0;
    }
    const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
@@ -41,9 +41,9 @@ int FileArbProgram::Main(int argc, char* argv[])
       this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
    const string runtimeInSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string durationLine = String::ConcatStrings("Duration: ", runtimeInSeconds, " seconds");
-   _console->WriteLine(durationLine);
+   _console->ThreadIdWriteLine(durationLine);
    const string exitCodeLine = String::ConcatValues("ExitCode: ", subProgramExitCode);
-   _console->WriteLine(exitCodeLine);
+   _console->ThreadIdWriteLine(exitCodeLine);
    return subProgramExitCode;
 }
 
@@ -52,7 +52,7 @@ int FileArbProgram::Run(const vector<string>& stringArgs)
    _stopwatch->Start();
    const FileArbArgs args = _argsParser->ParseArgs(stringArgs);
    const string runningMessage = "Running: " + args.commandLine;
-   _console->WriteLine(runningMessage);
+   _console->ThreadIdWriteLine(runningMessage);
    const shared_ptr<FileArbSubProgram> fileArbSubProgram = _fileArbSubProgramFactory->NewFileArbSubProgram(args.programMode);
    const int exitCode = fileArbSubProgram->Run(args);
    return exitCode;
@@ -62,6 +62,6 @@ int FileArbProgram::ExceptionHandler(const exception& ex, const vector<string>& 
 {
    const string exceptionTypeNameAndWhat = _call_Utils_Exception_ClassNameAndMessage(&ex);
    const string exceptionErrorMessage = "Error: Exception thrown: " + exceptionTypeNameAndWhat;
-   _console->WriteLineColor(exceptionErrorMessage, Color::Red);
+   _console->ThreadIdWriteLineColor(exceptionErrorMessage, Color::Red);
    return 1;
 }

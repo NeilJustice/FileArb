@@ -4,8 +4,9 @@
 
 TESTS(ConsoleTests)
 AFACT(DefaultConstructor_NewsConsoleColorer)
-AFACT(WriteLine_StringView_CodeCoverage)
-AFACT(WriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
+AFACT(NakedWriteLine_CodeCoverage)
+AFACT(ThreadIdWriteLine_CodeCoverage)
+AFACT(ThreadIdWriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
 
 Console _console;
@@ -25,22 +26,24 @@ TEST(DefaultConstructor_NewsConsoleColorer)
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
 }
 
-TEST(WriteLine_StringView_CodeCoverage)
+TEST(NakedWriteLine_CodeCoverage)
 {
-   _console.WriteLine("");
-   _console.WriteLine(ZenUnit::Random<string>());
-   const string_view stringView;
-   _console.WriteLine(stringView);
+   _console.NakedWriteLine(ZenUnit::Random<string>());
 }
 
-TEST(WriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
+TEST(ThreadIdWriteLine_CodeCoverage)
+{
+   _console.ThreadIdWriteLine(ZenUnit::Random<string>());
+}
+
+TEST(ThreadIdWriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 {
    const bool didSetTextColor = _consoleColorerMock->SetTextColorMock.ReturnRandom();
    _consoleColorerMock->UnsetTextColorMock.Expect();
    const string message = ZenUnit::Random<string>();
    const Color color = ZenUnit::RandomEnum<Color>(Color::MaxValue);
    //
-   _console.WriteLineColor(message, color);
+   _console.ThreadIdWriteLineColor(message, color);
    //
    METALMOCK(_consoleColorerMock->SetTextColorMock.CalledOnceWith(color));
    METALMOCK(_consoleColorerMock->UnsetTextColorMock.CalledOnceWith(didSetTextColor));

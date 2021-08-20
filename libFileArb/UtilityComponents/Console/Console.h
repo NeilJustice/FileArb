@@ -12,6 +12,7 @@ private:
 public:
    Console();
    virtual ~Console();
-   virtual void WriteLine(string_view message) const;
-   virtual void WriteLineColor(string_view message, Color color) const;
+   virtual void NakedWriteLine(string_view message) const;
+   virtual void ThreadIdWriteLine(string_view message) const;
+   virtual void ThreadIdWriteLineColor(string_view message, Color color) const;
 };

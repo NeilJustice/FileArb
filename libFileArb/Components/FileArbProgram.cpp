@@ -37,8 +37,7 @@ int FileArbProgram::Main(int argc, char* argv[])
       return 0;
    }
    const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
-   const int subProgramExitCode = _tryCatchCaller->TryCatchCall(
-      this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
+   const int subProgramExitCode = _tryCatchCaller->TryCatchCall(this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
    const string runtimeInSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string durationLine = String::ConcatStrings("Duration: ", runtimeInSeconds, " seconds");
    _console->ThreadIdWriteLine(durationLine);

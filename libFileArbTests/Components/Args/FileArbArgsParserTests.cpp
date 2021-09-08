@@ -87,8 +87,8 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
    const bool generateRandomBytes = ZenUnit::Random<bool>();
    const bool generateRandomLetters = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
-   const bool minimal = ZenUnit::Random<bool>();
-   _docoptParserMock->GetOptionalBoolMock.ReturnValues(generateRandomBytes, generateRandomLetters, parallel, minimal);
+   const bool quiet = ZenUnit::Random<bool>();
+   _docoptParserMock->GetOptionalBoolMock.ReturnValues(generateRandomBytes, generateRandomLetters, parallel, quiet);
 
    _call_DetermineProgramModeMock.Return(programMode);
 
@@ -123,7 +123,7 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
       { docoptValues, "--random-bytes" },
       { docoptValues, "--random-letters" },
       { docoptValues, "--parallel" },
-      { docoptValues, "--minimal" }
+      { docoptValues, "--quiet" }
    }));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
    const int expectedProgramModeAsInt = static_cast<int>(args.programMode);
@@ -151,7 +151,7 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
    expectedArgs.generateRandomBytes = generateRandomBytes;
    expectedArgs.generateRandomLetters = generateRandomLetters;
    expectedArgs.parallel = parallel;
-   expectedArgs.minimal = minimal;
+   expectedArgs.quiet = quiet;
    ARE_EQUAL(expectedArgs, args);
 }
 

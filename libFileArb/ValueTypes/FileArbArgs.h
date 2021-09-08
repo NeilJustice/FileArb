@@ -16,7 +16,7 @@ struct FileArbArgs
    bool generateRandomBytes = false;
    bool generateRandomLetters = false;
    bool parallel = false;
-   bool minimal = false;
+   bool quiet = false;
 
    // Calculated fields
    string fileNamePrefix;

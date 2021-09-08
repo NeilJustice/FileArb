@@ -67,7 +67,7 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
    args.generateRandomBytes = _docoptParser->GetOptionalBool(docoptValues, "--random-bytes");
    args.generateRandomLetters = _docoptParser->GetOptionalBool(docoptValues, "--random-letters");
    args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");
-   args.minimal = _docoptParser->GetOptionalBool(docoptValues, "--minimal");
+   args.quiet = _docoptParser->GetOptionalBool(docoptValues, "--quiet");
    return args;
 }
 

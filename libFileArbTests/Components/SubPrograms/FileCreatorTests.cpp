@@ -16,8 +16,8 @@ AFACT(CreateTextFile_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
 AFACT(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 AFACT(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 AFACT(CreateSequentiallyNumberedFilesInNumberedDirectory_DoesSo)
-AFACT(CreateNumberedFileInDirectory_MinimalIsFalse_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)
-AFACT(CreateNumberedFileInDirectory_MinimalIsTrue_CreatesFile_DoesNotWriteWroteFileMessage)
+AFACT(CreateNumberedFileInDirectory_QuietIsFalse_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)
+AFACT(CreateNumberedFileInDirectory_QuietIsTrue_CreatesFile_DoesNotWriteWroteFileMessage)
 EVIDENCE
 
 FileCreator _fileCreator;
@@ -149,7 +149,7 @@ TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_DoesSo)
       &_fileCreator, expectedDirectoryPath, args, fileTextOrBytes));
 }
 
-TEST(CreateNumberedFileInDirectory_MinimalIsFalse_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)
+TEST(CreateNumberedFileInDirectory_QuietIsFalse_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)
 {
    shared_ptr<StopwatchMock> threadUniqueCreateFileStopwatchMock = make_shared<StopwatchMock>();
    threadUniqueCreateFileStopwatchMock->StartMock.Expect();
@@ -163,7 +163,7 @@ TEST(CreateNumberedFileInDirectory_MinimalIsFalse_CreatesFile_WritesWroteFileMes
    const size_t callIndex = ZenUnit::Random<size_t>();
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
-   args.minimal = false;
+   args.quiet = false;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
    _fileCreator.CreateNumberedFileInDirectory(callIndex, directoryPath, args, fileTextOrBytes);
@@ -180,14 +180,14 @@ TEST(CreateNumberedFileInDirectory_MinimalIsFalse_CreatesFile_WritesWroteFileMes
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedWroteFileMessage)));
 }
 
-TEST(CreateNumberedFileInDirectory_MinimalIsTrue_CreatesFile_DoesNotWriteWroteFileMessage)
+TEST(CreateNumberedFileInDirectory_QuietIsTrue_CreatesFile_DoesNotWriteWroteFileMessage)
 {
    _fileSystemMock->CreateBinaryFileMock.Expect();
 
    const size_t callIndex = ZenUnit::Random<size_t>();
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
-   args.minimal = true;
+   args.quiet = true;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
    _fileCreator.CreateNumberedFileInDirectory(callIndex, directoryPath, args, fileTextOrBytes);

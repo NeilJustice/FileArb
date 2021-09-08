@@ -55,7 +55,7 @@ Usage:
       --bytes=<BytesPerFile>
       [--random-bytes]
       [--parallel]
-      [--minimal]
+      [--quiet]
    filearb create-text-files
       --target=<DirectoryPath>
       --directories=<NumberOfDirectories>
@@ -64,7 +64,7 @@ Usage:
       --characters=<CharactersPerLine>
       [--random-letters]
       [--parallel]
-      [--minimal]
+      [--quiet]
 ```
 
 ## FileArb program modes
@@ -126,7 +126,7 @@ filearb create-binary-files
       --bytes=<BytesPerFile>
       [--random-bytes]
       [--parallel]
-      [--minimal]
+      [--quiet]
 ```
 
 FileArb `create-binary-files` mode creates in a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of 0 bytes or `[--random-bytes]`.
@@ -146,7 +146,7 @@ filearb create-text-files
    --characters=<CharactersPerLine>
    [--random-letters]
    [--parallel]
-   [--minimal]
+   [--quiet]
 ```
 
 `filearb create-text-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` containing `0` characters or `--random-letters`.

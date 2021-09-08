@@ -21,7 +21,7 @@ TEST(DefaultConstructor_SetsFieldsTo0)
    expectedDefaultFileArbArgs.generateRandomBytes = false;
    expectedDefaultFileArbArgs.generateRandomLetters = false;
    expectedDefaultFileArbArgs.parallel = false;
-   expectedDefaultFileArbArgs.minimal = false;
+   expectedDefaultFileArbArgs.quiet = false;
    expectedDefaultFileArbArgs.fileNamePrefix = "";
    expectedDefaultFileArbArgs.fileExtension = "";
    ARE_EQUAL(expectedDefaultFileArbArgs, defaultFileArbArgs);
@@ -50,7 +50,7 @@ Usage:
       --bytes=<BytesPerFile>
       [--random-bytes]
       [--parallel]
-      [--minimal]
+      [--quiet]
    filearb create-text-files
       --target=<DirectoryPath>
       --directories=<NumberOfDirectories>
@@ -59,7 +59,7 @@ Usage:
       --characters=<CharactersPerLine>
       [--random-letters]
       [--parallel]
-      [--minimal]
+      [--quiet]
 )", FileArbArgs::CommandLineUsage);
 }
 

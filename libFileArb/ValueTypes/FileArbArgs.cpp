@@ -22,7 +22,7 @@ Usage:
       --bytes=<BytesPerFile>
       [--random-bytes]
       [--parallel]
-      [--minimal]
+      [--quiet]
    filearb create-text-files
       --target=<DirectoryPath>
       --directories=<NumberOfDirectories>
@@ -31,5 +31,5 @@ Usage:
       --characters=<CharactersPerLine>
       [--random-letters]
       [--parallel]
-      [--minimal]
+      [--quiet]
 )";

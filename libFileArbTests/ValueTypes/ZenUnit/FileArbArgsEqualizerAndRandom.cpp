@@ -16,7 +16,7 @@ namespace ZenUnit
       ARE_EQUAL(expectedFileArbArgs.generateRandomBytes, actualFileArbArgs.generateRandomBytes);
       ARE_EQUAL(expectedFileArbArgs.generateRandomLetters, actualFileArbArgs.generateRandomLetters);
       ARE_EQUAL(expectedFileArbArgs.parallel, actualFileArbArgs.parallel);
-      ARE_EQUAL(expectedFileArbArgs.minimal, actualFileArbArgs.minimal);
+      ARE_EQUAL(expectedFileArbArgs.quiet, actualFileArbArgs.quiet);
       ARE_EQUAL(expectedFileArbArgs.fileNamePrefix, actualFileArbArgs.fileNamePrefix);
       ARE_EQUAL(expectedFileArbArgs.fileExtension, actualFileArbArgs.fileExtension);
    }
@@ -35,7 +35,7 @@ namespace ZenUnit
       randomFileArbArgs.generateRandomBytes = randomGenerator->Bool();
       randomFileArbArgs.generateRandomLetters = randomGenerator->Bool();
       randomFileArbArgs.parallel = randomGenerator->Bool();
-      randomFileArbArgs.minimal = randomGenerator->Bool();
+      randomFileArbArgs.quiet = randomGenerator->Bool();
       randomFileArbArgs.fileNamePrefix = randomGenerator->String();
       randomFileArbArgs.fileExtension = randomGenerator->String();
       return randomFileArbArgs;

@@ -4,18 +4,18 @@
 
 FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
 
-Use cases for FileArb:
+Three use cases for FileArb:
 
 1. Performance testing the write speed of storage hardware such as USB drives, NVMe drives, and network file shares.
-2. Performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> which perform operations such as text replacement on a large number of files.
-3. Learning the true cost of cloud storage resources by way of writing, for example, 100 1-GB files to an Azure file share followed by examining the Azure bill.
+2. Performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> which perform many file operations such as text replacement.
+3. Learning the true cost of cloud storage resources by way of creating, for example, 10 1-GB files on an Azure file share followed by examining the resulting Azure bill.
 
 |Build Type|Build Status|
 |----------|------------|
 |GitHub Actions Debug and Release build - ubuntu-latest Clang 11 / GCC 9|[![FileArb](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml)|
 |AppVeyor Debug and Release build - Visual Studio 2019 x64|<a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"/></a>|
 |Codecov.io code coverage for FileArb's C++ and FileArbDevOpsPython|[![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu)](https://codecov.io/gh/NeilJustice/FileArb)|
-|SonarCloud scan of FileArbDevOpsPython - the Python code which build and tests FileArb|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileArb)|
+|SonarCloud scan of FileArbDevOpsPython - the Python code which builds and tests FileArb|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileArb)|
 
 FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
@@ -35,7 +35,7 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 ## FileArb command line usage
 
 ```prolog
-FileArb v0.13.0 - Creates arbitrarily many arbitrarily large text files or binary files.
+FileArb v0.13.0 - Creates configurably large text files or binary files.
 Optional suffixes for --bytes arguments: b or B, k or K, m or M, and g or G.
 
 Usage:
@@ -78,7 +78,7 @@ filearb create-binary-file
       [--random-bytes]
 ```
 
-`filearb create-binary-file` creates at a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
+FileArb `create-binary-file` mode creates in a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
 
 Console output for `filearb create-binary-file --target=. --bytes=2G` on Linux:
 
@@ -94,7 +94,7 @@ Console output for `FileArb.exe create-binary-file --target=. --bytes=2G` on Win
 
 ![Binary file in HxD](Screenshots/Windows/BinaryFileInHxD.png)
 
-`--random-bytes` can be speecified to create a binary file containing random bytes sampled from `std::random_device`.
+`--random-bytes` can be speecified to create a binary file containing pseudorandom bytes sampled from `std::random_device`.
 
 Here are the contents of one potential random binary file after running `filearb create-binary-file --target=C:\FileArbTesting --bytes=64 --random-bytes`:
 
@@ -110,7 +110,7 @@ filearb create-text-file
    [--random-letters]
 ```
 
-`filearb create-text-file` creates a text file at a specified `--target` directory containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letter characters if `--random-letters` is specified.
+FileArb `create-text-file` creates a text file in a specified `--target` directory containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letters if `--random-letters` is specified.
 
 Console output for `filearb create-text-file --target=. --lines=5 --characters=10` on Linux:
 
@@ -129,7 +129,7 @@ filearb create-binary-files
       [--minimal]
 ```
 
-`filearb create-binary-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of bytes, either 0 bytes or `[--random-bytes]`.
+FileArb `create-binary-files` mode creates in a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of 0 bytes or `[--random-bytes]`.
 
 Console output for `filearb create-binary-files --target=. --directories=5 --files=3 --bytes=1024 --random-bytes --parallel` on Linux:
 

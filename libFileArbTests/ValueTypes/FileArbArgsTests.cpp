@@ -30,7 +30,7 @@ TEST(DefaultConstructor_SetsFieldsTo0)
 TEST(CommandLineUsage_IsExpectedString)
 {
    ARE_EQUAL(
-R"(FileArb v0.13.0 - Creates arbitrarily large text files or binary files.
+R"(FileArb v0.13.0 - Creates configurably large text files or binary files.
 Optional suffixes for --bytes arguments: b or B, k or K, m or M, and g or G.
 
 Usage:

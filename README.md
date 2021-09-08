@@ -34,7 +34,7 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 
 ## FileArb command line usage
 
-```prolog
+```ini
 FileArb v0.14.0 - Creates configurably large text files or binary files.
 Optional suffixes for --bytes arguments: b or B, k or K, m or M, and g or G.
 
@@ -71,11 +71,11 @@ Usage:
 
 ### create-binary-file
 
-```prolog
+```ini
 filearb create-binary-file
-      --target=<TargetDirectoryPath>
-      --bytes=<NumberOfBytes>
-      [--random-bytes]
+   --target=<TargetDirectoryPath>
+   --bytes=<NumberOfBytes>
+   [--random-bytes]
 ```
 
 FileArb `create-binary-file` mode creates in a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
@@ -102,7 +102,7 @@ Here are the contents of one potential random binary file after running `filearb
 
 ### create-text-file
 
-```prolog
+```ini
 filearb create-text-file
    --target=<TargetDirectoryPath>
    --lines=<LinesPerFile>
@@ -118,15 +118,15 @@ Console output for `filearb create-text-file --target=. --lines=5 --characters=1
 
 ### create-binary-files
 
-```prolog
+```ini
 filearb create-binary-files
-      --target=<TargetDirectoryPath>
-      --directories=<NumberOfDirectories>
-      --files=<NumberOfFiles>
-      --bytes=<BytesPerFile>
-      [--random-bytes]
-      [--parallel]
-      [--quiet]
+   --target=<TargetDirectoryPath>
+   --directories=<NumberOfDirectories>
+   --files=<NumberOfFiles>
+   --bytes=<BytesPerFile>
+   [--random-bytes]
+   [--parallel]
+   [--quiet]
 ```
 
 FileArb `create-binary-files` mode creates in a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of 0 bytes or `[--random-bytes]`.
@@ -137,7 +137,7 @@ Console output for `filearb create-binary-files --target=. --directories=5 --fil
 
 ### create-text-files
 
-```prolog
+```ini
 filearb create-text-files
    --target=<DirectoryPath>
    --directories=<NumberOfDirectories>

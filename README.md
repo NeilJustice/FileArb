@@ -35,7 +35,7 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 ## FileArb command line usage
 
 ```prolog
-FileArb v0.13.0 - Creates configurably large text files or binary files.
+FileArb v0.14.0 - Creates configurably large text files or binary files.
 Optional suffixes for --bytes arguments: b or B, k or K, m or M, and g or G.
 
 Usage:

@@ -2,7 +2,7 @@
 #include "libFileArb/ValueTypes/FileArbArgs.h"
 
 const string FileArbArgs::CommandLineUsage =
-R"(FileArb v0.13.0 - Creates configurably large text files or binary files.
+R"(FileArb v0.14.0 - Creates configurably large text files or binary files.
 Optional suffixes for --bytes arguments: b or B, k or K, m or M, and g or G.
 
 Usage:

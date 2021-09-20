@@ -169,13 +169,9 @@ Shown is this screenshot is the if-statement in function `FileCreator::WriteFile
 
 ## Linux Jenkins jobs which build, cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ code and mypy-flake8-pylint-SonarQube scan FileArb's CI/CD Python code
 
-A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Fedora 34:
-
 ![Linux FileArb Jenkins jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
 ## Windows Jenkins Jobs which build and cppcheck FileArb's C++ code and mypy-flake8-pylint-SonarQube scan FileArb's CI/CD Python code
-
-A Jenkins Blue Ocean build pipeline builds the following FileArb Jenkins jobs on Windows 10:
 
 ![Windows FileArb Jenkins jobs](Screenshots/Windows/WindowsFileArbJenkinsJobs.png)
 

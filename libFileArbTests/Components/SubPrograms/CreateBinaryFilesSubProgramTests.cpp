@@ -6,7 +6,7 @@
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
 
 TESTS(CreateBinaryFilesSubProgramTests)
-AFACT(Constructor_NewsComponents)
+AFACT(DefaultConstructor_NewsComponents)
 AFACT(Run_CreateBinaryFiles_Returns0)
 EVIDENCE
 
@@ -24,7 +24,7 @@ STARTUP
    _createBinaryFilesSubProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
 }
 
-TEST(Constructor_NewsComponents)
+TEST(DefaultConstructor_NewsComponents)
 {
    CreateBinaryFilesSubProgram createBinaryFilesSubProgram;
    // Base Class Constant Components

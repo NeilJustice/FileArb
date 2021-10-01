@@ -48,7 +48,7 @@ TEST(GetLinuxErrno_ReturnsAddressOfErrno)
 
 TEST(DefaultConstructor_SetsFunctionPointers)
 {
-   ErrorCodeTranslator errorCodeTranslator;
+   const ErrorCodeTranslator errorCodeTranslator;
 #if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(GetLinuxErrno, errorCodeTranslator._call_errno);
    STD_FUNCTION_TARGETS(strerror_r, errorCodeTranslator._call_strerror_r);

@@ -24,7 +24,7 @@ STARTUP
 
 TEST(DefaultConstructor_SetsFCloseFunctionPointer)
 {
-   FCloseDeleter fcloseDeleter;
+   const FCloseDeleter fcloseDeleter;
    // Function Pointers
    STD_FUNCTION_TARGETS(fclose, fcloseDeleter._call_fclose);
 }

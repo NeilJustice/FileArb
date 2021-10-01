@@ -25,9 +25,6 @@ using namespace std;
 // libFileArb ValueTypes
 #include "libFileArb/ValueTypes/FileArbArgs.h"
 
-// libFileArbTests Components Misc MetalMock
-#include "libFileArbTests/UtilityComponents/Misc/MetalMock/AsserterMock.h"
-
 // libFileArb StaticUtilities
 #include "libFileArb/StaticUtilities/Exception.h"
 #include "libFileArb/StaticUtilities/ReleaseAssert.h"

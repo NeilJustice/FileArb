@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
+#include "libFileArbTests/UtilityComponents/Misc/MetalMock/AsserterMock.h"
 #include "libFileArbTests/UtilityComponents/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libFileArbTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 #include "libFileArbTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidFourArgMemberFunctionCallerMock.h"

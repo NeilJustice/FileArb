@@ -1,4 +1,5 @@
 #pragma once
+class Asserter;
 class ErrorCodeTranslator;
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
 class NonVoidTwoArgMemberFunctionCaller;

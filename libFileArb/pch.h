@@ -34,9 +34,6 @@ namespace fs = std::filesystem;
 // libFileArb Compiler
 #include "libFileArb/Compiler/CompilerMacros.h"
 
-// libFileArb Components Misc
-#include "libFileArb/UtilityComponents/Misc/Asserter.h"
-
 // libFileArb Enums
 #include "libFileArb/Enums/Color.h"
 #include "libFileArb/Enums/ProgramMode.h"

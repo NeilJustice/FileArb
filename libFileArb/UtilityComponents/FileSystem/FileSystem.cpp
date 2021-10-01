@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "libFileArb/UtilityComponents/Misc/Asserter.h"
 #include "libFileArb/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileArb/UtilityComponents/FileSystem/FCloseDeleter.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"

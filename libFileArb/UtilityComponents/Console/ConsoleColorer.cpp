@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileArb/UtilityComponents/Console/ConsoleColorer.h"
+#include "libFileArb/UtilityComponents/Misc/Asserter.h"
 
 ConsoleColorer::ConsoleColorer() noexcept
    // Function Pointers

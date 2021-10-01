@@ -1,6 +1,6 @@
 #include "pch.h"
+#include "libFileArb/Components/Makers/TextFileLinesGenerator.h"
 #include "libFileArb/Components/Random/RandomStringMaker.h"
-#include "libFileArb/Components/SubPrograms/TextFileLinesGenerator.h"
 
 TextFileLinesGenerator::TextFileLinesGenerator()
    // Function Pointers

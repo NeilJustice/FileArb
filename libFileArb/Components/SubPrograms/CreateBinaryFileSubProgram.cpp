@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/SubPrograms/BinaryFileBytesGenerator.h"
+#include "libFileArb/Components/Makers/BinaryFileBytesGenerator.h"
 #include "libFileArb/Components/SubPrograms/CreateBinaryFileSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 

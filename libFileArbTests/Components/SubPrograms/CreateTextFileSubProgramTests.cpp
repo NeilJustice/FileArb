@@ -2,8 +2,8 @@
 #include "libFileArb/Components/SubPrograms/CreateTextFileSubProgram.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
+#include "libFileArbTests/Components/Makers/MetalMock/TextFileLinesGeneratorMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
-#include "libFileArbTests/Components/SubPrograms/MetalMock/TextFileLinesGeneratorMock.h"
 
 TESTS(CreateTextFileSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)

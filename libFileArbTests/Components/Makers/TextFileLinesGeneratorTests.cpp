@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/SubPrograms/TextFileLinesGenerator.h"
+#include "libFileArb/Components/Makers/TextFileLinesGenerator.h"
 #include "libFileArbTests/Components/Random/MetalMock/RandomStringMakerMock.h"
 
 TESTS(TextFileLinesGeneratorTests)

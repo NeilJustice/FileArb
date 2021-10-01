@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/SubPrograms/TextFileLinesGenerator.h"
+#include "libFileArb/Components/Makers/TextFileLinesGenerator.h"
 
 class TextFileLinesGeneratorMock : public Metal::Mock<TextFileLinesGenerator>
 {

@@ -22,13 +22,3 @@ struct FileArbArgs
    string fileNamePrefix;
    string fileExtension;
 };
-
-#if defined _WIN32
-#if defined _DEBUG
-static_assert(sizeof(FileArbArgs) == 216);
-#else
-static_assert(sizeof(FileArbArgs) == 184);
-#endif
-#else
-static_assert(sizeof(FileArbArgs) == 192);
-#endif

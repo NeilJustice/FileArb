@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "libFileArb/Components/Random/RandomCharacterGenerator.h"
+#include "libFileArb/Components/Makers/RandomCharacterMaker.h"
 
-char RandomCharacterGenerator::NextRandomByte() const
+char RandomCharacterMaker::NextRandomByte() const
 {
    static random_device randomDevice;
    static default_random_engine defaultRandomEngine{ randomDevice() };
@@ -11,7 +11,7 @@ char RandomCharacterGenerator::NextRandomByte() const
    return nextRandomByte;
 }
 
-char RandomCharacterGenerator::NextRandomCapitalLetter() const
+char RandomCharacterMaker::NextRandomCapitalLetter() const
 {
    static random_device randomDevice;
    static default_random_engine defaultRandomEngine{ randomDevice() };

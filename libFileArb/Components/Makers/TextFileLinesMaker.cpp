@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "libFileArb/Components/Makers/TextFileLinesGenerator.h"
-#include "libFileArb/Components/Random/RandomStringMaker.h"
+#include "libFileArb/Components/Makers/RandomStringMaker.h"
+#include "libFileArb/Components/Makers/TextFileLinesMaker.h"
 
-TextFileLinesGenerator::TextFileLinesGenerator()
+TextFileLinesMaker::TextFileLinesMaker()
    // Function Pointers
    : _call_ReplicateLineNTimes(ReplicateLineNTimes)
    // Constant Components
@@ -10,11 +10,11 @@ TextFileLinesGenerator::TextFileLinesGenerator()
 {
 }
 
-TextFileLinesGenerator::~TextFileLinesGenerator()
+TextFileLinesMaker::~TextFileLinesMaker()
 {
 }
 
-string TextFileLinesGenerator::MakeFileText(size_t numberOfLines, size_t numberOfCharactersPerLine, bool generateRandomLetters) const
+string TextFileLinesMaker::MakeFileText(size_t numberOfLines, size_t numberOfCharactersPerLine, bool generateRandomLetters) const
 {
    if (generateRandomLetters)
    {
@@ -33,7 +33,7 @@ string TextFileLinesGenerator::MakeFileText(size_t numberOfLines, size_t numberO
    return allZerosFileText;
 }
 
-string TextFileLinesGenerator::ReplicateLineNTimes(const string& line, size_t n)
+string TextFileLinesMaker::ReplicateLineNTimes(const string& line, size_t n)
 {
    const size_t replicatedStringLength = line.size() * n;
    const size_t lineSize = line.size();

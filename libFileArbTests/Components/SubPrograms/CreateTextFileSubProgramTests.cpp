@@ -2,7 +2,7 @@
 #include "libFileArb/Components/SubPrograms/CreateTextFileSubProgram.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
-#include "libFileArbTests/Components/Makers/MetalMock/TextFileLinesGeneratorMock.h"
+#include "libFileArbTests/Components/Makers/MetalMock/TextFileLinesMakerMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
 
 TESTS(CreateTextFileSubProgramTests)
@@ -12,14 +12,14 @@ EVIDENCE
 
 CreateTextFileSubProgram _createTextFileSubProgram;
 // Constant Components
-TextFileLinesGeneratorMock* _textFileLinesGeneratorMock = nullptr;
+TextFileLinesMakerMock* _textFileLinesMakerMock = nullptr;
 // Mutable Components
 FileCreatorMock* _fileCreatorMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _createTextFileSubProgram._textFileLinesGenerator.reset(_textFileLinesGeneratorMock = new TextFileLinesGeneratorMock);
+   _createTextFileSubProgram._textFileLinesMaker.reset(_textFileLinesMakerMock = new TextFileLinesMakerMock);
    // Mutable Components
    _createTextFileSubProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
 }
@@ -31,20 +31,20 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._protected_fileSystem);
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._textFileLinesGenerator);
+   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._textFileLinesMaker);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._fileCreator);
 }
 
 TEST(Run_CreateTextFiles_Returns0)
 {
-   const string fileText = _textFileLinesGeneratorMock->MakeFileTextMock.ReturnRandom();
+   const string fileText = _textFileLinesMakerMock->MakeFileTextMock.ReturnRandom();
    _fileCreatorMock->CreateTextFileMock.Expect();
    const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    //
    const int exitCode = _createTextFileSubProgram.Run(args);
    //
-   METALMOCK(_textFileLinesGeneratorMock->MakeFileTextMock.CalledOnceWith(
+   METALMOCK(_textFileLinesMakerMock->MakeFileTextMock.CalledOnceWith(
       args.numberOfLinesPerFile, args.numberOfCharactersPerLine, args.generateRandomLetters));
    METALMOCK(_fileCreatorMock->CreateTextFileMock.CalledOnceWith(args, fileText));
    IS_ZERO(exitCode);

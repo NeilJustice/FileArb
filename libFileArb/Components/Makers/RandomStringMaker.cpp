@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "libFileArb/Components/Random/RandomCharacterGenerator.h"
-#include "libFileArb/Components/Random/RandomStringMaker.h"
+#include "libFileArb/Components/Makers/RandomCharacterMaker.h"
+#include "libFileArb/Components/Makers/RandomStringMaker.h"
 
 RandomStringMaker::RandomStringMaker()
    // Constant Components
-   : _randomCharacterGenerator(make_unique<RandomCharacterGenerator>())
+   : _randomCharacterGenerator(make_unique<RandomCharacterMaker>())
 {
 }
 

@@ -1,9 +1,9 @@
 #pragma once
 
-class RandomCharacterGenerator
+class RandomCharacterMaker
 {
 public:
-   virtual ~RandomCharacterGenerator() = default;
+   virtual ~RandomCharacterMaker() = default;
    virtual char NextRandomByte() const;
    virtual char NextRandomCapitalLetter() const;
 };

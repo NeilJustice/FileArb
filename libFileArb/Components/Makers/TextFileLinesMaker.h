@@ -1,9 +1,9 @@
 #pragma once
 class RandomStringMaker;
 
-class TextFileLinesGenerator
+class TextFileLinesMaker
 {
-   friend class TextFileLinesGeneratorTests;
+   friend class TextFileLinesMakerTests;
 private:
    // Function Pointers
    function<string(const string&, size_t)> _call_ReplicateLineNTimes;
@@ -12,8 +12,8 @@ private:
    // Mutable Fields
    string _fileText;
 public:
-   TextFileLinesGenerator();
-   virtual ~TextFileLinesGenerator();
+   TextFileLinesMaker();
+   virtual ~TextFileLinesMaker();
    virtual string MakeFileText(size_t numberOfLines, size_t numberOfCharactersPerLine, bool generateRandomLetters) const;
 private:
    static string ReplicateLineNTimes(const string& line, size_t n);

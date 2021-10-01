@@ -1,12 +1,12 @@
 #pragma once
-class RandomCharacterGenerator;
+class RandomCharacterMaker;
 
 class RandomStringMaker
 {
    friend class RandomStringMakerTests;
 private:
    // Constant Components
-   unique_ptr<const RandomCharacterGenerator> _randomCharacterGenerator;
+   unique_ptr<const RandomCharacterMaker> _randomCharacterGenerator;
 public:
    RandomStringMaker();
    virtual ~RandomStringMaker();

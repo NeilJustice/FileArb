@@ -1,6 +1,6 @@
 #pragma once
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
-class BinaryFileBytesGenerator;
+class BinaryFileBytesMaker;
 class FileCreator;
 
 class CreateBinaryFileSubProgram : public FileArbSubProgram
@@ -8,7 +8,7 @@ class CreateBinaryFileSubProgram : public FileArbSubProgram
 private:
    friend class CreateBinaryFileSubProgramTests;
    // Constant Components
-   unique_ptr<const BinaryFileBytesGenerator> _binaryFileBytesGenerator;
+   unique_ptr<const BinaryFileBytesMaker> _binaryFileBytesMaker;
    // Mutable Components
    unique_ptr<FileCreator> _fileCreator;
 public:

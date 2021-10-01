@@ -1,15 +1,15 @@
 #include "pch.h"
-#include "libFileArb/Components/Makers/TextFileLinesGenerator.h"
-#include "libFileArbTests/Components/Random/MetalMock/RandomStringMakerMock.h"
+#include "libFileArb/Components/Makers/TextFileLinesMaker.h"
+#include "libFileArbTests/Components/Makers/MetalMock/RandomStringMakerMock.h"
 
-TESTS(TextFileLinesGeneratorTests)
+TESTS(TextFileLinesMakerTests)
 AFACT(DefaultConstructor_SetsReplicateLineNTimesFunction)
 AFACT(MakeFileText_GenerateRandomCharsIsTrue_ReturnsRandomCharsStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
 AFACT(MakeFileText_GenerateRandomCharsIsFalse_ReturnsAllZerosStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
 FACTS(ReplicateLineNTimes_ReturnsLineReplicatedNTimes)
 EVIDENCE
 
-TextFileLinesGenerator _textFileLinesGenerator;
+TextFileLinesMaker _textFileLinesMaker;
 // Function Pointers
 METALMOCK_NONVOID2_STATIC(string, FileTextGenerator, ReplicateLineNTimes, const string&, size_t)
 // Constant Components
@@ -18,18 +18,18 @@ RandomStringMakerMock* _randomStringMakerMock = nullptr;
 STARTUP
 {
    // Function Pointers
-   _textFileLinesGenerator._call_ReplicateLineNTimes = BIND_2ARG_METALMOCK_OBJECT(ReplicateLineNTimesMock);
+   _textFileLinesMaker._call_ReplicateLineNTimes = BIND_2ARG_METALMOCK_OBJECT(ReplicateLineNTimesMock);
    // Constant Components
-   _textFileLinesGenerator._randomStringMaker.reset(_randomStringMakerMock = new RandomStringMakerMock);
+   _textFileLinesMaker._randomStringMaker.reset(_randomStringMakerMock = new RandomStringMakerMock);
 }
 
 TEST(DefaultConstructor_SetsReplicateLineNTimesFunction)
 {
-   TextFileLinesGenerator textFileLinesGenerator;
+   TextFileLinesMaker textFileLinesMaker;
    // Function Pointers
-   STD_FUNCTION_TARGETS(TextFileLinesGenerator::ReplicateLineNTimes, textFileLinesGenerator._call_ReplicateLineNTimes);
+   STD_FUNCTION_TARGETS(TextFileLinesMaker::ReplicateLineNTimes, textFileLinesMaker._call_ReplicateLineNTimes);
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(textFileLinesGenerator._randomStringMaker);
+   DELETE_TO_ASSERT_NEWED(textFileLinesMaker._randomStringMaker);
 }
 
 TEST(MakeFileText_GenerateRandomCharsIsTrue_ReturnsRandomCharsStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
@@ -41,7 +41,7 @@ TEST(MakeFileText_GenerateRandomCharsIsTrue_ReturnsRandomCharsStringWithNumberOf
       randomCapitalLettersString1, randomCapitalLettersString2, randomCapitalLettersString3);
    const size_t numberOfCharactersPerLine = ZenUnit::Random<size_t>();
    //
-   const string randomCapitalLettersFileText = _textFileLinesGenerator.MakeFileText(3, numberOfCharactersPerLine, true);
+   const string randomCapitalLettersFileText = _textFileLinesMaker.MakeFileText(3, numberOfCharactersPerLine, true);
    //
    METALMOCK(_randomStringMakerMock->MakeRandomCapitalLettersStringMock.CalledNTimesWith(3, numberOfCharactersPerLine));
    const string expectedRandomCapitalLettersFileText =
@@ -57,7 +57,7 @@ TEST(MakeFileText_GenerateRandomCharsIsFalse_ReturnsAllZerosStringWithNumberOfCh
    const size_t numberOfLines = ZenUnit::RandomBetween<size_t>(0, 2);
    const size_t numberOfCharactersPerLine = ZenUnit::RandomBetween<size_t>(0, 2);
    //
-   const string returnedFileText = _textFileLinesGenerator.MakeFileText(numberOfLines, numberOfCharactersPerLine, false);
+   const string returnedFileText = _textFileLinesMaker.MakeFileText(numberOfLines, numberOfCharactersPerLine, false);
    //
    string expectedLineToWrite(numberOfCharactersPerLine + 1, '0');
    expectedLineToWrite[expectedLineToWrite.size() - 1] = '\n';
@@ -76,8 +76,8 @@ TEST3X3(ReplicateLineNTimes_ReturnsLineReplicatedNTimes,
    2ull, "123", "123123",
    3ull, "123", "123123123")
 {
-   const string lineReplicatedNTimes = TextFileLinesGenerator::ReplicateLineNTimes(lineToWrite, n);
+   const string lineReplicatedNTimes = TextFileLinesMaker::ReplicateLineNTimes(lineToWrite, n);
    ARE_EQUAL(expectedReturnValue, lineReplicatedNTimes);
 }
 
-RUN_TESTS(TextFileLinesGeneratorTests)
+RUN_TESTS(TextFileLinesMakerTests)

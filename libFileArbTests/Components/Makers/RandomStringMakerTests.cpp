@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileArb/Components/Random/RandomStringMaker.h"
-#include "libFileArbTests/Components/Random/MetalMock/RandomCharacterGeneratorMock.h"
+#include "libFileArb/Components/Makers/RandomStringMaker.h"
+#include "libFileArbTests/Components/Makers/MetalMock/RandomCharacterMakerMock.h"
 
 TESTS(RandomStringMakerTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -11,12 +11,12 @@ EVIDENCE
 
 RandomStringMaker _randomStringMaker;
 // Constant Components
-RandomCharacterGeneratorMock* _randomCharacterGeneratorMock = nullptr;
+RandomCharacterMakerMock* _randomCharacterGeneratorMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _randomStringMaker._randomCharacterGenerator.reset(_randomCharacterGeneratorMock = new RandomCharacterGeneratorMock);
+   _randomStringMaker._randomCharacterGenerator.reset(_randomCharacterGeneratorMock = new RandomCharacterMakerMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)

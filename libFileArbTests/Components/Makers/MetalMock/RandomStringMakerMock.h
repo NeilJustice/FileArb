@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/Random/RandomStringMaker.h"
+#include "libFileArb/Components/Makers/RandomStringMaker.h"
 
 class RandomStringMakerMock : public Metal::Mock<RandomStringMaker>
 {

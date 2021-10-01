@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Makers/TextFileLinesGenerator.h"
+#include "libFileArb/Components/Makers/TextFileLinesMaker.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"

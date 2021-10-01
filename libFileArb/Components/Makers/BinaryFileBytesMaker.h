@@ -1,14 +1,14 @@
 #pragma once
 class RandomStringMaker;
 
-class BinaryFileBytesGenerator
+class BinaryFileBytesMaker
 {
-   friend class BinaryFileBytesGeneratorTests;
+   friend class BinaryFileBytesMakerTests;
 private:
    // Constant Components
    unique_ptr<const RandomStringMaker> _randomStringMaker;
 public:
-   BinaryFileBytesGenerator();
-   virtual ~BinaryFileBytesGenerator();
+   BinaryFileBytesMaker();
+   virtual ~BinaryFileBytesMaker();
    virtual string MakeBytesString(size_t numberOfBytesPerFile, bool randomBytes) const;
 };

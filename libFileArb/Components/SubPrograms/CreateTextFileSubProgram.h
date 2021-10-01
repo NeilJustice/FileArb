@@ -1,14 +1,14 @@
 #pragma once
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 class FileCreator;
-class TextFileLinesGenerator;
+class TextFileLinesMaker;
 
 class CreateTextFileSubProgram : public FileArbSubProgram
 {
 private:
    friend class CreateTextFileSubProgramTests;
    // Constant Components
-   unique_ptr<const TextFileLinesGenerator> _textFileLinesGenerator;
+   unique_ptr<const TextFileLinesMaker> _textFileLinesMaker;
    // Mutable Components
    unique_ptr<FileCreator> _fileCreator;
 public:

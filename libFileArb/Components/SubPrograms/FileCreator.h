@@ -32,8 +32,8 @@ private:
 public:
    FileCreator();
    virtual ~FileCreator();
-   virtual void CreateBinaryFile(const FileArbArgs& args, const string& fileBytes);
-   virtual void CreateTextFile(const FileArbArgs& args, const string& fileText);
+   virtual void CreateFileWithBytes(const FileArbArgs& args, const string& fileBytes);
+   virtual void CreateFileWithText(const FileArbArgs& args, const string& fileText);
    virtual void CreateFiles(const FileArbArgs& args, const string& fileTextOrBytes);
 private:
    void CreateSequentiallyNumberedFilesInNumberedDirectory(

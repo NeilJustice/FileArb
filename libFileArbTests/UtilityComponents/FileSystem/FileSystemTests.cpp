@@ -7,8 +7,8 @@
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 // Behavior Functions
-AFACT(CreateTextFile_CallsCreateBinaryOrTextFileWithTextFileArguments)
-AFACT(CreateBinaryFile_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
+AFACT(CreateFileWithText_CallsCreateBinaryOrTextFileWithTextFileArguments)
+AFACT(CreateFileWithBytes_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
 // Private Functions
 AFACT(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes)
 #if defined __linux__ || defined __APPLE__
@@ -87,26 +87,26 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 
 // Behavior Functions
 
-TEST(CreateTextFile_CallsCreateBinaryOrTextFileWithTextFileArguments)
+TEST(CreateFileWithText_CallsCreateBinaryOrTextFileWithTextFileArguments)
 {
    _caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.Expect();
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string text = ZenUnit::Random<string>();
    //
-   _fileSystem.CreateTextFile(filePath, text);
+   _fileSystem.CreateFileWithText(filePath, text);
    //
    METALMOCK(_caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileSystem, &FileSystem::CreateBinaryOrTextFile, filePath, "w", text.data(), text.size()));
 }
 
-TEST(CreateBinaryFile_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
+TEST(CreateFileWithBytes_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
 {
    _caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.Expect();
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* bytes = ZenUnit::Random<const char*>();
    const size_t bytesSize = ZenUnit::Random<size_t>();
    //
-   _fileSystem.CreateBinaryFile(filePath, bytes, bytesSize);
+   _fileSystem.CreateFileWithBytes(filePath, bytes, bytesSize);
    //
    METALMOCK(_caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileSystem, &FileSystem::CreateBinaryOrTextFile, filePath, "wb", bytes, bytesSize));

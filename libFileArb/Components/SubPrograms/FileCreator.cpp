@@ -26,21 +26,21 @@ FileCreator::~FileCreator()
 {
 }
 
-void FileCreator::CreateBinaryFile(const FileArbArgs& args, const string& fileBytes)
+void FileCreator::CreateFileWithBytes(const FileArbArgs& args, const string& fileBytes)
 {
    _stopwatch->Start();
    const fs::path filePath = args.targetDirectoryPath / "binaryfile.bin";
-   _fileSystem->CreateBinaryFile(filePath, fileBytes.data(), fileBytes.size());
+   _fileSystem->CreateFileWithBytes(filePath, fileBytes.data(), fileBytes.size());
    const long long millisecondsToWriteFile = _stopwatch->StopAndGetElapsedMilliseconds();
    const string wroteFileMessage = String::ConcatValues("Wrote binary file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
    _console->ThreadIdWriteLine(wroteFileMessage);
 }
 
-void FileCreator::CreateTextFile(const FileArbArgs& args, const string& fileText)
+void FileCreator::CreateFileWithText(const FileArbArgs& args, const string& fileText)
 {
    _stopwatch->Start();
    const fs::path filePath = args.targetDirectoryPath / "textfile.txt";
-   _fileSystem->CreateTextFile(filePath, fileText);
+   _fileSystem->CreateFileWithText(filePath, fileText);
    const long long millisecondsToWriteFile = _stopwatch->StopAndGetElapsedMilliseconds();
    const string wroteFileMessage = String::ConcatValues("Wrote text file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
    _console->ThreadIdWriteLine(wroteFileMessage);
@@ -86,7 +86,7 @@ void FileCreator::CreateNumberedFileInDirectory(
    }
    const string fileName = String::ConcatValues("file", fileNumber, args.fileExtension);
    const fs::path filePath = directoryPath / fileName;
-   _fileSystem->CreateBinaryFile(filePath, fileTextOrBytes.data(), fileTextOrBytes.size());
+   _fileSystem->CreateFileWithBytes(filePath, fileTextOrBytes.data(), fileTextOrBytes.size());
    if (!args.quiet)
    {
       const long long millisecondsToWriteFile = threadUniqueCreateFileStopwatch->StopAndGetElapsedMilliseconds();

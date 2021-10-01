@@ -41,13 +41,13 @@ FileSystem::~FileSystem()
 
 // Behavior Functions
 
-void FileSystem::CreateTextFile(const fs::path& filePath, string_view text) const
+void FileSystem::CreateFileWithText(const fs::path& filePath, string_view text) const
 {
    _caller_CreateBinaryOrTextFile->CallConstMemberFunction(
       this, &FileSystem::CreateBinaryOrTextFile, filePath, "w", text.data(), text.size());
 }
 
-void FileSystem::CreateBinaryFile(const fs::path& filePath, const char* bytes, size_t bytesSize) const
+void FileSystem::CreateFileWithBytes(const fs::path& filePath, const char* bytes, size_t bytesSize) const
 {
    _caller_CreateBinaryOrTextFile->CallConstMemberFunction(
       this, &FileSystem::CreateBinaryOrTextFile, filePath, "wb", bytes, bytesSize);

@@ -4,7 +4,7 @@
 class FileCreatorMock : public Metal::Mock<FileCreator>
 {
 public:
-   METALMOCK_VOID2(CreateBinaryFile, const FileArbArgs&, const string&)
-   METALMOCK_VOID2(CreateTextFile, const FileArbArgs&, const string&)
+   METALMOCK_VOID2(CreateFileWithBytes, const FileArbArgs&, const string&)
+   METALMOCK_VOID2(CreateFileWithText, const FileArbArgs&, const string&)
    METALMOCK_VOID2(CreateFiles, const FileArbArgs&, const string&)
 };

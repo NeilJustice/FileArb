@@ -1,4 +1,8 @@
 #include "pch.h"
 #include "libFileArb/StaticUtilities/Type.h"
 
-unordered_map<const char*, string> Type::s_mangledToDemangledTypeNameCache;
+namespace Utils
+{
+   unordered_map<const char*, string> Type::s_mangledToDemangledTypeNameCache;
+}
+

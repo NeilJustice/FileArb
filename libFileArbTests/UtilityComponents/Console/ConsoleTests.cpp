@@ -11,12 +11,12 @@ EVIDENCE
 
 Utils::Console _console;
 // Mutable Components
-ConsoleColorerMock* _consoleColorerMock = nullptr;
+Utils::ConsoleColorerMock* _consoleColorerMock = nullptr;
 
 STARTUP
 {
    // Mutable Components
-   _console._consoleColorer.reset(_consoleColorerMock = new ConsoleColorerMock);
+   _console._consoleColorer.reset(_consoleColorerMock = new Utils::ConsoleColorerMock);
 }
 
 TEST(DefaultConstructor_NewsConsoleColorer)

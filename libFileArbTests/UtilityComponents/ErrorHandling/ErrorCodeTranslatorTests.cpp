@@ -15,7 +15,7 @@ AFACT(Windows__GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoVa
 #endif
 EVIDENCE
 
-ErrorCodeTranslator _errorCodeTranslator;
+Utils::ErrorCodeTranslator _errorCodeTranslator;
 
 // Function Pointers
 #if defined __linux__ || defined __APPLE__
@@ -48,15 +48,13 @@ TEST(GetLinuxErrno_ReturnsAddressOfErrno)
 
 TEST(DefaultConstructor_SetsFunctionPointers)
 {
-   const ErrorCodeTranslator errorCodeTranslator;
+   const Utils::ErrorCodeTranslator errorCodeTranslator{};
 #if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(GetLinuxErrno, errorCodeTranslator._call_errno);
    STD_FUNCTION_TARGETS(strerror_r, errorCodeTranslator._call_strerror_r);
 #elif _WIN32
    STD_FUNCTION_TARGETS(_errno, errorCodeTranslator._call_errno);
-   STD_FUNCTION_TARGETS_OVERLOAD(
-      ErrorCodeTranslator::strerror_s_function_type,
-      strerror_s, errorCodeTranslator._call_strerror_s);
+   STD_FUNCTION_TARGETS_OVERLOAD(Utils::ErrorCodeTranslator::strerror_s_function_type, strerror_s, errorCodeTranslator._call_strerror_s);
    STD_FUNCTION_TARGETS(GetLastError, errorCodeTranslator._call_GetLastError);
 #endif
 }
@@ -74,11 +72,11 @@ TEST(GetErrnoValue_ReturnsResultOfCallingErrnoFunction)
 
 TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
 {
-   class ErrorCodeTranslatorSelfMocked : public Metal::Mock<ErrorCodeTranslator>
+   class ErrorCodeTranslatorSelfMocked : public Metal::Mock<Utils::ErrorCodeTranslator>
    {
    public:
       METALMOCK_NONVOID0_FREE(int*, _call_errno)
-         ErrorCodeTranslatorSelfMocked()
+      ErrorCodeTranslatorSelfMocked()
       {
          _call_errno = BIND_0ARG_METALMOCK_OBJECT(_call_errnoMock);
       }
@@ -99,7 +97,7 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
 
 #if _WIN32
 
-class ErrorCodeTranslatorSelfMocked : public Metal::Mock<ErrorCodeTranslator>
+class ErrorCodeTranslatorSelfMocked : public Metal::Mock<Utils::ErrorCodeTranslator>
 {
 public:
    METALMOCK_NONVOID0_FREE(DWORD, _call_GetLastError)

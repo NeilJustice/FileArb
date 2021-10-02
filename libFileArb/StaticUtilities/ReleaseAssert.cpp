@@ -1,25 +1,28 @@
 #include "pch.h"
 #include "libFileArb/StaticUtilities/ReleaseAssert.h"
 
-NOINLINE void ThrowLogicError(
-   const char* predicateText,
-   const char* filePath,
-   long lineNumber,
-   const char* functionName)
+namespace Utils
 {
-   const string what = String::ConcatValues("release_assert(", predicateText, ") failed in ", functionName, "()\n", filePath, "(", lineNumber, ")");
-   throw logic_error(what);
-}
-
-void ReleaseAssert(
-   bool predicateResult,
-   const char* predicateText,
-   const char* filePath,
-   long lineNumber,
-   const char* functionName)
-{
-   if (!predicateResult)
+   NOINLINE void ThrowLogicError(
+      const char* predicateText,
+      const char* filePath,
+      long lineNumber,
+      const char* functionName)
    {
-      ThrowLogicError(predicateText, filePath, lineNumber, functionName);
+      const string what = Utils::String::ConcatValues("release_assert(", predicateText, ") failed in ", functionName, "()\n", filePath, "(", lineNumber, ")");
+      throw logic_error(what);
+   }
+
+   void ReleaseAssert(
+      bool predicateResult,
+      const char* predicateText,
+      const char* filePath,
+      long lineNumber,
+      const char* functionName)
+   {
+      if (!predicateResult)
+      {
+         ThrowLogicError(predicateText, filePath, lineNumber, functionName);
+      }
    }
 }

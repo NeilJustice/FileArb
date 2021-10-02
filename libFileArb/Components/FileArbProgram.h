@@ -6,10 +6,12 @@
 namespace Utils
 {
    class Console;
+
+   template<typename ReturnType, typename ClassType, typename ArgumentType>
+   class NonVoidOneArgTryCatchCaller;
+
+   class Stopwatch;
 }
-class Stopwatch;
-template<typename ReturnType, typename ClassType, typename ArgumentType>
-class NonVoidOneArgTryCatchCaller;
 class FileArbArgsParser;
 class FileArbSubProgramFactory;
 class FileCreator;
@@ -23,12 +25,12 @@ private:
    std::function<std::vector<std::string>(int, char**)> _call_Utils_Vector_FromArgcArgv;
    // Constant Components
    std::unique_ptr<const Utils::Console> _console;
-   std::unique_ptr<const NonVoidOneArgTryCatchCaller<int, FileArbProgram, const std::vector<std::string>&>> _nonVoidOneArgTryCatchCaller;
+   std::unique_ptr<const Utils::NonVoidOneArgTryCatchCaller<int, FileArbProgram, const std::vector<std::string>&>> _nonVoidOneArgTryCatchCaller;
    std::unique_ptr<const FileArbArgsParser> _argsParser;
    std::unique_ptr<const FileArbSubProgramFactory> _fileArbSubProgramFactory;
    // Mutable Components
    std::unique_ptr<FileCreator> _fileCreator;
-   std::unique_ptr<Stopwatch> _stopwatch;
+   std::unique_ptr<Utils::Stopwatch> _stopwatch;
 public:
    FileArbProgram();
    virtual ~FileArbProgram();

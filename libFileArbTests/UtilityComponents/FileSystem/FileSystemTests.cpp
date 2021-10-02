@@ -21,7 +21,7 @@ AFACT(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoVal
 #endif
 EVIDENCE
 
-FileSystem _fileSystem;
+Utils::FileSystem _fileSystem;
 // Function Pointers
 METALMOCK_NONVOID0_FREE(int*, _call_errno)
 METALMOCK_NONVOID1_FREE(int, _call_fclose, FILE*)
@@ -33,14 +33,14 @@ METALMOCK_NONVOID3_FREE(errno_t, _call_fopen_s, FILE**, const char*, const char*
 METALMOCK_NONVOID1_FREE(bool, _call_fs_create_directories, const fs::path&)
 METALMOCK_NONVOID4_FREE(size_t, _call_fwrite, const void*, size_t, size_t, FILE*)
 // Function Callers
-using _caller_CreateBinaryOrTextFileMockType = Utils::VoidFourArgMemberFunctionCallerMock<FileSystem, const fs::path&, const char*, const char*, size_t>;
+using _caller_CreateBinaryOrTextFileMockType = Utils::VoidFourArgMemberFunctionCallerMock<Utils::FileSystem, const fs::path&, const char*, const char*, size_t>;
 _caller_CreateBinaryOrTextFileMockType* _caller_CreateBinaryOrTextFileMock = nullptr;
 
-using _caller_OpenFileMockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<shared_ptr<FILE>, FileSystem, const fs::path&, const char*>;
+using _caller_OpenFileMockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<shared_ptr<FILE>, Utils::FileSystem, const fs::path&, const char*>;
 _caller_OpenFileMockType* _caller_OpenFileMock = nullptr;
 // Constant Components
-AsserterMock* _asserterMock = nullptr;
-ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
+Utils::AsserterMock* _asserterMock = nullptr;
+Utils::ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 
 STARTUP
 {
@@ -58,13 +58,13 @@ STARTUP
    _fileSystem._caller_CreateBinaryOrTextFile.reset(_caller_CreateBinaryOrTextFileMock = new _caller_CreateBinaryOrTextFileMockType);
    _fileSystem._caller_OpenFile.reset(_caller_OpenFileMock = new _caller_OpenFileMockType);
    // Constant Components
-   _fileSystem._asserter.reset(_asserterMock = new AsserterMock);
-   _fileSystem._errorCodeTranslator.reset(_errorCodeTranslatorMock = new ErrorCodeTranslatorMock);
+   _fileSystem._asserter.reset(_asserterMock = new Utils::AsserterMock);
+   _fileSystem._errorCodeTranslator.reset(_errorCodeTranslatorMock = new Utils::ErrorCodeTranslatorMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
-   FileSystem fileSystem;
+   Utils::FileSystem fileSystem{};
    // Function Pointers
    STD_FUNCTION_TARGETS(fclose, fileSystem._call_fclose);
 #if defined __linux__ || defined __APPLE__
@@ -73,7 +73,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 #elif _WIN32
    STD_FUNCTION_TARGETS(_errno, fileSystem._call_errno);
    STD_FUNCTION_TARGETS(fopen_s, fileSystem._call_fopen_s);
-   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CreateDirectoriesOverloadType, fs::create_directories, fileSystem._call_fs_create_directories);
+   STD_FUNCTION_TARGETS_OVERLOAD(Utils::FileSystem::CreateDirectoriesOverloadType, fs::create_directories, fileSystem._call_fs_create_directories);
 #endif
    STD_FUNCTION_TARGETS(fwrite, fileSystem._call_fwrite);
    // Function Callers
@@ -97,7 +97,7 @@ TEST(CreateFileWithText_CallsCreateBinaryOrTextFileWithTextFileArguments)
    _fileSystem.CreateFileWithText(filePath, text);
    //
    METALMOCK(_caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::CreateBinaryOrTextFile, filePath, "w", text.data(), text.size()));
+      &_fileSystem, &Utils::FileSystem::CreateBinaryOrTextFile, filePath, "w", text.data(), text.size()));
 }
 
 TEST(CreateFileWithBytes_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
@@ -110,7 +110,7 @@ TEST(CreateFileWithBytes_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
    _fileSystem.CreateFileWithBytes(filePath, bytes, bytesSize);
    //
    METALMOCK(_caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::CreateBinaryOrTextFile, filePath, "wb", bytes, bytesSize));
+      &_fileSystem, &Utils::FileSystem::CreateBinaryOrTextFile, filePath, "wb", bytes, bytesSize));
 }
 
 // Private Functions
@@ -134,7 +134,7 @@ TEST(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpec
    //
    const fs::path expectedParentDirectoryPath = filePath.parent_path();
    METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath));
-   METALMOCK(_caller_OpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &FileSystem::OpenFile, filePath, fileOpenMode));
+   METALMOCK(_caller_OpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &Utils::FileSystem::OpenFile, filePath, fileOpenMode));
    METALMOCK(_call_fwriteMock.CalledOnceWith(bytes.data(), 1, bytes.size(), filePointer.get()));
    METALMOCK(_asserterMock->ThrowIfSizeTValuesNotEqualMock.CalledOnceWith(numberOfBytesWritten, bytes.size(), "fwrite unexpectedly did not return bytesSize"));
 }
@@ -182,7 +182,7 @@ TEST(OpenFile_FOpenReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoVa
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
    //
-   const string expectedExceptionMessage = String::ConcatValues(
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
       "fopen(filePath.string().c_str(), fileOpenMode) returned nullptr. ",
       "filePath=\"", filePath.string(), "\". fileOpenMode=\"", fileOpenMode,
       "\". errno=", errnoValue, " (", errnoDescription, ").");
@@ -270,7 +270,7 @@ TEST(OpenFile_FOpenSReturnsNon0_ThrowsRuntimeErrorExceptionWithReadableErrnoValu
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
    //
-   const string expectedExceptionMessage = String::ConcatValues(
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
       "fopen_s(&openedFile, filePath.string().c_str(), fileOpenMode) returned non-0: ", _fopen_s_CallHistory.returnValue,
       ". filePath=\"", filePath.string(), "\". fileOpenMode=\"", fileOpenMode,
       "\". errno=", errnoValue, " (", errnoDescription, ").");

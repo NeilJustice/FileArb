@@ -19,7 +19,7 @@ using PairStringStringType = pair<string, string>;
 METALMOCK_NONVOID4_STATIC(PairStringStringType, FileArbArgsParser, _call_GetFileNamePrefixAndFileExtension, bool, bool, bool, bool)
 // Constant Components
 BytesStringConverterMock* _bytesStringConverterMock = nullptr;
-DocoptParserMock* _docoptParserMock = nullptr;
+Utils::DocoptParserMock* _docoptParserMock = nullptr;
 
 using DocoptMapType = map<string, docopt::Value>;
 
@@ -30,7 +30,7 @@ STARTUP
    _fileArbArgsParser._call_GetFileNamePrefixAndFileExtension = BIND_4ARG_METALMOCK_OBJECT(_call_GetFileNamePrefixAndFileExtensionMock);
    // Constant Components
    _fileArbArgsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
-   _fileArbArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
+   _fileArbArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
@@ -103,7 +103,7 @@ TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
    const FileArbArgs args = _fileArbArgsParser.ParseArgs(stringArgs);
    //
    FileArbArgs expectedArgs;
-   expectedArgs.commandLine = Vector::JoinWithSeparator(stringArgs, ' ');
+   expectedArgs.commandLine = Utils::Vector::JoinWithSeparator(stringArgs, ' ');
    expectedArgs.programMode = programMode;
    expectedArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
    expectedArgs.fileExtension = fileNamePrefixAndFileExtension.second;

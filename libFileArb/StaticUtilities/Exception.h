@@ -1,8 +1,11 @@
 #pragma once
 
-class Exception
+namespace Utils
 {
-public:
-   static string GetClassNameAndMessage(const exception* ex);
-   Exception() = delete;
-};
+   class Exception
+   {
+   public:
+      static string GetClassNameAndMessage(const exception* ex);
+      Exception() = delete;
+   };
+}

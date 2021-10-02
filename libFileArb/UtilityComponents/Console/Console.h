@@ -1,9 +1,10 @@
 #pragma once
-class ConsoleColorer;
 class ConsoleTests;
 
 namespace Utils
 {
+   class ConsoleColorer;
+
    class Console
    {
       friend class ::ConsoleTests;

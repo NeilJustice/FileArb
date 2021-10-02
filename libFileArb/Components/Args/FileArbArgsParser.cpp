@@ -11,7 +11,7 @@ FileArbArgsParser::FileArbArgsParser()
    , _call_GetFileNamePrefixAndFileExtension(FileArbArgsParser::GetFileNamePrefixAndFileExtension)
    // Constant Components
    , _bytesStringConverter(make_unique<BytesStringConverter>())
-   , _docoptParser(make_unique<DocoptParser>())
+   , _docoptParser(make_unique<Utils::DocoptParser>())
 {
 }
 
@@ -22,7 +22,7 @@ FileArbArgsParser::~FileArbArgsParser()
 FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
 {
    FileArbArgs args;
-   args.commandLine = Vector::JoinWithSeparator(stringArgs, ' ');
+   args.commandLine = Utils::Vector::JoinWithSeparator(stringArgs, ' ');
    const map<string, docopt::Value> docoptValues = _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage, stringArgs);
    const bool isCreateBinaryFileMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-file");
    const bool isCreateBinaryFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-files");

@@ -38,13 +38,13 @@ public:
 
    int ExceptionHandlerMemberFunction(const exception& ex, ArgumentType argument)
    {
-      const string exceptionClassNameAndMessage = Exception::GetClassNameAndMessage(&ex);
+      const string exceptionClassNameAndMessage = Utils::Exception::GetClassNameAndMessage(&ex);
       exceptionHandlerCalls.emplace_back(exceptionClassNameAndMessage, argument);
       return exceptionHandlerExitCode;
    }
 };
 
-NonVoidOneArgTryCatchCaller<int, Class, ArgumentType> _nonVoidOneArgTryCatchCaller;
+Utils::NonVoidOneArgTryCatchCaller<int, Class, ArgumentType> _nonVoidOneArgTryCatchCaller;
 Class _nonConstClassInstance;
 
 TEST(TryCatchCallNonConstMemberFunction_CallsFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
@@ -69,7 +69,7 @@ TEST(TryCatchCallNonConstMemberFunction_CallsFunctionWhichThrowsException_CallsE
    //
    VECTORS_ARE_EQUAL({ argument }, _nonConstClassInstance.calls);
    const ExceptionType ex(_nonConstClassInstance.exceptionWhat.c_str());
-   const string exceptionClassNameAndMessage = Exception::GetClassNameAndMessage(&ex);
+   const string exceptionClassNameAndMessage = Utils::Exception::GetClassNameAndMessage(&ex);
    const vector<pair<string, ArgumentType>> expectedExceptionHandlerCalls =
    {
       { exceptionClassNameAndMessage, argument }

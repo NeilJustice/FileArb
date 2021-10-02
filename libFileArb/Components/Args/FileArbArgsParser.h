@@ -1,6 +1,9 @@
 #pragma once
+namespace Utils
+{
+   class DocoptParser;
+}
 class BytesStringConverter;
-class DocoptParser;
 
 class FileArbArgsParser
 {
@@ -11,7 +14,7 @@ private:
    function<pair<string, string>(bool, bool, bool, bool)> _call_GetFileNamePrefixAndFileExtension;
    // Constant Components
    unique_ptr<const BytesStringConverter> _bytesStringConverter;
-   unique_ptr<const DocoptParser> _docoptParser;
+   unique_ptr<const Utils::DocoptParser> _docoptParser;
 public:
    FileArbArgsParser();
    virtual ~FileArbArgsParser();

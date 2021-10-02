@@ -1,24 +1,27 @@
 #include "pch.h"
 #include "libFileArb/UtilityComponents/Misc/Asserter.h"
 
-void Asserter::ThrowIfIntsNotEqual(int expectedInt, int actualInt, string_view message) const
+namespace Utils
 {
-   if (actualInt != expectedInt)
+   void Asserter::ThrowIfIntsNotEqual(int expectedInt, int actualInt, string_view message) const
    {
-      const string exceptionMessage = String::ConcatValues(
-         "Asserter::ThrowIfIntsNotEqual(int expected, int actual, string_view message) failed. ",
-         "expectedInt=", expectedInt, ", actualInt=", actualInt, ", message=\"", message, "\"");
-      throw runtime_error(exceptionMessage);
+      if (actualInt != expectedInt)
+      {
+         const string exceptionMessage = Utils::String::ConcatValues(
+            "Asserter::ThrowIfIntsNotEqual(int expected, int actual, string_view message) failed. ",
+            "expectedInt=", expectedInt, ", actualInt=", actualInt, ", message=\"", message, "\"");
+         throw runtime_error(exceptionMessage);
+      }
    }
-}
 
-void Asserter::ThrowIfSizeTValuesNotEqual(size_t expectedSizeT, size_t actualSizeT, string_view message) const
-{
-   if (actualSizeT != expectedSizeT)
+   void Asserter::ThrowIfSizeTValuesNotEqual(size_t expectedSizeT, size_t actualSizeT, string_view message) const
    {
-      const string exceptionMessage = String::ConcatValues(
-         "Asserter::ThrowIfSizeTValuesNotEqual(size_t expectedSizeT, size_t actualSizeT, string_view message) failed. ",
-         "expectedSizeT=", expectedSizeT, ", actualSizeT=", actualSizeT, ", message=\"", message, "\"");
-      throw runtime_error(exceptionMessage);
+      if (actualSizeT != expectedSizeT)
+      {
+         const string exceptionMessage = Utils::String::ConcatValues(
+            "Asserter::ThrowIfSizeTValuesNotEqual(size_t expectedSizeT, size_t actualSizeT, string_view message) failed. ",
+            "expectedSizeT=", expectedSizeT, ", actualSizeT=", actualSizeT, ", message=\"", message, "\"");
+         throw runtime_error(exceptionMessage);
+      }
    }
 }

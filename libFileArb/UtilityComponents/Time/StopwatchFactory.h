@@ -1,9 +1,13 @@
 #pragma once
-class Stopwatch;
 
-class StopwatchFactory
+namespace Utils
 {
-public:
-   virtual shared_ptr<Stopwatch> NewStopwatch() const;
-   virtual ~StopwatchFactory() = default;
-};
+   class Stopwatch;
+
+   class StopwatchFactory
+   {
+   public:
+      virtual shared_ptr<Stopwatch> NewStopwatch() const;
+      virtual ~StopwatchFactory() = default;
+   };
+}

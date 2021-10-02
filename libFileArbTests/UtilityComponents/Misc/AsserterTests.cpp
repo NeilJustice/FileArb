@@ -8,7 +8,7 @@ AFACT(ThrowIfSizeTValuesNotEqual_SizeTValuesAreEqual_DoesNothing)
 AFACT(ThrowIfSizeTValuesNotEqual_SizeTValuesAreNotEqual_ThrowsRuntimeError)
 EVIDENCE
 
-Asserter _asserter;
+Utils::Asserter _asserter;
 
 TEST(ThrowIfIntsNotEqual_IntsAreEqual_DoesNotThrowException)
 {
@@ -25,7 +25,7 @@ TEST(ThrowIfIntsNotEqual_IntsAreNotEqual_ThrowsRuntimeError)
    const int actualInt = ZenUnit::RandomNotEqualToValue(expectedInt);
    const string message = ZenUnit::Random<string>();
    //
-   const string expectedExceptionMessage = String::ConcatValues(
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
       "Asserter::ThrowIfIntsNotEqual(int expected, int actual, string_view message) failed. ",
       "expectedInt=", expectedInt, ", actualInt=", actualInt, ", message=\"", message, "\"");
    THROWS_EXCEPTION(_asserter.ThrowIfIntsNotEqual(expectedInt, actualInt, message),
@@ -47,7 +47,7 @@ TEST(ThrowIfSizeTValuesNotEqual_SizeTValuesAreNotEqual_ThrowsRuntimeError)
    const size_t actualSizeT = expectedSizeT - 1;
    const string message = ZenUnit::Random<string>();
    //
-   const string expectedExceptionMessage = String::ConcatValues(
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
       "Asserter::ThrowIfSizeTValuesNotEqual(size_t expectedSizeT, size_t actualSizeT, string_view message) failed. ",
       "expectedSizeT=", expectedSizeT, ", actualSizeT=", actualSizeT, ", message=\"", message, "\"");
    THROWS_EXCEPTION(_asserter.ThrowIfSizeTValuesNotEqual(expectedSizeT, actualSizeT, message),

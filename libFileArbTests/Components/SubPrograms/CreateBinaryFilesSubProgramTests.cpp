@@ -28,8 +28,8 @@ TEST(DefaultConstructor_NewsComponents)
 {
    CreateBinaryFilesSubProgram createBinaryFilesSubProgram;
    // Base Class Constant Components
-   DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._protected_console);
-   DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._protected_fileSystem);
+   DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._console);
+   DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._fileSystem);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._binaryFileBytesMaker);
    // Mutable Components

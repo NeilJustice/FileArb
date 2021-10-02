@@ -28,10 +28,10 @@ using VoidThreeArgMemberFunctionCallerMockType = Utils::VoidThreeArgMemberFuncti
 VoidThreeArgMemberFunctionCallerMockType* _caller_CreateNumberedFileInDirectoryMock = nullptr;
 // Constant Components
 Utils::ConsoleMock* _consoleMock = nullptr;
-FileSystemMock* _fileSystemMock = nullptr;
-StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
+Utils::FileSystemMock* _fileSystemMock = nullptr;
+Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 // Mutable Components
-StopwatchMock* _stopwatchMock = nullptr;
+Utils::StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
@@ -40,10 +40,10 @@ STARTUP
    _fileCreator._caller_CreateNumberedFileInDirectory.reset(_caller_CreateNumberedFileInDirectoryMock = new VoidThreeArgMemberFunctionCallerMockType);
    // Constant Components
    _fileCreator._console.reset(_consoleMock = new Utils::ConsoleMock);
-   _fileCreator._fileSystem.reset(_fileSystemMock = new FileSystemMock);
-   _fileCreator._stopwatchFactory.reset(_stopwatchFactoryMock = new StopwatchFactoryMock);
+   _fileCreator._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
+   _fileCreator._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
    // Mutable Components
-   _fileCreator._stopwatch.reset(_stopwatchMock = new StopwatchMock);
+   _fileCreator._stopwatch.reset(_stopwatchMock = new Utils::StopwatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
@@ -72,7 +72,7 @@ TEST(CreateFileWithBytes_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBin
    _fileCreator.CreateFileWithBytes(args, fileBytes);
    //
    const fs::path expectedFilePath = args.targetDirectoryPath / "binaryfile.bin";
-   const string expectedWroteFileMessage = String::ConcatValues("Wrote binary file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
+   const string expectedWroteFileMessage = Utils::String::ConcatValues("Wrote binary file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
    METALMOCKTHEN(_fileSystemMock->CreateFileWithBytesMock.CalledOnceWith(expectedFilePath, fileBytes.data(), fileBytes.size()))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
@@ -91,7 +91,7 @@ TEST(CreateFileWithText_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
    _fileCreator.CreateFileWithText(args, fileText);
    //
    const fs::path expectedFilePath = args.targetDirectoryPath / "textfile.txt";
-   const string expectedWroteFileMessage = String::ConcatValues("Wrote text file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
+   const string expectedWroteFileMessage = Utils::String::ConcatValues("Wrote text file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
    METALMOCKTHEN(_fileSystemMock->CreateFileWithTextMock.CalledOnceWith(expectedFilePath, fileText))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
@@ -142,7 +142,7 @@ TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_DoesSo)
 
 TEST(CreateNumberedFileInDirectory_QuietIsFalse_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)
 {
-   shared_ptr<StopwatchMock> threadUniqueCreateFileStopwatchMock = make_shared<StopwatchMock>();
+   shared_ptr<Utils::StopwatchMock> threadUniqueCreateFileStopwatchMock = make_shared<Utils::StopwatchMock>();
    threadUniqueCreateFileStopwatchMock->StartMock.Expect();
    const long long millisecondsToWriteFile = threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    _stopwatchFactoryMock->NewStopwatchMock.Return(threadUniqueCreateFileStopwatchMock);
@@ -160,9 +160,9 @@ TEST(CreateNumberedFileInDirectory_QuietIsFalse_CreatesFile_WritesWroteFileMessa
    _fileCreator.CreateNumberedFileInDirectory(callIndex, directoryPath, args, fileTextOrBytes);
    //
    const size_t expectedFileNumber = callIndex + 1;
-   const string expectedFileName = String::ConcatValues("file", expectedFileNumber, args.fileExtension);
+   const string expectedFileName = Utils::String::ConcatValues("file", expectedFileNumber, args.fileExtension);
    const fs::path expectedFilePath = directoryPath / expectedFileName;
-   const string expectedWroteFileMessage = String::ConcatValues(
+   const string expectedWroteFileMessage = Utils::String::ConcatValues(
       "Wrote file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
    METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(threadUniqueCreateFileStopwatchMock->StartMock.CalledOnce())).Then(
@@ -184,7 +184,7 @@ TEST(CreateNumberedFileInDirectory_QuietIsTrue_CreatesFile_DoesNotWriteWroteFile
    _fileCreator.CreateNumberedFileInDirectory(callIndex, directoryPath, args, fileTextOrBytes);
    //
    const size_t expectedFileNumber = callIndex + 1;
-   const string expectedFileName = String::ConcatValues("file", expectedFileNumber, args.fileExtension);
+   const string expectedFileName = Utils::String::ConcatValues("file", expectedFileNumber, args.fileExtension);
    const fs::path expectedFilePath = directoryPath / expectedFileName;
    METALMOCK(_fileSystemMock->CreateFileWithBytesMock.CalledOnceWith(expectedFilePath, fileTextOrBytes.data(), fileTextOrBytes.size()));
 }

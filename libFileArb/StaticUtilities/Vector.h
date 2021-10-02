@@ -1,46 +1,49 @@
 #pragma once
 
-class Vector
+namespace Utils
 {
-public:
-   static std::vector<std::string> FromArgcArgv(int argc, char** argv);
-
-   template<typename T>
-   static std::string JoinWithSeparator(const std::vector<T>& vec, char separator)
+   class Vector
    {
-      const size_t vectorSize = vec.size();
-      if (vectorSize == 0)
-      {
-         return std::string();
-      }
-      std::ostringstream oss;
-      for (size_t i = 0; i < vectorSize; ++i)
-      {
-         const T& element = vec[i];
-         oss << element;
-         if (i < vectorSize - 1)
-         {
-            oss << separator;
-         }
-      }
-      std::string joinedVectorString = oss.str();
-      return joinedVectorString;
-   }
+   public:
+      static std::vector<std::string> FromArgcArgv(int argc, char** argv);
 
-   template<typename T>
-   static bool Contains(const std::vector<T>& v, const T& element)
-   {
-      const size_t size = v.size();
-      for (size_t i = 0; i < size; ++i)
+      template<typename T>
+      static std::string JoinWithSeparator(const std::vector<T>& vec, char separator)
       {
-         const T& vectorElement = v[i];
-         if (vectorElement == element)
+         const size_t vectorSize = vec.size();
+         if (vectorSize == 0)
          {
-            return true;
+            return std::string();
          }
+         std::ostringstream oss;
+         for (size_t i = 0; i < vectorSize; ++i)
+         {
+            const T& element = vec[i];
+            oss << element;
+            if (i < vectorSize - 1)
+            {
+               oss << separator;
+            }
+         }
+         std::string joinedVectorString = oss.str();
+         return joinedVectorString;
       }
-      return false;
-   }
 
-   Vector() = delete;
-};
+      template<typename T>
+      static bool Contains(const std::vector<T>& v, const T& element)
+      {
+         const size_t size = v.size();
+         for (size_t i = 0; i < size; ++i)
+         {
+            const T& vectorElement = v[i];
+            if (vectorElement == element)
+            {
+               return true;
+            }
+         }
+         return false;
+      }
+
+      Vector() = delete;
+   };
+}

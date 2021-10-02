@@ -12,16 +12,16 @@
 
 FileArbProgram::FileArbProgram()
    // Function Pointers
-   : _call_Utils_Exception_ClassNameAndMessage(Exception::GetClassNameAndMessage)
-   , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
+   : _call_Utils_Exception_ClassNameAndMessage(Utils::Exception::GetClassNameAndMessage)
+   , _call_Utils_Vector_FromArgcArgv(Utils::Vector::FromArgcArgv)
    // Constant Components
    , _console(make_unique<Utils::Console>())
-   , _nonVoidOneArgTryCatchCaller(make_unique<NonVoidOneArgTryCatchCaller<int, FileArbProgram, const vector<string>&>>())
+   , _nonVoidOneArgTryCatchCaller(make_unique<Utils::NonVoidOneArgTryCatchCaller<int, FileArbProgram, const vector<string>&>>())
    , _argsParser(make_unique<FileArbArgsParser>())
    , _fileArbSubProgramFactory(make_unique<FileArbSubProgramFactory>())
    // Mutable Components
    , _fileCreator(make_unique<FileCreator>())
-   , _stopwatch(make_unique<Stopwatch>())
+   , _stopwatch(make_unique<Utils::Stopwatch>())
 {
 }
 
@@ -41,9 +41,9 @@ int FileArbProgram::Main(int argc, char* argv[])
    const int subProgramExitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallNonConstMemberFunction(
       this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
    const string runtimeInSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string durationLine = String::ConcatStrings("Duration: ", runtimeInSeconds, " seconds");
+   const string durationLine = Utils::String::ConcatStrings("Duration: ", runtimeInSeconds, " seconds");
    _console->ThreadIdWriteLine(durationLine);
-   const string exitCodeLine = String::ConcatValues("ExitCode: ", subProgramExitCode);
+   const string exitCodeLine = Utils::String::ConcatValues("ExitCode: ", subProgramExitCode);
    _console->ThreadIdWriteLine(exitCodeLine);
    return subProgramExitCode;
 }

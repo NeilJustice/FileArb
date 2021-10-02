@@ -12,7 +12,7 @@ AFACT(CallOperator_FILEPlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichRe
 #endif
 EVIDENCE
 
-FCloseDeleter _fcloseDeleter;
+Utils::FCloseDeleter _fcloseDeleter;
 // Function Pointers
 METALMOCK_NONVOID1_FREE(int, _call_fclose, FILE*)
 
@@ -24,7 +24,7 @@ STARTUP
 
 TEST(DefaultConstructor_SetsFCloseFunctionPointer)
 {
-   const FCloseDeleter fcloseDeleter;
+   const Utils::FCloseDeleter fcloseDeleter{};
    // Function Pointers
    STD_FUNCTION_TARGETS(fclose, fcloseDeleter._call_fclose);
 }
@@ -47,7 +47,7 @@ TEST(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturnsNon0
    _call_fcloseMock.Return(fcloseReturnValue);
    FILE* const rawFilePointer = tmpfile();
    //
-   const string expectedExceptionMessage = String::ConcatValues("fclose(rawFilePointer) returned ", fcloseReturnValue);
+   const string expectedExceptionMessage = Utils::String::ConcatValues("fclose(rawFilePointer) returned ", fcloseReturnValue);
    THROWS_EXCEPTION(_fcloseDeleter(rawFilePointer),
       runtime_error, expectedExceptionMessage);
    //
@@ -74,7 +74,7 @@ TEST(CallOperator_FILEPlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichRet
    FILE* rawFilePointer{};
    tmpfile_s(&rawFilePointer);
    //
-   const string expectedExceptionMessage = String::ConcatValues("fclose(rawFilePointer) returned ", fcloseReturnValue);
+   const string expectedExceptionMessage = Utils::String::ConcatValues("fclose(rawFilePointer) returned ", fcloseReturnValue);
    THROWS_EXCEPTION(_fcloseDeleter(rawFilePointer),
       runtime_error, expectedExceptionMessage);
    //

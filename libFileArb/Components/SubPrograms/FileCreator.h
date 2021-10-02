@@ -2,17 +2,17 @@
 namespace Utils
 {
    class Console;
+   class FileSystem;
 
    template<typename ClassType, typename Arg1Type, typename Arg2Type>
    class VoidTwoArgMemberFunctionCaller;
 
    template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
    class VoidThreeArgMemberFunctionCaller;
+
+   class Stopwatch;
+   class StopwatchFactory;
 }
-class FileSystem;
-struct FileArbArgs;
-class Stopwatch;
-class StopwatchFactory;
 
 class FileCreator
 {
@@ -27,11 +27,11 @@ private:
 
    // Constant Components
    unique_ptr<const Utils::Console> _console;
-   unique_ptr<const FileSystem> _fileSystem;
-   unique_ptr<const StopwatchFactory> _stopwatchFactory;
+   unique_ptr<const Utils::FileSystem> _fileSystem;
+   unique_ptr<const Utils::StopwatchFactory> _stopwatchFactory;
 
    // Mutable Components
-   unique_ptr<Stopwatch> _stopwatch;
+   unique_ptr<Utils::Stopwatch> _stopwatch;
 public:
    FileCreator();
    virtual ~FileCreator();

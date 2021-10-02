@@ -6,7 +6,7 @@ namespace Utils
 {
    Console::Console()
       // Mutable Components
-      : _consoleColorer(make_unique<ConsoleColorer>())
+      : _consoleColorer(make_unique<Utils::ConsoleColorer>())
    {
    }
 

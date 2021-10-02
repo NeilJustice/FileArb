@@ -1,26 +1,29 @@
 #pragma once
 
-template<typename ReturnType, typename ClassType, typename ArgumentType>
-class NonVoidOneArgTryCatchCaller
+namespace Utils
 {
-public:
-   virtual int TryCatchCallNonConstMemberFunction(
-      ClassType* nonConstClassPointer,
-      int (ClassType::*nonConstMemberFunction)(ArgumentType),
-      ArgumentType argument,
-      int (ClassType::*exceptionHandlerMemberFunction)(const exception&, ArgumentType)) const
+   template<typename ReturnType, typename ClassType, typename ArgumentType>
+   class NonVoidOneArgTryCatchCaller
    {
-      try
+   public:
+      virtual int TryCatchCallNonConstMemberFunction(
+         ClassType* nonConstClassPointer,
+         int (ClassType::*nonConstMemberFunction)(ArgumentType),
+         ArgumentType argument,
+         int (ClassType::*exceptionHandlerMemberFunction)(const exception&, ArgumentType)) const
       {
-         const int exitCode = (nonConstClassPointer->*nonConstMemberFunction)(argument);
-         return exitCode;
+         try
+         {
+            const int exitCode = (nonConstClassPointer->*nonConstMemberFunction)(argument);
+            return exitCode;
+         }
+         catch (const exception& ex)
+         {
+            const int exceptionHandlerExitCode = (nonConstClassPointer->*exceptionHandlerMemberFunction)(ex, argument);
+            return exceptionHandlerExitCode;
+         }
       }
-      catch (const exception& ex)
-      {
-         const int exceptionHandlerExitCode = (nonConstClassPointer->*exceptionHandlerMemberFunction)(ex, argument);
-         return exceptionHandlerExitCode;
-      }
-   }
 
-   virtual ~NonVoidOneArgTryCatchCaller() = default;
-};
+      virtual ~NonVoidOneArgTryCatchCaller() = default;
+   };
+}

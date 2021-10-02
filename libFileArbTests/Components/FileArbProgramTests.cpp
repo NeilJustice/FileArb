@@ -22,7 +22,7 @@ FileArbProgram _fileArbProgram;
 METALMOCK_NONVOID2_FREE(vector<string>, _call_Vector_FromArgcArgv, int, char**)
 METALMOCK_NONVOID1_FREE(string, _call_Exception_GetClassNameAndMessage, const exception*)
 // Constant Components
-ConsoleMock* _consoleMock = nullptr;
+Utils::ConsoleMock* _consoleMock = nullptr;
 NonVoidOneArgTryCatchCallerMock<int, FileArbProgram, const vector<string>&>* _nonVoidOneArgTryCatchCallerMock = nullptr;
 StopwatchMock* _stopwatchMock = nullptr;
 FileArbArgsParserMock* _argsParserMock = nullptr;
@@ -36,7 +36,7 @@ STARTUP
    _fileArbProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(_call_Vector_FromArgcArgvMock);
    _fileArbProgram._call_Utils_Exception_ClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(_call_Exception_GetClassNameAndMessageMock);
    // Constant Components
-   _fileArbProgram._console.reset(_consoleMock = new ConsoleMock);
+   _fileArbProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
    _fileArbProgram._nonVoidOneArgTryCatchCaller.reset(_nonVoidOneArgTryCatchCallerMock = new NonVoidOneArgTryCatchCallerMock<int, FileArbProgram, const vector<string>&>);
    _fileArbProgram._argsParser.reset(_argsParserMock = new FileArbArgsParserMock);
    _fileArbProgram._fileArbSubProgramFactory.reset(_fileArbSubProgramFactoryMock = new FileArbSubProgramFactoryMock);

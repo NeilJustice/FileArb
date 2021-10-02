@@ -3,44 +3,46 @@
 
 template<typename Arg1Type, typename Arg2Type, typename Arg3Type>
 TEMPLATE_TESTS(VoidThreeArgMemberFunctionCallerTests, Arg1Type, Arg2Type, Arg3Type)
-AFACT(CallNonConstMemberFunctionNTimes_NIs0_CallsFunctionZeroTimes)
-AFACT(CallNonConstMemberFunctionNTimes_NIs2_CallsFunctionTwice)
+AFACT(CallConstMemberFunctionNTimes_NIs0_CallsFunctionZeroTimes)
+AFACT(CallConstMemberFunctionNTimes_NIs2_CallsFunctionTwice)
 EVIDENCE
 
-class Class
+class TestingClass
 {
 public:
-   vector<tuple<size_t, Arg1Type, Arg2Type, Arg3Type>> functionArguments;
+   mutable vector<tuple<size_t, Arg1Type, Arg2Type, Arg3Type>> functionArguments;
 
-   void NonConstTwoArgMemberFunction(size_t callIndex, Arg1Type arg1, Arg2Type arg2, Arg3Type arg3)
+   void ConstTwoArgMemberFunction(size_t callIndex, Arg1Type arg1, Arg2Type arg2, Arg3Type arg3) const
    {
       functionArguments.push_back(make_tuple(callIndex, arg1, arg2, arg3));
    }
 };
 
-VoidThreeArgMemberFunctionCaller<Class, Arg1Type, Arg2Type, Arg3Type> _voidThreeArgMemberFunctionCaller;
-Class _classInstance;
+const Utils::VoidThreeArgMemberFunctionCaller<TestingClass, Arg1Type, Arg2Type, Arg3Type> _voidThreeArgMemberFunctionCaller;
+const TestingClass _constClassInstance;
 
-TEST(CallNonConstMemberFunctionNTimes_NIs0_CallsFunctionZeroTimes)
+TEST(CallConstMemberFunctionNTimes_NIs0_CallsFunctionZeroTimes)
 {
-   _voidThreeArgMemberFunctionCaller.CallNonConstMemberFunctionNTimes(
-      0ull, &Class::NonConstTwoArgMemberFunction, &_classInstance, Arg1Type{}, Arg2Type{}, Arg3Type{});
-   IS_EMPTY(_classInstance.functionArguments);
+   _voidThreeArgMemberFunctionCaller.CallConstMemberFunctionNTimes(
+      0ULL, &_constClassInstance, &TestingClass::ConstTwoArgMemberFunction, Arg1Type{}, Arg2Type{}, Arg3Type{});
+   IS_EMPTY(_constClassInstance.functionArguments);
 }
 
-TEST(CallNonConstMemberFunctionNTimes_NIs2_CallsFunctionTwice)
+TEST(CallConstMemberFunctionNTimes_NIs2_CallsFunctionTwice)
 {
    const Arg1Type arg1 = ZenUnit::Random<Arg1Type>();
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    const Arg3Type arg3 = ZenUnit::Random<Arg3Type>();
    //
-   _voidThreeArgMemberFunctionCaller.CallNonConstMemberFunctionNTimes(
-      2ull, &Class::NonConstTwoArgMemberFunction, &_classInstance, arg1, arg2, arg3);
+   _voidThreeArgMemberFunctionCaller.CallConstMemberFunctionNTimes(
+      2ULL, &_constClassInstance, &TestingClass::ConstTwoArgMemberFunction, arg1, arg2, arg3);
    //
-   vector<tuple<size_t, Arg1Type, Arg2Type, Arg3Type>> expectedFunctionArguments;
-   expectedFunctionArguments.push_back(make_tuple(0ull, arg1, arg2, arg3));
-   expectedFunctionArguments.push_back(make_tuple(1ull, arg1, arg2, arg3));
-   VECTORS_ARE_EQUAL(expectedFunctionArguments, _classInstance.functionArguments);
+   const vector<tuple<size_t, Arg1Type, Arg2Type, Arg3Type>> expectedFunctionArguments =
+   {
+      { make_tuple(0ULL, arg1, arg2, arg3) },
+      { make_tuple(1ULL, arg1, arg2, arg3) }
+   };
+   VECTORS_ARE_EQUAL(expectedFunctionArguments, _constClassInstance.functionArguments);
 }
 
 RUN_TEMPLATE_TESTS(VoidThreeArgMemberFunctionCallerTests, int, double, char)

@@ -6,7 +6,7 @@ TEMPLATE_TESTS(NonVoidTwoArgMemberFunctionCallerTests, ReturnType, Arg1Type, Arg
 AFACT(CallConstMemberFunction_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnValue)
 EVIDENCE
 
-class Class
+class TestingClass
 {
 public:
    mutable vector<pair<Arg1Type, Arg2Type>> calls;
@@ -20,7 +20,7 @@ public:
    }
 };
 
-NonVoidTwoArgMemberFunctionCaller<ReturnType, Class, Arg1Type, Arg2Type> _nonVoidTwoArgMemberFunctionCaller;
+Utils::NonVoidTwoArgMemberFunctionCaller<ReturnType, TestingClass, Arg1Type, Arg2Type> _nonVoidTwoArgMemberFunctionCaller;
 Arg1Type _arg1 = {};
 Arg2Type _arg2 = {};
 
@@ -32,10 +32,10 @@ STARTUP
 
 TEST(CallConstMemberFunction_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnValue)
 {
-   const Class constClassInstance{};
+   const TestingClass constClassInstance{};
    //
    const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.CallConstMemberFunction(
-      &constClassInstance, &Class::NonVoidConstMemberFunction, _arg1, _arg2);
+      &constClassInstance, &TestingClass::NonVoidConstMemberFunction, _arg1, _arg2);
    //
    const vector<pair<Arg1Type, Arg2Type>> expectedCalls =
    {

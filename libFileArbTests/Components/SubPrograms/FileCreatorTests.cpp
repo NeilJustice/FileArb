@@ -21,13 +21,13 @@ EVIDENCE
 
 FileCreator _fileCreator;
 // Function Callers
-using VoidTwoArgMemberFunctionCallerMockType = VoidTwoArgMemberFunctionCallerMock<FileCreator, const FileArbArgs&, const string&>;
+using VoidTwoArgMemberFunctionCallerMockType = Utils::VoidTwoArgMemberFunctionCallerMock<FileCreator, const FileArbArgs&, const string&>;
 VoidTwoArgMemberFunctionCallerMockType* _caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock = nullptr;
 
-using VoidThreeArgMemberFunctionCallerMockType = VoidThreeArgMemberFunctionCallerMock<FileCreator, const fs::path&, const FileArbArgs&, const string&>;
+using VoidThreeArgMemberFunctionCallerMockType = Utils::VoidThreeArgMemberFunctionCallerMock<FileCreator, const fs::path&, const FileArbArgs&, const string&>;
 VoidThreeArgMemberFunctionCallerMockType* _caller_CreateNumberedFileInDirectoryMock = nullptr;
 // Constant Components
-ConsoleMock* _consoleMock = nullptr;
+Utils::ConsoleMock* _consoleMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 // Mutable Components
@@ -39,7 +39,7 @@ STARTUP
    _fileCreator._caller_CreateSequentiallyNumberedFilesInNumberedDirectory.reset(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock = new VoidTwoArgMemberFunctionCallerMockType);
    _fileCreator._caller_CreateNumberedFileInDirectory.reset(_caller_CreateNumberedFileInDirectoryMock = new VoidThreeArgMemberFunctionCallerMockType);
    // Constant Components
-   _fileCreator._console.reset(_consoleMock = new ConsoleMock);
+   _fileCreator._console.reset(_consoleMock = new Utils::ConsoleMock);
    _fileCreator._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    _fileCreator._stopwatchFactory.reset(_stopwatchFactoryMock = new StopwatchFactoryMock);
    // Mutable Components
@@ -100,39 +100,33 @@ TEST(CreateFileWithText_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
 
 TEST(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 {
-   _caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->ParallelCallNonConstMemberFunctionNTimesMock.Expect();
+   _caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->ParallelCallConstMemberFunctionNTimesMock.Expect();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.parallel = true;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
    _fileCreator.CreateFiles(args, fileTextOrBytes);
    //
-   METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->
-      ParallelCallNonConstMemberFunctionNTimesMock.CalledOnceWith(
-         args.numberOfDirectoriesToCreate,
-         &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory,
-         &_fileCreator, args, fileTextOrBytes));
+   METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->ParallelCallConstMemberFunctionNTimesMock.CalledOnceWith(
+      args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes));
 }
 
 TEST(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 {
-   _caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->CallNonConstMemberFunctionNTimesMock.Expect();
+   _caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->CallConstMemberFunctionNTimesMock.Expect();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.parallel = false;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
    _fileCreator.CreateFiles(args, fileTextOrBytes);
    //
-   METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->
-      CallNonConstMemberFunctionNTimesMock.CalledOnceWith(
-         args.numberOfDirectoriesToCreate,
-         &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory,
-         &_fileCreator, args, fileTextOrBytes));
+   METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->CallConstMemberFunctionNTimesMock.CalledOnceWith(
+      args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes));
 }
 
 TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_DoesSo)
 {
-   _caller_CreateNumberedFileInDirectoryMock->CallNonConstMemberFunctionNTimesMock.Expect();
+   _caller_CreateNumberedFileInDirectoryMock->CallConstMemberFunctionNTimesMock.Expect();
    const size_t callIndex = ZenUnit::Random<size_t>();
    const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    const string fileTextOrBytes = ZenUnit::Random<string>();
@@ -142,10 +136,8 @@ TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_DoesSo)
    const size_t expectedDirectoryNumber = callIndex + 1;
    const string expectedDirectoryName = "directory" + to_string(expectedDirectoryNumber);
    const fs::path expectedDirectoryPath = args.targetDirectoryPath / fs::path(expectedDirectoryName);
-   METALMOCK(_caller_CreateNumberedFileInDirectoryMock->CallNonConstMemberFunctionNTimesMock.CalledOnceWith(
-      args.numberOfFilesToCreate,
-      &FileCreator::CreateNumberedFileInDirectory,
-      &_fileCreator, expectedDirectoryPath, args, fileTextOrBytes));
+   METALMOCK(_caller_CreateNumberedFileInDirectoryMock->CallConstMemberFunctionNTimesMock.CalledOnceWith(
+      args.numberOfFilesToCreate, &_fileCreator, &FileCreator::CreateNumberedFileInDirectory, expectedDirectoryPath, args, fileTextOrBytes));
 }
 
 TEST(CreateNumberedFileInDirectory_QuietIsFalse_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)

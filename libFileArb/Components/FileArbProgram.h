@@ -3,7 +3,10 @@
 #if defined __linux__ || defined __APPLE__
 #include <memory>
 #endif
-class Console;
+namespace Utils
+{
+   class Console;
+}
 class Stopwatch;
 template<typename ReturnType, typename ClassType, typename ArgumentType>
 class NonVoidOneArgTryCatchCaller;
@@ -19,7 +22,7 @@ private:
    std::function<std::string(const std::exception*)> _call_Utils_Exception_ClassNameAndMessage;
    std::function<std::vector<std::string>(int, char**)> _call_Utils_Vector_FromArgcArgv;
    // Constant Components
-   std::unique_ptr<const Console> _console;
+   std::unique_ptr<const Utils::Console> _console;
    std::unique_ptr<const NonVoidOneArgTryCatchCaller<int, FileArbProgram, const std::vector<std::string>&>> _nonVoidOneArgTryCatchCaller;
    std::unique_ptr<const FileArbArgsParser> _argsParser;
    std::unique_ptr<const FileArbSubProgramFactory> _fileArbSubProgramFactory;

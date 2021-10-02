@@ -9,7 +9,7 @@ AFACT(ThreadIdWriteLine_CodeCoverage)
 AFACT(ThreadIdWriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
 
-Console _console;
+Utils::Console _console;
 // Mutable Components
 ConsoleColorerMock* _consoleColorerMock = nullptr;
 
@@ -21,7 +21,7 @@ STARTUP
 
 TEST(DefaultConstructor_NewsConsoleColorer)
 {
-   Console console;
+   Utils::Console console;
    // Function Pointers
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
 }

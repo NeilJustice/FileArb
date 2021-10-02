@@ -13,7 +13,7 @@ FileCreator::FileCreator()
    : _caller_CreateSequentiallyNumberedFilesInNumberedDirectory(make_unique<VoidTwoArgMemberFunctionCallerType>())
    , _caller_CreateNumberedFileInDirectory(make_unique<VoidThreeArgMemberFunctionCallerType>())
    // Constant Components
-   , _console(make_unique<Console>())
+   , _console(make_unique<Utils::Console>())
    , _fileSystem(make_unique<FileSystem>())
    , _stopwatchFactory(make_unique<StopwatchFactory>())
    // Mutable Components
@@ -45,36 +45,32 @@ void FileCreator::CreateFileWithText(const FileArbArgs& args, const string& file
    _console->ThreadIdWriteLine(wroteFileMessage);
 }
 
-void FileCreator::CreateFiles(const FileArbArgs& args, const string& fileTextOrBytes)
+void FileCreator::CreateFiles(const FileArbArgs& args, const string& fileTextOrBytes) const
 {
    if (args.parallel)
    {
-      _caller_CreateSequentiallyNumberedFilesInNumberedDirectory->ParallelCallNonConstMemberFunctionNTimes(
-         args.numberOfDirectoriesToCreate,
-         &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory,
-         this, args, fileTextOrBytes);
+      _caller_CreateSequentiallyNumberedFilesInNumberedDirectory->ParallelCallConstMemberFunctionNTimes(
+         args.numberOfDirectoriesToCreate, this, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes);
    }
    else
    {
-      _caller_CreateSequentiallyNumberedFilesInNumberedDirectory->CallNonConstMemberFunctionNTimes(
-         args.numberOfDirectoriesToCreate,
-         &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory,
-         this, args, fileTextOrBytes);
+      _caller_CreateSequentiallyNumberedFilesInNumberedDirectory->CallConstMemberFunctionNTimes(
+         args.numberOfDirectoriesToCreate, this, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes);
    }
 }
 
 void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(
-   size_t callIndex, const FileArbArgs& args, const string& fileTextOrBytes)
+   size_t callIndex, const FileArbArgs& args, const string& fileTextOrBytes) const
 {
    const size_t directoryNumber = callIndex + 1;
    const string directoryName = "directory" + to_string(directoryNumber);
    const fs::path directoryPath = args.targetDirectoryPath / fs::path(directoryName);
-   _caller_CreateNumberedFileInDirectory->CallNonConstMemberFunctionNTimes(
-      args.numberOfFilesToCreate, &FileCreator::CreateNumberedFileInDirectory, this, directoryPath, args, fileTextOrBytes);
+   _caller_CreateNumberedFileInDirectory->CallConstMemberFunctionNTimes(
+      args.numberOfFilesToCreate, this, &FileCreator::CreateNumberedFileInDirectory, directoryPath, args, fileTextOrBytes);
 }
 
 void FileCreator::CreateNumberedFileInDirectory(
-   size_t callIndex, const fs::path& directoryPath, const FileArbArgs& args, const string& fileTextOrBytes)
+   size_t callIndex, const fs::path& directoryPath, const FileArbArgs& args, const string& fileTextOrBytes) const
 {
    const size_t fileNumber = callIndex + 1;
    shared_ptr<Stopwatch> threadUniqueCreateFileStopwatch;

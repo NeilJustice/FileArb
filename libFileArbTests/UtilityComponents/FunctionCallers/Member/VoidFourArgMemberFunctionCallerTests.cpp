@@ -26,7 +26,7 @@ public:
 TEST(CallConstMemberFunction_CallsConstMemberFunctionOnce)
 {
    Class classInstance{};
-   VoidFourArgMemberFunctionCaller<Class, Arg1Type, Arg2Type, Arg3Type, Arg4Type> voidFourArgMemberFunctionCaller;
+   Utils::VoidFourArgMemberFunctionCaller<Class, Arg1Type, Arg2Type, Arg3Type, Arg4Type> voidFourArgMemberFunctionCaller;
    IS_EMPTY(classInstance.calls);
    //
    voidFourArgMemberFunctionCaller.CallConstMemberFunction(
@@ -46,7 +46,7 @@ TEST(CallConstMemberFunction_CallsConstMemberFunctionOnce)
 TEST(CallNonConstMemberFunction_CallsNonConstMemberFunctionOnce)
 {
    Class classInstance{};
-   VoidFourArgMemberFunctionCaller<Class, Arg1Type, Arg2Type, Arg3Type, Arg4Type> voidFourArgMemberFunctionCaller;
+   Utils::VoidFourArgMemberFunctionCaller<Class, Arg1Type, Arg2Type, Arg3Type, Arg4Type> voidFourArgMemberFunctionCaller;
    IS_EMPTY(classInstance.calls);
    //
    voidFourArgMemberFunctionCaller.CallNonConstMemberFunction(

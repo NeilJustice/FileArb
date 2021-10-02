@@ -5,7 +5,7 @@
 
 FileArbSubProgram::FileArbSubProgram()
    // Base Class Constant Components
-   : _protected_console(make_unique<Console>())
+   : _protected_console(make_unique<Utils::Console>())
    , _protected_fileSystem(make_unique<FileSystem>())
 {
 }

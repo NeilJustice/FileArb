@@ -15,7 +15,7 @@ FileArbProgram::FileArbProgram()
    : _call_Utils_Exception_ClassNameAndMessage(Exception::GetClassNameAndMessage)
    , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
    // Constant Components
-   , _console(make_unique<Console>())
+   , _console(make_unique<Utils::Console>())
    , _nonVoidOneArgTryCatchCaller(make_unique<NonVoidOneArgTryCatchCaller<int, FileArbProgram, const vector<string>&>>())
    , _argsParser(make_unique<FileArbArgsParser>())
    , _fileArbSubProgramFactory(make_unique<FileArbSubProgramFactory>())

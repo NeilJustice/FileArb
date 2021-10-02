@@ -36,6 +36,7 @@ int FileArbProgram::Main(int argc, char* argv[])
       _console->NakedWriteLine(FileArbArgs::CommandLineUsage);
       return 0;
    }
+   _stopwatch->Start();
    const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
    const int subProgramExitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallNonConstMemberFunction(
       this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
@@ -49,7 +50,6 @@ int FileArbProgram::Main(int argc, char* argv[])
 
 int FileArbProgram::Run(const vector<string>& stringArgs)
 {
-   _stopwatch->Start();
    const FileArbArgs args = _argsParser->ParseArgs(stringArgs);
    const string runningMessage = "Running: " + args.commandLine;
    _console->ThreadIdWriteLine(runningMessage);

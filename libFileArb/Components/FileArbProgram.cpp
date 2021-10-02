@@ -7,7 +7,7 @@
 #include "libFileArb/StaticUtilities/Exception.h"
 #include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
-#include "libFileArb/UtilityComponents/Exception/TryCatchCaller.h"
+#include "libFileArb/UtilityComponents/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
 #include "libFileArb/UtilityComponents/Time/Stopwatch.h"
 
 FileArbProgram::FileArbProgram()
@@ -16,7 +16,7 @@ FileArbProgram::FileArbProgram()
    , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
    // Constant Components
    , _console(make_unique<Console>())
-   , _tryCatchCaller(make_unique<TryCatchCaller<FileArbProgram, const vector<string>&>>())
+   , _nonVoidOneArgTryCatchCaller(make_unique<NonVoidOneArgTryCatchCaller<int, FileArbProgram, const vector<string>&>>())
    , _argsParser(make_unique<FileArbArgsParser>())
    , _fileArbSubProgramFactory(make_unique<FileArbSubProgramFactory>())
    // Mutable Components
@@ -37,7 +37,8 @@ int FileArbProgram::Main(int argc, char* argv[])
       return 0;
    }
    const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
-   const int subProgramExitCode = _tryCatchCaller->TryCatchCall(this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
+   const int subProgramExitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallNonConstMemberFunction(
+      this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
    const string runtimeInSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string durationLine = String::ConcatStrings("Duration: ", runtimeInSeconds, " seconds");
    _console->ThreadIdWriteLine(durationLine);

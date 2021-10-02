@@ -19,7 +19,6 @@ using PairStringStringType = pair<string, string>;
 METALMOCK_NONVOID4_STATIC(PairStringStringType, FileArbArgsParser, _call_GetFileNamePrefixAndFileExtension, bool, bool, bool, bool)
 // Constant Components
 BytesStringConverterMock* _bytesStringConverterMock = nullptr;
-ConsoleMock* _consoleMock = nullptr;
 DocoptParserMock* _docoptParserMock = nullptr;
 
 using DocoptMapType = map<string, docopt::Value>;
@@ -31,7 +30,6 @@ STARTUP
    _fileArbArgsParser._call_GetFileNamePrefixAndFileExtension = BIND_4ARG_METALMOCK_OBJECT(_call_GetFileNamePrefixAndFileExtensionMock);
    // Constant Components
    _fileArbArgsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
-   _fileArbArgsParser._console.reset(_consoleMock = new ConsoleMock);
    _fileArbArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
 }
 
@@ -43,7 +41,6 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    STD_FUNCTION_TARGETS(FileArbArgsParser::GetFileNamePrefixAndFileExtension, fileArbArgsParser._call_GetFileNamePrefixAndFileExtension);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(fileArbArgsParser._bytesStringConverter);
-   DELETE_TO_ASSERT_NEWED(fileArbArgsParser._console);
    DELETE_TO_ASSERT_NEWED(fileArbArgsParser._docoptParser);
 }
 

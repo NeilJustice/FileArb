@@ -11,7 +11,6 @@ FileArbArgsParser::FileArbArgsParser()
    , _call_GetFileNamePrefixAndFileExtension(FileArbArgsParser::GetFileNamePrefixAndFileExtension)
    // Constant Components
    , _bytesStringConverter(make_unique<BytesStringConverter>())
-   , _console(make_unique<Console>())
    , _docoptParser(make_unique<DocoptParser>())
 {
 }

@@ -1,10 +1,5 @@
 #pragma once
-namespace docopt
-{
-   struct value;
-}
 class BytesStringConverter;
-class Console;
 class DocoptParser;
 
 class FileArbArgsParser
@@ -16,7 +11,6 @@ private:
    function<pair<string, string>(bool, bool, bool, bool)> _call_GetFileNamePrefixAndFileExtension;
    // Constant Components
    unique_ptr<const BytesStringConverter> _bytesStringConverter;
-   unique_ptr<const Console> _console;
    unique_ptr<const DocoptParser> _docoptParser;
 public:
    FileArbArgsParser();

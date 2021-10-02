@@ -5,20 +5,20 @@ namespace ZenUnit
 {
    void Equalizer<FileArbArgs>::AssertEqual(const FileArbArgs& expectedFileArbArgs, const FileArbArgs& actualFileArbArgs)
    {
-      ARE_EQUAL(expectedFileArbArgs.commandLine, actualFileArbArgs.commandLine);
-      ARE_EQUAL(expectedFileArbArgs.programMode, actualFileArbArgs.programMode);
-      ARE_EQUAL(expectedFileArbArgs.targetDirectoryPath, actualFileArbArgs.targetDirectoryPath);
-      ARE_EQUAL(expectedFileArbArgs.numberOfDirectoriesToCreate, actualFileArbArgs.numberOfDirectoriesToCreate);
-      ARE_EQUAL(expectedFileArbArgs.numberOfFilesToCreate, actualFileArbArgs.numberOfFilesToCreate);
-      ARE_EQUAL(expectedFileArbArgs.numberOfLinesPerFile, actualFileArbArgs.numberOfLinesPerFile);
-      ARE_EQUAL(expectedFileArbArgs.numberOfCharactersPerLine, actualFileArbArgs.numberOfCharactersPerLine);
-      ARE_EQUAL(expectedFileArbArgs.numberOfBytesPerFile, actualFileArbArgs.numberOfBytesPerFile);
-      ARE_EQUAL(expectedFileArbArgs.generateRandomBytes, actualFileArbArgs.generateRandomBytes);
-      ARE_EQUAL(expectedFileArbArgs.generateRandomLetters, actualFileArbArgs.generateRandomLetters);
-      ARE_EQUAL(expectedFileArbArgs.parallel, actualFileArbArgs.parallel);
-      ARE_EQUAL(expectedFileArbArgs.quiet, actualFileArbArgs.quiet);
-      ARE_EQUAL(expectedFileArbArgs.fileNamePrefix, actualFileArbArgs.fileNamePrefix);
-      ARE_EQUAL(expectedFileArbArgs.fileExtension, actualFileArbArgs.fileExtension);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, commandLine);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, programMode);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, targetDirectoryPath);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfDirectoriesToCreate);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfFilesToCreate);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfLinesPerFile);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfCharactersPerLine);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfBytesPerFile);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, generateRandomBytes);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, generateRandomLetters);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, parallel);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, quiet);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, fileNamePrefix);
+      FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, fileExtension);
    }
 
    FileArbArgs TestableFileArbArgs(const RandomGenerator* randomGenerator)

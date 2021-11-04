@@ -5,7 +5,7 @@ namespace Utils
 {
    class Stopwatch
    {
-      friend class StopwatchTests;
+      friend class ::StopwatchTests;
    private:
       // Function Pointers
       std::function<std::chrono::time_point<std::chrono::high_resolution_clock>()> _call_now;

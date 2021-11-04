@@ -16,8 +16,8 @@ namespace Utils
 
 class FileCreator
 {
-private:
    friend class FileCreatorTests;
+private:
    // Function Callers
    using VoidTwoArgMemberFunctionCallerType = Utils::VoidTwoArgMemberFunctionCaller<FileCreator, const FileArbArgs&, const string&>;
    unique_ptr<const VoidTwoArgMemberFunctionCallerType> _caller_CreateSequentiallyNumberedFilesInNumberedDirectory;

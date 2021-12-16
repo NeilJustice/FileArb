@@ -167,7 +167,7 @@ Shown is this screenshot is the if-statement in function `FileCreator::WriteFile
 
 ![FileArb code structure as it appears in Visual Studio 2019](Screenshots/Windows/FileArbCodeExampleInVisualStudio2019.png)
 
-## Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ code and mypy-flake8-pylint-SonarQube scan FileArb's CI/CD Python code
+## Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb's C++ code and mypy-flake8-pylint-SonarQube scan FileArb's CI/CD Python code
 
 ![Linux FileArb Jenkins jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 

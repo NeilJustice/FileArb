@@ -27,7 +27,7 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
    * [create-text-files](#create-text-files)
 * [FileArb code structure as it appears in Visual Studio Code on Linux](#filearb-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileArb code structure as it appears in Visual Studio 2019 on Windows](#filearb-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
-* [Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize and ThreadSanitize FileArb's C++ code and Mypy-Flake8-Pylint-SonarQube scan FileArb's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearbs-c-code-and-mypy-flake8-pylint-sonarqube-scan-filearbs-cicd-python-code)
+* [Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileArb's C++ code and Mypy-Flake8-Pylint-SonarQube scan FileArb's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filearbs-c-code-and-mypy-flake8-pylint-sonarqube-scan-filearbs-cicd-python-code)
 * [Windows Jenkins jobs which build and Cppcheck FileArb's C++ code and Mypy-Flake8-Pylint-SonarQube scan FileArb's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-filearbs-c-code-and-mypy-flake8-pylint-sonarqube-scan-filearbs-cicd-python-code)
 * [4 commands to build binary filearb on Linux with Clang](#4-commands-to-build-binary-filearb-on-linux-with-clang)
 * [4 commands to build executable FileArb.exe on Windows with Visual Studio 2019](#4-commands-to-build-executable-filearbexe-on-windows-with-visual-studio-2019)

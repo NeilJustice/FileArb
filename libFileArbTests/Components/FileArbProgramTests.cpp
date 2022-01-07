@@ -88,7 +88,7 @@ TEST(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExitCod
 
    const string exePath = ZenUnit::Random<string>();
    const string fileArbIniPath = ZenUnit::Random<string>();
-   const int argc = ZenUnit::RandomNotEqualToValue<int>(1);
+   const int argc = ZenUnit::RandomNotEqualTo<int>(1);
    const char* argv[] = { exePath.c_str(), fileArbIniPath.c_str() };
    //
    const int returnedSubProgramExitCode = _fileArbProgram.Main(argc, const_cast<char**>(argv));

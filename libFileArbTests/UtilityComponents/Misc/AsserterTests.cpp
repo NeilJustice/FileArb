@@ -22,7 +22,7 @@ TEST(ThrowIfIntsNotEqual_IntsAreEqual_DoesNotThrowException)
 TEST(ThrowIfIntsNotEqual_IntsAreNotEqual_ThrowsRuntimeError)
 {
    const int expectedInt = ZenUnit::RandomNon0<int>();
-   const int actualInt = ZenUnit::RandomNotEqualToValue(expectedInt);
+   const int actualInt = ZenUnit::RandomNotEqualTo(expectedInt);
    const string message = ZenUnit::Random<string>();
    //
    const string expectedExceptionMessage = Utils::String::ConcatValues(

@@ -17,7 +17,15 @@ CreateTextFilesSubProgram::~CreateTextFilesSubProgram()
 
 int CreateTextFilesSubProgram::Run(const FileArbArgs& args)
 {
-   const string fileText = _textFileLinesMaker->MakeFileText(args.numberOfLinesPerFile, args.numberOfCharactersPerLine, args.generateRandomLetters);
-   _fileCreator->CreateFiles(args, fileText);
+   if (args.generateRandomLetters)
+   {
+      const vector<string> randomFileTexts = _textFileLinesMaker->MakeRandomFileTexts(args.numberOfLinesPerFile, args.numberOfCharactersPerLine);
+      _fileCreator->CreateRandomFiles(args, randomFileTexts);
+   }
+   else
+   {
+      const string fileText = _textFileLinesMaker->MakeFileText(args.numberOfLinesPerFile, args.numberOfCharactersPerLine);
+      _fileCreator->CreateFiles(args, fileText);
+   }
    return 0;
 }

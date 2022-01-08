@@ -1,11 +1,11 @@
 #include "pch.h"
+#include "libFileArb/Components/Makers/LineReplicator.h"
 #include "libFileArb/Components/Makers/RandomStringMaker.h"
 #include "libFileArb/Components/Makers/TextFileLinesMaker.h"
 
 TextFileLinesMaker::TextFileLinesMaker()
-   // Function Pointers
-   : _call_ReplicateLineNTimes(ReplicateLineNTimes)
    // Constant Components
+   : _lineReplicator(make_unique<LineReplicator>())
    , _randomStringMaker(make_unique<RandomStringMaker>())
 {
 }
@@ -14,34 +14,28 @@ TextFileLinesMaker::~TextFileLinesMaker()
 {
 }
 
-string TextFileLinesMaker::MakeFileText(size_t numberOfLines, size_t numberOfCharactersPerLine, bool generateRandomLetters) const
+string TextFileLinesMaker::MakeFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const
 {
-   if (generateRandomLetters)
-   {
-      ostringstream oss;
-      for (size_t i = 0; i < numberOfLines; ++i)
-      {
-         string randomCapitalLettersString = _randomStringMaker->MakeRandomCapitalLettersString(numberOfCharactersPerLine);
-         oss << randomCapitalLettersString << '\n';
-      }
-      string randomCapitalLettersFileText = oss.str();
-      return randomCapitalLettersFileText;
-   }
    string allZerosLine(numberOfCharactersPerLine + 1, '0');
    allZerosLine[allZerosLine.size() - 1] = '\n';
-   string allZerosFileText = _call_ReplicateLineNTimes(allZerosLine, numberOfLines);
+   string allZerosFileText = _lineReplicator->ReplicateLineNTimes(allZerosLine, numberOfLines);
    return allZerosFileText;
 }
 
-string TextFileLinesMaker::ReplicateLineNTimes(const string& line, size_t n)
+string TextFileLinesMaker::MakeRandomFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const
 {
-   const size_t replicatedStringLength = line.size() * n;
-   const size_t lineSize = line.size();
-   string lineReplicatedNTimes(replicatedStringLength, 0);
-   for (size_t i = 0; i < n; ++i)
+   ostringstream oss;
+   for (size_t i = 0; i < numberOfLines; ++i)
    {
-      const size_t stringOffset = i * lineSize;
-      memcpy(const_cast<char*>(lineReplicatedNTimes.c_str()) + stringOffset, line.c_str(), lineSize);
+      string randomCapitalLettersString = _randomStringMaker->MakeRandomCapitalLettersString(numberOfCharactersPerLine);
+      oss << randomCapitalLettersString << '\n';
    }
-   return lineReplicatedNTimes;
+   string randomCapitalLettersFileText = oss.str();
+   return randomCapitalLettersFileText;
+}
+
+vector<string> TextFileLinesMaker::MakeRandomFileTexts(size_t /*numberOfLines*/, size_t /*numberOfCharactersPerLine*/) const
+{
+   vector<string> randomFileTexts;
+   return randomFileTexts;
 }

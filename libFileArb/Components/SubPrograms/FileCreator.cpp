@@ -66,6 +66,11 @@ void FileCreator::CreateFiles(const FileArbArgs& args, const string& fileTextOrB
    _console->ThreadIdWriteLine(createdFilesMessage);
 }
 
+void FileCreator::CreateRandomFiles(const FileArbArgs& /*args*/, const vector<string>& /*fileTextsOrBytes*/) const
+{
+
+}
+
 void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(
    size_t callIndex, const FileArbArgs& args, const string& fileTextOrBytes) const
 {

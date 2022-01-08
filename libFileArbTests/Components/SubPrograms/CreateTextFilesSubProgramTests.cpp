@@ -6,7 +6,8 @@
 
 TESTS(CreateTextFilesSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(Run_CreateTextFiles_Returns0)
+AFACT(Run_GenerateRandomLetterIsTrue_CreatesRandomTextFiles_Returns0)
+AFACT(Run_GenerateRandomLetterIsFalse_CreatesNonRandomTextFiles_Returns0)
 EVIDENCE
 
 CreateTextFilesSubProgram _createTextFilesSubProgram;
@@ -34,17 +35,31 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(createTextFilesSubProgram._fileCreator);
 }
 
-TEST(Run_CreateTextFiles_Returns0)
+TEST(Run_GenerateRandomLetterIsTrue_CreatesRandomTextFiles_Returns0)
 {
-   const string fileText = _textFileLinesMakerMock->MakeFileTextMock.ReturnRandom();
-   _fileCreatorMock->CreateFilesMock.Expect();
-   const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   const vector<string> randomFileTexts = _textFileLinesMakerMock->MakeRandomFileTextsMock.ReturnRandom();
+   _fileCreatorMock->CreateRandomFilesMock.Expect();
+   FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   args.generateRandomLetters = true;
    //
    const int exitCode = _createTextFilesSubProgram.Run(args);
    //
-   METALMOCK(_textFileLinesMakerMock->MakeFileTextMock.CalledOnceWith(
-      args.numberOfLinesPerFile, args.numberOfCharactersPerLine, args.generateRandomLetters));
-   METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(args, fileText));
+   METALMOCKTHEN(_textFileLinesMakerMock->MakeRandomFileTextsMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine)).Then(
+   METALMOCKTHEN(_fileCreatorMock->CreateRandomFilesMock.CalledOnceWith(args, randomFileTexts)));
+   IS_ZERO(exitCode);
+}
+
+TEST(Run_GenerateRandomLetterIsFalse_CreatesNonRandomTextFiles_Returns0)
+{
+   const string fileText = _textFileLinesMakerMock->MakeFileTextMock.ReturnRandom();
+   _fileCreatorMock->CreateFilesMock.Expect();
+   FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   args.generateRandomLetters = false;
+   //
+   const int exitCode = _createTextFilesSubProgram.Run(args);
+   //
+   METALMOCKTHEN(_textFileLinesMakerMock->MakeFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine)).Then(
+   METALMOCKTHEN(_fileCreatorMock->CreateFilesMock.CalledOnceWith(args, fileText)));
    IS_ZERO(exitCode);
 }
 

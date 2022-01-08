@@ -14,7 +14,8 @@ AFACT(CreateFileWithBytes_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBi
 AFACT(CreateFileWithText_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
 AFACT(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 AFACT(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
-AFACT(CreateSequentiallyNumberedFilesInNumberedDirectory_DoesSo)
+AFACT(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsFalse_CreatesSequentiallyNumberedFilesInNumberedDirectory_WritesMessages)
+AFACT(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsTrue_CreatesSequentiallyNumberedFilesInNumberedDirectory_DoesNotWriteMessages)
 AFACT(CreateNumberedFileInDirectory_QuietIsFalse_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)
 AFACT(CreateNumberedFileInDirectory_QuietIsTrue_CreatesFile_DoesNotWriteWroteFileMessage)
 EVIDENCE
@@ -124,17 +125,49 @@ TEST(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirecto
       args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes));
 }
 
-TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_DoesSo)
+TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsFalse_CreatesSequentiallyNumberedFilesInNumberedDirectory_WritesMessages)
 {
+   shared_ptr<Utils::StopwatchMock> threadUniqueCreateFileStopwatchMock = make_shared<Utils::StopwatchMock>();
+   threadUniqueCreateFileStopwatchMock->StartMock.Expect();
+   const long long millisecondsToWriteFilesInDirectory = threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+   _stopwatchFactoryMock->NewStopwatchMock.Return(threadUniqueCreateFileStopwatchMock);
+
    _caller_CreateNumberedFileInDirectoryMock->CallConstMemberFunctionNTimesMock.Expect();
+
+   _consoleMock->ThreadIdWriteLineMock.Expect();
+
    const size_t callIndex = ZenUnit::Random<size_t>();
-   const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   args.quiet = false;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
    _fileCreator.CreateSequentiallyNumberedFilesInNumberedDirectory(callIndex, args, fileTextOrBytes);
    //
    const size_t expectedDirectoryNumber = callIndex + 1;
-   const string expectedDirectoryName = "directory" + to_string(expectedDirectoryNumber);
+   const string expectedDirectoryName = Utils::String::ConcatValues("directory", expectedDirectoryNumber);
+   const fs::path expectedDirectoryPath = args.targetDirectoryPath / fs::path(expectedDirectoryName);
+   const string expectedWroteFilesInDirectoryMessage = Utils::String::ConcatValues(
+      "Wrote ", args.numberOfFilesToCreate, " files to directory ", expectedDirectoryPath.string(), " [", millisecondsToWriteFilesInDirectory, " ms]");
+   METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(threadUniqueCreateFileStopwatchMock->StartMock.CalledOnce())).Then(
+   METALMOCKTHEN(_caller_CreateNumberedFileInDirectoryMock->CallConstMemberFunctionNTimesMock.CalledOnceWith(
+      args.numberOfFilesToCreate, &_fileCreator, &FileCreator::CreateNumberedFileInDirectory, expectedDirectoryPath, args, fileTextOrBytes))).Then(
+   METALMOCKTHEN(threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedWroteFilesInDirectoryMessage)));
+}
+
+TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsTrue_CreatesSequentiallyNumberedFilesInNumberedDirectory_DoesNotWriteMessages)
+{
+   _caller_CreateNumberedFileInDirectoryMock->CallConstMemberFunctionNTimesMock.Expect();
+   const size_t callIndex = ZenUnit::Random<size_t>();
+   FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   args.quiet = true;
+   const string fileTextOrBytes = ZenUnit::Random<string>();
+   //
+   _fileCreator.CreateSequentiallyNumberedFilesInNumberedDirectory(callIndex, args, fileTextOrBytes);
+   //
+   const size_t expectedDirectoryNumber = callIndex + 1;
+   const string expectedDirectoryName = Utils::String::ConcatValues("directory", expectedDirectoryNumber);
    const fs::path expectedDirectoryPath = args.targetDirectoryPath / fs::path(expectedDirectoryName);
    METALMOCK(_caller_CreateNumberedFileInDirectoryMock->CallConstMemberFunctionNTimesMock.CalledOnceWith(
       args.numberOfFilesToCreate, &_fileCreator, &FileCreator::CreateNumberedFileInDirectory, expectedDirectoryPath, args, fileTextOrBytes));

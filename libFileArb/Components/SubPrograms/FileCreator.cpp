@@ -62,11 +62,24 @@ void FileCreator::CreateFiles(const FileArbArgs& args, const string& fileTextOrB
 void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(
    size_t callIndex, const FileArbArgs& args, const string& fileTextOrBytes) const
 {
+   shared_ptr<Utils::Stopwatch> threadUniqueCreateFileStopwatch;
+   if (!args.quiet)
+   {
+      threadUniqueCreateFileStopwatch = _stopwatchFactory->NewStopwatch();
+      threadUniqueCreateFileStopwatch->Start();
+   }
    const size_t directoryNumber = callIndex + 1;
-   const string directoryName = "directory" + to_string(directoryNumber);
+   const string directoryName = Utils::String::ConcatValues("directory", directoryNumber);
    const fs::path directoryPath = args.targetDirectoryPath / fs::path(directoryName);
    _caller_CreateNumberedFileInDirectory->CallConstMemberFunctionNTimes(
       args.numberOfFilesToCreate, this, &FileCreator::CreateNumberedFileInDirectory, directoryPath, args, fileTextOrBytes);
+   if (!args.quiet)
+   {
+      const long long millisecondsToWriteFilesInDirectory = threadUniqueCreateFileStopwatch->StopAndGetElapsedMilliseconds();
+      const string wroteFilesInDirectoryMessage = Utils::String::ConcatValues(
+         "Wrote ", args.numberOfFilesToCreate, " files to directory ", directoryPath.string(), " [", millisecondsToWriteFilesInDirectory, " ms]");
+      _console->ThreadIdWriteLine(wroteFilesInDirectoryMessage);
+   }
 }
 
 void FileCreator::CreateNumberedFileInDirectory(

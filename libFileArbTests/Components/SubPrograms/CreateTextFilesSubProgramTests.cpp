@@ -37,17 +37,14 @@ TEST(DefaultConstructor_NewsComponents)
 
 TEST(Run_GenerateRandomLetterIsTrue_CreatesRandomTextFiles_Returns0)
 {
-   const vector<string> randomFileTexts = _textFileLinesMakerMock->MakeRandomFileTextsMock.ReturnRandom();
    _fileCreatorMock->CreateRandomFilesMock.Expect();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.generateRandomLetters = true;
    //
    const int exitCode = _createTextFilesSubProgram.Run(args);
    //
-   const size_t expectedTotalNumberOfFiles = args.numberOfDirectoriesToCreate * args.numberOfFilesToCreate;
-   METALMOCKTHEN(_textFileLinesMakerMock->MakeRandomFileTextsMock.CalledOnceWith(
-      expectedTotalNumberOfFiles, args.numberOfLinesPerFile, args.numberOfCharactersPerLine)).Then(
-   METALMOCKTHEN(_fileCreatorMock->CreateRandomFilesMock.CalledOnceWith(args, randomFileTexts)));
+   const vector<fs::path> expectedAllFilePaths;
+   METALMOCK(_fileCreatorMock->CreateRandomFilesMock.CalledOnceWith(expectedAllFilePaths, args));
    IS_ZERO(exitCode);
 }
 

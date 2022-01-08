@@ -30,7 +30,7 @@ public:
    virtual void CreateFileWithBytes(const FileArbArgs& args, const string& fileBytes);
    virtual void CreateFileWithText(const FileArbArgs& args, const string& fileText);
    virtual void CreateFiles(const FileArbArgs& args, const string& fileTextOrBytes) const;
-   virtual void CreateRandomFiles(const FileArbArgs& args, const vector<string>& fileTextsOrBytes) const;
+   virtual void CreateRandomFiles(const vector<fs::path>& allFilePaths, const FileArbArgs& args) const;
 private:
    void CreateSequentiallyNumberedFilesInNumberedDirectory(
       size_t callIndex, const FileArbArgs& args, const string& fileTextOrBytes) const;

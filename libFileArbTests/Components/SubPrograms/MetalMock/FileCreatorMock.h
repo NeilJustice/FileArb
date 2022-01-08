@@ -7,5 +7,5 @@ public:
    METALMOCK_VOID2(CreateFileWithBytes, const FileArbArgs&, const string&)
    METALMOCK_VOID2(CreateFileWithText, const FileArbArgs&, const string&)
    METALMOCK_VOID2_CONST(CreateFiles, const FileArbArgs&, const string&)
-   METALMOCK_VOID2_CONST(CreateRandomFiles, const FileArbArgs&, const vector<string>&)
+   METALMOCK_VOID2_CONST(CreateRandomFiles, const vector<fs::path>&, const FileArbArgs&)
 };

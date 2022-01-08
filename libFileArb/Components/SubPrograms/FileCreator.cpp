@@ -66,9 +66,11 @@ void FileCreator::CreateFiles(const FileArbArgs& args, const string& fileTextOrB
    _console->ThreadIdWriteLine(createdFilesMessage);
 }
 
-void FileCreator::CreateRandomFiles(const FileArbArgs& /*args*/, const vector<string>& /*fileTextsOrBytes*/) const
+void FileCreator::CreateRandomFiles(const vector<fs::path>& /*allFilePaths*/, const FileArbArgs& /*args*/) const
 {
-
+   //const size_t totalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
+   //_caller_CreateNumberedFileInDirectory->CallConstMemberFunctionNTimes(
+   //   totalNumberOfFiles, this, &FileCreator::CreateRandomFile, args);
 }
 
 void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(

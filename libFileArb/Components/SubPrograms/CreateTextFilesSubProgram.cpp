@@ -19,13 +19,12 @@ int CreateTextFilesSubProgram::Run(const FileArbArgs& args)
 {
    if (args.generateRandomLetters)
    {
-      const size_t totalNumberOfFiles = args.numberOfDirectoriesToCreate * args.numberOfFilesToCreate;
-      const vector<string> randomFileTexts = _textFileLinesMaker->MakeRandomFileTexts(
-         totalNumberOfFiles, args.numberOfLinesPerFile, args.numberOfCharactersPerLine);
-      _fileCreator->CreateRandomFiles(args, randomFileTexts);
+       const vector<fs::path> allFilePaths;
+      _fileCreator->CreateRandomFiles(allFilePaths, args);
    }
    else
    {
+      // const vector<fs::path> allFilePaths;
       const string fileText = _textFileLinesMaker->MakeFileText(args.numberOfLinesPerFile, args.numberOfCharactersPerLine);
       _fileCreator->CreateFiles(args, fileText);
    }

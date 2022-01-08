@@ -34,8 +34,9 @@ string TextFileLinesMaker::MakeRandomFileText(size_t numberOfLines, size_t numbe
    return randomCapitalLettersFileText;
 }
 
-vector<string> TextFileLinesMaker::MakeRandomFileTexts(size_t /*numberOfLines*/, size_t /*numberOfCharactersPerLine*/) const
+vector<string> TextFileLinesMaker::MakeRandomFileTexts(size_t /*totalNumberOfFiles*/, size_t /*numberOfLines*/, size_t /*numberOfCharactersPerLine*/) const
 {
    vector<string> randomFileTexts;
+
    return randomFileTexts;
 }

@@ -44,7 +44,9 @@ TEST(Run_GenerateRandomLetterIsTrue_CreatesRandomTextFiles_Returns0)
    //
    const int exitCode = _createTextFilesSubProgram.Run(args);
    //
-   METALMOCKTHEN(_textFileLinesMakerMock->MakeRandomFileTextsMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine)).Then(
+   const size_t expectedTotalNumberOfFiles = args.numberOfDirectoriesToCreate * args.numberOfFilesToCreate;
+   METALMOCKTHEN(_textFileLinesMakerMock->MakeRandomFileTextsMock.CalledOnceWith(
+      expectedTotalNumberOfFiles, args.numberOfLinesPerFile, args.numberOfCharactersPerLine)).Then(
    METALMOCKTHEN(_fileCreatorMock->CreateRandomFilesMock.CalledOnceWith(args, randomFileTexts)));
    IS_ZERO(exitCode);
 }

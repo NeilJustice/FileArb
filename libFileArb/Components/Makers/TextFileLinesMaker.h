@@ -16,5 +16,4 @@ public:
    virtual ~TextFileLinesMaker();
    virtual string MakeFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const;
    virtual string MakeRandomFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const;
-   virtual vector<string> MakeRandomFileTexts(size_t totalNumberOfFiles, size_t numberOfLines, size_t numberOfCharactersPerLine) const;
 };

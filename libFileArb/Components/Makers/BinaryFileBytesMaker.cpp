@@ -12,13 +12,14 @@ BinaryFileBytesMaker::~BinaryFileBytesMaker()
 {
 }
 
-string BinaryFileBytesMaker::MakeBytesString(size_t numberOfBytesPerFile, bool generateRandomBytes) const
+string BinaryFileBytesMaker::MakeNonRandomBytesString(size_t numberOfBytesPerFile) const
 {
-   if (generateRandomBytes)
-   {
-      string randomBytesString = _randomStringMaker->MakeRandomBytesString(numberOfBytesPerFile);
-      return randomBytesString;
-   }
    string nonRandomBytesString(numberOfBytesPerFile, 0);
    return nonRandomBytesString;
+}
+
+string BinaryFileBytesMaker::MakeRandomBytesString(size_t numberOfBytesPerFile) const
+{
+   string randomBytesString = _randomStringMaker->MakeRandomBytesString(numberOfBytesPerFile);
+   return randomBytesString;
 }

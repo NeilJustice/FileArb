@@ -10,5 +10,6 @@ private:
 public:
    BinaryFileBytesMaker();
    virtual ~BinaryFileBytesMaker();
-   virtual string MakeBytesString(size_t numberOfBytesPerFile, bool randomBytes) const;
+   virtual string MakeNonRandomBytesString(size_t numberOfBytesPerFile) const;
+   virtual string MakeRandomBytesString(size_t numberOfBytesPerFile) const;
 };

@@ -7,7 +7,8 @@
 
 TESTS(CreateBinaryFilesSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(Run_CreateBinaryFiles_Returns0)
+AFACT(Run_GenerateRandomBytesIsFalse_CreatesNonRandomBinaryFiles_Returns0)
+AFACT(Run_GenerateRandomBytesIsTrue_CreatesRandomBinaryFiles_Returns0)
 EVIDENCE
 
 CreateBinaryFilesSubProgram _createBinaryFilesSubProgram;
@@ -36,15 +37,30 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._fileCreator);
 }
 
-TEST(Run_CreateBinaryFiles_Returns0)
+TEST(Run_GenerateRandomBytesIsFalse_CreatesNonRandomBinaryFiles_Returns0)
 {
-   const string bytesString = _binaryFileBytesMakerMock->MakeBytesStringMock.ReturnRandom();
+   const string bytesString = _binaryFileBytesMakerMock->MakeNonRandomBytesStringMock.ReturnRandom();
    _fileCreatorMock->CreateFilesMock.Expect();
-   const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   args.generateRandomBytes = false;
    //
    const int exitCode = _createBinaryFilesSubProgram.Run(args);
    //
-   METALMOCK(_binaryFileBytesMakerMock->MakeBytesStringMock.CalledOnceWith(args.numberOfBytesPerFile, args.generateRandomBytes));
+   METALMOCK(_binaryFileBytesMakerMock->MakeNonRandomBytesStringMock.CalledOnceWith(args.numberOfBytesPerFile));
+   METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(args, bytesString));
+   IS_ZERO(exitCode);
+}
+
+TEST(Run_GenerateRandomBytesIsTrue_CreatesRandomBinaryFiles_Returns0)
+{
+   const string bytesString = _binaryFileBytesMakerMock->MakeRandomBytesStringMock.ReturnRandom();
+   _fileCreatorMock->CreateFilesMock.Expect();
+   FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   args.generateRandomBytes = true;
+   //
+   const int exitCode = _createBinaryFilesSubProgram.Run(args);
+   //
+   METALMOCK(_binaryFileBytesMakerMock->MakeRandomBytesStringMock.CalledOnceWith(args.numberOfBytesPerFile));
    METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(args, bytesString));
    IS_ZERO(exitCode);
 }

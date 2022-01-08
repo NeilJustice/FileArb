@@ -2,6 +2,7 @@
 #include "libFileArb/Components/Makers/LineReplicator.h"
 #include "libFileArb/Components/Makers/RandomStringMaker.h"
 #include "libFileArb/Components/Makers/TextFileLinesMaker.h"
+#include "libFileArb/UtilityComponents/Generators/TwoArgElementsGenerator.h"
 
 TextFileLinesMaker::TextFileLinesMaker()
    // Constant Components

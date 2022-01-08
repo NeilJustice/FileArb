@@ -15,10 +15,10 @@ class FileCreator
    friend class FileCreatorTests;
 private:
    // Function Callers
-   using VoidTwoArgMemberFunctionCallerType = Utils::VoidTwoArgMemberFunctionCaller<FileCreator, const FileArbArgs&, const string&>;
+   using VoidTwoArgMemberFunctionCallerType = Utils::VoidTwoArgMemberFunctionCaller<FileCreator, const string&, const FileArbArgs&>;
    unique_ptr<const VoidTwoArgMemberFunctionCallerType> _caller_CreateSequentiallyNumberedFilesInNumberedDirectory;
 
-   using VoidThreeArgMemberFunctionCallerType = Utils::VoidThreeArgMemberFunctionCaller<FileCreator, const fs::path&, const FileArbArgs&, const string&>;
+   using VoidThreeArgMemberFunctionCallerType = Utils::VoidThreeArgMemberFunctionCaller<FileCreator, const fs::path&, const string&, const FileArbArgs&>;
    unique_ptr<const VoidThreeArgMemberFunctionCallerType> _caller_CreateNumberedFileInDirectory;
    // Constant Components
    unique_ptr<const Utils::Console> _console;
@@ -33,7 +33,7 @@ public:
    virtual void CreateRandomFiles(const vector<fs::path>& allFilePaths, const FileArbArgs& args) const;
 private:
    void CreateSequentiallyNumberedFilesInNumberedDirectory(
-      size_t callIndex, const FileArbArgs& args, const string& fileTextOrBytes) const;
+      size_t callIndex, const string& fileTextOrBytes, const FileArbArgs& args) const;
    void CreateNumberedFileInDirectory(
-      size_t callIndex, const fs::path& directoryPath, const FileArbArgs& args, const string& fileTextOrBytes) const;
+      size_t callIndex, const fs::path& directoryPath, const string& fileTextOrBytes, const FileArbArgs& args) const;
 };

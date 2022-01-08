@@ -52,12 +52,12 @@ void FileCreator::CreateFiles(const string& fileTextOrBytes, const FileArbArgs& 
    if (args.parallel)
    {
       _caller_CreateSequentiallyNumberedFilesInNumberedDirectory->ParallelCallConstMemberFunctionNTimes(
-         args.numberOfDirectoriesToCreate, this, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes);
+         args.numberOfDirectoriesToCreate, this, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, fileTextOrBytes, args);
    }
    else
    {
       _caller_CreateSequentiallyNumberedFilesInNumberedDirectory->CallConstMemberFunctionNTimes(
-         args.numberOfDirectoriesToCreate, this, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes);
+         args.numberOfDirectoriesToCreate, this, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, fileTextOrBytes, args);
    }
    const long long millisecondsToWriteFiles = createFilesStopwatch->StopAndGetElapsedMilliseconds();
    const size_t totalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
@@ -74,7 +74,7 @@ void FileCreator::CreateRandomFiles(const vector<fs::path>& /*allFilePaths*/, co
 }
 
 void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(
-   size_t callIndex, const FileArbArgs& args, const string& fileTextOrBytes) const
+   size_t callIndex, const string& fileTextOrBytes, const FileArbArgs& args) const
 {
    shared_ptr<Utils::Stopwatch> threadUniqueCreateFileStopwatch;
    if (!args.quiet)
@@ -86,7 +86,7 @@ void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(
    const string directoryName = Utils::String::ConcatValues("directory", directoryNumber);
    const fs::path directoryPath = args.targetDirectoryPath / fs::path(directoryName);
    _caller_CreateNumberedFileInDirectory->CallConstMemberFunctionNTimes(
-      args.numberOfFilesToCreate, this, &FileCreator::CreateNumberedFileInDirectory, directoryPath, args, fileTextOrBytes);
+      args.numberOfFilesToCreate, this, &FileCreator::CreateNumberedFileInDirectory, directoryPath, fileTextOrBytes, args);
    if (!args.quiet)
    {
       const long long millisecondsToWriteFilesInDirectory = threadUniqueCreateFileStopwatch->StopAndGetElapsedMilliseconds();
@@ -97,7 +97,7 @@ void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(
 }
 
 void FileCreator::CreateNumberedFileInDirectory(
-   size_t callIndex, const fs::path& directoryPath, const FileArbArgs& args, const string& fileTextOrBytes) const
+   size_t callIndex, const fs::path& directoryPath, const string& fileTextOrBytes, const FileArbArgs& args) const
 {
    const size_t fileNumber = callIndex + 1;
    shared_ptr<Utils::Stopwatch> threadUniqueCreateFileStopwatch;

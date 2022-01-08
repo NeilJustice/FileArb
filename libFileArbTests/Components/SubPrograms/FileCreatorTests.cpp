@@ -22,10 +22,10 @@ EVIDENCE
 
 FileCreator _fileCreator;
 // Function Callers
-using VoidTwoArgMemberFunctionCallerMockType = Utils::VoidTwoArgMemberFunctionCallerMock<FileCreator, const FileArbArgs&, const string&>;
+using VoidTwoArgMemberFunctionCallerMockType = Utils::VoidTwoArgMemberFunctionCallerMock<FileCreator, const string&, const FileArbArgs&>;
 VoidTwoArgMemberFunctionCallerMockType* _caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock = nullptr;
 
-using VoidThreeArgMemberFunctionCallerMockType = Utils::VoidThreeArgMemberFunctionCallerMock<FileCreator, const fs::path&, const FileArbArgs&, const string&>;
+using VoidThreeArgMemberFunctionCallerMockType = Utils::VoidThreeArgMemberFunctionCallerMock<FileCreator, const fs::path&, const string&, const FileArbArgs&>;
 VoidThreeArgMemberFunctionCallerMockType* _caller_CreateNumberedFileInDirectoryMock = nullptr;
 // Constant Components
 Utils::ConsoleMock* _consoleMock = nullptr;
@@ -126,7 +126,7 @@ TEST(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectories
    METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(createFilesStopwatchMock->StartMock.CalledOnce())).Then(
    METALMOCKTHEN(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->ParallelCallConstMemberFunctionNTimesMock.CalledOnceWith(
-      args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes))).Then(
+      args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, fileTextOrBytes, args))).Then(
    METALMOCKTHEN(createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
 }
@@ -154,7 +154,7 @@ TEST(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirecto
    METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(createFilesStopwatchMock->StartMock.CalledOnce())).Then(
    METALMOCKTHEN(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->CallConstMemberFunctionNTimesMock.CalledOnceWith(
-      args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes))).Then(
+      args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, fileTextOrBytes, args))).Then(
    METALMOCKTHEN(createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
 }
@@ -175,7 +175,7 @@ TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsFalse_CreatesSequ
    args.quiet = false;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
-   _fileCreator.CreateSequentiallyNumberedFilesInNumberedDirectory(callIndex, args, fileTextOrBytes);
+   _fileCreator.CreateSequentiallyNumberedFilesInNumberedDirectory(callIndex, fileTextOrBytes, args);
    //
    const size_t expectedDirectoryNumber = callIndex + 1;
    const string expectedDirectoryName = Utils::String::ConcatValues("directory", expectedDirectoryNumber);
@@ -185,7 +185,7 @@ TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsFalse_CreatesSequ
    METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(threadUniqueCreateFileStopwatchMock->StartMock.CalledOnce())).Then(
    METALMOCKTHEN(_caller_CreateNumberedFileInDirectoryMock->CallConstMemberFunctionNTimesMock.CalledOnceWith(
-      args.numberOfFilesToCreate, &_fileCreator, &FileCreator::CreateNumberedFileInDirectory, expectedDirectoryPath, args, fileTextOrBytes))).Then(
+      args.numberOfFilesToCreate, &_fileCreator, &FileCreator::CreateNumberedFileInDirectory, expectedDirectoryPath, fileTextOrBytes, args))).Then(
    METALMOCKTHEN(threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedWroteFilesInDirectoryMessage)));
 }
@@ -198,13 +198,13 @@ TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsTrue_CreatesSeque
    args.quiet = true;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
-   _fileCreator.CreateSequentiallyNumberedFilesInNumberedDirectory(callIndex, args, fileTextOrBytes);
+   _fileCreator.CreateSequentiallyNumberedFilesInNumberedDirectory(callIndex, fileTextOrBytes, args);
    //
    const size_t expectedDirectoryNumber = callIndex + 1;
    const string expectedDirectoryName = Utils::String::ConcatValues("directory", expectedDirectoryNumber);
    const fs::path expectedDirectoryPath = args.targetDirectoryPath / fs::path(expectedDirectoryName);
    METALMOCK(_caller_CreateNumberedFileInDirectoryMock->CallConstMemberFunctionNTimesMock.CalledOnceWith(
-      args.numberOfFilesToCreate, &_fileCreator, &FileCreator::CreateNumberedFileInDirectory, expectedDirectoryPath, args, fileTextOrBytes));
+      args.numberOfFilesToCreate, &_fileCreator, &FileCreator::CreateNumberedFileInDirectory, expectedDirectoryPath, fileTextOrBytes, args));
 }
 
 TEST(CreateNumberedFileInDirectory_QuietIsFalse_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)
@@ -220,11 +220,11 @@ TEST(CreateNumberedFileInDirectory_QuietIsFalse_CreatesFile_WritesWroteFileMessa
 
    const size_t callIndex = ZenUnit::Random<size_t>();
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
+   const string fileTextOrBytes = ZenUnit::Random<string>();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.quiet = false;
-   const string fileTextOrBytes = ZenUnit::Random<string>();
    //
-   _fileCreator.CreateNumberedFileInDirectory(callIndex, directoryPath, args, fileTextOrBytes);
+   _fileCreator.CreateNumberedFileInDirectory(callIndex, directoryPath, fileTextOrBytes, args);
    //
    const size_t expectedFileNumber = callIndex + 1;
    const string expectedFileName = Utils::String::ConcatValues("file", expectedFileNumber, args.fileExtension);
@@ -244,11 +244,11 @@ TEST(CreateNumberedFileInDirectory_QuietIsTrue_CreatesFile_DoesNotWriteWroteFile
 
    const size_t callIndex = ZenUnit::Random<size_t>();
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
+   const string fileTextOrBytes = ZenUnit::Random<string>();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.quiet = true;
-   const string fileTextOrBytes = ZenUnit::Random<string>();
    //
-   _fileCreator.CreateNumberedFileInDirectory(callIndex, directoryPath, args, fileTextOrBytes);
+   _fileCreator.CreateNumberedFileInDirectory(callIndex, directoryPath, fileTextOrBytes, args);
    //
    const size_t expectedFileNumber = callIndex + 1;
    const string expectedFileName = Utils::String::ConcatValues("file", expectedFileNumber, args.fileExtension);

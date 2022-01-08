@@ -37,6 +37,7 @@ string TextFileLinesMaker::MakeRandomFileText(size_t numberOfLines, size_t numbe
 vector<string> TextFileLinesMaker::MakeRandomFileTexts(size_t /*totalNumberOfFiles*/, size_t /*numberOfLines*/, size_t /*numberOfCharactersPerLine*/) const
 {
    vector<string> randomFileTexts;
-
+   // _twoArgElementsGenerator_MakeRandomFileText->GenerateElement(
+   //    totalNumberOfFiles, this, &TextFileLinesMaker::MakeRandomFileText, numberOfLines, numberOfCharactersPerLine);
    return randomFileTexts;
 }

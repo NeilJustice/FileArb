@@ -31,8 +31,6 @@ VoidThreeArgMemberFunctionCallerMockType* _caller_CreateNumberedFileInDirectoryM
 Utils::ConsoleMock* _consoleMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
 Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
-// Mutable Components
-Utils::StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
@@ -43,8 +41,6 @@ STARTUP
    _fileCreator._console.reset(_consoleMock = new Utils::ConsoleMock);
    _fileCreator._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _fileCreator._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
-   // Mutable Components
-   _fileCreator._stopwatch.reset(_stopwatchMock = new Utils::StopwatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
@@ -57,15 +53,16 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(fileCreator._console);
    DELETE_TO_ASSERT_NEWED(fileCreator._fileSystem);
    DELETE_TO_ASSERT_NEWED(fileCreator._stopwatchFactory);
-   // Mutable Components
-   DELETE_TO_ASSERT_NEWED(fileCreator._stopwatch);
 }
 
 TEST(CreateFileWithBytes_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBin)
 {
-   _stopwatchMock->StartMock.Expect();
+   shared_ptr<Utils::StopwatchMock> createFileStopwatchMock = make_shared<Utils::StopwatchMock>();
+   createFileStopwatchMock->StartMock.Expect();
+   const long long millisecondsToWriteFile = createFileStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+   _stopwatchFactoryMock->NewStopwatchMock.Return(createFileStopwatchMock);
+
    _fileSystemMock->CreateFileWithBytesMock.Expect();
-   const long long millisecondsToWriteFile = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    _consoleMock->ThreadIdWriteLineMock.Expect();
    const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    const string fileBytes = ZenUnit::Random<string>();
@@ -74,18 +71,24 @@ TEST(CreateFileWithBytes_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBin
    //
    const fs::path expectedFilePath = args.targetDirectoryPath / "binaryfile.bin";
    const string expectedWroteFileMessage = Utils::String::ConcatValues("Wrote binary file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
-   METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
+   METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(createFileStopwatchMock->StartMock.CalledOnce())).Then(
    METALMOCKTHEN(_fileSystemMock->CreateFileWithBytesMock.CalledOnceWith(expectedFilePath, fileBytes.data(), fileBytes.size()))).Then(
-   METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
+   METALMOCKTHEN(createFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedWroteFileMessage)));
 }
 
 TEST(CreateFileWithText_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
 {
-   _stopwatchMock->StartMock.Expect();
+   shared_ptr<Utils::StopwatchMock> createFileStopwatchMock = make_shared<Utils::StopwatchMock>();
+   createFileStopwatchMock->StartMock.Expect();
+   const long long millisecondsToWriteFile = createFileStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+   _stopwatchFactoryMock->NewStopwatchMock.Return(createFileStopwatchMock);
+
    _fileSystemMock->CreateFileWithTextMock.Expect();
-   const long long millisecondsToWriteFile = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+
    _consoleMock->ThreadIdWriteLineMock.Expect();
+
    const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    const string fileText = ZenUnit::Random<string>();
    //
@@ -93,36 +96,67 @@ TEST(CreateFileWithText_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
    //
    const fs::path expectedFilePath = args.targetDirectoryPath / "textfile.txt";
    const string expectedWroteFileMessage = Utils::String::ConcatValues("Wrote text file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
-   METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
+   METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(createFileStopwatchMock->StartMock.CalledOnce())).Then(
    METALMOCKTHEN(_fileSystemMock->CreateFileWithTextMock.CalledOnceWith(expectedFilePath, fileText))).Then(
-   METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
+   METALMOCKTHEN(createFileStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedWroteFileMessage)));
 }
 
 TEST(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 {
+   shared_ptr<Utils::StopwatchMock> createFilesStopwatchMock = make_shared<Utils::StopwatchMock>();
+   createFilesStopwatchMock->StartMock.Expect();
+   const long long millisecondsToWriteFiles = createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+   _stopwatchFactoryMock->NewStopwatchMock.Return(createFilesStopwatchMock);
+
    _caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->ParallelCallConstMemberFunctionNTimesMock.Expect();
+
+   _consoleMock->ThreadIdWriteLineMock.Expect();
+
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.parallel = true;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
    _fileCreator.CreateFiles(args, fileTextOrBytes);
    //
-   METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->ParallelCallConstMemberFunctionNTimesMock.CalledOnceWith(
-      args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes));
+   const size_t expectedTotalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
+   const string expectedCreatedFilesMessage = Utils::String::ConcatValues(
+      "Wrote " , expectedTotalNumberOfFiles, " files to ", args.numberOfDirectoriesToCreate, " directories [" , millisecondsToWriteFiles, " ms]");
+   METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(createFilesStopwatchMock->StartMock.CalledOnce())).Then(
+   METALMOCKTHEN(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->ParallelCallConstMemberFunctionNTimesMock.CalledOnceWith(
+      args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes))).Then(
+   METALMOCKTHEN(createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
 }
 
 TEST(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 {
+   shared_ptr<Utils::StopwatchMock> createFilesStopwatchMock = make_shared<Utils::StopwatchMock>();
+   createFilesStopwatchMock->StartMock.Expect();
+   const long long millisecondsToWriteFiles = createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+   _stopwatchFactoryMock->NewStopwatchMock.Return(createFilesStopwatchMock);
+
    _caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->CallConstMemberFunctionNTimesMock.Expect();
+
+   _consoleMock->ThreadIdWriteLineMock.Expect();
+
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.parallel = false;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
    _fileCreator.CreateFiles(args, fileTextOrBytes);
    //
-   METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->CallConstMemberFunctionNTimesMock.CalledOnceWith(
-      args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes));
+   const size_t expectedTotalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
+   const string expectedCreatedFilesMessage = Utils::String::ConcatValues(
+      "Wrote " , expectedTotalNumberOfFiles, " files to ", args.numberOfDirectoriesToCreate, " directories [" , millisecondsToWriteFiles, " ms]");
+   METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(createFilesStopwatchMock->StartMock.CalledOnce())).Then(
+   METALMOCKTHEN(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->CallConstMemberFunctionNTimesMock.CalledOnceWith(
+      args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes))).Then(
+   METALMOCKTHEN(createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
 }
 
 TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsFalse_CreatesSequentiallyNumberedFilesInNumberedDirectory_WritesMessages)

@@ -12,7 +12,7 @@
 // create-binary-file --target=D:\FileArbTesting --bytes=3K --random-bytes
 // create-binary-files --target=D:\FileArbTesting --directories=1 --files=1 --bytes=3 --random-bytes
 // create-binary-files --target=D:\FileArbTesting --directories=3 --files=1000 --bytes=3 --random-bytes --quiet
-// create-binary-files --target=D:\FileArbTesting --directories=32 --files=10 --bytes=100M --parallel
+// create-binary-files --target=D:\FileArbTesting --directories=32 --files=10 --bytes=1M --parallel
 
 // create-text-file --target=D:\FileArbTesting --lines=3 --characters=3 --random-letters
 // create-text-files --target=D:\FileArbTesting --directories=3 --files=3 --lines=3 --characters=3 --random-letters --parallel --quiet

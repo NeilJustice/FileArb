@@ -16,8 +16,6 @@ FileCreator::FileCreator()
    , _console(make_unique<Utils::Console>())
    , _fileSystem(make_unique<Utils::FileSystem>())
    , _stopwatchFactory(make_unique<Utils::StopwatchFactory>())
-   // Mutable Components
-   , _stopwatch(make_unique<Utils::Stopwatch>())
 {
 }
 
@@ -27,26 +25,30 @@ FileCreator::~FileCreator()
 
 void FileCreator::CreateFileWithBytes(const FileArbArgs& args, const string& fileBytes)
 {
-   _stopwatch->Start();
+   const shared_ptr<Utils::Stopwatch> createFileStopwatch = _stopwatchFactory->NewStopwatch();
+   createFileStopwatch->Start();
    const fs::path filePath = args.targetDirectoryPath / "binaryfile.bin";
    _fileSystem->CreateFileWithBytes(filePath, fileBytes.data(), fileBytes.size());
-   const long long millisecondsToWriteFile = _stopwatch->StopAndGetElapsedMilliseconds();
+   const long long millisecondsToWriteFile = createFileStopwatch->StopAndGetElapsedMilliseconds();
    const string wroteFileMessage = Utils::String::ConcatValues("Wrote binary file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
    _console->ThreadIdWriteLine(wroteFileMessage);
 }
 
 void FileCreator::CreateFileWithText(const FileArbArgs& args, const string& fileText)
 {
-   _stopwatch->Start();
+   const shared_ptr<Utils::Stopwatch> createFileStopwatch = _stopwatchFactory->NewStopwatch();
+   createFileStopwatch->Start();
    const fs::path filePath = args.targetDirectoryPath / "textfile.txt";
    _fileSystem->CreateFileWithText(filePath, fileText);
-   const long long millisecondsToWriteFile = _stopwatch->StopAndGetElapsedMilliseconds();
+   const long long millisecondsToWriteFile = createFileStopwatch->StopAndGetElapsedMilliseconds();
    const string wroteFileMessage = Utils::String::ConcatValues("Wrote text file ", filePath.string(), " [", millisecondsToWriteFile, " ms]");
    _console->ThreadIdWriteLine(wroteFileMessage);
 }
 
 void FileCreator::CreateFiles(const FileArbArgs& args, const string& fileTextOrBytes) const
 {
+   const shared_ptr<Utils::Stopwatch> createFilesStopwatch = _stopwatchFactory->NewStopwatch();
+   createFilesStopwatch->Start();
    if (args.parallel)
    {
       _caller_CreateSequentiallyNumberedFilesInNumberedDirectory->ParallelCallConstMemberFunctionNTimes(
@@ -57,6 +59,11 @@ void FileCreator::CreateFiles(const FileArbArgs& args, const string& fileTextOrB
       _caller_CreateSequentiallyNumberedFilesInNumberedDirectory->CallConstMemberFunctionNTimes(
          args.numberOfDirectoriesToCreate, this, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes);
    }
+   const long long millisecondsToWriteFiles = createFilesStopwatch->StopAndGetElapsedMilliseconds();
+   const size_t totalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
+   const string createdFilesMessage = Utils::String::ConcatValues(
+      "Wrote " , totalNumberOfFiles, " files to ", args.numberOfDirectoriesToCreate, " directories [" , millisecondsToWriteFiles, " ms]");
+   _console->ThreadIdWriteLine(createdFilesMessage);
 }
 
 void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(

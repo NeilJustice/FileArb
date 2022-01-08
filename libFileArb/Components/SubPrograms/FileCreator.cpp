@@ -23,7 +23,7 @@ FileCreator::~FileCreator()
 {
 }
 
-void FileCreator::CreateFileWithBytes(const FileArbArgs& args, const string& fileBytes)
+void FileCreator::CreateFileWithBytes(const string& fileBytes, const FileArbArgs& args)
 {
    const shared_ptr<Utils::Stopwatch> createFileStopwatch = _stopwatchFactory->NewStopwatch();
    createFileStopwatch->Start();
@@ -34,7 +34,7 @@ void FileCreator::CreateFileWithBytes(const FileArbArgs& args, const string& fil
    _console->ThreadIdWriteLine(wroteFileMessage);
 }
 
-void FileCreator::CreateFileWithText(const FileArbArgs& args, const string& fileText)
+void FileCreator::CreateFileWithText(const string& fileText, const FileArbArgs& args)
 {
    const shared_ptr<Utils::Stopwatch> createFileStopwatch = _stopwatchFactory->NewStopwatch();
    createFileStopwatch->Start();
@@ -45,7 +45,7 @@ void FileCreator::CreateFileWithText(const FileArbArgs& args, const string& file
    _console->ThreadIdWriteLine(wroteFileMessage);
 }
 
-void FileCreator::CreateFiles(const FileArbArgs& args, const string& fileTextOrBytes) const
+void FileCreator::CreateFiles(const string& fileTextOrBytes, const FileArbArgs& args) const
 {
    const shared_ptr<Utils::Stopwatch> createFilesStopwatch = _stopwatchFactory->NewStopwatch();
    createFilesStopwatch->Start();

@@ -27,9 +27,9 @@ private:
 public:
    FileCreator();
    virtual ~FileCreator();
-   virtual void CreateFileWithBytes(const FileArbArgs& args, const string& fileBytes);
-   virtual void CreateFileWithText(const FileArbArgs& args, const string& fileText);
-   virtual void CreateFiles(const FileArbArgs& args, const string& fileTextOrBytes) const;
+   virtual void CreateFileWithBytes(const string& fileBytes, const FileArbArgs& args);
+   virtual void CreateFileWithText(const string& fileText, const FileArbArgs& args);
+   virtual void CreateFiles(const string& fileTextOrBytes, const FileArbArgs& args) const;
    virtual void CreateRandomFiles(const vector<fs::path>& allFilePaths, const FileArbArgs& args) const;
 private:
    void CreateSequentiallyNumberedFilesInNumberedDirectory(

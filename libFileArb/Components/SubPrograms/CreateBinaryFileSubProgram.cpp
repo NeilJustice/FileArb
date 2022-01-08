@@ -18,6 +18,6 @@ CreateBinaryFileSubProgram::~CreateBinaryFileSubProgram()
 int CreateBinaryFileSubProgram::Run(const FileArbArgs& args)
 {
    const string bytesString = _binaryFileBytesMaker->MakeNonRandomBytesString(args.numberOfBytesPerFile);
-   _fileCreator->CreateFileWithBytes(args, bytesString);
+   _fileCreator->CreateFileWithBytes(bytesString, args);
    return 0;
 }

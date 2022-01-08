@@ -26,7 +26,7 @@ int CreateTextFilesSubProgram::Run(const FileArbArgs& args)
    {
       // const vector<fs::path> allFilePaths;
       const string fileText = _textFileLinesMaker->MakeFileText(args.numberOfLinesPerFile, args.numberOfCharactersPerLine);
-      _fileCreator->CreateFiles(args, fileText);
+      _fileCreator->CreateFiles(fileText, args);
    }
    return 0;
 }

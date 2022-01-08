@@ -14,8 +14,6 @@ AFACT(CreateFileWithBytes_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBi
 AFACT(CreateFileWithText_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
 AFACT(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 AFACT(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
-AFACT(CreateRandomFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
-AFACT(CreateRandomFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 AFACT(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsFalse_CreatesSequentiallyNumberedFilesInNumberedDirectory_WritesMessages)
 AFACT(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsTrue_CreatesSequentiallyNumberedFilesInNumberedDirectory_DoesNotWriteMessages)
 AFACT(CreateNumberedFileInDirectory_QuietIsFalse_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)
@@ -66,10 +64,10 @@ TEST(CreateFileWithBytes_CreatesBinaryFileInTargetDirectoryNamedbinaryfileDotBin
 
    _fileSystemMock->CreateFileWithBytesMock.Expect();
    _consoleMock->ThreadIdWriteLineMock.Expect();
-   const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    const string fileBytes = ZenUnit::Random<string>();
+   const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    //
-   _fileCreator.CreateFileWithBytes(args, fileBytes);
+   _fileCreator.CreateFileWithBytes(fileBytes, args);
    //
    const fs::path expectedFilePath = args.targetDirectoryPath / "binaryfile.bin";
    const string expectedWroteFileMessage = Utils::String::ConcatValues("Wrote binary file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
@@ -94,7 +92,7 @@ TEST(CreateFileWithText_CreatesTextFileInTargetDirectoryNamedtextfileDotTxt)
    const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    const string fileText = ZenUnit::Random<string>();
    //
-   _fileCreator.CreateFileWithText(args, fileText);
+   _fileCreator.CreateFileWithText(fileText, args);
    //
    const fs::path expectedFilePath = args.targetDirectoryPath / "textfile.txt";
    const string expectedWroteFileMessage = Utils::String::ConcatValues("Wrote text file ", expectedFilePath.string(), " [", millisecondsToWriteFile, " ms]");
@@ -120,7 +118,7 @@ TEST(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectories
    args.parallel = true;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
-   _fileCreator.CreateFiles(args, fileTextOrBytes);
+   _fileCreator.CreateFiles(fileTextOrBytes, args);
    //
    const size_t expectedTotalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
    const string expectedCreatedFilesMessage = Utils::String::ConcatValues(
@@ -148,7 +146,7 @@ TEST(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirecto
    args.parallel = false;
    const string fileTextOrBytes = ZenUnit::Random<string>();
    //
-   _fileCreator.CreateFiles(args, fileTextOrBytes);
+   _fileCreator.CreateFiles(fileTextOrBytes, args);
    //
    const size_t expectedTotalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
    const string expectedCreatedFilesMessage = Utils::String::ConcatValues(
@@ -159,16 +157,6 @@ TEST(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirecto
       args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, args, fileTextOrBytes))).Then(
    METALMOCKTHEN(createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
-}
-
-TEST(CreateRandomFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
-{
-
-}
-
-TEST(CreateRandomFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
-{
-
 }
 
 TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsFalse_CreatesSequentiallyNumberedFilesInNumberedDirectory_WritesMessages)

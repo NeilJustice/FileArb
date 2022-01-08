@@ -20,12 +20,12 @@ int CreateBinaryFilesSubProgram::Run(const FileArbArgs& args)
    if (args.generateRandomBytes)
    {
       const string randomBytesString = _binaryFileBytesMaker->MakeRandomBytesString(args.numberOfBytesPerFile);
-      _fileCreator->CreateFiles(args, randomBytesString);
+      _fileCreator->CreateFiles(randomBytesString, args);
    }
    else
    {
       const string nonRandomBytesString = _binaryFileBytesMaker->MakeNonRandomBytesString(args.numberOfBytesPerFile);
-      _fileCreator->CreateFiles(args, nonRandomBytesString);
+      _fileCreator->CreateFiles(nonRandomBytesString, args);
    }
    return 0;
 }

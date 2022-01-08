@@ -47,7 +47,7 @@ TEST(Run_GenerateRandomBytesIsFalse_CreatesNonRandomBinaryFiles_Returns0)
    const int exitCode = _createBinaryFilesSubProgram.Run(args);
    //
    METALMOCK(_binaryFileBytesMakerMock->MakeNonRandomBytesStringMock.CalledOnceWith(args.numberOfBytesPerFile));
-   METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(args, bytesString));
+   METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(bytesString, args));
    IS_ZERO(exitCode);
 }
 
@@ -61,7 +61,7 @@ TEST(Run_GenerateRandomBytesIsTrue_CreatesRandomBinaryFiles_Returns0)
    const int exitCode = _createBinaryFilesSubProgram.Run(args);
    //
    METALMOCK(_binaryFileBytesMakerMock->MakeRandomBytesStringMock.CalledOnceWith(args.numberOfBytesPerFile));
-   METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(args, bytesString));
+   METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(bytesString, args));
    IS_ZERO(exitCode);
 }
 

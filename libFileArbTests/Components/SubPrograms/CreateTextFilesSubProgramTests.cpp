@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/CreateTextFilesSubProgram.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
+#include "libFileArbTests/Components/Makers/MetalMock/FilePathsMakerMock.h"
 #include "libFileArbTests/Components/Makers/MetalMock/TextFileLinesMakerMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
 
@@ -12,6 +13,7 @@ EVIDENCE
 
 CreateTextFilesSubProgram _createTextFilesSubProgram;
 // Constant Components
+FilePathsMakerMock* _filePathsMakerMock = nullptr;
 TextFileLinesMakerMock* _textFileLinesMakerMock = nullptr;
 // Mutable Components
 FileCreatorMock* _fileCreatorMock = nullptr;
@@ -19,6 +21,7 @@ FileCreatorMock* _fileCreatorMock = nullptr;
 STARTUP
 {
    // Constant Components
+   _createTextFilesSubProgram._filePathsMaker.reset(_filePathsMakerMock = new FilePathsMakerMock);
    _createTextFilesSubProgram._textFileLinesMaker.reset(_textFileLinesMakerMock = new TextFileLinesMakerMock);
    // Mutable Components
    _createTextFilesSubProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
@@ -28,6 +31,7 @@ TEST(DefaultConstructor_NewsComponents)
 {
    CreateTextFilesSubProgram createTextFilesSubProgram;
    // Base Class Constant Components
+   DELETE_TO_ASSERT_NEWED(createTextFilesSubProgram._filePathsMaker);
    DELETE_TO_ASSERT_NEWED(createTextFilesSubProgram._fileSystem);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(createTextFilesSubProgram._textFileLinesMaker);
@@ -37,14 +41,15 @@ TEST(DefaultConstructor_NewsComponents)
 
 TEST(Run_GenerateRandomLetterIsTrue_CreatesRandomTextFiles_Returns0)
 {
+   const vector<fs::path> allFilePaths = _filePathsMakerMock->MakeFilePathsMock.ReturnRandom();
    _fileCreatorMock->CreateRandomFilesMock.Expect();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.generateRandomLetters = true;
    //
    const int exitCode = _createTextFilesSubProgram.Run(args);
    //
-   const vector<fs::path> expectedAllFilePaths;
-   METALMOCK(_fileCreatorMock->CreateRandomFilesMock.CalledOnceWith(expectedAllFilePaths, args));
+   METALMOCKTHEN(_filePathsMakerMock->MakeFilePathsMock.CalledOnceWith(args)).Then(
+   METALMOCKTHEN(_fileCreatorMock->CreateRandomFilesMock.CalledOnceWith(allFilePaths, args)));
    IS_ZERO(exitCode);
 }
 

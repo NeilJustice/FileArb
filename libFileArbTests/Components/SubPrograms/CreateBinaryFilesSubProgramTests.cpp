@@ -3,6 +3,7 @@
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
 #include "libFileArbTests/Components/Makers/MetalMock/BinaryFileBytesMakerMock.h"
+#include "libFileArbTests/Components/Makers/MetalMock/FilePathsMakerMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
 
 TESTS(CreateBinaryFilesSubProgramTests)
@@ -14,6 +15,7 @@ EVIDENCE
 CreateBinaryFilesSubProgram _createBinaryFilesSubProgram;
 // Constant Components
 BinaryFileBytesMakerMock* _binaryFileBytesMakerMock = nullptr;
+FilePathsMakerMock* _filePathsMakerMock = nullptr;
 // Mutable Components
 FileCreatorMock* _fileCreatorMock = nullptr;
 
@@ -21,6 +23,7 @@ STARTUP
 {
    // Constant Components
    _createBinaryFilesSubProgram._binaryFileBytesMaker.reset(_binaryFileBytesMakerMock = new BinaryFileBytesMakerMock);
+   _createBinaryFilesSubProgram._filePathsMaker.reset(_filePathsMakerMock = new FilePathsMakerMock);
    // Mutable Components
    _createBinaryFilesSubProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
 }
@@ -33,8 +36,23 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._fileSystem);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._binaryFileBytesMaker);
+   DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._filePathsMaker);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(createBinaryFilesSubProgram._fileCreator);
+}
+
+TEST(Run_GenerateRandomBytesIsTrue_CreatesRandomBinaryFiles_Returns0)
+{
+   const vector<fs::path> filePaths = _filePathsMakerMock->MakeFilePathsMock.ReturnRandom();
+   _fileCreatorMock->CreateRandomFilesMock.Expect();
+   FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   args.generateRandomBytes = true;
+   //
+   const int exitCode = _createBinaryFilesSubProgram.Run(args);
+   //
+   METALMOCKTHEN(_filePathsMakerMock->MakeFilePathsMock.CalledOnceWith(args)).Then(
+   METALMOCKTHEN(_fileCreatorMock->CreateRandomFilesMock.CalledOnceWith(filePaths, args)));
+   IS_ZERO(exitCode);
 }
 
 TEST(Run_GenerateRandomBytesIsFalse_CreatesNonRandomBinaryFiles_Returns0)
@@ -47,20 +65,6 @@ TEST(Run_GenerateRandomBytesIsFalse_CreatesNonRandomBinaryFiles_Returns0)
    const int exitCode = _createBinaryFilesSubProgram.Run(args);
    //
    METALMOCK(_binaryFileBytesMakerMock->MakeNonRandomBytesStringMock.CalledOnceWith(args.numberOfBytesPerFile));
-   METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(bytesString, args));
-   IS_ZERO(exitCode);
-}
-
-TEST(Run_GenerateRandomBytesIsTrue_CreatesRandomBinaryFiles_Returns0)
-{
-   const string bytesString = _binaryFileBytesMakerMock->MakeRandomBytesStringMock.ReturnRandom();
-   _fileCreatorMock->CreateFilesMock.Expect();
-   FileArbArgs args = ZenUnit::Random<FileArbArgs>();
-   args.generateRandomBytes = true;
-   //
-   const int exitCode = _createBinaryFilesSubProgram.Run(args);
-   //
-   METALMOCK(_binaryFileBytesMakerMock->MakeRandomBytesStringMock.CalledOnceWith(args.numberOfBytesPerFile));
    METALMOCK(_fileCreatorMock->CreateFilesMock.CalledOnceWith(bytesString, args));
    IS_ZERO(exitCode);
 }

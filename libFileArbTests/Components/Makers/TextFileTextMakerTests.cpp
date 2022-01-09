@@ -1,15 +1,15 @@
 #include "pch.h"
-#include "libFileArb/Components/Makers/TextFileLinesMaker.h"
+#include "libFileArb/Components/Makers/TextFileTextMaker.h"
 #include "libFileArbTests/Components/Makers/MetalMock/LineReplicatorMock.h"
 #include "libFileArbTests/Components/Makers/MetalMock/RandomStringMakerMock.h"
 
-TESTS(TextFileLinesMakerTests)
+TESTS(TextFileTextMakerTests)
 AFACT(DefaultConstructor_SetsReplicateLineNTimesFunction)
-AFACT(MakeFileText_ReturnsAllZerosStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
+AFACT(MakeNonRandomFileText_ReturnsAllZerosStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
 AFACT(MakeRandomFileText_ReturnsRandomCharsStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
 EVIDENCE
 
-TextFileLinesMaker _textFileLinesMaker;
+TextFileTextMaker _textFileTextMaker;
 // Constant Components
 LineReplicatorMock* _lineReplicatorMock = nullptr;
 RandomStringMakerMock* _randomStringMakerMock = nullptr;
@@ -17,25 +17,25 @@ RandomStringMakerMock* _randomStringMakerMock = nullptr;
 STARTUP
 {
    // Constant Components
-   _textFileLinesMaker._lineReplicator.reset(_lineReplicatorMock = new LineReplicatorMock);
-   _textFileLinesMaker._randomStringMaker.reset(_randomStringMakerMock = new RandomStringMakerMock);
+   _textFileTextMaker._lineReplicator.reset(_lineReplicatorMock = new LineReplicatorMock);
+   _textFileTextMaker._randomStringMaker.reset(_randomStringMakerMock = new RandomStringMakerMock);
 }
 
 TEST(DefaultConstructor_SetsReplicateLineNTimesFunction)
 {
-   TextFileLinesMaker textFileLinesMaker;
+   TextFileTextMaker textFileTextMaker;
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(textFileLinesMaker._lineReplicator);
-   DELETE_TO_ASSERT_NEWED(textFileLinesMaker._randomStringMaker);
+   DELETE_TO_ASSERT_NEWED(textFileTextMaker._lineReplicator);
+   DELETE_TO_ASSERT_NEWED(textFileTextMaker._randomStringMaker);
 }
 
-TEST(MakeFileText_ReturnsAllZerosStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
+TEST(MakeNonRandomFileText_ReturnsAllZerosStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
 {
    const string fileText = _lineReplicatorMock->ReplicateLineNTimesMock.ReturnRandom();
    const size_t numberOfLines = ZenUnit::RandomBetween<size_t>(0, 2);
    const size_t numberOfCharactersPerLine = ZenUnit::RandomBetween<size_t>(0, 2);
    //
-   const string returnedFileText = _textFileLinesMaker.MakeFileText(numberOfLines, numberOfCharactersPerLine);
+   const string returnedFileText = _textFileTextMaker.MakeNonRandomFileText(numberOfLines, numberOfCharactersPerLine);
    //
    string expectedLineToWrite(numberOfCharactersPerLine + 1, '0');
    expectedLineToWrite[expectedLineToWrite.size() - 1] = '\n';
@@ -52,7 +52,7 @@ TEST(MakeRandomFileText_ReturnsRandomCharsStringWithNumberOfCharactersPerLineRep
       randomCapitalLettersString1, randomCapitalLettersString2, randomCapitalLettersString3);
    const size_t numberOfCharactersPerLine = ZenUnit::Random<size_t>();
    //
-   const string randomCapitalLettersFileText = _textFileLinesMaker.MakeRandomFileText(3, numberOfCharactersPerLine);
+   const string randomCapitalLettersFileText = _textFileTextMaker.MakeRandomFileText(3, numberOfCharactersPerLine);
    //
    METALMOCK(_randomStringMakerMock->MakeRandomCapitalLettersStringMock.CalledNTimesWith(3, numberOfCharactersPerLine));
    const string expectedRandomCapitalLettersFileText =
@@ -62,4 +62,4 @@ TEST(MakeRandomFileText_ReturnsRandomCharsStringWithNumberOfCharactersPerLineRep
    ARE_EQUAL(expectedRandomCapitalLettersFileText, randomCapitalLettersFileText);
 }
 
-RUN_TESTS(TextFileLinesMakerTests)
+RUN_TESTS(TextFileTextMakerTests)

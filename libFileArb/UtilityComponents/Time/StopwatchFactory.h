@@ -7,7 +7,7 @@ namespace Utils
    class StopwatchFactory
    {
    public:
-      virtual shared_ptr<Stopwatch> NewStopwatch() const;
+      virtual shared_ptr<Stopwatch> NewAndStartStopwatch() const;
       virtual ~StopwatchFactory() = default;
    };
 }

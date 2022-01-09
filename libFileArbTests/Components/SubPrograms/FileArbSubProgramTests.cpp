@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
-#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libFileArbTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileArb/UtilityComponents/Console/Console.h"
+#include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
+#include "libFileArb/UtilityComponents/Time/StopwatchFactory.h"
 
 TESTS(FileArbSubProgramTests)
 AFACT(DefaultConstructor_NewsConsoleAndFileSystem)
@@ -16,6 +17,7 @@ TEST(DefaultConstructor_NewsConsoleAndFileSystem)
    // Base Class Constant Components
    DELETE_TO_ASSERT_NEWED(fileArbSubProgram._console);
    DELETE_TO_ASSERT_NEWED(fileArbSubProgram._fileSystem);
+   DELETE_TO_ASSERT_NEWED(fileArbSubProgram._stopwatchFactory);
 }
 
 TEST(Run_Returns0)

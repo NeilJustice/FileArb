@@ -45,7 +45,7 @@ namespace Utils
       FileSystem();
       virtual ~FileSystem();
       virtual void CreateFileWithText(const fs::path& filePath, string_view text) const;
-      virtual void CreateFileWithBytes(const fs::path& filePath, const char* bytes, size_t bytesSize) const;
+      virtual void CreateFileWithBytes(const fs::path& filePath, string_view bytesString) const;
    private:
       void CreateBinaryOrTextFile(const fs::path& filePath, const char* fileOpenMode, const char* bytes, size_t bytesSize) const;
       shared_ptr<FILE> OpenFile(const fs::path& filePath, const char* fileOpenMode) const;

@@ -26,13 +26,14 @@ TEST(MakeFilePaths_1NumberOfDirectoriesToCreate_2NumberOfFilesToCreate_MakesAndR
    args.targetDirectoryPath = "target_directory";
    args.numberOfDirectoriesToCreate = 1;
    args.numberOfFilesToCreate = 2;
+   args.fileExtension = ".txt";
    //
    const vector<fs::path> filePaths = _filePathsMaker.MakeFilePaths(args);
    //
    const vector<fs::path> expectedFilePaths =
    {
-      args.targetDirectoryPath / "directory1" / "file1",
-      args.targetDirectoryPath / "directory1" / "file2"
+      args.targetDirectoryPath / "directory1" / "file1.txt",
+      args.targetDirectoryPath / "directory1" / "file2.txt"
    };
    VECTORS_ARE_EQUAL(expectedFilePaths, filePaths);
 }
@@ -43,22 +44,23 @@ TEST(MakeFilePaths_3NumberOfDirectoriesToCreate_3NumberOfFilesToCreate_MakesAndR
    args.targetDirectoryPath = "dir1/dir2/dir3/target_directory4";
    args.numberOfDirectoriesToCreate = 3;
    args.numberOfFilesToCreate = 3;
+   args.fileExtension = ".bin";
    //
    const vector<fs::path> filePaths = _filePathsMaker.MakeFilePaths(args);
    //
    const vector<fs::path> expectedFilePaths =
    {
-      args.targetDirectoryPath / "directory1" / "file1",
-      args.targetDirectoryPath / "directory1" / "file2",
-      args.targetDirectoryPath / "directory1" / "file3",
+      args.targetDirectoryPath / "directory1" / "file1.bin",
+      args.targetDirectoryPath / "directory1" / "file2.bin",
+      args.targetDirectoryPath / "directory1" / "file3.bin",
 
-      args.targetDirectoryPath / "directory2" / "file1",
-      args.targetDirectoryPath / "directory2" / "file2",
-      args.targetDirectoryPath / "directory2" / "file3",
+      args.targetDirectoryPath / "directory2" / "file1.bin",
+      args.targetDirectoryPath / "directory2" / "file2.bin",
+      args.targetDirectoryPath / "directory2" / "file3.bin",
 
-      args.targetDirectoryPath / "directory3" / "file1",
-      args.targetDirectoryPath / "directory3" / "file2",
-      args.targetDirectoryPath / "directory3" / "file3"
+      args.targetDirectoryPath / "directory3" / "file1.bin",
+      args.targetDirectoryPath / "directory3" / "file2.bin",
+      args.targetDirectoryPath / "directory3" / "file3.bin"
    };
    VECTORS_ARE_EQUAL(expectedFilePaths, filePaths);
 }

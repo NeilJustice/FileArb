@@ -2,9 +2,9 @@
 class LineReplicator;
 class RandomStringMaker;
 
-class TextFileLinesMaker
+class TextFileTextMaker
 {
-   friend class TextFileLinesMakerTests;
+   friend class TextFileTextMakerTests;
 private:
    // Constant Components
    unique_ptr<const LineReplicator> _lineReplicator;
@@ -12,8 +12,8 @@ private:
    // Mutable Fields
    string _fileText;
 public:
-   TextFileLinesMaker();
-   virtual ~TextFileLinesMaker();
-   virtual string MakeFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const;
+   TextFileTextMaker();
+   virtual ~TextFileTextMaker();
+   virtual string MakeNonRandomFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const;
    virtual string MakeRandomFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const;
 };

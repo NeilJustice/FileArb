@@ -50,10 +50,10 @@ namespace Utils
          this, &FileSystem::CreateBinaryOrTextFile, filePath, "w", text.data(), text.size());
    }
 
-   void FileSystem::CreateFileWithBytes(const fs::path& filePath, const char* bytes, size_t bytesSize) const
+   void FileSystem::CreateFileWithBytes(const fs::path& filePath, string_view bytesString) const
    {
       _caller_CreateBinaryOrTextFile->CallConstMemberFunction(
-         this, &FileSystem::CreateBinaryOrTextFile, filePath, "wb", bytes, bytesSize);
+         this, &FileSystem::CreateBinaryOrTextFile, filePath, "wb", bytesString.data(), bytesString.size());
    }
 
    // Private Functions

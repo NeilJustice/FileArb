@@ -16,6 +16,6 @@ namespace Utils
       virtual ~Stopwatch() = default;
       virtual void Start();
       virtual std::string StopAndGetElapsedSeconds();
-      virtual long long StopAndGetElapsedMilliseconds();
+      virtual unsigned long long StopAndGetElapsedMilliseconds();
    };
 }

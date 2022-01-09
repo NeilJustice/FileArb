@@ -28,18 +28,20 @@ namespace Utils
          0ULL; // 333 -> 0.333
       const std::string leadingMillisecondZeros(numberOfLeadingMillisecondZeros, '0');
       const long long elapsedSeconds = elapsedMilliseconds / 1000;
-      std::string elapsedSecondsWithMillisecondResolution = Utils::String::ConcatValues(elapsedSeconds, '.', leadingMillisecondZeros, elapsedMillisecondsMod1000);
+      std::string elapsedSecondsWithMillisecondResolution = Utils::String::ConcatValues(
+         elapsedSeconds, '.', leadingMillisecondZeros, elapsedMillisecondsMod1000);
       return elapsedSecondsWithMillisecondResolution;
    }
 
-   long long Stopwatch::StopAndGetElapsedMilliseconds()
+   unsigned long long Stopwatch::StopAndGetElapsedMilliseconds()
    {
       if (_startTime == chrono::time_point<chrono::high_resolution_clock>())
       {
          return 0;
       }
       const chrono::time_point<chrono::high_resolution_clock> stopTime = _call_now();
-      const long long elapsedMilliseconds = chrono::duration_cast<chrono::milliseconds>(stopTime - _startTime).count();
+      const unsigned long long elapsedMilliseconds = static_cast<unsigned long long>(
+         chrono::duration_cast<chrono::milliseconds>(stopTime - _startTime).count());
       _startTime = chrono::time_point<chrono::high_resolution_clock>();
       return elapsedMilliseconds;
    }

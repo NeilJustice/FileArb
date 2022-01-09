@@ -1,25 +1,25 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/BytesStringConverter.h"
-#include "libFileArb/Components/Args/FileArbArgsParser.h"
+#include "libFileArb/Components/Args/ArgsParser.h"
 #include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
 #include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
 
-FileArbArgsParser::FileArbArgsParser()
+ArgsParser::ArgsParser()
    // Function Pointers
-   : _call_DetermineProgramMode(FileArbArgsParser::DetermineProgramMode)
-   , _call_GetFileNamePrefixAndFileExtension(FileArbArgsParser::GetFileNamePrefixAndFileExtension)
+   : _call_DetermineProgramMode(ArgsParser::DetermineProgramMode)
+   , _call_GetFileNamePrefixAndFileExtension(ArgsParser::GetFileNamePrefixAndFileExtension)
    // Constant Components
    , _bytesStringConverter(make_unique<BytesStringConverter>())
    , _docoptParser(make_unique<Utils::DocoptParser>())
 {
 }
 
-FileArbArgsParser::~FileArbArgsParser()
+ArgsParser::~ArgsParser()
 {
 }
 
-FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
+FileArbArgs ArgsParser::ParseArgs(const vector<string>& stringArgs) const
 {
    FileArbArgs args;
    args.commandLine = Utils::Vector::JoinWithSeparator(stringArgs, ' ');
@@ -70,7 +70,7 @@ FileArbArgs FileArbArgsParser::ParseArgs(const vector<string>& stringArgs) const
    return args;
 }
 
-ProgramMode FileArbArgsParser::DetermineProgramMode(
+ProgramMode ArgsParser::DetermineProgramMode(
    bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode)
 {
    if (isCreateBinaryFileMode)
@@ -89,7 +89,7 @@ ProgramMode FileArbArgsParser::DetermineProgramMode(
    return ProgramMode::CreateTextFiles;
 }
 
-pair<string, string> FileArbArgsParser::GetFileNamePrefixAndFileExtension(
+pair<string, string> ArgsParser::GetFileNamePrefixAndFileExtension(
    bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode)
 {
    if (isCreateBinaryFileMode || isCreateBinaryFilesMode)

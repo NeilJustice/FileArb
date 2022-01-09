@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/FileArbProgram.h"
 #include "libFileArb/StaticUtilities/Vector.h"
-#include "libFileArbTests/Components/Args/MetalMock/FileArbArgsParserMock.h"
+#include "libFileArbTests/Components/Args/MetalMock/ArgsParserMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramFactoryMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
@@ -25,7 +25,7 @@ METALMOCK_NONVOID1_FREE(string, _call_Exception_GetClassNameAndMessage, const ex
 Utils::ConsoleMock* _consoleMock = nullptr;
 Utils::NonVoidOneArgTryCatchCallerMock<int, FileArbProgram, const vector<string>&>* _nonVoidOneArgTryCatchCallerMock = nullptr;
 Utils::StopwatchMock* _stopwatchMock = nullptr;
-FileArbArgsParserMock* _argsParserMock = nullptr;
+ArgsParserMock* _argsParserMock = nullptr;
 // Mutable Components
 FileArbSubProgramFactoryMock* _fileArbSubProgramFactoryMock = nullptr;
 FileCreatorMock* _fileCreatorMock = nullptr;
@@ -38,7 +38,7 @@ STARTUP
    // Constant Components
    _fileArbProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
    _fileArbProgram._nonVoidOneArgTryCatchCaller.reset(_nonVoidOneArgTryCatchCallerMock = new Utils::NonVoidOneArgTryCatchCallerMock<int, FileArbProgram, const vector<string>&>);
-   _fileArbProgram._argsParser.reset(_argsParserMock = new FileArbArgsParserMock);
+   _fileArbProgram._argsParser.reset(_argsParserMock = new ArgsParserMock);
    _fileArbProgram._fileArbSubProgramFactory.reset(_fileArbSubProgramFactoryMock = new FileArbSubProgramFactoryMock);
    // Mutable Components
    _fileArbProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
@@ -93,7 +93,7 @@ TEST(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExitCod
    //
    const int returnedSubProgramExitCode = _fileArbProgram.Main(argc, const_cast<char**>(argv));
    //
-   const string expectedDurationLine = Utils::String::ConcatValues("Duration: ", runtimeInSeconds, " seconds");
+   const string expectedDurationLine = Utils::String::ConcatValues("TotalDuration: ", runtimeInSeconds, " seconds");
    const string expectedExitCodeLine = Utils::String::ConcatValues("ExitCode: ", subProgramExitCode);
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
    METALMOCKTHEN(_call_Vector_FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)))).Then(

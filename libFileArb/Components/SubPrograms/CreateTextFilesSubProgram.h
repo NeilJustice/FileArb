@@ -1,7 +1,7 @@
 #pragma once
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 class FileCreator;
-class TextFileLinesMaker;
+class TextFileTextMaker;
 class FilePathsMaker;
 
 class CreateTextFilesSubProgram : public FileArbSubProgram
@@ -9,7 +9,7 @@ class CreateTextFilesSubProgram : public FileArbSubProgram
 private:
    friend class CreateTextFilesSubProgramTests;
    // Constant Components
-   unique_ptr<const TextFileLinesMaker> _textFileLinesMaker;
+   unique_ptr<const TextFileTextMaker> _textFileTextMaker;
    unique_ptr<const FilePathsMaker> _filePathsMaker;
    // Mutable Components
    unique_ptr<FileCreator> _fileCreator;

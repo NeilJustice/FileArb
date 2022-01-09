@@ -8,6 +8,6 @@ namespace Utils
    public:
       METALMOCK_VOID0(Start)
       METALMOCK_NONVOID0(string, StopAndGetElapsedSeconds)
-      METALMOCK_NONVOID0(long long, StopAndGetElapsedMilliseconds)
+      METALMOCK_NONVOID0(unsigned long long, StopAndGetElapsedMilliseconds)
    };
 }

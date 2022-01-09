@@ -1,20 +1,20 @@
 #include "pch.h"
 #include "libFileArb/Components/Makers/LineReplicator.h"
 #include "libFileArb/Components/Makers/RandomStringMaker.h"
-#include "libFileArb/Components/Makers/TextFileLinesMaker.h"
+#include "libFileArb/Components/Makers/TextFileTextMaker.h"
 
-TextFileLinesMaker::TextFileLinesMaker()
+TextFileTextMaker::TextFileTextMaker()
    // Constant Components
    : _lineReplicator(make_unique<LineReplicator>())
    , _randomStringMaker(make_unique<RandomStringMaker>())
 {
 }
 
-TextFileLinesMaker::~TextFileLinesMaker()
+TextFileTextMaker::~TextFileTextMaker()
 {
 }
 
-string TextFileLinesMaker::MakeFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const
+string TextFileTextMaker::MakeNonRandomFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const
 {
    string allZerosLine(numberOfCharactersPerLine + 1, '0');
    allZerosLine[allZerosLine.size() - 1] = '\n';
@@ -22,7 +22,7 @@ string TextFileLinesMaker::MakeFileText(size_t numberOfLines, size_t numberOfCha
    return allZerosFileText;
 }
 
-string TextFileLinesMaker::MakeRandomFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const
+string TextFileTextMaker::MakeRandomFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const
 {
    ostringstream oss;
    for (size_t i = 0; i < numberOfLines; ++i)

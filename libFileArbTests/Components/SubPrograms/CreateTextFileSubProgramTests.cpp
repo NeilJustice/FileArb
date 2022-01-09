@@ -1,51 +1,93 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/CreateTextFileSubProgram.h"
-#include "libFileArb/UtilityComponents/Console/Console.h"
-#include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
-#include "libFileArbTests/Components/Makers/MetalMock/TextFileLinesMakerMock.h"
-#include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
+#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/Makers/MetalMock/TextFileTextMakerMock.h"
+#include "libFileArbTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
+#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchFactoryMock.h"
 
 TESTS(CreateTextFileSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(Run_CreateTextFiles_Returns0)
+AFACT(Run_GenerateRandomLetterIsTrue_WritesRandomTextFileToTargetDirectory_Returns0)
+AFACT(Run_GenerateRandomLetterIsFalse_WritesNonRandomTextFileToTargetDirectory_Returns0)
 EVIDENCE
 
 CreateTextFileSubProgram _createTextFileSubProgram;
+// Base Class Constant Components
+Utils::ConsoleMock* _consoleMock = nullptr;
+Utils::FileSystemMock* _fileSystemMock = nullptr;
+Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 // Constant Components
-TextFileLinesMakerMock* _textFileLinesMakerMock = nullptr;
-// Mutable Components
-FileCreatorMock* _fileCreatorMock = nullptr;
+TextFileTextMakerMock* _textFileTextMakerMock = nullptr;
 
 STARTUP
 {
+   // Base Class Constant Components
+   _createTextFileSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _createTextFileSubProgram._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
+   _createTextFileSubProgram._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
    // Constant Components
-   _createTextFileSubProgram._textFileLinesMaker.reset(_textFileLinesMakerMock = new TextFileLinesMakerMock);
-   // Mutable Components
-   _createTextFileSubProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
+   _createTextFileSubProgram._textFileTextMaker.reset(_textFileTextMakerMock = new TextFileTextMakerMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    CreateTextFileSubProgram createTextFileSubProgram;
-   // Base Class Constant Components
-   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._console);
-   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._fileSystem);
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._textFileLinesMaker);
-   // Mutable Components
-   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._fileCreator);
+   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._textFileTextMaker);
 }
 
-TEST(Run_CreateTextFiles_Returns0)
+TEST(Run_GenerateRandomLetterIsTrue_WritesRandomTextFileToTargetDirectory_Returns0)
 {
-   const string fileText = _textFileLinesMakerMock->MakeFileTextMock.ReturnRandom();
-   _fileCreatorMock->CreateFileWithTextMock.Expect();
-   const FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   shared_ptr<Utils::StopwatchMock> stopwatchMock = make_shared<Utils::StopwatchMock>();
+   const unsigned long long elapsedMilliseconds = stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+   _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(stopwatchMock);
+
+   const string fileText = _textFileTextMakerMock->MakeRandomFileTextMock.ReturnRandom();
+
+   _fileSystemMock->CreateFileWithTextMock.Expect();
+
+   _consoleMock->ThreadIdWriteLineMock.Expect();
+
+   FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   args.generateRandomLetters = true;
    //
    const int exitCode = _createTextFileSubProgram.Run(args);
    //
-   METALMOCK(_textFileLinesMakerMock->MakeFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine));
-   METALMOCK(_fileCreatorMock->CreateFileWithTextMock.CalledOnceWith(fileText, args));
+   const fs::path expectedFilePath = args.targetDirectoryPath / "textfile.txt";
+   const string expectedMessage = Utils::String::ConcatValues("Wrote text file ", expectedFilePath.string(), " [", elapsedMilliseconds, " ms]");
+   METALMOCKTHEN(_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(_textFileTextMakerMock->MakeRandomFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine))).Then(
+   METALMOCKTHEN(_fileSystemMock->CreateFileWithTextMock.CalledOnceWith(expectedFilePath, fileText))).Then(
+   METALMOCKTHEN(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedMessage)));
+   IS_ZERO(exitCode);
+}
+
+TEST(Run_GenerateRandomLetterIsFalse_WritesNonRandomTextFileToTargetDirectory_Returns0)
+{
+   shared_ptr<Utils::StopwatchMock> stopwatchMock = make_shared<Utils::StopwatchMock>();
+   const unsigned long long elapsedMilliseconds = stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+   _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(stopwatchMock);
+
+   const string fileText = _textFileTextMakerMock->MakeNonRandomFileTextMock.ReturnRandom();
+
+   _fileSystemMock->CreateFileWithTextMock.Expect();
+
+   _consoleMock->ThreadIdWriteLineMock.Expect();
+
+   FileArbArgs args = ZenUnit::Random<FileArbArgs>();
+   args.generateRandomLetters = false;
+   //
+   const int exitCode = _createTextFileSubProgram.Run(args);
+   //
+   const fs::path expectedFilePath = args.targetDirectoryPath / "textfile.txt";
+   const string expectedMessage = Utils::String::ConcatValues("Wrote text file ", expectedFilePath.string(), " [", elapsedMilliseconds, " ms]");
+   METALMOCKTHEN(_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(_textFileTextMakerMock->MakeNonRandomFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine))).Then(
+   METALMOCKTHEN(_fileSystemMock->CreateFileWithTextMock.CalledOnceWith(expectedFilePath, fileText))).Then(
+   METALMOCKTHEN(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedMessage)));
    IS_ZERO(exitCode);
 }
 

@@ -104,13 +104,12 @@ TEST(CreateFileWithBytes_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
 {
    _caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.Expect();
    const fs::path filePath = ZenUnit::Random<fs::path>();
-   const char* bytes = ZenUnit::Random<const char*>();
-   const size_t bytesSize = ZenUnit::Random<size_t>();
+   const string bytesString = ZenUnit::Random<string>();
    //
-   _fileSystem.CreateFileWithBytes(filePath, bytes, bytesSize);
+   _fileSystem.CreateFileWithBytes(filePath, bytesString);
    //
    METALMOCK(_caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &Utils::FileSystem::CreateBinaryOrTextFile, filePath, "wb", bytes, bytesSize));
+      &_fileSystem, &Utils::FileSystem::CreateBinaryOrTextFile, filePath, "wb", bytesString.data(), bytesString.size()));
 }
 
 // Private Functions

@@ -12,7 +12,7 @@ namespace Utils
 
    class Stopwatch;
 }
-class FileArbArgsParser;
+class ArgsParser;
 class FileArbSubProgramFactory;
 class FileCreator;
 
@@ -26,7 +26,7 @@ private:
    // Constant Components
    std::unique_ptr<const Utils::Console> _console;
    std::unique_ptr<const Utils::NonVoidOneArgTryCatchCaller<int, FileArbProgram, const std::vector<std::string>&>> _nonVoidOneArgTryCatchCaller;
-   std::unique_ptr<const FileArbArgsParser> _argsParser;
+   std::unique_ptr<const ArgsParser> _argsParser;
    std::unique_ptr<const FileArbSubProgramFactory> _fileArbSubProgramFactory;
    // Mutable Components
    std::unique_ptr<FileCreator> _fileCreator;

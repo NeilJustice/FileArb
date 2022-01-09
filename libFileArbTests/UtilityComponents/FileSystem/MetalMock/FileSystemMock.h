@@ -7,6 +7,6 @@ namespace Utils
    {
    public:
       METALMOCK_VOID2_CONST(CreateFileWithText, const fs::path&, string_view)
-      METALMOCK_VOID3_CONST(CreateFileWithBytes, const fs::path&, const char*, size_t)
+      METALMOCK_VOID2_CONST(CreateFileWithBytes, const fs::path&, string_view)
    };
 }

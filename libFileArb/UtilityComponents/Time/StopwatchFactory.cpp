@@ -4,8 +4,10 @@
 
 namespace Utils
 {
-   shared_ptr<Stopwatch> StopwatchFactory::NewStopwatch() const
+   shared_ptr<Stopwatch> StopwatchFactory::NewAndStartStopwatch() const
    {
-      return make_shared<Stopwatch>();
+      shared_ptr<Stopwatch> stopwatch = make_shared<Stopwatch>();
+      stopwatch->Start();
+      return stopwatch;
    }
 }

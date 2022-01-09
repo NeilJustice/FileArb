@@ -90,7 +90,7 @@ TEST(StopAndGetElapsedMilliseconds_StartPreviouslyCalled_ReturnsElapsedMilliseco
    nowMock.Return(stopTime);
    _stopwatch._startTime = startTime;
    //
-   const long long elapsedMilliseconds = _stopwatch.StopAndGetElapsedMilliseconds();
+   const unsigned long long elapsedMilliseconds = _stopwatch.StopAndGetElapsedMilliseconds();
    //
    METALMOCK(nowMock.CalledOnce());
    ARE_EQUAL(1000, elapsedMilliseconds);

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Args/FileArbArgsParser.h"
+#include "libFileArb/Components/Args/ArgsParser.h"
 #include "libFileArb/Components/FileArbProgram.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgramFactory.h"
@@ -17,7 +17,7 @@ FileArbProgram::FileArbProgram()
    // Constant Components
    , _console(make_unique<Utils::Console>())
    , _nonVoidOneArgTryCatchCaller(make_unique<Utils::NonVoidOneArgTryCatchCaller<int, FileArbProgram, const vector<string>&>>())
-   , _argsParser(make_unique<FileArbArgsParser>())
+   , _argsParser(make_unique<ArgsParser>())
    , _fileArbSubProgramFactory(make_unique<FileArbSubProgramFactory>())
    // Mutable Components
    , _fileCreator(make_unique<FileCreator>())
@@ -41,7 +41,7 @@ int FileArbProgram::Main(int argc, char* argv[])
    const int subProgramExitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallNonConstMemberFunction(
       this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
    const string runtimeInSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string durationLine = Utils::String::ConcatStrings("Duration: ", runtimeInSeconds, " seconds");
+   const string durationLine = Utils::String::ConcatStrings("TotalDuration: ", runtimeInSeconds, " seconds");
    _console->ThreadIdWriteLine(durationLine);
    const string exitCodeLine = Utils::String::ConcatValues("ExitCode: ", subProgramExitCode);
    _console->ThreadIdWriteLine(exitCodeLine);

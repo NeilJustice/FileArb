@@ -9,8 +9,6 @@ private:
    friend class CreateBinaryFileSubProgramTests;
    // Constant Components
    unique_ptr<const BinaryFileBytesMaker> _binaryFileBytesMaker;
-   // Mutable Components
-   unique_ptr<FileCreator> _fileCreator;
 public:
    CreateBinaryFileSubProgram();
    virtual ~CreateBinaryFileSubProgram();

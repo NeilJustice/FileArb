@@ -20,7 +20,7 @@ vector<fs::path> FilePathsMaker::MakeFilePaths(const FileArbArgs& args) const
       const fs::path directoryPath = args.targetDirectoryPath / directoryName;
       for (size_t fileIndex = 0; fileIndex < args.numberOfFilesToCreate; ++fileIndex)
       {
-         const string fileName = Utils::String::ConcatValues("file", fileIndex + 1);
+         const string fileName = Utils::String::ConcatValues("file", fileIndex + 1, args.fileExtension);
          fs::path filePath = directoryPath / fileName;
          filePaths.emplace_back(std::move(filePath));
       }

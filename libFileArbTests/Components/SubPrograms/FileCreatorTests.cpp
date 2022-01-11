@@ -83,7 +83,6 @@ TEST(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectories
    //
    _fileCreator.CreateFiles(fileTextOrBytes, args);
    //
-   const size_t expectedTotalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
    METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->ParallelCallConstMemberFunctionNTimesMock.CalledOnceWith(
       args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, fileTextOrBytes, args));
 }
@@ -97,7 +96,6 @@ TEST(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirecto
    //
    _fileCreator.CreateFiles(fileTextOrBytes, args);
    //
-   const size_t expectedTotalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
    METALMOCK(_caller_CreateSequentiallyNumberedFilesInNumberedDirectoryMock->CallConstMemberFunctionNTimesMock.CalledOnceWith(
       args.numberOfDirectoriesToCreate, &_fileCreator, &FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory, fileTextOrBytes, args));
 }

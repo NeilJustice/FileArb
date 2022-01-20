@@ -24,8 +24,8 @@ jobs:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
 
-      - name: Install apt packages
-        run: sudo apt-get install ninja-build
+      - name: Install lld and ninja-build
+        run: sudo apt-get install lld ninja-build
 
       - name: Install lcov if g++-10 Release
         run: sudo apt-get install lcov
@@ -80,6 +80,9 @@ jobs:
           CXX: "/usr/bin/${{ matrix.cxx }}"
           PYTHONPATH: "."
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
+
+      - name: Print .comment section of binary libFileArbTests to confirm it was linked with LLD
+        run: readelf --string-dump .comment "${{matrix.cmake_build_type}}/libFileArbTests/libFileArbTests"
 
       - name: Install and run lcov 1.15 then upload to Codecov.io if g++-10 Release
         run: |

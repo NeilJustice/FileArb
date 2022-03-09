@@ -10,11 +10,11 @@ FACTS(SetTextColor_ColorIsNotWhite_ConsoleSupportsColorIsTrue_SetsTextColor_Retu
 AFACT(UnsetTextColor_DidPreviouslySetTextColorIsFalse_DoesNothing)
 AFACT(UnsetTextColor_DidPreviouslySetTextColorIsTrue_CallsSetTextColorWhite)
 // Private Functions
-FACTS(ColorToLinuxColor_ReturnsLinuxColorStringForColor)
-FACTS(ColorToWindowsColor_ReturnsWindowsColorForColor)
 #if defined __linux__ || defined __APPLE__
+FACTS(ColorToLinuxColor_ReturnsLinuxColorStringForColor)
 AFACT(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
 #elif _WIN32
+FACTS(ColorToWindowsColor_ReturnsWindowsColorForColor)
 AFACT(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
 #endif
 AFACT(SetSupportsColorIfUnset_SupportsColorBeenSetIsTrue_DoesNothing)
@@ -130,6 +130,8 @@ TEST(UnsetTextColor_DidPreviouslySetTextColorIsTrue_CallsSetTextColorWhite)
 
 // Private Functions
 
+#if defined __linux__ || defined __APPLE__
+
 TEST2X2(ColorToLinuxColor_ReturnsLinuxColorStringForColor,
    Color color, const char* expectedReturnValue,
    Color::Red, "\033[31m",
@@ -142,22 +144,6 @@ TEST2X2(ColorToLinuxColor_ReturnsLinuxColorStringForColor,
    const char* const linuxColor = _consoleColorer.ColorToLinuxColor(color);
    ARE_EQUAL(expectedReturnValue, linuxColor);
 }
-
-TEST2X2(ColorToWindowsColor_ReturnsWindowsColorForColor,
-   Color color, WindowsColor expectedReturnValue,
-   Color::Red, WindowsColor::Red,
-   Color::White, WindowsColor::White,
-   Color::Teal, WindowsColor::Teal,
-   Color::Green, WindowsColor::Green,
-   Color::Yellow, WindowsColor::Yellow,
-   Color::Unset, WindowsColor::White,
-   Color::MaxValue, WindowsColor::White)
-{
-   const WindowsColor windowsColor = _consoleColorer.ColorToWindowsColor(color);
-   ARE_EQUAL(expectedReturnValue, windowsColor);
-}
-
-#if defined __linux__ || defined __APPLE__
 
 TEST(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
 {
@@ -175,6 +161,20 @@ TEST(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCo
 }
 
 #elif _WIN32
+
+TEST2X2(ColorToWindowsColor_ReturnsWindowsColorForColor,
+   Color color, WindowsColor expectedReturnValue,
+   Color::Red, WindowsColor::Red,
+   Color::White, WindowsColor::White,
+   Color::Teal, WindowsColor::Teal,
+   Color::Green, WindowsColor::Green,
+   Color::Yellow, WindowsColor::Yellow,
+   Color::Unset, WindowsColor::White,
+   Color::MaxValue, WindowsColor::White)
+{
+   const WindowsColor windowsColor = _consoleColorer.ColorToWindowsColor(color);
+   ARE_EQUAL(expectedReturnValue, windowsColor);
+}
 
 TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
 {

@@ -54,6 +54,8 @@ namespace Utils
 
    // Private Functions
 
+#if defined __linux__
+
    const char* ConsoleColorer::ColorToLinuxColor(Color textColor) const
    {
       switch (textColor)
@@ -68,6 +70,8 @@ namespace Utils
       }
    }
 
+#elif defined _WIN32
+
    WindowsColor ConsoleColorer::ColorToWindowsColor(Color textColor) const
    {
       switch (textColor)
@@ -81,6 +85,8 @@ namespace Utils
       default: return WindowsColor::White;
       };
    }
+
+#endif
 
    void ConsoleColorer::PlatformSpecificSetTextColor(Color textColor) const
    {

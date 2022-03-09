@@ -27,8 +27,11 @@ namespace Utils
       virtual bool SetTextColor(Color textColor);
       virtual void UnsetTextColor(bool didPreviouslySetTextColor) const;
    private:
+#if defined __linux__
       virtual const char* ColorToLinuxColor(Color textColor) const;
+#elif defined _WIN32
       virtual WindowsColor ColorToWindowsColor(Color textColor) const;
+#endif
       virtual void PlatformSpecificSetTextColor(Color textColor) const;
       virtual void SetSupportsColorIfUnset();
       virtual bool SupportsColor() const;

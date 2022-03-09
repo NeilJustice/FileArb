@@ -193,7 +193,7 @@ Resulting binary `/usr/local/bin/filearb`:
 ```powershell
 git clone https://github.com/NeilJustice/FileArb
 cd FileArb
-cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
+cmake . -G"Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 

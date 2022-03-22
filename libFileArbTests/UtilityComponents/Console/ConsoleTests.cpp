@@ -41,7 +41,7 @@ TEST(ThreadIdWriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_Unsets
    const bool didSetTextColor = _consoleColorerMock->SetTextColorMock.ReturnRandom();
    _consoleColorerMock->UnsetTextColorMock.Expect();
    const string message = ZenUnit::Random<string>();
-   const Color color = ZenUnit::RandomEnum<Color>(Color::MaxValue);
+   const Color color = ZenUnit::RandomEnum<Color>();
    //
    _console.ThreadIdWriteLineColor(message, color);
    //

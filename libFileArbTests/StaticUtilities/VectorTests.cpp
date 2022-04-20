@@ -3,9 +3,9 @@
 
 TESTS(VectorTests)
 AFACT(FromArgcArgv_ReturnsArgsVector)
-AFACT(JoinWithSeparator_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
-AFACT(JoinWithSeparator_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
-FACTS(JoinWithSeparator_2ElementIntVector_ReturnsElementsJoinedBySeparator)
+AFACT(Join_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
+AFACT(Join_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
+FACTS(Join_2ElementIntVector_ReturnsElementsJoinedBySeparator)
 FACTS(Contains_ReturnsTrueIfVectorContainsElementAccordingToEqualityOperator)
 EVIDENCE
 
@@ -24,28 +24,28 @@ TEST(FromArgcArgv_ReturnsArgsVector)
    VECTORS_ARE_EQUAL(expectedArgsC, Utils::Vector::FromArgcArgv(3, const_cast<char**>(chars3)));
 }
 
-TEST(JoinWithSeparator_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
+TEST(Join_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
 {
    const vector<int> emptyIntVector = {};
-   IS_EMPTY_STRING(Utils::Vector::JoinWithSeparator(emptyIntVector, ' '));
-   IS_EMPTY_STRING(Utils::Vector::JoinWithSeparator(emptyIntVector, ','));
+   IS_EMPTY_STRING(Utils::Vector::Join(emptyIntVector, ' '));
+   IS_EMPTY_STRING(Utils::Vector::Join(emptyIntVector, ','));
 }
 
-TEST(JoinWithSeparator_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
+TEST(Join_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
 {
    const vector<int> intVector = { 1 };
-   ARE_EQUAL("1", Utils::Vector::JoinWithSeparator(intVector, ' '));
-   ARE_EQUAL("1", Utils::Vector::JoinWithSeparator(intVector, ','));
+   ARE_EQUAL("1", Utils::Vector::Join(intVector, ' '));
+   ARE_EQUAL("1", Utils::Vector::Join(intVector, ','));
 }
 
-TEST3X3(JoinWithSeparator_2ElementIntVector_ReturnsElementsJoinedBySeparator,
+TEST3X3(Join_2ElementIntVector_ReturnsElementsJoinedBySeparator,
    const string& expectedJoinedVector, const vector<int>& vec, char separator,
    "1 2", vector<int>{ 1, 2 }, ' ',
    "1,2", vector<int>{ 1, 2 }, ',',
    "1 2 3", vector<int>{ 1, 2, 3 }, ' ',
    "1,2,3", vector<int>{ 1, 2, 3 }, ',')
 {
-   const string joinedVector = Utils::Vector::JoinWithSeparator(vec, separator);
+   const string joinedVector = Utils::Vector::Join(vec, separator);
    ARE_EQUAL(expectedJoinedVector, joinedVector);
 }
 

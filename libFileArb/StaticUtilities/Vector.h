@@ -8,7 +8,7 @@ namespace Utils
       static std::vector<std::string> FromArgcArgv(int argc, char** argv);
 
       template<typename T>
-      static std::string JoinWithSeparator(const std::vector<T>& vec, char separator)
+      static std::string Join(const std::vector<T>& vec, char separator)
       {
          const size_t vectorSize = vec.size();
          if (vectorSize == 0)

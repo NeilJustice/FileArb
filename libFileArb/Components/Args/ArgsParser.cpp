@@ -1,17 +1,26 @@
 #include "pch.h"
-#include "libFileArb/Components/Args/BytesStringConverter.h"
 #include "libFileArb/Components/Args/ArgsParser.h"
+#include "libFileArb/Components/Args/BytesStringConverter.h"
+#include "libFileArb/Components/Args/CreateBinaryFileArgsParser.h"
+#include "libFileArb/Components/Args/CreateBinaryFilesArgsParser.h"
+#include "libFileArb/Components/Args/CreateTextFileArgsParser.h"
+#include "libFileArb/Components/Args/CreateTextFilesArgsParser.h"
+#include "libFileArb/Components/Args/ProgramModeDeterminer.h"
 #include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArb/UtilityComponents/Console/Console.h"
-#include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
+#include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
 
 ArgsParser::ArgsParser()
-   // Function Pointers
-   : _call_DetermineProgramMode(ArgsParser::DetermineProgramMode)
-   , _call_GetFileNamePrefixAndFileExtension(ArgsParser::GetFileNamePrefixAndFileExtension)
    // Constant Components
-   , _bytesStringConverter(make_unique<BytesStringConverter>())
+   : _bytesStringConverter(make_unique<BytesStringConverter>())
+   , _console(make_unique<Utils::Console>())
+   , _fileSystem(make_unique<Utils::FileSystem>())
+   , _createBinaryFileArgsParser(make_unique<CreateBinaryFileArgsParser>())
+   , _createTextFileArgsParser(make_unique<CreateTextFileArgsParser>())
+   , _createBinaryFilesArgsParser(make_unique<CreateBinaryFilesArgsParser>())
+   , _createTextFilesArgsParser(make_unique<CreateTextFilesArgsParser>())
    , _docoptParser(make_unique<Utils::DocoptParser>())
+   , _programModeDeterminer(make_unique<ProgramModeDeterminer>())
 {
 }
 
@@ -19,83 +28,61 @@ ArgsParser::~ArgsParser()
 {
 }
 
-FileArbArgs ArgsParser::ParseArgs(const vector<string>& stringArgs) const
+FileArbArgs ArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
 {
-   FileArbArgs args;
-   args.commandLine = Utils::Vector::JoinWithSeparator(stringArgs, ' ');
-   const map<string, docopt::Value> docoptValues = _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage, stringArgs);
-   const bool isCreateBinaryFileMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-file");
-   const bool isCreateBinaryFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-binary-files");
-   const bool isCreateTextFileMode = _docoptParser->GetRequiredBool(docoptValues, "create-text-file");
-   const bool isCreateTextFilesMode = _docoptParser->GetRequiredBool(docoptValues, "create-text-files");
-   args.programMode = _call_DetermineProgramMode(isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode);
+   const string commandLine = Utils::Vector::Join(stringArgs, ' ');
+   const string runningMessage = Utils::String::ConcatStrings("Running: ", commandLine);
+   _console->ThreadIdWriteLine(runningMessage);
 
-   const pair<string, string> fileNamePrefixAndFileExtension = _call_GetFileNamePrefixAndFileExtension(
-      isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode);
-   args.fileNamePrefix = fileNamePrefixAndFileExtension.first;
-   args.fileExtension = fileNamePrefixAndFileExtension.second;
+   const fs::path workingDirectoryPath = _fileSystem->GetCurrentPath();
+   const string workingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
+   _console->ThreadIdWriteLine(workingDirectoryMessage);
 
-   args.targetDirectoryPath = _docoptParser->GetRequiredString(docoptValues, "--target");
+   const map<string, docopt::Value> docoptArgs_create_binary_file =
+      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs);
 
-   const int programModeAsInt = static_cast<int>(args.programMode);
+   const map<string, docopt::Value> docoptArgs_create_text_file =
+      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_text_file, stringArgs);
 
-   args.numberOfDirectoriesToCreate = _docoptParser->GetProgramModeSpecificRequiredSizeT(
-      docoptValues, "--directories", programModeAsInt,
-      { static_cast<int>(ProgramMode::CreateTextFiles), static_cast<int>(ProgramMode::CreateBinaryFiles) });
+   const map<string, docopt::Value> docoptArgs_create_binary_files =
+      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs);
 
-   args.numberOfFilesToCreate = _docoptParser->GetProgramModeSpecificRequiredSizeT(
-      docoptValues, "--files", programModeAsInt,
-      { static_cast<int>(ProgramMode::CreateTextFiles), static_cast<int>(ProgramMode::CreateBinaryFiles) });
+   const map<string, docopt::Value> docoptArgs_create_text_files =
+      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_text_files, stringArgs);
 
-   args.numberOfLinesPerFile = _docoptParser->GetProgramModeSpecificRequiredSizeT(
-      docoptValues, "--lines", programModeAsInt,
-      { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) });
+   const ProgramMode programMode = _programModeDeterminer->DetermineProgramMode(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files);
 
-   args.numberOfCharactersPerLine = _docoptParser->GetProgramModeSpecificRequiredSizeT(
-      docoptValues, "--characters", programModeAsInt,
-      { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) });
-
-   const string bytesString = _docoptParser->GetProgramModeSpecificRequiredString(
-      docoptValues, "--bytes", programModeAsInt,
-      { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) });
-   if (args.programMode == ProgramMode::CreateBinaryFile || args.programMode == ProgramMode::CreateBinaryFiles)
+   FileArbArgs fileArbArgs;
+   switch (programMode)
    {
-      args.numberOfBytesPerFile = _bytesStringConverter->ConvertBytesStringToNumberOfBytes(bytesString);
+      case ProgramMode::CreateBinaryFile:
+      {
+         fileArbArgs = _createBinaryFileArgsParser->ParseArgs(docoptArgs_create_binary_file, commandLine);
+         break;
+      }
+      case ProgramMode::CreateTextFile:
+      {
+         fileArbArgs = _createTextFileArgsParser->ParseArgs(docoptArgs_create_text_file, commandLine);
+         break;
+      }
+      case ProgramMode::CreateBinaryFiles:
+      {
+         fileArbArgs = _createBinaryFilesArgsParser->ParseArgs(docoptArgs_create_binary_files, commandLine);
+         break;
+      }
+      case ProgramMode::CreateTextFiles:
+      {
+         fileArbArgs = _createTextFilesArgsParser->ParseArgs(docoptArgs_create_text_files, commandLine);
+         break;
+      }
+      default:
+      {
+         throw invalid_argument("Invalid ProgramMode: " + to_string(static_cast<int>(programMode)));
+      }
    }
-
-   args.generateRandomBytes = _docoptParser->GetOptionalBool(docoptValues, "--random-bytes");
-   args.generateRandomLetters = _docoptParser->GetOptionalBool(docoptValues, "--random-letters");
-   args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");
-   args.quiet = _docoptParser->GetOptionalBool(docoptValues, "--quiet");
-   return args;
-}
-
-ProgramMode ArgsParser::DetermineProgramMode(
-   bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode)
-{
-   if (isCreateBinaryFileMode)
-   {
-      return ProgramMode::CreateBinaryFile;
-   }
-   else if (isCreateBinaryFilesMode)
-   {
-      return ProgramMode::CreateBinaryFiles;
-   }
-   else if (isCreateTextFileMode)
-   {
-      return ProgramMode::CreateTextFile;
-   }
-   release_assert(isCreateTextFilesMode);
-   return ProgramMode::CreateTextFiles;
-}
-
-pair<string, string> ArgsParser::GetFileNamePrefixAndFileExtension(
-   bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode)
-{
-   if (isCreateBinaryFileMode || isCreateBinaryFilesMode)
-   {
-      return make_pair("binary", ".bin");
-   }
-   release_assert(isCreateTextFileMode || isCreateTextFilesMode);
-   return make_pair("text", ".txt");
+   return fileArbArgs;
 }

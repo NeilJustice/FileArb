@@ -28,6 +28,7 @@ namespace Utils
       , _call_fclose(fclose)
       , _call_fs_create_directories_as_assignable_function_overload_pointer(fs::create_directories)
       , _call_fwrite(fwrite)
+      , _call_get_fs_current_path_as_assignable_function_overload_pointer(fs::current_path)
       // Function Callers
       , _caller_CreateBinaryOrTextFile(make_unique<_caller_CreateBinaryOrTextFileType>())
       , _caller_OpenFile(make_unique<_caller_OpenFileType>())
@@ -36,6 +37,7 @@ namespace Utils
       , _errorCodeTranslator(make_unique<Utils::ErrorCodeTranslator>())
    {
       _call_fs_create_directories = _call_fs_create_directories_as_assignable_function_overload_pointer;
+      _call_get_fs_current_path = _call_get_fs_current_path_as_assignable_function_overload_pointer;
    }
 
    FileSystem::~FileSystem()
@@ -54,6 +56,12 @@ namespace Utils
    {
       _caller_CreateBinaryOrTextFile->CallConstMemberFunction(
          this, &FileSystem::CreateBinaryOrTextFile, filePath, "wb", bytesString.data(), bytesString.size());
+   }
+
+   fs::path FileSystem::FileSystem::GetCurrentPath() const
+   {
+      fs::path currentPath = _call_get_fs_current_path();
+      return currentPath;
    }
 
    // Private Functions

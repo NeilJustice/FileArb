@@ -22,14 +22,17 @@ using namespace std;
 #include "libFileArb/Enums/ProgramMode.h"
 #include "libFileArb/Enums/WindowsColor.h"
 
-// libFileArb ValueTypes
-#include "libFileArb/ValueTypes/FileArbArgs.h"
+// libFileArbtests ValueTypes ZenUnit
+#include "libFileArbTests/ValueTypes/ZenUnit/FileArbArgsEqualizerAndRandom.h"
+#include "libFileArbTests/ValueTypes/ZenUnit/docoptValueRandom.h"
 
 // libFileArb StaticUtilities
 #include "libFileArb/StaticUtilities/Exception.h"
 #include "libFileArb/StaticUtilities/ReleaseAssert.h"
 #include "libFileArb/StaticUtilities/StringUtil.h"
 
-// libFileArbtests ZenUnit Equalizers And Randoms
-#include "libFileArbTests/ValueTypes/ZenUnit/FileArbArgsEqualizerAndRandom.h"
-#include "libFileArbTests/ValueTypes/ZenUnit/docoptValueRandom.h"
+// libFileArb Components
+#include "libFileArbTests/Components/Getters/MetalMock/FileNamePrefixAndExtensionGetterMock.h"
+
+// libFileArb UtilityComponents
+#include "libFileArbTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"

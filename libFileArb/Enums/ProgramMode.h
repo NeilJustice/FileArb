@@ -3,9 +3,10 @@
 enum class ProgramMode : unsigned char
 {
    Unset,
-   CreateTextFile,
-   CreateTextFiles,
    CreateBinaryFile,
+   CreateTextFile,
    CreateBinaryFiles,
+   CreateTextFiles,
+   Invalid,
    MaxValue
 };

@@ -12,6 +12,7 @@ AFACT(CreateFileWithText_CallsCreateBinaryOrTextFileWithTextFileArguments)
 AFACT(CreateFileWithBytes_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
 // Private Functions
 AFACT(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes)
+AFACT(GetCurrentPath_ReturnsResultOfCallingFilesystemCurrentPath)
 #if defined __linux__ || defined __APPLE__
 AFACT(OpenFile_FOpenReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 AFACT(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
@@ -32,6 +33,7 @@ METALMOCK_NONVOID3_FREE(errno_t, _call_fopen_s, FILE**, const char*, const char*
 #endif
 METALMOCK_NONVOID1_FREE(bool, _call_fs_create_directories, const fs::path&)
 METALMOCK_NONVOID4_FREE(size_t, _call_fwrite, const void*, size_t, size_t, FILE*)
+METALMOCK_NONVOID0_FREE(fs::path, _call_get_fs_current_path)
 // Function Callers
 using _caller_CreateBinaryOrTextFileMockType = Utils::VoidFourArgMemberFunctionCallerMock<Utils::FileSystem, const fs::path&, const char*, const char*, size_t>;
 _caller_CreateBinaryOrTextFileMockType* _caller_CreateBinaryOrTextFileMock = nullptr;
@@ -54,6 +56,7 @@ STARTUP
 #endif
    _fileSystem._call_fs_create_directories = BIND_1ARG_METALMOCK_OBJECT(_call_fs_create_directoriesMock);
    _fileSystem._call_fwrite = BIND_4ARG_METALMOCK_OBJECT(_call_fwriteMock);
+   _fileSystem._call_get_fs_current_path = BIND_0ARG_METALMOCK_OBJECT(_call_get_fs_current_pathMock);
    // Function Callers
    _fileSystem._caller_CreateBinaryOrTextFile.reset(_caller_CreateBinaryOrTextFileMock = new _caller_CreateBinaryOrTextFileMockType);
    _fileSystem._caller_OpenFile.reset(_caller_OpenFileMock = new _caller_OpenFileMockType);
@@ -74,6 +77,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    STD_FUNCTION_TARGETS(_errno, fileSystem._call_errno);
    STD_FUNCTION_TARGETS(fopen_s, fileSystem._call_fopen_s);
    STD_FUNCTION_TARGETS_OVERLOAD(Utils::FileSystem::CreateDirectoriesOverloadType, fs::create_directories, fileSystem._call_fs_create_directories);
+   STD_FUNCTION_TARGETS_OVERLOAD(Utils::FileSystem::GetCurrentPathOverloadType, fs::current_path, fileSystem._call_get_fs_current_path);
 #endif
    STD_FUNCTION_TARGETS(fwrite, fileSystem._call_fwrite);
    // Function Callers
@@ -110,6 +114,16 @@ TEST(CreateFileWithBytes_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
    //
    METALMOCK(_caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileSystem, &Utils::FileSystem::CreateBinaryOrTextFile, filePath, "wb", bytesString.data(), bytesString.size()));
+}
+
+TEST(GetCurrentPath_ReturnsResultOfCallingFilesystemCurrentPath)
+{
+   const fs::path currentPath = _call_get_fs_current_pathMock.ReturnRandom();
+   //
+   const fs::path returnedCurrentPath = _fileSystem.GetCurrentPath();
+   //
+   METALMOCK(_call_get_fs_current_pathMock.CalledOnce());
+   ARE_EQUAL(currentPath, returnedCurrentPath);
 }
 
 // Private Functions

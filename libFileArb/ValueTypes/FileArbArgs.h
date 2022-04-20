@@ -2,6 +2,18 @@
 
 struct FileArbArgs
 {
+   static const string CommandLineUsage_create_binary_file_args;
+   static const string CommandLineUsage_create_binary_file;
+
+   static const string CommandLineUsage_create_text_file_args;
+   static const string CommandLineUsage_create_text_file;
+
+   static const string CommandLineUsage_create_binary_files_args;
+   static const string CommandLineUsage_create_binary_files;
+
+   static const string CommandLineUsage_create_text_files_args;
+   static const string CommandLineUsage_create_text_files;
+
    static const string CommandLineUsage;
 
    // Command line fields

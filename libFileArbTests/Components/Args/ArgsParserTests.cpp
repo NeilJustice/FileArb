@@ -2,179 +2,292 @@
 #include "libFileArb/Components/Args/ArgsParser.h"
 #include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArbTests/Components/Args/MetalMock/BytesStringConverterMock.h"
+#include "libFileArbTests/Components/Args/MetalMock/CreateBinaryFileArgsParserMock.h"
+#include "libFileArbTests/Components/Args/MetalMock/CreateTextFileArgsParserMock.h"
+#include "libFileArbTests/Components/Args/MetalMock/CreateBinaryFilesArgsParserMock.h"
+#include "libFileArbTests/Components/Args/MetalMock/CreateTextFilesArgsParserMock.h"
+#include "libFileArbTests/Components/Args/MetalMock/ProgramModeDeterminerMock.h"
 #include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libFileArbTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
+#include "libFileArbTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(ArgsParserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)
-FACTS(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs)
-FACTS(DetermineProgramMode_ReturnsExpectedProgramModeDependingOnProgramModeBoolValues)
-FACTS(GetFileNamePrefixAndFileExtension_ReturnsDotTxtForCreateTextFileOrFilesMode_ReturnsDotBinForCreateBinaryFileOrFilesMode)
+AFACT(ParseStringArgs_ProgramModeIsCreateBinaryFile_ParsesCreateBinaryFileArgs_ReturnsFileArbArgs)
+AFACT(ParseStringArgs_ProgramModeIsCreateBinaryFiles_ParsesCreateBinaryFilesArgs_ReturnsFileArbArgs)
+AFACT(ParseStringArgs_ProgramModeIsCreateTextFile_ParsesCreateTextFileArgs_ReturnsFileArbArgs)
+AFACT(ParseStringArgs_ProgramModeIsCreateTextFiles_ParsesCreateTextFilesArgs_ReturnsFileArbArgs)
+FACTS(ParseStringArgs_ProgramModeIsInvalid_ThrowsInvalidArgument)
 EVIDENCE
 
 ArgsParser _argsParser;
 // Function Pointers
-METALMOCK_NONVOID4_STATIC(ProgramMode, ArgsParser, _call_DetermineProgramMode, bool, bool, bool, bool)
 using PairStringStringType = pair<string, string>;
-METALMOCK_NONVOID4_STATIC(PairStringStringType, ArgsParser, _call_GetFileNamePrefixAndFileExtension, bool, bool, bool, bool)
 // Constant Components
 BytesStringConverterMock* _bytesStringConverterMock = nullptr;
+Utils::ConsoleMock* _consoleMock = nullptr;
+CreateBinaryFileArgsParserMock* _createBinaryFileArgsParserMock = nullptr;
+CreateTextFileArgsParserMock* _createTextFileArgsParserMock = nullptr;
+CreateBinaryFilesArgsParserMock* _createBinaryFilesArgsParserMock = nullptr;
+CreateTextFilesArgsParserMock* _createTextFilesArgsParserMock = nullptr;
+Utils::FileSystemMock* _fileSystemMock = nullptr;
 Utils::DocoptParserMock* _docoptParserMock = nullptr;
+ProgramModeDeterminerMock* _programModeDeterminerMock = nullptr;
 
 using DocoptMapType = map<string, docopt::Value>;
 
 STARTUP
 {
-   // Function Pointers
-   _argsParser._call_DetermineProgramMode = BIND_4ARG_METALMOCK_OBJECT(_call_DetermineProgramModeMock);
-   _argsParser._call_GetFileNamePrefixAndFileExtension = BIND_4ARG_METALMOCK_OBJECT(_call_GetFileNamePrefixAndFileExtensionMock);
    // Constant Components
    _argsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
+   _argsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _argsParser._createBinaryFileArgsParser.reset(_createBinaryFileArgsParserMock = new CreateBinaryFileArgsParserMock);
+   _argsParser._createTextFileArgsParser.reset(_createTextFileArgsParserMock = new CreateTextFileArgsParserMock);
+   _argsParser._createBinaryFilesArgsParser.reset(_createBinaryFilesArgsParserMock = new CreateBinaryFilesArgsParserMock);
+   _argsParser._createTextFilesArgsParser.reset(_createTextFilesArgsParserMock = new CreateTextFilesArgsParserMock);
    _argsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
+   _argsParser._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
+   _argsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
    ArgsParser argsParser;
-   // Function Pointers
-   STD_FUNCTION_TARGETS(ArgsParser::DetermineProgramMode, argsParser._call_DetermineProgramMode);
-   STD_FUNCTION_TARGETS(ArgsParser::GetFileNamePrefixAndFileExtension, argsParser._call_GetFileNamePrefixAndFileExtension);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(argsParser._bytesStringConverter);
+   DELETE_TO_ASSERT_NEWED(argsParser._console);
+   DELETE_TO_ASSERT_NEWED(argsParser._createBinaryFileArgsParser);
+   DELETE_TO_ASSERT_NEWED(argsParser._createTextFileArgsParser);
+   DELETE_TO_ASSERT_NEWED(argsParser._createBinaryFilesArgsParser);
+   DELETE_TO_ASSERT_NEWED(argsParser._createTextFilesArgsParser);
    DELETE_TO_ASSERT_NEWED(argsParser._docoptParser);
+   DELETE_TO_ASSERT_NEWED(argsParser._fileSystem);
 }
 
-TEST2X2(ParseArgs_ParsesEachArgument_ReturnsFileArbArgs,
-   ProgramMode programMode, bool expectCallToConvertBytesStringToNumberOfBytes,
-   ProgramMode::CreateBinaryFile, true,
-   ProgramMode::CreateBinaryFiles, true,
-   ProgramMode::CreateTextFile, false,
-   ProgramMode::CreateTextFiles, false)
+TEST(ParseStringArgs_ProgramModeIsCreateBinaryFile_ParsesCreateBinaryFileArgs_ReturnsFileArbArgs)
 {
-   map<string, docopt::Value> docoptValues;
-   docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
-   _docoptParserMock->ParseArgsMock.Return(docoptValues);
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
-   const bool isCreateBinaryFileMode = ZenUnit::Random<bool>();
-   const bool isCreateBinaryFilesMode = ZenUnit::Random<bool>();
-   const bool isCreateTextFileMode = ZenUnit::Random<bool>();
-   const bool isCreateTextFilesMode = ZenUnit::Random<bool>();
-   _docoptParserMock->GetRequiredBoolMock.ReturnValues(
-      isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode);
+   const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_binary_files = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_text_files = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   _docoptParserMock->ParseArgsMock.ReturnValues(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files);
 
-   const string targetDirectoryPath = _docoptParserMock->GetRequiredStringMock.ReturnRandom();
+   const fs::path workingDirectoryPath = _fileSystemMock->GetCurrentPathMock.ReturnRandom();
 
-   const size_t numberOfDirectoriesToCreate = ZenUnit::Random<size_t>();
-   const size_t numberOfFilesToCreate = ZenUnit::Random<size_t>();
-   const size_t numberOfLinesPerFile = ZenUnit::Random<size_t>();
-   const size_t numberOfCharactersPerLine = ZenUnit::Random<size_t>();
-   _docoptParserMock->GetProgramModeSpecificRequiredSizeTMock.ReturnValues(
-      numberOfDirectoriesToCreate,
-      numberOfFilesToCreate,
-      numberOfLinesPerFile,
-      numberOfCharactersPerLine);
+   _programModeDeterminerMock->DetermineProgramModeMock.Return(ProgramMode::CreateBinaryFile);
 
-   const string bytesString = _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnRandom();
-   size_t numberOfBytesPerFile = 0;
-   if (expectCallToConvertBytesStringToNumberOfBytes)
-   {
-      numberOfBytesPerFile = _bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.ReturnRandom();
-   }
+   const FileArbArgs args = _createBinaryFileArgsParserMock->ParseArgsMock.ReturnRandom();
 
-   const bool generateRandomBytes = ZenUnit::Random<bool>();
-   const bool generateRandomLetters = ZenUnit::Random<bool>();
-   const bool parallel = ZenUnit::Random<bool>();
-   const bool quiet = ZenUnit::Random<bool>();
-   _docoptParserMock->GetOptionalBoolMock.ReturnValues(generateRandomBytes, generateRandomLetters, parallel, quiet);
-
-   _call_DetermineProgramModeMock.Return(programMode);
-
-   const pair<string, string> fileNamePrefixAndFileExtension = _call_GetFileNamePrefixAndFileExtensionMock.ReturnRandom();
-
-   const vector<string> stringArgs =
-   {
-      ZenUnit::Random<string>(),
-      ZenUnit::Random<string>(),
-      ZenUnit::Random<string>(),
-      ZenUnit::Random<string>(),
-      ZenUnit::Random<string>()
-   };
+   const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
-   const FileArbArgs args = _argsParser.ParseArgs(stringArgs);
+   const FileArbArgs returnedArgs = _argsParser.ParseStringArgs(stringArgs);
    //
-   FileArbArgs expectedArgs;
-   expectedArgs.commandLine = Utils::Vector::JoinWithSeparator(stringArgs, ' ');
-   expectedArgs.programMode = programMode;
-   expectedArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
-   expectedArgs.fileExtension = fileNamePrefixAndFileExtension.second;
-   METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs));
-   METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
-   {
-      { docoptValues, "create-binary-file" },
-      { docoptValues, "create-binary-files" },
-      { docoptValues, "create-text-file" },
-      { docoptValues, "create-text-files" }
-   }));
-   METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledAsFollows(
-   {
-      { docoptValues, "--random-bytes" },
-      { docoptValues, "--random-letters" },
-      { docoptValues, "--parallel" },
-      { docoptValues, "--quiet" }
-   }));
-   METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
-   const int expectedProgramModeAsInt = static_cast<int>(args.programMode);
-   METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredSizeTMock.CalledAsFollows(
-   {
-      { docoptValues, "--directories", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateTextFiles), static_cast<int>(ProgramMode::CreateBinaryFiles) } },
-      { docoptValues, "--files", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateTextFiles), static_cast<int>(ProgramMode::CreateBinaryFiles) } },
-      { docoptValues, "--lines", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) } },
-      { docoptValues, "--characters", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateTextFile), static_cast<int>(ProgramMode::CreateTextFiles) } },
-   }));
-   METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledOnceWith(
-      docoptValues, "--bytes", expectedProgramModeAsInt, { static_cast<int>(ProgramMode::CreateBinaryFile), static_cast<int>(ProgramMode::CreateBinaryFiles) }));
-   if (expectCallToConvertBytesStringToNumberOfBytes)
-   {
-      METALMOCK(_bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.CalledOnceWith(bytesString));
-   }
-   METALMOCK(_call_DetermineProgramModeMock.CalledOnceWith(isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode));
-   METALMOCK(_call_GetFileNamePrefixAndFileExtensionMock.CalledOnceWith(isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode));
-   expectedArgs.targetDirectoryPath = targetDirectoryPath;
-   expectedArgs.numberOfDirectoriesToCreate = numberOfDirectoriesToCreate;
-   expectedArgs.numberOfFilesToCreate = numberOfFilesToCreate;
-   expectedArgs.numberOfLinesPerFile = numberOfLinesPerFile;
-   expectedArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
-   expectedArgs.numberOfBytesPerFile = numberOfBytesPerFile;
-   expectedArgs.generateRandomBytes = generateRandomBytes;
-   expectedArgs.generateRandomLetters = generateRandomLetters;
-   expectedArgs.parallel = parallel;
-   expectedArgs.quiet = quiet;
-   ARE_EQUAL(expectedArgs, args);
+   const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
+   const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
+   const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningMessage)).Then(
+   METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryMessage))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_file, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_files, stringArgs))).Then(
+   METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files))).Then(
+   METALMOCKTHEN(_createBinaryFileArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs_create_binary_file, expectedCommandLine)));
+   ARE_EQUAL(args, returnedArgs);
 }
 
-TEST5X5(DetermineProgramMode_ReturnsExpectedProgramModeDependingOnProgramModeBoolValues,
-   bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode, ProgramMode expectedReturnValue,
-   true, false, false, false, ProgramMode::CreateBinaryFile,
-   false, true, false, false, ProgramMode::CreateBinaryFiles,
-   false, false, true, false, ProgramMode::CreateTextFile,
-   false, false, false, true, ProgramMode::CreateTextFiles)
+TEST(ParseStringArgs_ProgramModeIsCreateBinaryFiles_ParsesCreateBinaryFilesArgs_ReturnsFileArbArgs)
 {
-   const ProgramMode programMode = ArgsParser::DetermineProgramMode(
-      isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode);
-   ARE_EQUAL(expectedReturnValue, programMode);
+   _consoleMock->ThreadIdWriteLineMock.Expect();
+
+   const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_binary_files = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_text_files = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   _docoptParserMock->ParseArgsMock.ReturnValues(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files);
+
+   const fs::path workingDirectoryPath = _fileSystemMock->GetCurrentPathMock.ReturnRandom();
+
+   _programModeDeterminerMock->DetermineProgramModeMock.Return(ProgramMode::CreateTextFile);
+
+   const FileArbArgs args = _createTextFileArgsParserMock->ParseArgsMock.ReturnRandom();
+
+   const vector<string> stringArgs = ZenUnit::RandomVector<string>();
+   //
+   const FileArbArgs returnedArgs = _argsParser.ParseStringArgs(stringArgs);
+   //
+   const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
+   const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
+   const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningMessage)).Then(
+   METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryMessage))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_file, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_files, stringArgs))).Then(
+   METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files))).Then(
+   METALMOCKTHEN(_createTextFileArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs_create_text_file, expectedCommandLine)));
+   ARE_EQUAL(args, returnedArgs);
 }
 
-TEST6X6(GetFileNamePrefixAndFileExtension_ReturnsDotTxtForCreateTextFileOrFilesMode_ReturnsDotBinForCreateBinaryFileOrFilesMode,
-   bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode, const string& expectedFileNamePrefix, const string& expectedFileExtension,
-   true, false, false, false, "binary", ".bin"s,
-   false, true, false, false, "binary", ".bin"s,
-   false, false, true, false, "text", ".txt"s,
-   false, false, false, true, "text", ".txt"s)
+TEST(ParseStringArgs_ProgramModeIsCreateTextFile_ParsesCreateTextFileArgs_ReturnsFileArbArgs)
 {
-   const pair<string, string> fileNamePrefixAndFileExtension = ArgsParser::GetFileNamePrefixAndFileExtension(
-      isCreateBinaryFileMode, isCreateBinaryFilesMode, isCreateTextFileMode, isCreateTextFilesMode);
-   ARE_EQUAL(expectedFileNamePrefix, fileNamePrefixAndFileExtension.first);
-   ARE_EQUAL(expectedFileExtension, fileNamePrefixAndFileExtension.second);
+   _consoleMock->ThreadIdWriteLineMock.Expect();
+
+   const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_binary_files = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_text_files = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   _docoptParserMock->ParseArgsMock.ReturnValues(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files);
+
+   const fs::path workingDirectoryPath = _fileSystemMock->GetCurrentPathMock.ReturnRandom();
+
+   _programModeDeterminerMock->DetermineProgramModeMock.Return(ProgramMode::CreateBinaryFiles);
+
+   const FileArbArgs args = _createBinaryFilesArgsParserMock->ParseArgsMock.ReturnRandom();
+
+   const vector<string> stringArgs = ZenUnit::RandomVector<string>();
+   //
+   const FileArbArgs returnedArgs = _argsParser.ParseStringArgs(stringArgs);
+   //
+   const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
+   const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
+   const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningMessage)).Then(
+   METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryMessage))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_file, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_files, stringArgs))).Then(
+   METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files))).Then(
+   METALMOCKTHEN(_createBinaryFilesArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs_create_binary_files, expectedCommandLine)));
+   ARE_EQUAL(args, returnedArgs);
+}
+
+TEST(ParseStringArgs_ProgramModeIsCreateTextFiles_ParsesCreateTextFilesArgs_ReturnsFileArbArgs)
+{
+   _consoleMock->ThreadIdWriteLineMock.Expect();
+
+   const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_binary_files = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_text_files = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   _docoptParserMock->ParseArgsMock.ReturnValues(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files);
+
+   const fs::path workingDirectoryPath = _fileSystemMock->GetCurrentPathMock.ReturnRandom();
+
+   _programModeDeterminerMock->DetermineProgramModeMock.Return(ProgramMode::CreateTextFiles);
+
+   const FileArbArgs args = _createTextFilesArgsParserMock->ParseArgsMock.ReturnRandom();
+
+   const vector<string> stringArgs = ZenUnit::RandomVector<string>();
+   //
+   const FileArbArgs returnedArgs = _argsParser.ParseStringArgs(stringArgs);
+   //
+   const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
+   const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
+   const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningMessage)).Then(
+   METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryMessage))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_file, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_files, stringArgs))).Then(
+   METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files))).Then(
+   METALMOCKTHEN(_createTextFilesArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs_create_text_files, expectedCommandLine)));
+   ARE_EQUAL(args, returnedArgs);
+}
+
+TEST1X1(ParseStringArgs_ProgramModeIsInvalid_ThrowsInvalidArgument,
+   ProgramMode invalidProgramMode,
+   ProgramMode::Unset,
+   ProgramMode::Invalid,
+   ProgramMode::MaxValue)
+{
+   _consoleMock->ThreadIdWriteLineMock.Expect();
+
+   const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_binary_files = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs_create_text_files = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   _docoptParserMock->ParseArgsMock.ReturnValues(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files);
+
+   const fs::path workingDirectoryPath = _fileSystemMock->GetCurrentPathMock.ReturnRandom();
+
+   _programModeDeterminerMock->DetermineProgramModeMock.Return(invalidProgramMode);
+
+   const vector<string> stringArgs = ZenUnit::RandomVector<string>();
+   //
+   THROWS_EXCEPTION(_argsParser.ParseStringArgs(stringArgs),
+      invalid_argument, "Invalid ProgramMode: " + to_string(static_cast<int>(invalidProgramMode)));
+   //
+   const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
+   const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
+   const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningMessage)).Then(
+   METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryMessage))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_file, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs))).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_files, stringArgs))).Then(
+   METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
+      docoptArgs_create_binary_file,
+      docoptArgs_create_text_file,
+      docoptArgs_create_binary_files,
+      docoptArgs_create_text_files)));
 }
 
 RUN_TESTS(ArgsParserTests)

@@ -32,6 +32,10 @@ namespace Utils
       bool(*_call_fs_create_directories_as_assignable_function_overload_pointer)(const fs::path&);
       std::function<bool(const fs::path&)> _call_fs_create_directories;
       function<size_t(const void*, size_t, size_t, FILE*)> _call_fwrite;
+
+      using GetCurrentPathOverloadType = fs::path(*)();
+      fs::path(*_call_get_fs_current_path_as_assignable_function_overload_pointer)();
+      function<fs::path()> _call_get_fs_current_path;
       // Function Callers
       using _caller_CreateBinaryOrTextFileType = Utils::VoidFourArgMemberFunctionCaller<FileSystem, const fs::path&, const char*, const char*, size_t>;
       unique_ptr<const _caller_CreateBinaryOrTextFileType> _caller_CreateBinaryOrTextFile;
@@ -46,6 +50,7 @@ namespace Utils
       virtual ~FileSystem();
       virtual void CreateFileWithText(const fs::path& filePath, string_view text) const;
       virtual void CreateFileWithBytes(const fs::path& filePath, string_view bytesString) const;
+      virtual fs::path GetCurrentPath() const;
    private:
       void CreateBinaryOrTextFile(const fs::path& filePath, const char* fileOpenMode, const char* bytes, size_t bytesSize) const;
       shared_ptr<FILE> OpenFile(const fs::path& filePath, const char* fileOpenMode) const;

@@ -110,13 +110,11 @@ TEST(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExitCod
 
 TEST(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_ReturnsExitCodeFromSubProgram)
 {
-   const FileArbArgs args = _argsParserMock->ParseArgsMock.ReturnRandom();
+   const FileArbArgs args = _argsParserMock->ParseStringArgsMock.ReturnRandom();
 
    shared_ptr<FileArbSubProgramMock> fileArbSubProgramMock = make_shared<FileArbSubProgramMock>();
    const int exitCode = fileArbSubProgramMock->RunMock.ReturnRandom();
    _fileArbSubProgramFactoryMock->NewFileArbSubProgramMock.Return(fileArbSubProgramMock);
-
-   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    const vector<string> stringArgs =
    {
@@ -127,9 +125,7 @@ TEST(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_Re
    //
    const int returnedExitCode = _fileArbProgram.Run(stringArgs);
    //
-   const string expectedRunningMessage = "Running: " + args.commandLine;
-   METALMOCKTHEN(_argsParserMock->ParseArgsMock.CalledOnceWith(stringArgs)).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedRunningMessage))).Then(
+   METALMOCKTHEN(_argsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs)).Then(
    METALMOCKTHEN(_fileArbSubProgramFactoryMock->NewFileArbSubProgramMock.CalledOnceWith(args.programMode))).Then(
    METALMOCKTHEN(fileArbSubProgramMock->RunMock.CalledOnceWith(args)));
    ARE_EQUAL(exitCode, returnedExitCode);

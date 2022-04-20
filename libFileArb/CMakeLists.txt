@@ -5,12 +5,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories(${CMAKE_SOURCE_DIR})
 include_directories(${ZenUnitAndMetalMockIncludeDirectory})
 
-include_directories("${CMAKE_SOURCE_DIR}/BoostRegex/include")
-
 folder_source_group(Compiler)
 folder_source_group(Components)
 folder_source_group_subfolder(Components Args)
 folder_source_group_subfolder(Components FileArb)
+folder_source_group_subfolder(Components Getters)
 folder_source_group_subfolder(Components Makers)
 folder_source_group_subfolder(Components Random)
 folder_source_group_subfolder(Components SubPrograms)

@@ -50,9 +50,7 @@ int FileArbProgram::Main(int argc, char* argv[])
 
 int FileArbProgram::Run(const vector<string>& stringArgs)
 {
-   const FileArbArgs args = _argsParser->ParseArgs(stringArgs);
-   const string runningMessage = "Running: " + args.commandLine;
-   _console->ThreadIdWriteLine(runningMessage);
+   const FileArbArgs args = _argsParser->ParseStringArgs(stringArgs);
    const shared_ptr<FileArbSubProgram> fileArbSubProgram = _fileArbSubProgramFactory->NewFileArbSubProgram(args.programMode);
    const int exitCode = fileArbSubProgram->Run(args);
    return exitCode;

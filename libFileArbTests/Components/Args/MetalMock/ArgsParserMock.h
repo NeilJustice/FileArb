@@ -4,5 +4,5 @@
 class ArgsParserMock : public Metal::Mock<ArgsParser>
 {
 public:
-   METALMOCK_NONVOID1_CONST(FileArbArgs, ParseArgs, const vector<string>&)
+   METALMOCK_NONVOID1_CONST(FileArbArgs, ParseStringArgs, const vector<string>&)
 };

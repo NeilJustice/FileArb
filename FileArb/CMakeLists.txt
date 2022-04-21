@@ -9,9 +9,8 @@ add_executable(FileArb FileArbMain.cpp)
 
 if(UNIX)
    set_target_properties(FileArb PROPERTIES OUTPUT_NAME filearb)
-elseif(MSVC)
-   target_link_libraries(FileArb libFileArb)
 endif()
+target_link_libraries(FileArb libFileArb)
 
 install(TARGETS FileArb DESTINATION "bin")
 

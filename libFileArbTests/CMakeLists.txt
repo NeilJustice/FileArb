@@ -48,12 +48,11 @@ file(GLOB_RECURSE Sources *.h *.cpp)
 source_group("" FILES ${Sources})
 
 add_executable(libFileArbTests ${Sources})
+target_link_libraries(libFileArbTests libFileArb)
 if(UNIX)
    if(LCovCodeCoverageMode)
      target_link_libraries(libFileArbTests CodeCovLibraryInterface)
    endif()
-elseif(MSVC)
-   target_link_libraries(libFileArbTests libFileArb)
 endif()
 
 IfMSVCEnablePrecompiledHeaders()

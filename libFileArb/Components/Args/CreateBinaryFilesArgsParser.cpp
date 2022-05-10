@@ -29,7 +29,10 @@ FileArbArgs CreateBinaryFilesArgsParser::ParseArgs(const map<string, docopt::Val
    fileArbArgs.targetDirectoryPath = _docoptParser->GetRequiredString(docoptArgs, "--target");
    fileArbArgs.numberOfDirectoriesToCreate = _docoptParser->GetRequiredSizeT(docoptArgs, "--directories");
    fileArbArgs.numberOfFilesToCreate = _docoptParser->GetRequiredSizeT(docoptArgs, "--files");
-   fileArbArgs.numberOfBytesPerFile = _docoptParser->GetRequiredSizeT(docoptArgs, "--bytes");
+
+   const string bytesString = _docoptParser->GetRequiredString(docoptArgs, "--bytes");
+   fileArbArgs.numberOfBytesPerFile = _bytesStringConverter->ConvertBytesStringToNumberOfBytes(bytesString);
+
    fileArbArgs.generateRandomBytes = _docoptParser->GetOptionalBool(docoptArgs, "--random-bytes");
    fileArbArgs.parallel = _docoptParser->GetOptionalBool(docoptArgs, "--parallel");
    fileArbArgs.quiet = _docoptParser->GetOptionalBool(docoptArgs, "--quiet");

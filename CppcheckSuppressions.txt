@@ -3,7 +3,7 @@
 allocaCalled:*
 ctuOneDefinitionRuleViolation:*
 mismatchingContainerIterator:*
-noExplicitConstructor:libFileArb/UtilityComponents/Docopt/docopt.h:56
+noExplicitConstructor:libFileArb/UtilityComponents/Docopt/docopt.h:55
 preprocessorErrorDirective:*
 preprocessorErrorDirective:/usr/include/c++/v1/__config:104
 unmatchedSuppression:

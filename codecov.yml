@@ -1,3 +1,2 @@
 ignore:
   - "libFileArb/UtilityComponents/Docopt/docopt.h"
-  - "BoostRegex/include/boost"

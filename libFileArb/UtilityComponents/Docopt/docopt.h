@@ -5,7 +5,6 @@
 #pragma warning(disable: 4365) // 'return': conversion from 'size_t' to 'ptrdiff_t', signed/unsigned mismatch
 #pragma warning(disable: 4643) // Forward declaring 'allocator' in namespace std is not permitted by the C++ Standard.
 #pragma warning(disable: 4800) // Implicit conversion from 'int' to bool. Possible information loss
-#pragma warning(disable: 26812) // The enum type 'boost::detail::local_counted_base::count_type' is unscoped. Prefer 'enum struct' over 'enum'
 #endif
 #include <functional>
 #include <iostream>

@@ -18,7 +18,7 @@ testNames = [
 
 class PythonTests(unittest.TestCase):
 
-   ExpectedPylintCommand = 'pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append(\'.\')\" '
+   ExpectedPylintCommand = 'pylint --rcfile=.pylintrc --score=n '
 
    @staticmethod
    @patch('FileArbDevOpsPython.Process.fail_fast_run', spec_set=True)

@@ -8,7 +8,7 @@
     </ProjectHome>
     <StartupFile>MypyFlake8PylintThenRunTestsWithCoverage.py</StartupFile>
     <SearchPath>..\</SearchPath>
-    <WorkingDirectory>D:\Code\FileArb\FileArbDevOpsPython</WorkingDirectory>
+    <WorkingDirectory>C:\Code\FileArb\FileArbDevOpsPython</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>PyUtils</Name>
     <RootNamespace>PyUtils</RootNamespace>

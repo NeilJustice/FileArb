@@ -1,6 +1,6 @@
 #pragma once
 
-enum class ProgramMode : unsigned char
+enum struct ProgramMode
 {
    Unset,
    CreateBinaryFile,

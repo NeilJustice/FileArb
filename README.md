@@ -35,7 +35,7 @@ FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/Z
 ## FileArb command line usage
 
 ```ini
-FileArb v1.0.0 - Creates arbitrarily large text files or binary files.
+FileArb v1.1.0 - Creates arbitrarily large text files or binary files.
 Optional suffixes for --bytes arguments: b or B, k or K, m or M, and g or G.
 
 Usage:

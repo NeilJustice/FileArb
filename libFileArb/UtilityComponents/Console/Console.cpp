@@ -24,7 +24,7 @@ namespace Utils
    {
       const thread::id threadId = this_thread::get_id();
       scoped_lock<mutex> coutLock(_coutMutex);
-      cout << "[FileArb Thread " << threadId << "] " << message << '\n';
+      cout << "[FileArb T" << setw(5) << left << threadId << "] " << message << '\n';
    }
 
    void Console::ThreadIdWriteLineWithColor(string_view message, Color color) const
@@ -32,7 +32,7 @@ namespace Utils
       const thread::id threadId = this_thread::get_id();
       scoped_lock<mutex> coutLock(_coutMutex);
       const bool didSetTextColor = _consoleColorer->SetTextColor(color);
-      cout << "[FileArb Thread " << threadId << "] " << message << '\n';
+      cout << "[FileArb T" << setw(5) << left << threadId << "] " << message << '\n';
       _consoleColorer->UnsetTextColor(didSetTextColor);
    }
 }

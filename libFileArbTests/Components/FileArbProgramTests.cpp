@@ -136,7 +136,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessageInRed_Returns1)
    const string exceptionClassNameAndMessage = ZenUnit::Random<string>();
    _call_Exception_GetClassNameAndMessageMock.Return(exceptionClassNameAndMessage);
 
-   _consoleMock->ThreadIdWriteLineColorMock.Expect();
+   _consoleMock->ThreadIdWriteLineWithColorMock.Expect();
    const exception ex;
    const vector<string> args = { ZenUnit::Random<string>() };
    //
@@ -144,7 +144,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessageInRed_Returns1)
    //
    const string expectedExceptionErrorMessage = "Error: Exception thrown: " + exceptionClassNameAndMessage;
    METALMOCK(_call_Exception_GetClassNameAndMessageMock.CalledOnceWith(&ex));
-   METALMOCK(_consoleMock->ThreadIdWriteLineColorMock.CalledOnceWith(expectedExceptionErrorMessage, Color::Red));
+   METALMOCK(_consoleMock->ThreadIdWriteLineWithColorMock.CalledOnceWith(expectedExceptionErrorMessage, Color::Red));
    ARE_EQUAL(1, exitCode);
 }
 

@@ -60,6 +60,6 @@ int FileArbProgram::ExceptionHandler(const exception& ex, const vector<string>& 
 {
    const string exceptionTypeNameAndWhat = _call_Utils_Exception_ClassNameAndMessage(&ex);
    const string exceptionErrorMessage = "Error: Exception thrown: " + exceptionTypeNameAndWhat;
-   _console->ThreadIdWriteLineColor(exceptionErrorMessage, Color::Red);
+   _console->ThreadIdWriteLineWithColor(exceptionErrorMessage, Color::Red);
    return 1;
 }

@@ -66,7 +66,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 
 TEST(ParseStringArgs_ProgramModeIsCreateBinaryFile_ParsesCreateBinaryFileArgs_ReturnsFileArbArgs)
 {
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineWithColorMock.Expect();
 
    const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
@@ -91,11 +91,11 @@ TEST(ParseStringArgs_ProgramModeIsCreateBinaryFile_ParsesCreateBinaryFileArgs_Re
    const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
    const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
    const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_consoleMock->ThreadIdWriteLineWithColorMock.CalledNTimes(2));
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningMessage)).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedRunningMessage, Color::White)).Then(
    METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryMessage))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedWorkingDirectoryMessage, Color::White))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_file, stringArgs))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs))).Then(
@@ -111,7 +111,7 @@ TEST(ParseStringArgs_ProgramModeIsCreateBinaryFile_ParsesCreateBinaryFileArgs_Re
 
 TEST(ParseStringArgs_ProgramModeIsCreateBinaryFiles_ParsesCreateBinaryFilesArgs_ReturnsFileArbArgs)
 {
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineWithColorMock.Expect();
 
    const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
@@ -136,11 +136,11 @@ TEST(ParseStringArgs_ProgramModeIsCreateBinaryFiles_ParsesCreateBinaryFilesArgs_
    const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
    const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
    const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_consoleMock->ThreadIdWriteLineWithColorMock.CalledNTimes(2));
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningMessage)).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedRunningMessage, Color::White)).Then(
    METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryMessage))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedWorkingDirectoryMessage, Color::White))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_file, stringArgs))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs))).Then(
@@ -156,7 +156,7 @@ TEST(ParseStringArgs_ProgramModeIsCreateBinaryFiles_ParsesCreateBinaryFilesArgs_
 
 TEST(ParseStringArgs_ProgramModeIsCreateTextFile_ParsesCreateTextFileArgs_ReturnsFileArbArgs)
 {
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineWithColorMock.Expect();
 
    const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
@@ -181,11 +181,11 @@ TEST(ParseStringArgs_ProgramModeIsCreateTextFile_ParsesCreateTextFileArgs_Return
    const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
    const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
    const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_consoleMock->ThreadIdWriteLineWithColorMock.CalledNTimes(2));
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningMessage)).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedRunningMessage, Color::White)).Then(
    METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryMessage))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedWorkingDirectoryMessage, Color::White))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_file, stringArgs))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs))).Then(
@@ -201,7 +201,7 @@ TEST(ParseStringArgs_ProgramModeIsCreateTextFile_ParsesCreateTextFileArgs_Return
 
 TEST(ParseStringArgs_ProgramModeIsCreateTextFiles_ParsesCreateTextFilesArgs_ReturnsFileArbArgs)
 {
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineWithColorMock.Expect();
 
    const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
@@ -226,11 +226,11 @@ TEST(ParseStringArgs_ProgramModeIsCreateTextFiles_ParsesCreateTextFilesArgs_Retu
    const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
    const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
    const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_consoleMock->ThreadIdWriteLineWithColorMock.CalledNTimes(2));
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningMessage)).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedRunningMessage, Color::White)).Then(
    METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryMessage))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedWorkingDirectoryMessage, Color::White))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_file, stringArgs))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs))).Then(
@@ -250,7 +250,7 @@ TEST1X1(ParseStringArgs_ProgramModeIsInvalid_ThrowsInvalidArgument,
    ProgramMode::Invalid,
    ProgramMode::MaxValue)
 {
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineWithColorMock.Expect();
 
    const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomOrderedMap<string, docopt::Value>();
@@ -274,11 +274,11 @@ TEST1X1(ParseStringArgs_ProgramModeIsInvalid_ThrowsInvalidArgument,
    const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
    const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
    const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_consoleMock->ThreadIdWriteLineWithColorMock.CalledNTimes(2));
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningMessage)).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedRunningMessage, Color::White)).Then(
    METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryMessage))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedWorkingDirectoryMessage, Color::White))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_text_file, stringArgs))).Then(
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledWith(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs))).Then(

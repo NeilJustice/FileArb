@@ -6,7 +6,7 @@ TESTS(ConsoleTests)
 AFACT(DefaultConstructor_NewsConsoleColorer)
 AFACT(NakedWriteLine_CodeCoverage)
 AFACT(ThreadIdWriteLine_CodeCoverage)
-AFACT(ThreadIdWriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
+AFACT(ThreadIdWriteLineWithColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
 
 Utils::Console _console;
@@ -36,14 +36,14 @@ TEST(ThreadIdWriteLine_CodeCoverage)
    _console.ThreadIdWriteLine(ZenUnit::Random<string>());
 }
 
-TEST(ThreadIdWriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
+TEST(ThreadIdWriteLineWithColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 {
    const bool didSetTextColor = _consoleColorerMock->SetTextColorMock.ReturnRandom();
    _consoleColorerMock->UnsetTextColorMock.Expect();
    const string message = ZenUnit::Random<string>();
    const Color color = ZenUnit::RandomEnum<Color>();
    //
-   _console.ThreadIdWriteLineColor(message, color);
+   _console.ThreadIdWriteLineWithColor(message, color);
    //
    METALMOCK(_consoleColorerMock->SetTextColorMock.CalledOnceWith(color));
    METALMOCK(_consoleColorerMock->UnsetTextColorMock.CalledOnceWith(didSetTextColor));

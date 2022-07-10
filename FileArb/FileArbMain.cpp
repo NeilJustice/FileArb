@@ -1,7 +1,7 @@
 #include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
 #include "libFileArb/Components/FileArbProgram.h"
 
-// create-binary-file --target=D:\FileArbTesting --bytes=3K --random-bytes
+// create-binary-file --target=D:\FileArbTesting --bytes1=3K --random-bytes
 // create-binary-files --target=D:\FileArbTesting --directories=1 --files=1 --bytes=3 --random-bytes
 // create-binary-files --target=D:\FileArbTesting --directories=3 --files=1000 --bytes=3 --random-bytes --quiet
 // create-binary-files --target=D:\FileArbTesting --directories=32 --files=10 --bytes=1M --parallel

@@ -4,9 +4,8 @@
 
 TESTS(ConsoleColorerTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
-AFACT(SetTextColor_ColorIsWhite_ReturnsFalse)
-FACTS(SetTextColor_ColorIsNotWhite_CallsSetSupportsColorIfUnset_DoesNotSupportColor_ReturnsFalse)
-FACTS(SetTextColor_ColorIsNotWhite_ConsoleSupportsColorIsTrue_SetsTextColor_ReturnsTrue)
+AFACT(SetTextColor_CallsSetSupportsColorIfUnset_DoesNotSupportColor_ReturnsFalse)
+AFACT(SetTextColor_CallsSetSupportsColorIfUnset_SupportsColor_CallsPlatformSpecificSetTextColor_ReturnsTrue)
 AFACT(UnsetTextColor_DidPreviouslySetTextColorIsFalse_DoesNothing)
 AFACT(UnsetTextColor_DidPreviouslySetTextColorIsTrue_CallsSetTextColorWhite)
 // Private Functions
@@ -59,19 +58,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
    IS_FALSE(consoleColorer._supportsColorHasBeenSet);
 }
 
-TEST(SetTextColor_ColorIsWhite_ReturnsFalse)
-{
-   const Color color = Color::White;
-   //
-   const bool didSetColor = _consoleColorer.SetTextColor(color);
-   //
-   IS_FALSE(didSetColor);
-}
-
-TEST1X1(SetTextColor_ColorIsNotWhite_CallsSetSupportsColorIfUnset_DoesNotSupportColor_ReturnsFalse,
-   Color nonWhiteColor,
-   Color::Green,
-   Color::Red)
+TEST(SetTextColor_CallsSetSupportsColorIfUnset_DoesNotSupportColor_ReturnsFalse)
 {
    class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
@@ -80,17 +67,15 @@ TEST1X1(SetTextColor_ColorIsNotWhite_CallsSetSupportsColorIfUnset_DoesNotSupport
    } consoleColorerSelfMocked;
    consoleColorerSelfMocked.SetSupportsColorIfUnsetMock.Expect();
    consoleColorerSelfMocked._supportsColor = false;
+   const Color textColor = ZenUnit::RandomEnum<Color>();
    //
-   const bool didSetTextColor = consoleColorerSelfMocked.SetTextColor(nonWhiteColor);
+   const bool didSetTextColor = consoleColorerSelfMocked.SetTextColor(textColor);
    //
    METALMOCK(consoleColorerSelfMocked.SetSupportsColorIfUnsetMock.CalledOnce());
    IS_FALSE(didSetTextColor);
 }
 
-TEST1X1(SetTextColor_ColorIsNotWhite_ConsoleSupportsColorIsTrue_SetsTextColor_ReturnsTrue,
-   Color nonWhiteColor,
-   Color::Green,
-   Color::Red)
+TEST(SetTextColor_CallsSetSupportsColorIfUnset_SupportsColor_CallsPlatformSpecificSetTextColor_ReturnsTrue)
 {
    class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
@@ -101,11 +86,12 @@ TEST1X1(SetTextColor_ColorIsNotWhite_ConsoleSupportsColorIsTrue_SetsTextColor_Re
    consoleColorerSelfMocked.SetSupportsColorIfUnsetMock.Expect();
    consoleColorerSelfMocked.PlatformSpecificSetTextColorMock.Expect();
    consoleColorerSelfMocked._supportsColor = true;
+   const Color textColor = ZenUnit::RandomEnum<Color>();
    //
-   const bool didSetTextColor = consoleColorerSelfMocked.SetTextColor(nonWhiteColor);
+   const bool didSetTextColor = consoleColorerSelfMocked.SetTextColor(textColor);
    //
    METALMOCK(consoleColorerSelfMocked.SetSupportsColorIfUnsetMock.CalledOnce());
-   METALMOCK(consoleColorerSelfMocked.PlatformSpecificSetTextColorMock.CalledOnceWith(nonWhiteColor));
+   METALMOCK(consoleColorerSelfMocked.PlatformSpecificSetTextColorMock.CalledOnceWith(textColor));
    IS_TRUE(didSetTextColor);
 }
 

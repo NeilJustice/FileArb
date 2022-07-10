@@ -31,17 +31,13 @@ namespace Utils
 
    bool ConsoleColorer::SetTextColor(Color textColor)
    {
-      if (textColor == Color::White)
+      SetSupportsColorIfUnset();
+      if (!_supportsColor)
       {
          return false;
       }
-      SetSupportsColorIfUnset();
-      if (_supportsColor)
-      {
-         PlatformSpecificSetTextColor(textColor);
-         return true;
-      }
-      return false;
+      PlatformSpecificSetTextColor(textColor);
+      return true;
    }
 
    void ConsoleColorer::UnsetTextColor(bool didPreviouslySetTextColor) const

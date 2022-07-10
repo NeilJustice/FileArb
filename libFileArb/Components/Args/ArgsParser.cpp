@@ -32,11 +32,11 @@ FileArbArgs ArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
 {
    const string commandLine = Utils::Vector::Join(stringArgs, ' ');
    const string runningMessage = Utils::String::ConcatStrings("Running: ", commandLine);
-   _console->ThreadIdWriteLine(runningMessage);
+   _console->ThreadIdWriteLineWithColor(runningMessage, Color::White);
 
    const fs::path workingDirectoryPath = _fileSystem->GetCurrentPath();
    const string workingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
-   _console->ThreadIdWriteLine(workingDirectoryMessage);
+   _console->ThreadIdWriteLineWithColor(workingDirectoryMessage, Color::White);
 
    const map<string, docopt::Value> docoptArgs_create_binary_file =
       _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs);

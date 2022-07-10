@@ -18,7 +18,7 @@ class ArgsParser
 private:
    friend class ArgsParserTests;
    // Function Pointers
-   function<ProgramMode(bool, bool, bool, bool)> _call_DetermineProgramMode;
+   function<void(int)> _call_exit;
    // Constant Components
    unique_ptr<const BytesStringConverter> _bytesStringConverter;
    unique_ptr<const Utils::Console> _console;

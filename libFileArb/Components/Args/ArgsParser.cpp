@@ -11,8 +11,10 @@
 #include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
 
 ArgsParser::ArgsParser()
+   // Function Callers
+   : _call_exit(exit)
    // Constant Components
-   : _bytesStringConverter(make_unique<BytesStringConverter>())
+   , _bytesStringConverter(make_unique<BytesStringConverter>())
    , _console(make_unique<Utils::Console>())
    , _fileSystem(make_unique<Utils::FileSystem>())
    , _createBinaryFileArgsParser(make_unique<CreateBinaryFileArgsParser>())
@@ -81,7 +83,9 @@ FileArbArgs ArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
       }
       default:
       {
-         throw invalid_argument("Invalid ProgramMode: " + to_string(static_cast<int>(programMode)));
+         _console->ThreadIdWriteLineWithColor("Error: Invalid command line arguments", Color::Red);
+         _console->NakedWriteLine(FileArbArgs::CommandLineUsage);
+         _call_exit(1);
       }
    }
    return fileArbArgs;

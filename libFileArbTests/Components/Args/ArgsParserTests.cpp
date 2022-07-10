@@ -17,12 +17,12 @@ AFACT(ParseStringArgs_ProgramModeIsCreateBinaryFile_ParsesCreateBinaryFileArgs_R
 AFACT(ParseStringArgs_ProgramModeIsCreateBinaryFiles_ParsesCreateBinaryFilesArgs_ReturnsFileArbArgs)
 AFACT(ParseStringArgs_ProgramModeIsCreateTextFile_ParsesCreateTextFileArgs_ReturnsFileArbArgs)
 AFACT(ParseStringArgs_ProgramModeIsCreateTextFiles_ParsesCreateTextFilesArgs_ReturnsFileArbArgs)
-FACTS(ParseStringArgs_ProgramModeIsInvalid_ThrowsInvalidArgument)
+FACTS(ParseStringArgs_ProgramModeIsInvalid_WritesCommandlineArgumentsThenExitsWithCode1)
 EVIDENCE
 
 ArgsParser _argsParser;
 // Function Pointers
-using PairStringStringType = pair<string, string>;
+METALMOCK_VOID1_FREE(_call_exit, int)
 // Constant Components
 BytesStringConverterMock* _bytesStringConverterMock = nullptr;
 Utils::ConsoleMock* _consoleMock = nullptr;
@@ -38,6 +38,8 @@ using DocoptMapType = map<string, docopt::Value>;
 
 STARTUP
 {
+   // Function Pointers
+   _argsParser._call_exit = BIND_1ARG_METALMOCK_OBJECT(_call_exitMock);
    // Constant Components
    _argsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
    _argsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
@@ -53,6 +55,8 @@ STARTUP
 TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
    ArgsParser argsParser;
+   // Function Pointers
+   STD_FUNCTION_TARGETS(exit, argsParser._call_exit);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(argsParser._bytesStringConverter);
    DELETE_TO_ASSERT_NEWED(argsParser._console);
@@ -244,7 +248,7 @@ TEST(ParseStringArgs_ProgramModeIsCreateTextFiles_ParsesCreateTextFilesArgs_Retu
    ARE_EQUAL(args, returnedArgs);
 }
 
-TEST1X1(ParseStringArgs_ProgramModeIsInvalid_ThrowsInvalidArgument,
+TEST1X1(ParseStringArgs_ProgramModeIsInvalid_WritesCommandlineArgumentsThenExitsWithCode1,
    ProgramMode invalidProgramMode,
    ProgramMode::Unset,
    ProgramMode::Invalid,
@@ -266,15 +270,18 @@ TEST1X1(ParseStringArgs_ProgramModeIsInvalid_ThrowsInvalidArgument,
 
    _programModeDeterminerMock->DetermineProgramModeMock.Return(invalidProgramMode);
 
+   _consoleMock->NakedWriteLineMock.Expect();
+
+   _call_exitMock.Expect();
+
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
-   THROWS_EXCEPTION(_argsParser.ParseStringArgs(stringArgs),
-      invalid_argument, "Invalid ProgramMode: " + to_string(static_cast<int>(invalidProgramMode)));
+   _argsParser.ParseStringArgs(stringArgs);
    //
    const string expectedCommandLine = Utils::Vector::Join(stringArgs, ' ');
    const string expectedRunningMessage = Utils::String::ConcatStrings("Running: ", expectedCommandLine);
    const string expectedWorkingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
-   METALMOCK(_consoleMock->ThreadIdWriteLineWithColorMock.CalledNTimes(2));
+   METALMOCK(_consoleMock->ThreadIdWriteLineWithColorMock.CalledNTimes(3));
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledNTimes(4));
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith(expectedRunningMessage, Color::White)).Then(
    METALMOCKTHEN(_fileSystemMock->GetCurrentPathMock.CalledOnce())).Then(
@@ -287,7 +294,10 @@ TEST1X1(ParseStringArgs_ProgramModeIsInvalid_ThrowsInvalidArgument,
       docoptArgs_create_binary_file,
       docoptArgs_create_text_file,
       docoptArgs_create_binary_files,
-      docoptArgs_create_text_files)));
+      docoptArgs_create_text_files))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineWithColorMock.CalledWith("Error: Invalid command line arguments", Color::Red))).Then(
+   METALMOCKTHEN(_consoleMock->NakedWriteLineMock.CalledOnceWith(FileArbArgs::CommandLineUsage))).Then(
+   METALMOCKTHEN(_call_exitMock.CalledOnceWith(1)));
 }
 
 RUN_TESTS(ArgsParserTests)

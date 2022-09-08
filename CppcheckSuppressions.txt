@@ -1,6 +1,8 @@
 *:*ZenUnit.h
 *:*MetalMock.h
+*:libFileArb\UtilityComponents\Docopt\docopt.h
 allocaCalled:*
+constVariable:libFileArb\StaticUtilities\StringUtil.h:12
 ctuOneDefinitionRuleViolation:*
 mismatchingContainerIterator:*
 noExplicitConstructor:libFileArb/UtilityComponents/Docopt/docopt.h:55

@@ -30,7 +30,7 @@ class ProcessTests(unittest.TestCase):
       self.command = Random.string()
       self.shlexedCommand = Random.string()
       self.currentWorkingDirectory = Random.string()
-      self.ExpectedPylintcommand = 'pylint --rcfile=.pylintrc --init-hook=\"sys.path.append(\'.\')\" '
+      self.ExpectedPylintcommand = 'pylint --rcfile=.pylintrc '
 
    def test_bytes_to_utf8_string_ReturnsBytesDecodedToUtf8String(self):
       self.assertEqual('', Process.bytes_to_utf8(b''))
@@ -175,12 +175,12 @@ class ProcessTests(unittest.TestCase):
 
          def assert_map_called_once_with(self, expectedFunc, expectedIterable):
             assert self.map_numberOfCalls == 1
-            assert expectedFunc, self.map_funcArg
-            assert expectedIterable, self.map_iterableArg
+            assert self.map_funcArg == expectedFunc
+            assert self.map_iterableArg == expectedIterable
 
          def assert_shutdown_called_once_with(self, expectedWait):
-            assert 1, self.numberOfShutdownCalls
-            assert expectedWait, self.shutdown_waitArg
+            assert self.shutdown_numberOfCalls == 1
+            assert self.shutdown_waitArg == expectedWait
 
       @patch('concurrent.futures.ProcessPoolExecutor', spec_set=True)
       @patch('multiprocessing.cpu_count', spec_set=True)

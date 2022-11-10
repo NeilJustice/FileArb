@@ -1,4 +1,9 @@
 #include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
+#include <functional>
+#include <memory>
+#include <string>
+#include <vector>
+using namespace std;
 #include "libFileArb/Components/FileArbProgram.h"
 
 // create-binary-file --target=D:\FileArbTesting --bytes=3K --random-bytes

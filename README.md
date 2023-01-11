@@ -9,8 +9,6 @@ Three use cases for FileArb:
 2. Performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> which perform many file operations such as text replacement.
 3. Learning the true cost of cloud storage resources by way of creating, for example, 10 1-GB files on an Azure file share followed by examining the resulting Azure bill.
 
-FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
-
 * [FileArb command line usage](#filearb-command-line-usage)
 * [FileArb program modes](#filearb-program-modes)
    * [create-binary-file](#create-binary-file)

@@ -1,8 +1,5 @@
 #include "pch.h"
 #include "libFileArb/Components/Makers/LineReplicator.h"
-#if defined __linux__
-#include <cstring> // memcpy
-#endif
 
 LineReplicator::LineReplicator()
 {

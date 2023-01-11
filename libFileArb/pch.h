@@ -10,6 +10,7 @@
 #include <unordered_set>
 #include <random>
 #if defined __linux__ || defined __APPLE__
+   #include <cstring>
    #include <limits.h>
    #include <mutex>
    #include <thread>

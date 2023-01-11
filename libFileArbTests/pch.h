@@ -4,6 +4,7 @@
 #include <execution>
 #include <filesystem>
 #if defined __linux__ || defined __APPLE__
+   #include <cstring>
    #include <mutex>
    #include <thread>
    #include <unistd.h>

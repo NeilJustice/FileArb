@@ -5,7 +5,7 @@ namespace Utils
 {
    bool Utils::String::ContainsSubstring(string_view stringView, string_view substring)
    {
-      const bool strContainsSubstring = ::strstr(stringView.data(), substring.data()) != nullptr;
+      const bool strContainsSubstring = strstr(stringView.data(), substring.data()) != nullptr;
       return strContainsSubstring;
    }
 

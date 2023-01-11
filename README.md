@@ -1,6 +1,5 @@
 # 🗃️ FileArb 🗃️
-
-[![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileArb) ![Dependencies 0](Screenshots/Dependencies-0-brightgreen.svg)
+[![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) [![FileArb](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml) <a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"/></a> [![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu)](https://codecov.io/gh/NeilJustice/FileArb) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileArb) ![Dependencies 0](Screenshots/Dependencies-0-brightgreen.svg)
 
 FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
 
@@ -9,13 +8,6 @@ Three use cases for FileArb:
 1. Performance testing the write speed of storage hardware such as USB drives, NVMe drives, and network file shares.
 2. Performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> which perform many file operations such as text replacement.
 3. Learning the true cost of cloud storage resources by way of creating, for example, 10 1-GB files on an Azure file share followed by examining the resulting Azure bill.
-
-|Build Type|Build Status|
-|----------|------------|
-|GitHub Actions Debug and Release build - ubuntu-latest Clang 11 / GCC 10|[![FileArb](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileArb/actions/workflows/build.yml)|
-|AppVeyor Debug and Release build - Visual Studio 2022 x64|<a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"/></a>|
-|Codecov.io code coverage for FileArb's C++ and FileArbDevOpsPython|[![codecov](https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu)](https://codecov.io/gh/NeilJustice/FileArb)|
-|SonarCloud scan of FileArbDevOpsPython - the Python code which builds and tests FileArb|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileArb)|
 
 FileArb is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 

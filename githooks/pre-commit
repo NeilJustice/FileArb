@@ -4,11 +4,11 @@ set -eu
 osname="$(uname --operating-system)"
 if [[ "$osname" == *"Linux" ]]; then
    ./JenkinsJobs/Linux/FileArb-Cppcheck.sh
-   ./JenkinsJobs/Linux/FileArbDevOpsPython-Mypy-Flake8-Pylint-SonarQube.sh
+   ./JenkinsJobs/Linux/FileArbDevOpsPython-Mypy-Flake8-Pylint.sh
    ./JenkinsJobs/Linux/FileArb-Debug-Clang.sh
 elif [ "$osname" == "Msys" ]; then
    pwsh.exe JenkinsJobs/Windows/FileArb-Cppcheck.ps1
-   pwsh.exe JenkinsJobs/Windows/FileArbDevOpsPython-Mypy-Flake8-Pylint-SonarQube.ps1
+   pwsh.exe JenkinsJobs/Windows/FileArbDevOpsPython-Mypy-Flake8-Pylint.ps1
    pwsh.exe JenkinsJobs/Windows/FileArb-Debug.ps1 "OFF"
 fi
 jenkinsJobExitCode=$?

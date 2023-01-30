@@ -1,6 +1,4 @@
 param($fastWindowsDebugBuildMode = "ON")
-Set-PSDebug -Trace 1
-
 $env:PYTHONPATH="."
 python.exe -u FileArbDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --solution-name=FileArb `
@@ -9,6 +7,4 @@ python.exe -u FileArbDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --tests-project=libFileArbTests `
    --cmake-definitions="-DFastWindowsDebugBuildMode=$fastWindowsDebugBuildMode" `
    --no-install
-
-Set-PSDebug -Trace 0
 exit $LastExitCode

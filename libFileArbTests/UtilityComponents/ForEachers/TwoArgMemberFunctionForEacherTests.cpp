@@ -105,18 +105,17 @@ TEST(CallConstMemberFunctionWithEachElement_TwoItemCollection_CallsThisPointerBo
    _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
       elements, &_classMock, &Class::ConstMemberFunction, arg2);
    //
-   _classMock.ConstMemberFunctionMock.CalledAsFollows(
-   {
-      { elements[0], arg2 },
-      { elements[1], arg2 }
-   });
+   METALMOCK(_classMock.ConstMemberFunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(_classMock.ConstMemberFunctionMock.CalledWith(elements[0], arg2)).Then(
+   METALMOCKTHEN(_classMock.ConstMemberFunctionMock.CalledWith(elements[1], arg2)));
 }
 
 TEST(CallConstMemberFunctionWithEachElementInParallel_EmptyCollection_DoesNotCallConstMemberFunction)
 {
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
-   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElementInParallel({}, &_constClassInstance, &Class::ConstMemberFunction, arg2);
+   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElementInParallel(
+      {}, &_constClassInstance, &Class::ConstMemberFunction, arg2);
 }
 
 TEST(CallConstMemberFunctionWithEachElementInParallel_TwoItemCollection_CallsConstMemberFunctionWithEachElementInParallel)
@@ -202,11 +201,9 @@ TEST(CallNonConstMemberFunctionWithEachElement_TwoItemCollection_CallsThisPointe
    _twoArgMemberFunctionForEacher.CallNonConstMemberFunctionWithEachElement(
       elements, &_classMock, &Class::NonConstMemberFunction, arg2);
    //
-   METALMOCK(_classMock.NonConstMemberFunctionMock.CalledAsFollows(
-   {
-      { elements[0], arg2 },
-      { elements[1], arg2 }
-   }));
+   METALMOCK(_classMock.NonConstMemberFunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(_classMock.NonConstMemberFunctionMock.CalledWith(elements[0], arg2)).Then(
+   METALMOCKTHEN(_classMock.NonConstMemberFunctionMock.CalledWith(elements[1], arg2)));
 }
 
 TEST(CallNonConstMemberFunctionWithEachElementInParallel_EmptyCollection_DoesNotCallNonConstMemberFunction)

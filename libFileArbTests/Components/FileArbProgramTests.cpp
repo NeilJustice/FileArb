@@ -95,16 +95,14 @@ TEST(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExitCod
    //
    const string expectedDurationLine = Utils::String::ConcatValues("TotalDuration: ", runtimeInSeconds, " seconds");
    const string expectedExitCodeLine = Utils::String::ConcatValues("ExitCode: ", subProgramExitCode);
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
    METALMOCKTHEN(_call_Vector_FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)))).Then(
    METALMOCKTHEN(_nonVoidOneArgTryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.CalledOnceWith(
       &_fileArbProgram, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledAsFollows(
-   {
-      { expectedDurationLine },
-      { expectedExitCodeLine }
-   })));
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedDurationLine))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedExitCodeLine)));
    ARE_EQUAL(subProgramExitCode, returnedSubProgramExitCode);
 }
 

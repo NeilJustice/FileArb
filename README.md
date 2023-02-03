@@ -90,7 +90,7 @@ Console output for `FileArb.exe create-binary-file --target=. --bytes=2G` on Win
 
 ![Binary file in HxD](Screenshots/Windows/BinaryFileInHxD.png)
 
-`--random-bytes` can be speecified to create a binary file containing pseudorandom bytes sampled from `std::random_device`.
+`--random-bytes` can be specified to create a binary file containing pseudorandom bytes sampled from `std::random_device`.
 
 Here are the contents of one potential random binary file after running `filearb create-binary-file --target=C:\FileArbTesting --bytes=64 --random-bytes`:
 

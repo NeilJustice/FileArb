@@ -46,7 +46,7 @@ namespace Utils
 
    // Behavior Functions
 
-   void FileSystem::CreateFileWithText(const fs::path& filePath, string_view text) const
+   void FileSystem::CreateTextFile(const fs::path& filePath, string_view text) const
    {
       _caller_CreateBinaryOrTextFile->CallConstMemberFunction(
          this, &FileSystem::CreateBinaryOrTextFile, filePath, "w", text.data(), text.size());

@@ -45,7 +45,7 @@ TEST(Run_GenerateRandomLetterIsTrue_WritesRandomTextFileToTargetDirectory_Return
 
    const string fileText = _textFileTextMakerMock->MakeRandomFileTextMock.ReturnRandom();
 
-   _fileSystemMock->CreateFileWithTextMock.Expect();
+   _fileSystemMock->CreateTextFileMock.Expect();
 
    _consoleMock->ThreadIdWriteLineMock.Expect();
 
@@ -58,7 +58,7 @@ TEST(Run_GenerateRandomLetterIsTrue_WritesRandomTextFileToTargetDirectory_Return
    const string expectedMessage = Utils::String::ConcatValues("Wrote text file ", expectedFilePath.string(), " [", elapsedMilliseconds, " ms]");
    METALMOCKTHEN(_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(_textFileTextMakerMock->MakeRandomFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine))).Then(
-   METALMOCKTHEN(_fileSystemMock->CreateFileWithTextMock.CalledOnceWith(expectedFilePath, fileText))).Then(
+   METALMOCKTHEN(_fileSystemMock->CreateTextFileMock.CalledOnceWith(expectedFilePath, fileText))).Then(
    METALMOCKTHEN(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedMessage)));
    IS_ZERO(exitCode);
@@ -72,7 +72,7 @@ TEST(Run_GenerateRandomLetterIsFalse_WritesNonRandomTextFileToTargetDirectory_Re
 
    const string fileText = _textFileTextMakerMock->MakeNonRandomFileTextMock.ReturnRandom();
 
-   _fileSystemMock->CreateFileWithTextMock.Expect();
+   _fileSystemMock->CreateTextFileMock.Expect();
 
    _consoleMock->ThreadIdWriteLineMock.Expect();
 
@@ -85,7 +85,7 @@ TEST(Run_GenerateRandomLetterIsFalse_WritesNonRandomTextFileToTargetDirectory_Re
    const string expectedMessage = Utils::String::ConcatValues("Wrote text file ", expectedFilePath.string(), " [", elapsedMilliseconds, " ms]");
    METALMOCKTHEN(_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(_textFileTextMakerMock->MakeNonRandomFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine))).Then(
-   METALMOCKTHEN(_fileSystemMock->CreateFileWithTextMock.CalledOnceWith(expectedFilePath, fileText))).Then(
+   METALMOCKTHEN(_fileSystemMock->CreateTextFileMock.CalledOnceWith(expectedFilePath, fileText))).Then(
    METALMOCKTHEN(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedMessage)));
    IS_ZERO(exitCode);

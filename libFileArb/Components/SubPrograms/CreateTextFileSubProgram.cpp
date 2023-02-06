@@ -30,7 +30,7 @@ int CreateTextFileSubProgram::Run(const FileArbArgs& args)
       fileText = _textFileTextMaker->MakeNonRandomFileText(args.numberOfLinesPerFile, args.numberOfCharactersPerLine);
    }
    const fs::path filePath = args.targetDirectoryPath / "textfile.txt";
-   _fileSystem->CreateFileWithText(filePath, fileText);
+   _fileSystem->CreateTextFile(filePath, fileText);
 
    const unsigned long long elapsedMilliseconds = stopwatch->StopAndGetElapsedMilliseconds();
    const string message = Utils::String::ConcatValues("Wrote text file ", filePath.string(), " [", elapsedMilliseconds, " ms]");

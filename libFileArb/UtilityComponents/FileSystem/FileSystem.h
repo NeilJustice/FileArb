@@ -48,7 +48,7 @@ namespace Utils
    public:
       FileSystem();
       virtual ~FileSystem();
-      virtual void CreateFileWithText(const fs::path& filePath, string_view text) const;
+      virtual void CreateTextFile(const fs::path& filePath, string_view text) const;
       virtual void CreateFileWithBytes(const fs::path& filePath, string_view bytesString) const;
       virtual fs::path GetCurrentPath() const;
    private:

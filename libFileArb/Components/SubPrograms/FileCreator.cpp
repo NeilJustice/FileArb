@@ -101,7 +101,7 @@ void FileCreator::CreateRandomTextFile(const fs::path& filePath, const FileArbAr
       threadUniqueStopwatch = _stopwatchFactory->NewAndStartStopwatch();
    }
    const string randomTextString = _textFileTextMaker->MakeRandomFileText(args.numberOfLinesPerFile, args.numberOfCharactersPerLine);
-   _fileSystem->CreateFileWithText(filePath, randomTextString);
+   _fileSystem->CreateTextFile(filePath, randomTextString);
    if (!args.quiet)
    {
       const unsigned long long elapsedMilliseconds = threadUniqueStopwatch->StopAndGetElapsedMilliseconds();

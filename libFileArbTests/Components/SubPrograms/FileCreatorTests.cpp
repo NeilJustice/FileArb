@@ -216,7 +216,7 @@ TEST(CreateRandomBinaryFile_QuietIsFalse_CreatesRandomBinaryFileAtFilePath_Write
 TEST(CreateRandomTextFile_QuietIsTrue_CreatesRandomTextFileAtFilePath)
 {
    const string randomTextString = _textFileTextMakerMock->MakeRandomFileTextMock.ReturnRandom();
-   _fileSystemMock->CreateFileWithTextMock.Expect();
+   _fileSystemMock->CreateTextFileMock.Expect();
    const fs::path filePath = ZenUnit::Random<fs::path>();
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.quiet = true;
@@ -224,7 +224,7 @@ TEST(CreateRandomTextFile_QuietIsTrue_CreatesRandomTextFileAtFilePath)
    _fileCreator.CreateRandomTextFile(filePath, args);
    //
    METALMOCKTHEN(_textFileTextMakerMock->MakeRandomFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine)).Then(
-   METALMOCKTHEN(_fileSystemMock->CreateFileWithTextMock.CalledOnceWith(filePath, randomTextString)));
+   METALMOCKTHEN(_fileSystemMock->CreateTextFileMock.CalledOnceWith(filePath, randomTextString)));
 }
 
 TEST(CreateRandomTextFile_QuietIsFalse_CreatesRandomTextFileAtFilePath_WritesWroteTextFileMessageWithElapsedMilliseconds)
@@ -235,7 +235,7 @@ TEST(CreateRandomTextFile_QuietIsFalse_CreatesRandomTextFileAtFilePath_WritesWro
 
    const string randomTextString = _textFileTextMakerMock->MakeRandomFileTextMock.ReturnRandom();
 
-   _fileSystemMock->CreateFileWithTextMock.Expect();
+   _fileSystemMock->CreateTextFileMock.Expect();
 
    _consoleMock->ThreadIdWriteLineMock.Expect();
 
@@ -248,7 +248,7 @@ TEST(CreateRandomTextFile_QuietIsFalse_CreatesRandomTextFileAtFilePath_WritesWro
    const string expectedWroteTextFileMessage = Utils::String::ConcatValues("Wrote text file ", filePath.string(), " [", elapsedMilliseconds, " ms]");
    METALMOCKTHEN(_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(_textFileTextMakerMock->MakeRandomFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine))).Then(
-   METALMOCKTHEN(_fileSystemMock->CreateFileWithTextMock.CalledOnceWith(filePath, randomTextString))).Then(
+   METALMOCKTHEN(_fileSystemMock->CreateTextFileMock.CalledOnceWith(filePath, randomTextString))).Then(
    METALMOCKTHEN(threadUniqueStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedWroteTextFileMessage)));
 }

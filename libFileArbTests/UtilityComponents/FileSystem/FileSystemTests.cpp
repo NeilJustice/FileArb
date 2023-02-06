@@ -8,7 +8,7 @@
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 // Behavior Functions
-AFACT(CreateFileWithText_CallsCreateBinaryOrTextFileWithTextFileArguments)
+AFACT(CreateTextFile_CallsCreateBinaryOrTextFileWithTextFileArguments)
 AFACT(CreateFileWithBytes_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
 // Private Functions
 AFACT(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes)
@@ -92,13 +92,13 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 
 // Behavior Functions
 
-TEST(CreateFileWithText_CallsCreateBinaryOrTextFileWithTextFileArguments)
+TEST(CreateTextFile_CallsCreateBinaryOrTextFileWithTextFileArguments)
 {
    _caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.Expect();
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string text = ZenUnit::Random<string>();
    //
-   _fileSystem.CreateFileWithText(filePath, text);
+   _fileSystem.CreateTextFile(filePath, text);
    //
    METALMOCK(_caller_CreateBinaryOrTextFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileSystem, &Utils::FileSystem::CreateBinaryOrTextFile, filePath, "w", text.data(), text.size()));

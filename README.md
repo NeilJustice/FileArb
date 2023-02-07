@@ -27,6 +27,7 @@ Three use cases for FileArb:
 * [Windows Jenkins jobs](#windows-jenkins-jobs)
 * [4 commands to build binary filearb on Linux with Clang](#4-commands-to-build-binary-filearb-on-linux-with-clang)
 * [4 commands to build executable FileArb.exe on Windows with Visual Studio 2022](#4-commands-to-build-executable-filearbexe-on-windows-with-visual-studio-2022)
+* [Thanks to](#thanks-to)
 
 ## FileArb command line usage
 
@@ -192,3 +193,7 @@ cmake --build . --config Release --target install
 Resulting executable `C:\bin\FileArb.exe`:
 
 ![Resulting executable FileArb.exe](Screenshots/Windows/FileArbDotExe.png)
+
+## Thanks to
+
+<a href="https://brandmark.io">brandmark.io</a> for FileArb's logo

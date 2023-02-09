@@ -8,8 +8,8 @@ EVIDENCE
 
 TEST(DefaultConstructor_SetsFieldsTo0)
 {
-   const FileArbArgs defaultFileArbArgs;
-   FileArbArgs expectedDefaultFileArbArgs;
+   const FileArbArgs defaultFileArbArgs{};
+   FileArbArgs expectedDefaultFileArbArgs{};
    expectedDefaultFileArbArgs.commandLine = "";
    expectedDefaultFileArbArgs.programMode = ProgramMode::Unset;
    expectedDefaultFileArbArgs.targetDirectoryPath = fs::path();
@@ -38,11 +38,6 @@ Usage:
       --target=<DirectoryPath>
       --bytes=<NumberOfBytes>
       [--random-bytes]
-   filearb create-text-file
-      --target=<DirectoryPath>
-      --lines=<LinesPerFile>
-      --characters=<CharactersPerLine>
-      [--random-letters]
    filearb create-binary-files
       --target=<DirectoryPath>
       --directories=<NumberOfDirectories>
@@ -51,6 +46,11 @@ Usage:
       [--random-bytes]
       [--parallel]
       [--quiet]
+   filearb create-text-file
+      --target=<DirectoryPath>
+      --lines=<LinesPerFile>
+      --characters=<CharactersPerLine>
+      [--random-letters]
    filearb create-text-files
       --target=<DirectoryPath>
       --directories=<NumberOfDirectories>

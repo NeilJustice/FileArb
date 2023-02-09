@@ -10,16 +10,6 @@ const string FileArbArgs::CommandLineUsage_create_binary_file =
 R"(Usage:
    )" + CommandLineUsage_create_binary_file_args;
 
-const string FileArbArgs::CommandLineUsage_create_text_file_args =
-R"(filearb create-text-file
-   --target=<DirectoryPath>
-   --lines=<LinesPerFile>
-   --characters=<CharactersPerLine>
-   [--random-letters])";
-const string FileArbArgs::CommandLineUsage_create_text_file =
-R"(Usage:
-   )" + CommandLineUsage_create_text_file_args;
-
 const string FileArbArgs::CommandLineUsage_create_binary_files_args =
 R"(filearb create-binary-files
    --target=<DirectoryPath>
@@ -32,6 +22,16 @@ R"(filearb create-binary-files
 const string FileArbArgs::CommandLineUsage_create_binary_files =
 R"(Usage:
    )" + CommandLineUsage_create_binary_files_args;
+
+const string FileArbArgs::CommandLineUsage_create_text_file_args =
+R"(filearb create-text-file
+   --target=<DirectoryPath>
+   --lines=<LinesPerFile>
+   --characters=<CharactersPerLine>
+   [--random-letters])";
+const string FileArbArgs::CommandLineUsage_create_text_file =
+R"(Usage:
+   )" + CommandLineUsage_create_text_file_args;
 
 const string FileArbArgs::CommandLineUsage_create_text_files_args =
 R"(filearb create-text-files
@@ -56,11 +56,6 @@ Usage:
       --target=<DirectoryPath>
       --bytes=<NumberOfBytes>
       [--random-bytes]
-   filearb create-text-file
-      --target=<DirectoryPath>
-      --lines=<LinesPerFile>
-      --characters=<CharactersPerLine>
-      [--random-letters]
    filearb create-binary-files
       --target=<DirectoryPath>
       --directories=<NumberOfDirectories>
@@ -69,6 +64,11 @@ Usage:
       [--random-bytes]
       [--parallel]
       [--quiet]
+   filearb create-text-file
+      --target=<DirectoryPath>
+      --lines=<LinesPerFile>
+      --characters=<CharactersPerLine>
+      [--random-letters]
    filearb create-text-files
       --target=<DirectoryPath>
       --directories=<NumberOfDirectories>

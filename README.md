@@ -18,8 +18,8 @@ Three use cases for FileArb:
 * [FileArb command line usage](#filearb-command-line-usage)
 * [FileArb program modes](#filearb-program-modes)
    * [create-binary-file](#create-binary-file)
-   * [create-text-file](#create-text-file)
    * [create-binary-files](#create-binary-files)
+   * [create-text-file](#create-text-file)
    * [create-text-files](#create-text-files)
 * [FileArb code structure as it appears in Visual Studio Code on Linux](#filearb-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileArb code structure as it appears in Visual Studio 2022 on Windows](#filearb-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
@@ -40,11 +40,6 @@ Usage:
       --target=<DirectoryPath>
       --bytes=<NumberOfBytes>
       [--random-bytes]
-   filearb create-text-file
-      --target=<DirectoryPath>
-      --lines=<LinesPerFile>
-      --characters=<CharactersPerLine>
-      [--random-letters]
    filearb create-binary-files
       --target=<DirectoryPath>
       --directories=<NumberOfDirectories>
@@ -53,6 +48,11 @@ Usage:
       [--random-bytes]
       [--parallel]
       [--quiet]
+   filearb create-text-file
+      --target=<DirectoryPath>
+      --lines=<LinesPerFile>
+      --characters=<CharactersPerLine>
+      [--random-letters]
    filearb create-text-files
       --target=<DirectoryPath>
       --directories=<NumberOfDirectories>
@@ -75,7 +75,7 @@ filearb create-binary-file
    [--random-bytes]
 ```
 
-FileArb `create-binary-file` mode creates in a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
+`create-binary-file` creates in a specified `--target` directory a file named `binaryfile.bin` containing `--bytes` number of binary 0 bytes.
 
 Console output for `filearb create-binary-file --target=. --bytes=2G` on Linux:
 
@@ -97,22 +97,6 @@ Here are the contents of one potential random binary file after running `filearb
 
 ![Random binary file in HxD](Screenshots/Windows/RandomBinaryFileInHxD.png)
 
-### create-text-file
-
-```ini
-filearb create-text-file
-   --target=<TargetDirectoryPath>
-   --lines=<LinesPerFile>
-   --characters=<CharactersPerLine>
-   [--random-letters]
-```
-
-FileArb `create-text-file` creates a text file in a specified `--target` directory containing `--lines` number of lines each containing `--characters` number of `'0'` characters per line or random capital letters if `--random-letters` is specified.
-
-Console output for `filearb create-text-file --target=. --lines=5 --characters=10` on Linux:
-
-![create-text-file example on Linux](Screenshots/Linux/create-text-file.png)
-
 ### create-binary-files
 
 ```ini
@@ -126,11 +110,27 @@ filearb create-binary-files
    [--quiet]
 ```
 
-FileArb `create-binary-files` mode creates in a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of 0 bytes or `[--random-bytes]`.
+`create-binary-files` creates in a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` each containing `--bytes` number of 0 bytes or `[--random-bytes]`.
 
 Console output for `filearb create-binary-files --target=. --directories=5 --files=3 --bytes=1024 --random-bytes --parallel` on Linux:
 
 ![create-binary-files](Screenshots/Linux/create-binary-files.png)
+
+### create-text-file
+
+```ini
+filearb create-text-file
+   --target=<TargetDirectoryPath>
+   --lines=<LinesPerFile>
+   --characters=<CharactersPerLine>
+   [--random-letters]
+```
+
+`create-text-file` creates a text file in a specified `--target` directory containing `--lines` number of lines each containing `--characters` number of `0` ASCII characters per line or random capital letters if `--random-letters` is specified.
+
+Console output for `filearb create-text-file --target=. --lines=5 --characters=10` on Linux:
+
+![create-text-file example on Linux](Screenshots/Linux/create-text-file.png)
 
 ### create-text-files
 
@@ -146,7 +146,7 @@ filearb create-text-files
    [--quiet]
 ```
 
-`filearb create-text-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` containing `0` characters or `--random-letters`.
+`filearb create-text-files` creates at a specified `--target` directory a specified number of `--directories` each containing a specified number of `--files` containing `0` ASCII characters or `--random-letters`.
 
 Console output for `filearb create-text-files --target=target_dir --directories=5 --files=3 --lines=3 --characters=64 --random-letters --parallel` on Linux:
 

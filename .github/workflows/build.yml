@@ -101,3 +101,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
+
+      - name: tree GITHUB_WORKSPACE
+        run: tree $GITHUB_WORKSPACE

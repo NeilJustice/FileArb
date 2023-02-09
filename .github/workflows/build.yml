@@ -5,8 +5,8 @@ jobs:
   build:
     strategy:
       matrix:
-         cmake_build_type: [Debug, Release]
          cxx: [clang++, g++-10]
+         cmake_build_type: [Debug, Release]         
 
     runs-on: ubuntu-latest
 
@@ -110,3 +110,4 @@ jobs:
         with:
           name: filearb
           path: Release/FileArb/filearb
+        if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Release' }}

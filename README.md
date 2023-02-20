@@ -197,4 +197,4 @@ Resulting executable `C:\bin\FileArb.exe`:
 
 ## Thanks to
 
-<a href="https://brandmark.io">brandmark.io</a> for FileArb's AI-generated logo
+<a href="https://brandmark.io">brandmark.io</a> for FileArb's logo

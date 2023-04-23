@@ -15,13 +15,13 @@ ArgsParser::ArgsParser()
    : _call_exit(exit)
    // Constant Components
    , _bytesStringConverter(make_unique<BytesStringConverter>())
-   , _console(make_unique<Utils::Console>())
+   , _console(make_unique<Time::Console>())
    , _fileSystem(make_unique<Utils::FileSystem>())
    , _createBinaryFileArgsParser(make_unique<CreateBinaryFileArgsParser>())
    , _createTextFileArgsParser(make_unique<CreateTextFileArgsParser>())
    , _createBinaryFilesArgsParser(make_unique<CreateBinaryFilesArgsParser>())
    , _createTextFilesArgsParser(make_unique<CreateTextFilesArgsParser>())
-   , _docoptParser(make_unique<Utils::DocoptParser>())
+   , _docoptParser(make_unique<Time::DocoptParser>())
    , _programModeDeterminer(make_unique<ProgramModeDeterminer>())
 {
 }

@@ -29,9 +29,9 @@ private:
    unique_ptr<const _memberForEacher_filePathsType> _memberForEacher_filePaths;
    // Constant Components
    unique_ptr<const BinaryFileBytesMaker> _binaryFileBytesMaker;
-   unique_ptr<const Utils::Console> _console;
+   unique_ptr<const Time::Console> _console;
    unique_ptr<const Utils::FileSystem> _fileSystem;
-   unique_ptr<const Utils::StopwatchFactory> _stopwatchFactory;
+   unique_ptr<const Time::StopwatchFactory> _stopwatchFactory;
    unique_ptr<const TextFileTextMaker> _textFileTextMaker;
 public:
    FileCreator();

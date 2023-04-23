@@ -40,9 +40,9 @@ using _memberForEacher_filePathsMockType = Utils::TwoArgMemberFunctionForEacherM
 _memberForEacher_filePathsMockType* _memberForEacher_filePathsMock = nullptr;
 // Constant Components
 BinaryFileBytesMakerMock* _binaryFileBytesMakerMock = nullptr;
-Utils::ConsoleMock* _consoleMock = nullptr;
+Time::ConsoleMock* _consoleMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
-Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
+Time::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 TextFileTextMakerMock* _textFileTextMakerMock = nullptr;
 
 STARTUP
@@ -53,9 +53,9 @@ STARTUP
    _fileCreator._memberForEacher_filePaths.reset(_memberForEacher_filePathsMock = new _memberForEacher_filePathsMockType);
    // Constant Components
    _fileCreator._binaryFileBytesMaker.reset(_binaryFileBytesMakerMock = new BinaryFileBytesMakerMock);
-   _fileCreator._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _fileCreator._console.reset(_consoleMock = new Time::ConsoleMock);
    _fileCreator._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
-   _fileCreator._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
+   _fileCreator._stopwatchFactory.reset(_stopwatchFactoryMock = new Time::StopwatchFactoryMock);
    _fileCreator._textFileTextMaker.reset(_textFileTextMakerMock = new TextFileTextMakerMock);
 }
 
@@ -128,7 +128,7 @@ TEST(CreateRandomTextFiles_CreatesRandomTextFilesAtFilePathOptionallyInParallel)
 
 TEST(CreateNumberedFileInDirectory_QuietIsFalse_CreatesFile_WritesWroteFileMessageWithElapsedMilliseconds)
 {
-   shared_ptr<Utils::StopwatchMock> threadUniqueCreateFileStopwatchMock = make_shared<Utils::StopwatchMock>();
+   shared_ptr<Time::StopwatchMock> threadUniqueCreateFileStopwatchMock = make_shared<Time::StopwatchMock>();
    const unsigned long long millisecondsToWriteFile = threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(threadUniqueCreateFileStopwatchMock);
 
@@ -189,7 +189,7 @@ TEST(CreateRandomBinaryFile_QuietIsTrue_CreatesRandomBinaryFileAtFilePath)
 
 TEST(CreateRandomBinaryFile_QuietIsFalse_CreatesRandomBinaryFileAtFilePath_WritesWroteBinaryFileMessageWithElapsedMilliseconds)
 {
-   shared_ptr<Utils::StopwatchMock> threadUniqueStopwatchMock = make_shared<Utils::StopwatchMock>();
+   shared_ptr<Time::StopwatchMock> threadUniqueStopwatchMock = make_shared<Time::StopwatchMock>();
    const unsigned long long elapsedMilliseconds = threadUniqueStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(threadUniqueStopwatchMock);
 
@@ -229,7 +229,7 @@ TEST(CreateRandomTextFile_QuietIsTrue_CreatesRandomTextFileAtFilePath)
 
 TEST(CreateRandomTextFile_QuietIsFalse_CreatesRandomTextFileAtFilePath_WritesWroteTextFileMessageWithElapsedMilliseconds)
 {
-   shared_ptr<Utils::StopwatchMock> threadUniqueStopwatchMock = make_shared<Utils::StopwatchMock>();
+   shared_ptr<Time::StopwatchMock> threadUniqueStopwatchMock = make_shared<Time::StopwatchMock>();
    const unsigned long long elapsedMilliseconds = threadUniqueStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(threadUniqueStopwatchMock);
 
@@ -255,7 +255,7 @@ TEST(CreateRandomTextFile_QuietIsFalse_CreatesRandomTextFileAtFilePath_WritesWro
 
 TEST(CreateSequentiallyNumberedFilesInNumberedDirectory_QuietIsFalse_CreatesSequentiallyNumberedFilesInNumberedDirectory_WritesMessages)
 {
-   shared_ptr<Utils::StopwatchMock> threadUniqueCreateFileStopwatchMock = make_shared<Utils::StopwatchMock>();
+   shared_ptr<Time::StopwatchMock> threadUniqueCreateFileStopwatchMock = make_shared<Time::StopwatchMock>();
    const unsigned long long millisecondsToWriteFilesInDirectory = threadUniqueCreateFileStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(threadUniqueCreateFileStopwatchMock);
 

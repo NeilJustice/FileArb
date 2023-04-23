@@ -16,20 +16,20 @@ EVIDENCE
 
 CreateTextFilesSubProgram _createTextFilesSubProgram;
 // Constant Components
-Utils::ConsoleMock* _consoleMock = nullptr;
+Time::ConsoleMock* _consoleMock = nullptr;
 FilePathsMakerMock* _filePathsMakerMock = nullptr;
 TextFileTextMakerMock* _textFileTextMakerMock = nullptr;
-Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
+Time::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 // Mutable Components
 FileCreatorMock* _fileCreatorMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _createTextFilesSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _createTextFilesSubProgram._console.reset(_consoleMock = new Time::ConsoleMock);
    _createTextFilesSubProgram._filePathsMaker.reset(_filePathsMakerMock = new FilePathsMakerMock);
    _createTextFilesSubProgram._textFileTextMaker.reset(_textFileTextMakerMock = new TextFileTextMakerMock);
-   _createTextFilesSubProgram._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
+   _createTextFilesSubProgram._stopwatchFactory.reset(_stopwatchFactoryMock = new Time::StopwatchFactoryMock);
    // Mutable Components
    _createTextFilesSubProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
 }
@@ -50,7 +50,7 @@ TEST(DefaultConstructor_NewsComponents)
 
 TEST(Run_GenerateRandomLetterIsTrue_CreatesRandomTextFiles_Returns0)
 {
-   shared_ptr<Utils::StopwatchMock> createFilesStopwatchMock = make_shared<Utils::StopwatchMock>();
+   shared_ptr<Time::StopwatchMock> createFilesStopwatchMock = make_shared<Time::StopwatchMock>();
    const unsigned long long millisecondsToWriteFiles = createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(createFilesStopwatchMock);
 
@@ -76,7 +76,7 @@ TEST(Run_GenerateRandomLetterIsTrue_CreatesRandomTextFiles_Returns0)
 
 TEST(Run_GenerateRandomLetterIsFalse_CreatesNonRandomTextFiles_Returns0)
 {
-   shared_ptr<Utils::StopwatchMock> createFilesStopwatchMock = make_shared<Utils::StopwatchMock>();
+   shared_ptr<Time::StopwatchMock> createFilesStopwatchMock = make_shared<Time::StopwatchMock>();
    const unsigned long long millisecondsToWriteFiles = createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(createFilesStopwatchMock);
 

@@ -10,14 +10,14 @@ EVIDENCE
 CreateBinaryFileArgsParser _createBinaryFileArgsParser;
 // Constant Components
 BytesStringConverterMock* _bytesStringConverterMock = nullptr;
-Utils::DocoptParserMock* _docoptParserMock = nullptr;
+Time::DocoptParserMock* _docoptParserMock = nullptr;
 FileNamePrefixAndExtensionGetterMock* _fileNamePrefixAndExtensionGetterMock = nullptr;
 
 STARTUP
 {
    // Constant Components
    _createBinaryFileArgsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
-   _createBinaryFileArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
+   _createBinaryFileArgsParser._docoptParser.reset(_docoptParserMock = new Time::DocoptParserMock);
    _createBinaryFileArgsParser._fileNamePrefixAndExtensionGetter.reset(_fileNamePrefixAndExtensionGetterMock = new FileNamePrefixAndExtensionGetterMock);
 }
 

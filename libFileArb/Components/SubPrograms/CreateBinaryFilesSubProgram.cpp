@@ -22,7 +22,7 @@ CreateBinaryFilesSubProgram::~CreateBinaryFilesSubProgram()
 
 int CreateBinaryFilesSubProgram::Run(const FileArbArgs& args)
 {
-   const shared_ptr<Utils::Stopwatch> createFilesStopwatch = _stopwatchFactory->NewAndStartStopwatch();
+   const shared_ptr<Time::Stopwatch> createFilesStopwatch = _stopwatchFactory->NewAndStartStopwatch();
    if (args.generateRandomBytes)
    {
       const vector<fs::path> allFilePaths = _filePathsMaker->MakeFilePaths(args);

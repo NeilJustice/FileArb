@@ -11,9 +11,9 @@ class FileArbSubProgram
    friend class FileArbSubProgramTests;
 protected:
    // Base Class Constant Components
-   unique_ptr<const Utils::Console> _console;
+   unique_ptr<const Time::Console> _console;
    unique_ptr<const Utils::FileSystem> _fileSystem;
-   unique_ptr<const Utils::StopwatchFactory> _stopwatchFactory;
+   unique_ptr<const Time::StopwatchFactory> _stopwatchFactory;
 public:
    FileArbSubProgram();
    virtual ~FileArbSubProgram();

@@ -17,9 +17,9 @@ FileCreator::FileCreator()
    , _memberForEacher_filePaths(make_unique<_memberForEacher_filePathsType>())
    // Constant Components
    , _binaryFileBytesMaker(make_unique<BinaryFileBytesMaker>())
-   , _console(make_unique<Utils::Console>())
+   , _console(make_unique<Time::Console>())
    , _fileSystem(make_unique<Utils::FileSystem>())
-   , _stopwatchFactory(make_unique<Utils::StopwatchFactory>())
+   , _stopwatchFactory(make_unique<Time::StopwatchFactory>())
    , _textFileTextMaker(make_unique<TextFileTextMaker>())
 {
 }
@@ -60,7 +60,7 @@ void FileCreator::CreateNumberedFileInDirectory(
    size_t callIndex, const fs::path& directoryPath, const string& fileTextOrBytes, const FileArbArgs& args) const
 {
    const size_t fileNumber = callIndex + 1;
-   shared_ptr<Utils::Stopwatch> threadUniqueCreateFileStopwatch;
+   shared_ptr<Time::Stopwatch> threadUniqueCreateFileStopwatch;
    if (!args.quiet)
    {
       threadUniqueCreateFileStopwatch = _stopwatchFactory->NewAndStartStopwatch();
@@ -78,7 +78,7 @@ void FileCreator::CreateNumberedFileInDirectory(
 
 void FileCreator::CreateRandomBinaryFile(const fs::path& filePath, const FileArbArgs& args) const
 {
-   shared_ptr<Utils::Stopwatch> threadUniqueStopwatch;
+   shared_ptr<Time::Stopwatch> threadUniqueStopwatch;
    if (!args.quiet)
    {
       threadUniqueStopwatch = _stopwatchFactory->NewAndStartStopwatch();
@@ -95,7 +95,7 @@ void FileCreator::CreateRandomBinaryFile(const fs::path& filePath, const FileArb
 
 void FileCreator::CreateRandomTextFile(const fs::path& filePath, const FileArbArgs& args) const
 {
-   shared_ptr<Utils::Stopwatch> threadUniqueStopwatch;
+   shared_ptr<Time::Stopwatch> threadUniqueStopwatch;
    if (!args.quiet)
    {
       threadUniqueStopwatch = _stopwatchFactory->NewAndStartStopwatch();
@@ -113,7 +113,7 @@ void FileCreator::CreateRandomTextFile(const fs::path& filePath, const FileArbAr
 void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(
    size_t callIndex, const string& fileTextOrBytes, const FileArbArgs& args) const
 {
-   shared_ptr<Utils::Stopwatch> threadUniqueCreateFileStopwatch;
+   shared_ptr<Time::Stopwatch> threadUniqueCreateFileStopwatch;
    if (!args.quiet)
    {
       threadUniqueCreateFileStopwatch = _stopwatchFactory->NewAndStartStopwatch();

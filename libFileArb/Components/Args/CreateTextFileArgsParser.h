@@ -6,7 +6,7 @@ class CreateTextFileArgsParser
    friend class CreateTextFileArgsParserTests;
 private:
    // Constant Components
-   unique_ptr<const Utils::DocoptParser> _docoptParser;
+   unique_ptr<const Time::DocoptParser> _docoptParser;
    unique_ptr<const FileNamePrefixAndExtensionGetter> _fileNamePrefixAndExtensionGetter;
 public:
    CreateTextFileArgsParser();

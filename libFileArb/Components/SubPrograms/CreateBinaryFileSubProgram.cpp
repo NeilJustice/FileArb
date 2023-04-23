@@ -18,7 +18,7 @@ CreateBinaryFileSubProgram::~CreateBinaryFileSubProgram()
 
 int CreateBinaryFileSubProgram::Run(const FileArbArgs& args)
 {
-   const shared_ptr<Utils::Stopwatch> stopwatch = _stopwatchFactory->NewAndStartStopwatch();
+   const shared_ptr<Time::Stopwatch> stopwatch = _stopwatchFactory->NewAndStartStopwatch();
 
    string fileBytesString;
    if (args.generateRandomBytes)

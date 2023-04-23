@@ -4,7 +4,7 @@
 
 CreateTextFilesArgsParser::CreateTextFilesArgsParser()
    // Constant Components
-   : _docoptParser(make_unique<Utils::DocoptParser>())
+   : _docoptParser(make_unique<Time::DocoptParser>())
    , _fileNamePrefixAndExtensionGetter(make_unique<FileNamePrefixAndExtensionGetter>())
 {
 }

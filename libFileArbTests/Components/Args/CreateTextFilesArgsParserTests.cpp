@@ -8,13 +8,13 @@ EVIDENCE
 
 CreateTextFilesArgsParser _createTextFilesArgsParser;
 // Constant Components
-Utils::DocoptParserMock* _docoptParserMock = nullptr;
+Time::DocoptParserMock* _docoptParserMock = nullptr;
 FileNamePrefixAndExtensionGetterMock* _fileNamePrefixAndExtensionGetterMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _createTextFilesArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
+   _createTextFilesArgsParser._docoptParser.reset(_docoptParserMock = new Time::DocoptParserMock);
    _createTextFilesArgsParser._fileNamePrefixAndExtensionGetter.reset(_fileNamePrefixAndExtensionGetterMock = new FileNamePrefixAndExtensionGetterMock);
 }
 

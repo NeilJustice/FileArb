@@ -9,19 +9,19 @@ AFACT(ThreadIdWriteLine_CodeCoverage)
 AFACT(ThreadIdWriteLineWithColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
 
-Utils::Console _console;
+Time::Console _console;
 // Mutable Components
-Utils::ConsoleColorerMock* _consoleColorerMock = nullptr;
+Time::ConsoleColorerMock* _consoleColorerMock = nullptr;
 
 STARTUP
 {
    // Mutable Components
-   _console._consoleColorer.reset(_consoleColorerMock = new Utils::ConsoleColorerMock);
+   _console._consoleColorer.reset(_consoleColorerMock = new Time::ConsoleColorerMock);
 }
 
 TEST(DefaultConstructor_NewsConsoleColorer)
 {
-   Utils::Console console;
+   Time::Console console;
    // Function Pointers
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
 }

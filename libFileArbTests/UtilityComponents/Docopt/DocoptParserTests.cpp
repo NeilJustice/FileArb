@@ -26,7 +26,7 @@ AFACT(GetProgramModeSpecificRequiredSizeT_ProgramModeIsNotContainedWithinRequire
 AFACT(GetProgramModeSpecificRequiredSizeT_ProgramModeIsContainedInRequiredProgramModesVector_ReturnsResultOfCallingStaticGetRequiredSizeT)
 EVIDENCE
 
-Utils::DocoptParser _docoptParser;
+Time::DocoptParser _docoptParser;
 // Function Pointers
 using DocoptMapType = map<string, docopt::Value>;
 METALMOCK_NONVOID5_FREE(DocoptMapType, _call_docopt, const string&, const vector<string>&, bool, const string&, bool)
@@ -47,11 +47,11 @@ STARTUP
 
 TEST(DefaultConstructor_NewsYearMonthParser)
 {
-   const Utils::DocoptParser docoptParser;
+   const Time::DocoptParser docoptParser;
    // Function Pointers
    STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt);
-   STD_FUNCTION_TARGETS(Utils::DocoptParser::StaticGetRequiredSizeT, docoptParser._call_StaticGetRequiredSizeT);
-   STD_FUNCTION_TARGETS(Utils::DocoptParser::StaticGetRequiredString, docoptParser._call_StaticGetRequiredString);
+   STD_FUNCTION_TARGETS(Time::DocoptParser::StaticGetRequiredSizeT, docoptParser._call_StaticGetRequiredSizeT);
+   STD_FUNCTION_TARGETS(Time::DocoptParser::StaticGetRequiredString, docoptParser._call_StaticGetRequiredString);
 }
 
 TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
@@ -196,7 +196,7 @@ TEST(StaticGetRequiredSizeT_ArgInMapAsNegative1_ReturnsSizeTMaxValue)
 {
    _docoptArgs[_argName] = docopt::Value("-1"s);
    //
-   const size_t sizeTValue = Utils::DocoptParser::StaticGetRequiredSizeT(_docoptArgs, _argName);
+   const size_t sizeTValue = Time::DocoptParser::StaticGetRequiredSizeT(_docoptArgs, _argName);
    //
    ARE_EQUAL(numeric_limits<size_t>::max(), sizeTValue);
 }
@@ -206,7 +206,7 @@ TEST(StaticGetRequiredSizeT_ArgInMapAsSizeTValue_ReturnsSizeT)
    const size_t sizeTValue = ZenUnit::RandomBetween<size_t>(0, 3);
    _docoptArgs[_argName] = docopt::Value(to_string(sizeTValue));
    //
-   const size_t returnedSizeTValue = Utils::DocoptParser::StaticGetRequiredSizeT(_docoptArgs, _argName);
+   const size_t returnedSizeTValue = Time::DocoptParser::StaticGetRequiredSizeT(_docoptArgs, _argName);
    //
    ARE_EQUAL(sizeTValue, returnedSizeTValue);
 }

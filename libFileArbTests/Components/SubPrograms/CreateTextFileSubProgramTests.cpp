@@ -14,18 +14,18 @@ EVIDENCE
 
 CreateTextFileSubProgram _createTextFileSubProgram;
 // Base Class Constant Components
-Utils::ConsoleMock* _consoleMock = nullptr;
+Time::ConsoleMock* _consoleMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
-Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
+Time::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 // Constant Components
 TextFileTextMakerMock* _textFileTextMakerMock = nullptr;
 
 STARTUP
 {
    // Base Class Constant Components
-   _createTextFileSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _createTextFileSubProgram._console.reset(_consoleMock = new Time::ConsoleMock);
    _createTextFileSubProgram._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
-   _createTextFileSubProgram._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
+   _createTextFileSubProgram._stopwatchFactory.reset(_stopwatchFactoryMock = new Time::StopwatchFactoryMock);
    // Constant Components
    _createTextFileSubProgram._textFileTextMaker.reset(_textFileTextMakerMock = new TextFileTextMakerMock);
 }
@@ -39,7 +39,7 @@ TEST(DefaultConstructor_NewsComponents)
 
 TEST(Run_GenerateRandomLetterIsTrue_WritesRandomTextFileToTargetDirectory_Returns0)
 {
-   shared_ptr<Utils::StopwatchMock> stopwatchMock = make_shared<Utils::StopwatchMock>();
+   shared_ptr<Time::StopwatchMock> stopwatchMock = make_shared<Time::StopwatchMock>();
    const unsigned long long elapsedMilliseconds = stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(stopwatchMock);
 
@@ -66,7 +66,7 @@ TEST(Run_GenerateRandomLetterIsTrue_WritesRandomTextFileToTargetDirectory_Return
 
 TEST(Run_GenerateRandomLetterIsFalse_WritesNonRandomTextFileToTargetDirectory_Returns0)
 {
-   shared_ptr<Utils::StopwatchMock> stopwatchMock = make_shared<Utils::StopwatchMock>();
+   shared_ptr<Time::StopwatchMock> stopwatchMock = make_shared<Time::StopwatchMock>();
    const unsigned long long elapsedMilliseconds = stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(stopwatchMock);
 

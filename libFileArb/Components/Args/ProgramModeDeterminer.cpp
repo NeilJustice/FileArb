@@ -5,7 +5,7 @@
 
 ProgramModeDeterminer::ProgramModeDeterminer()
    // Constant Components
-   : _docoptParser(make_unique<Utils::DocoptParser>())
+   : _docoptParser(make_unique<Time::DocoptParser>())
 {
 }
 

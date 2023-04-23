@@ -25,13 +25,13 @@ ArgsParser _argsParser;
 METALMOCK_VOID1_FREE(_call_exit, int)
 // Constant Components
 BytesStringConverterMock* _bytesStringConverterMock = nullptr;
-Time::ConsoleMock* _consoleMock = nullptr;
+Utils::ConsoleMock* _consoleMock = nullptr;
 CreateBinaryFileArgsParserMock* _createBinaryFileArgsParserMock = nullptr;
 CreateTextFileArgsParserMock* _createTextFileArgsParserMock = nullptr;
 CreateBinaryFilesArgsParserMock* _createBinaryFilesArgsParserMock = nullptr;
 CreateTextFilesArgsParserMock* _createTextFilesArgsParserMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
-Time::DocoptParserMock* _docoptParserMock = nullptr;
+Utils::DocoptParserMock* _docoptParserMock = nullptr;
 ProgramModeDeterminerMock* _programModeDeterminerMock = nullptr;
 
 using DocoptMapType = map<string, docopt::Value>;
@@ -42,12 +42,12 @@ STARTUP
    _argsParser._call_exit = BIND_1ARG_METALMOCK_OBJECT(_call_exitMock);
    // Constant Components
    _argsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
-   _argsParser._console.reset(_consoleMock = new Time::ConsoleMock);
+   _argsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
    _argsParser._createBinaryFileArgsParser.reset(_createBinaryFileArgsParserMock = new CreateBinaryFileArgsParserMock);
    _argsParser._createTextFileArgsParser.reset(_createTextFileArgsParserMock = new CreateTextFileArgsParserMock);
    _argsParser._createBinaryFilesArgsParser.reset(_createBinaryFilesArgsParserMock = new CreateBinaryFilesArgsParserMock);
    _argsParser._createTextFilesArgsParser.reset(_createTextFilesArgsParserMock = new CreateTextFilesArgsParserMock);
-   _argsParser._docoptParser.reset(_docoptParserMock = new Time::DocoptParserMock);
+   _argsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
    _argsParser._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _argsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);
 }

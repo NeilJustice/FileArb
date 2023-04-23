@@ -6,7 +6,7 @@
 CreateBinaryFilesArgsParser::CreateBinaryFilesArgsParser()
    // Constant Components
    : _bytesStringConverter(make_unique<BytesStringConverter>())
-   , _docoptParser(make_unique<Time::DocoptParser>())
+   , _docoptParser(make_unique<Utils::DocoptParser>())
    , _fileNamePrefixAndExtensionGetter(make_unique<FileNamePrefixAndExtensionGetter>())
 {
 }

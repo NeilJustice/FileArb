@@ -8,10 +8,10 @@ EVIDENCE
 
 TEST(NewStopwatch_ReturnsNewStopwatch)
 {
-   const Time::StopwatchFactory stopwatchFactory;
+   const Utils::StopwatchFactory stopwatchFactory;
    //
-   const shared_ptr<Time::Stopwatch> stopwatch1 = stopwatchFactory.NewAndStartStopwatch();
-   const shared_ptr<Time::Stopwatch> stopwatch2 = stopwatchFactory.NewAndStartStopwatch();
+   const shared_ptr<Utils::Stopwatch> stopwatch1 = stopwatchFactory.NewAndStartStopwatch();
+   const shared_ptr<Utils::Stopwatch> stopwatch2 = stopwatchFactory.NewAndStartStopwatch();
    //
    ARE_NOT_EQUAL(stopwatch1.get(), stopwatch2.get());
    this_thread::sleep_for(chrono::milliseconds(1));

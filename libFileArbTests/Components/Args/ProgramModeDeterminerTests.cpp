@@ -13,12 +13,12 @@ EVIDENCE
 
 ProgramModeDeterminer _programModeDeterminer;
 // Constant Components
-Time::DocoptParserMock* _docoptParserMock = nullptr;
+Utils::DocoptParserMock* _docoptParserMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _programModeDeterminer._docoptParser.reset(_docoptParserMock = new Time::DocoptParserMock);
+   _programModeDeterminer._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)

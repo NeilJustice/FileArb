@@ -15,13 +15,13 @@ FileArbProgram::FileArbProgram()
    : _call_Utils_Exception_ClassNameAndMessage(Utils::Exception::GetClassNameAndMessage)
    , _call_Utils_Vector_FromArgcArgv(Utils::Vector::FromArgcArgv)
    // Constant Components
-   , _console(make_unique<Time::Console>())
+   , _console(make_unique<Utils::Console>())
    , _nonVoidOneArgTryCatchCaller(make_unique<Utils::NonVoidOneArgTryCatchCaller<int, FileArbProgram, const vector<string>&>>())
    , _argsParser(make_unique<ArgsParser>())
    , _fileArbSubProgramFactory(make_unique<FileArbSubProgramFactory>())
    // Mutable Components
    , _fileCreator(make_unique<FileCreator>())
-   , _stopwatch(make_unique<Time::Stopwatch>())
+   , _stopwatch(make_unique<Utils::Stopwatch>())
 {
 }
 

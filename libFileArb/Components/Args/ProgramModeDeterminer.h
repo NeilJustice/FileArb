@@ -9,7 +9,7 @@ class ProgramModeDeterminer
    friend class ProgramModeDeterminerTests;
 private:
    // Constant Components
-   unique_ptr<const Time::DocoptParser> _docoptParser;
+   unique_ptr<const Utils::DocoptParser> _docoptParser;
 public:
    ProgramModeDeterminer();
    virtual ~ProgramModeDeterminer();

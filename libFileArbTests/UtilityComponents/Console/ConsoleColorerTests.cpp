@@ -21,7 +21,7 @@ AFACT(SetSupportsColorIfUnset_SupportsColorBeenSetIsFalse_SetsSupportsColorToRes
 FACTS(SupportsColor_CallsFileno_CallsIsAtty_ReturnsTrueIfIsAttyReturnValueIsNot0)
 EVIDENCE
 
-Time::ConsoleColorer _consoleColorer;
+Utils::ConsoleColorer _consoleColorer;
 // Function Pointers
 METALMOCK_NONVOID1_FREE(int, fileno, FILE*)
 METALMOCK_NONVOID1_FREE(int, isatty, int)
@@ -39,7 +39,7 @@ STARTUP
 
 TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
 {
-   Time::ConsoleColorer consoleColorer;
+   Utils::ConsoleColorer consoleColorer;
    //
    // Function Pointers
 #ifdef _WIN32
@@ -60,7 +60,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
 
 TEST(SetTextColor_CallsSetSupportsColorIfUnset_DoesNotSupportColor_ReturnsFalse)
 {
-   class ConsoleColorerSelfMocked : public Metal::Mock<Time::ConsoleColorer>
+   class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
       METALMOCK_VOID0(SetSupportsColorIfUnset)
@@ -77,7 +77,7 @@ TEST(SetTextColor_CallsSetSupportsColorIfUnset_DoesNotSupportColor_ReturnsFalse)
 
 TEST(SetTextColor_CallsSetSupportsColorIfUnset_SupportsColor_CallsPlatformSpecificSetTextColor_ReturnsTrue)
 {
-   class ConsoleColorerSelfMocked : public Metal::Mock<Time::ConsoleColorer>
+   class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
       METALMOCK_VOID0(SetSupportsColorIfUnset)
@@ -102,7 +102,7 @@ TEST(UnsetTextColor_DidPreviouslySetTextColorIsFalse_DoesNothing)
 
 TEST(UnsetTextColor_DidPreviouslySetTextColorIsTrue_CallsSetTextColorWhite)
 {
-   class ConsoleColorerSelfMocked : public Metal::Mock<Time::ConsoleColorer>
+   class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
       METALMOCK_VOID1_CONST(PlatformSpecificSetTextColor, Color)
@@ -133,7 +133,7 @@ TEST2X2(ColorToLinuxColor_ReturnsLinuxColorStringForColor,
 
 TEST(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
 {
-   class ConsoleColorerSelfMocked : public Metal::Mock<Time::ConsoleColorer>
+   class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
       METALMOCK_NONVOID1_CONST(const char*, ColorToLinuxColor, Color)
@@ -164,7 +164,7 @@ TEST2X2(ColorToWindowsColor_ReturnsWindowsColorForColor,
 
 TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
 {
-   class ConsoleColorerSelfMocked : public Metal::Mock<Time::ConsoleColorer>
+   class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
       METALMOCK_NONVOID1_FREE(HANDLE, GetStdHandle, DWORD)
@@ -211,7 +211,7 @@ TEST(SetSupportsColorIfUnset_SupportsColorBeenSetIsTrue_DoesNothing)
 
 TEST(SetSupportsColorIfUnset_SupportsColorBeenSetIsFalse_SetsSupportsColorToResultOfCallingSupportsColor_SetsSupportsColorHasBeenSetToTrue)
 {
-   class ConsoleColorerSelfMocked : public Metal::Mock<Time::ConsoleColorer>
+   class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
       METALMOCK_NONVOID0_CONST(bool, SupportsColor)

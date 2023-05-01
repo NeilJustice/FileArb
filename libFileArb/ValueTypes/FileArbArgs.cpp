@@ -10,6 +10,7 @@ const string FileArbArgs::CommandLineUsage_create_binary_file =
 R"(Usage:
    )" + CommandLineUsage_create_binary_file_args;
 
+
 const string FileArbArgs::CommandLineUsage_create_binary_files_args =
 R"(filearb create-binary-files
    --target=<DirectoryPath>
@@ -23,6 +24,7 @@ const string FileArbArgs::CommandLineUsage_create_binary_files =
 R"(Usage:
    )" + CommandLineUsage_create_binary_files_args;
 
+
 const string FileArbArgs::CommandLineUsage_create_text_file_args =
 R"(filearb create-text-file
    --target=<DirectoryPath>
@@ -32,6 +34,7 @@ R"(filearb create-text-file
 const string FileArbArgs::CommandLineUsage_create_text_file =
 R"(Usage:
    )" + CommandLineUsage_create_text_file_args;
+
 
 const string FileArbArgs::CommandLineUsage_create_text_files_args =
 R"(filearb create-text-files
@@ -46,6 +49,7 @@ R"(filearb create-text-files
 const string FileArbArgs::CommandLineUsage_create_text_files =
 R"(Usage:
    )" + CommandLineUsage_create_text_files_args;
+
 
 const string FileArbArgs::CommandLineUsage =
 R"(FileArb v1.1.0 - Creates arbitrarily large text files or binary files.

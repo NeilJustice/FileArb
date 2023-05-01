@@ -3,6 +3,10 @@
 
 TESTS(FileArbArgsTests)
 AFACT(DefaultConstructor_SetsFieldsTo0)
+AFACT(CommandLineUsage_create_binary_file_args_AreExpectedStrings)
+AFACT(CommandLineUsage_create_binary_files_args_AreExpectedStrings)
+AFACT(CommandLineUsage_create_text_file_args_AreExpectedStrings)
+AFACT(CommandLineUsage_create_text_files_args_AreExpectedStrings)
 AFACT(CommandLineUsage_IsExpectedString)
 EVIDENCE
 
@@ -25,6 +29,76 @@ TEST(DefaultConstructor_SetsFieldsTo0)
    expectedDefaultFileArbArgs.fileNamePrefix = "";
    expectedDefaultFileArbArgs.fileExtension = "";
    ARE_EQUAL(expectedDefaultFileArbArgs, defaultFileArbArgs);
+}
+
+TEST(CommandLineUsage_create_binary_file_args_AreExpectedStrings)
+{
+   const string expectedArgs =
+R"(filearb create-binary-file
+   --target=<DirectoryPath>
+   --bytes=<NumberOfBytes>
+   [--random-bytes])";
+   ARE_EQUAL(expectedArgs, FileArbArgs::CommandLineUsage_create_binary_file_args);
+
+   const string expectedUsage =
+R"(Usage:
+   )" + expectedArgs;
+   ARE_EQUAL(expectedUsage, FileArbArgs::CommandLineUsage_create_binary_file);
+}
+
+TEST(CommandLineUsage_create_binary_files_args_AreExpectedStrings)
+{
+   const string expectedArgs =
+R"(filearb create-binary-files
+   --target=<DirectoryPath>
+   --directories=<NumberOfDirectories>
+   --files=<NumberOfFiles>
+   --bytes=<BytesPerFile>
+   [--random-bytes]
+   [--parallel]
+   [--quiet])";
+   ARE_EQUAL(expectedArgs, FileArbArgs::CommandLineUsage_create_binary_files_args);
+
+   const string expectedUsage =
+R"(Usage:
+   )" + expectedArgs;
+   ARE_EQUAL(expectedUsage, FileArbArgs::CommandLineUsage_create_binary_files);
+}
+
+TEST(CommandLineUsage_create_text_file_args_AreExpectedStrings)
+{
+   const string expectedArgs =
+R"(filearb create-text-file
+   --target=<DirectoryPath>
+   --lines=<LinesPerFile>
+   --characters=<CharactersPerLine>
+   [--random-letters])";
+   ARE_EQUAL(expectedArgs, FileArbArgs::CommandLineUsage_create_text_file_args);
+
+   const string expectedUsage =
+R"(Usage:
+   )" + expectedArgs;
+   ARE_EQUAL(expectedUsage, FileArbArgs::CommandLineUsage_create_text_file);
+}
+
+TEST(CommandLineUsage_create_text_files_args_AreExpectedStrings)
+{
+   const string expectedArgs =
+R"(filearb create-text-files
+   --target=<DirectoryPath>
+   --directories=<NumberOfDirectories>
+   --files=<FilesPerDirectory>
+   --lines=<LinesPerFile>
+   --characters=<CharactersPerLine>
+   [--random-letters]
+   [--parallel]
+   [--quiet])";
+   ARE_EQUAL(expectedArgs, FileArbArgs::CommandLineUsage_create_text_files_args);
+
+   const string expectedUsage =
+R"(Usage:
+   )" + expectedArgs;
+   ARE_EQUAL(expectedUsage, FileArbArgs::CommandLineUsage_create_text_files);
 }
 
 TEST(CommandLineUsage_IsExpectedString)

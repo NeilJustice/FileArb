@@ -2,7 +2,7 @@
 #include "libFileArb/ValueTypes/FileArbArgs.h"
 
 TESTS(FileArbArgsTests)
-AFACT(DefaultConstructor_SetsFieldsTo0)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(CommandLineUsage_create_binary_file_args_AreExpectedStrings)
 AFACT(CommandLineUsage_create_binary_files_args_AreExpectedStrings)
 AFACT(CommandLineUsage_create_text_file_args_AreExpectedStrings)
@@ -10,7 +10,7 @@ AFACT(CommandLineUsage_create_text_files_args_AreExpectedStrings)
 AFACT(CommandLineUsage_IsExpectedString)
 EVIDENCE
 
-TEST(DefaultConstructor_SetsFieldsTo0)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    const FileArbArgs defaultFileArbArgs{};
    FileArbArgs expectedDefaultFileArbArgs{};

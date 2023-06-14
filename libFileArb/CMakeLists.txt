@@ -33,6 +33,7 @@ file(GLOB_RECURSE Sources *.h *.cpp *.ui)
 source_group("" FILES ${Sources})
 
 add_library(libFileArb ${Sources})
+set_property(TARGET libFileArb PROPERTY CXX_STANDARD 20)
 if(UNIX)
    set_target_properties(libFileArb PROPERTIES DEBUG_OUTPUT_NAME "FileArbDebug")
    set_target_properties(libFileArb PROPERTIES RELEASE_OUTPUT_NAME "FileArbRelease")

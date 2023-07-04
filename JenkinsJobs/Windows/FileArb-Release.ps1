@@ -4,6 +4,6 @@ python.exe -u FileArbDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --cmake-generator="Visual Studio 17 2022" `
    --cmake-build-type=Release `
    --tests-project-name=libFileArbTests `
-   --cmake-definitions="-DFastWindowsReleaseBuildMode=ON" `
+   --cmake-definitions="" `
    --no-install
 exit $LastExitCode

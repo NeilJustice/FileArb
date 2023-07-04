@@ -40,6 +40,9 @@ if(UNIX)
 elseif(MSVC)
    set_target_properties(libFileArb PROPERTIES DEBUG_OUTPUT_NAME "libFileArbDebug")
    set_target_properties(libFileArb PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libFileArbRelWithDebInfo")
+
+   replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ob1" "/Ob2")
+   append(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Oi /Ot /GS- /arch:AVX2 /fp:fast")
 endif()
 
 IfMSVCEnablePrecompiledHeaders()

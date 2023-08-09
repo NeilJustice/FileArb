@@ -3,6 +3,7 @@
 #ifdef _WIN32
 #pragma warning(disable: 4061) // enumerator in switch of enum is not explicitly handled by a case label
 #pragma warning(disable: 4514) // 'Function' unreferenced inline function has been removed
+#pragma warning(disable: 4619) // #pragma warning: there is no warning number '5267'
 #pragma warning(disable: 4623) // '__std_type_info_data': default constructor was implicitly defined as deleted
 #pragma warning(disable: 4625) // copy constructor was implicitly defined as deleted
 #pragma warning(disable: 4626) // assignment operator was implicitly defined as deleted

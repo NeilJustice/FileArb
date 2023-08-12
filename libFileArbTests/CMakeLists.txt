@@ -48,7 +48,6 @@ file(GLOB_RECURSE Sources *.h *.cpp)
 source_group("" FILES ${Sources})
 
 add_executable(libFileArbTests ${Sources})
-set_property(TARGET libFileArbTests PROPERTY CXX_STANDARD 20)
 target_link_libraries(libFileArbTests libFileArb)
 
 if(MSVC)

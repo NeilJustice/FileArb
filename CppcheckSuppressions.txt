@@ -5,6 +5,7 @@ allocaCalled:*
 constVariable:libFileArb\StaticUtilities\StringUtil.h:12
 ctuOneDefinitionRuleViolation:*
 mismatchingContainerIterator:*
+missingIncludeSystem:*
 noExplicitConstructor:libFileArb/UtilityComponents/Docopt/docopt.h:55
 preprocessorErrorDirective:*
 preprocessorErrorDirective:/usr/include/c++/v1/__config:104

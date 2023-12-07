@@ -23,8 +23,8 @@ EVIDENCE
 
 Utils::ConsoleColorer _consoleColorer;
 // Function Pointers
-METALMOCK_NONVOID1_FREE(int, fileno, FILE*)
-METALMOCK_NONVOID1_FREE(int, isatty, int)
+METALMOCK_NONVOID1_STATIC_OR_FREE(int, fileno, FILE*)
+METALMOCK_NONVOID1_STATIC_OR_FREE(int, isatty, int)
 // Constant Components
 Utils::AsserterMock* _asserterMock = nullptr;
 
@@ -167,8 +167,8 @@ TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
    class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
-      METALMOCK_NONVOID1_FREE(HANDLE, GetStdHandle, DWORD)
-      METALMOCK_NONVOID2_FREE(BOOL, SetConsoleTextAttribute, HANDLE, WORD)
+      METALMOCK_NONVOID1_STATIC_OR_FREE(HANDLE, GetStdHandle, DWORD)
+      METALMOCK_NONVOID2_STATIC_OR_FREE(BOOL, SetConsoleTextAttribute, HANDLE, WORD)
       METALMOCK_NONVOID1_CONST(WindowsColor, ColorToWindowsColor, Color)
       Utils::AsserterMock* _asserterMock = nullptr;
       ConsoleColorerSelfMocked()

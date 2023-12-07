@@ -19,12 +19,12 @@ Utils::ErrorCodeTranslator _errorCodeTranslator;
 
 // Function Pointers
 #if defined __linux__ || defined __APPLE__
-METALMOCK_NONVOID3_FREE(char*, strerror_r, int, char*, size_t)
+METALMOCK_NONVOID3_STATIC_OR_FREE(char*, strerror_r, int, char*, size_t)
 #elif _WIN32
-METALMOCK_NONVOID3_FREE(errno_t, strerror_s, char*, size_t, int)
-METALMOCK_NONVOID0_FREE(unsigned long, GetLastError)
+METALMOCK_NONVOID3_STATIC_OR_FREE(errno_t, strerror_s, char*, size_t, int)
+METALMOCK_NONVOID0_STATIC_OR_FREE(unsigned long, GetLastError)
 #endif
-METALMOCK_NONVOID0_FREE(int*, _call_errno)
+METALMOCK_NONVOID0_STATIC_OR_FREE(int*, _call_errno)
 
 STARTUP
 {
@@ -75,7 +75,7 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
    class ErrorCodeTranslatorSelfMocked : public Metal::Mock<Utils::ErrorCodeTranslator>
    {
    public:
-      METALMOCK_NONVOID0_FREE(int*, _call_errno)
+      METALMOCK_NONVOID0_STATIC_OR_FREE(int*, _call_errno)
       ErrorCodeTranslatorSelfMocked()
       {
          _call_errno = BIND_0ARG_METALMOCK_OBJECT(_call_errnoMock);
@@ -100,7 +100,7 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
 class ErrorCodeTranslatorSelfMocked : public Metal::Mock<Utils::ErrorCodeTranslator>
 {
 public:
-   METALMOCK_NONVOID0_FREE(DWORD, _call_GetLastError)
+   METALMOCK_NONVOID0_STATIC_OR_FREE(DWORD, _call_GetLastError)
    ErrorCodeTranslatorSelfMocked()
    {
       _call_GetLastError = BIND_0ARG_METALMOCK_OBJECT(_call_GetLastErrorMock);

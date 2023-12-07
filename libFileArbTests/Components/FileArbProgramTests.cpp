@@ -19,8 +19,8 @@ EVIDENCE
 
 FileArbProgram _fileArbProgram;
 // Function Callers
-METALMOCK_NONVOID2_FREE(vector<string>, _call_Vector_FromArgcArgv, int, char**)
-METALMOCK_NONVOID1_FREE(string, _call_Exception_GetClassNameAndMessage, const exception*)
+METALMOCK_NONVOID2_STATIC_OR_FREE(vector<string>, _call_Vector_FromArgcArgv, int, char**)
+METALMOCK_NONVOID1_STATIC_OR_FREE(string, _call_Exception_GetClassNameAndMessage, const exception*)
 // Constant Components
 Utils::ConsoleMock* _consoleMock = nullptr;
 Utils::NonVoidOneArgTryCatchCallerMock<int, FileArbProgram, const vector<string>&>* _nonVoidOneArgTryCatchCallerMock = nullptr;

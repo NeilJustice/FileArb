@@ -24,16 +24,16 @@ EVIDENCE
 
 Utils::FileSystem _fileSystem;
 // Function Pointers
-METALMOCK_NONVOID0_FREE(int*, _call_errno)
-METALMOCK_NONVOID1_FREE(int, _call_fclose, FILE*)
+METALMOCK_NONVOID0_STATIC_OR_FREE(int*, _call_errno)
+METALMOCK_NONVOID1_STATIC_OR_FREE(int, _call_fclose, FILE*)
 #if defined __linux__ || defined __APPLE__
-METALMOCK_NONVOID2_FREE(FILE*, _call_fopen, const char*, const char*)
+METALMOCK_NONVOID2_STATIC_OR_FREE(FILE*, _call_fopen, const char*, const char*)
 #elif _WIN32
-METALMOCK_NONVOID3_FREE(errno_t, _call_fopen_s, FILE**, const char*, const char*)
+METALMOCK_NONVOID3_STATIC_OR_FREE(errno_t, _call_fopen_s, FILE**, const char*, const char*)
 #endif
-METALMOCK_NONVOID1_FREE(bool, _call_fs_create_directories, const fs::path&)
-METALMOCK_NONVOID4_FREE(size_t, _call_fwrite, const void*, size_t, size_t, FILE*)
-METALMOCK_NONVOID0_FREE(fs::path, _call_get_fs_current_path)
+METALMOCK_NONVOID1_STATIC_OR_FREE(bool, _call_fs_create_directories, const fs::path&)
+METALMOCK_NONVOID4_STATIC_OR_FREE(size_t, _call_fwrite, const void*, size_t, size_t, FILE*)
+METALMOCK_NONVOID0_STATIC_OR_FREE(fs::path, _call_get_fs_current_path)
 // Function Callers
 using _caller_CreateBinaryOrTextFileMockType = Utils::VoidFourArgMemberFunctionCallerMock<Utils::FileSystem, const fs::path&, const char*, const char*, size_t>;
 _caller_CreateBinaryOrTextFileMockType* _caller_CreateBinaryOrTextFileMock = nullptr;

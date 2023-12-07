@@ -29,9 +29,9 @@ EVIDENCE
 Utils::DocoptParser _docoptParser;
 // Function Pointers
 using DocoptMapType = map<string, docopt::Value>;
-METALMOCK_NONVOID5_FREE(DocoptMapType, _call_docopt, const string&, const vector<string>&, bool, const string&, bool)
-METALMOCK_NONVOID2_STATIC(size_t, DocoptParser, _call_StaticGetRequiredSizeT, map<string COMMA docopt::Value>, const string&)
-METALMOCK_NONVOID2_STATIC(string, DocoptParser, _call_StaticGetRequiredString, map<string COMMA docopt::Value>, const string&)
+METALMOCK_NONVOID5_STATIC_OR_FREE(DocoptMapType, _call_docopt, const string&, const vector<string>&, bool, const string&, bool)
+METALMOCK_NONVOID2_STATIC_OR_FREE(size_t, _call_DocoptParser_StaticGetRequiredSizeT, map<string COMMA docopt::Value>, const string&)
+METALMOCK_NONVOID2_STATIC_OR_FREE(string, _call_DocoptParser_StaticGetRequiredString, map<string COMMA docopt::Value>, const string&)
 
 map<string, docopt::Value> _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
 const string _argName = ZenUnit::Random<string>() + "_argName";
@@ -41,8 +41,8 @@ STARTUP
 {
    // Function Pointers
    _docoptParser._call_docopt = BIND_5ARG_METALMOCK_OBJECT(_call_docoptMock);
-   _docoptParser._call_StaticGetRequiredSizeT = BIND_2ARG_METALMOCK_OBJECT(_call_StaticGetRequiredSizeTMock);
-   _docoptParser._call_StaticGetRequiredString = BIND_2ARG_METALMOCK_OBJECT(_call_StaticGetRequiredStringMock);
+   _docoptParser._call_StaticGetRequiredSizeT = BIND_2ARG_METALMOCK_OBJECT(_call_DocoptParser_StaticGetRequiredSizeTMock);
+   _docoptParser._call_StaticGetRequiredString = BIND_2ARG_METALMOCK_OBJECT(_call_DocoptParser_StaticGetRequiredStringMock);
 }
 
 TEST(DefaultConstructor_NewsYearMonthParser)
@@ -144,11 +144,11 @@ TEST(GetProgramModeSpecificRequiredString_ProgramModeIsNotContainedWithinRequire
 
 TEST(GetProgramModeSpecificRequiredString_ProgramModeIsContainedInRequiredProgramModesVector_ReturnsResultOfCallingStaticGetRequiredString)
 {
-   const string staticGetRequiredStringReturnValue = _call_StaticGetRequiredStringMock.ReturnRandom();
+   const string staticGetRequiredStringReturnValue = _call_DocoptParser_StaticGetRequiredStringMock.ReturnRandom();
    //
    const string argumentValue = _docoptParser.GetProgramModeSpecificRequiredString(_docoptArgs, _argName, 0, { 0 });
    //
-   METALMOCK(_call_StaticGetRequiredStringMock.CalledOnceWith(_docoptArgs, _argName));
+   METALMOCK(_call_DocoptParser_StaticGetRequiredStringMock.CalledOnceWith(_docoptArgs, _argName));
    ARE_EQUAL(staticGetRequiredStringReturnValue, argumentValue);
 }
 
@@ -170,11 +170,11 @@ TEST(GetOptionalString_ArgInMapWithStringValue_ReturnsValue)
 
 TEST(GetRequiredSizeT_ReturnsResultOfCallingStaticGetRequiredSizeT)
 {
-   const size_t sizeTValue = _call_StaticGetRequiredSizeTMock.ReturnRandom();
+   const size_t sizeTValue = _call_DocoptParser_StaticGetRequiredSizeTMock.ReturnRandom();
    //
    const size_t returnedSizeTValue = _docoptParser.GetRequiredSizeT(_docoptArgs, _argName);
    //
-   METALMOCK(_call_StaticGetRequiredSizeTMock.CalledOnceWith(_docoptArgs, _argName));
+   METALMOCK(_call_DocoptParser_StaticGetRequiredSizeTMock.CalledOnceWith(_docoptArgs, _argName));
    ARE_EQUAL(sizeTValue, returnedSizeTValue);
 }
 
@@ -219,11 +219,11 @@ TEST(GetProgramModeSpecificRequiredSizeT_ProgramModeIsNotContainedWithinRequired
 
 TEST(GetProgramModeSpecificRequiredSizeT_ProgramModeIsContainedInRequiredProgramModesVector_ReturnsResultOfCallingStaticGetRequiredSizeT)
 {
-   const size_t staticGetRequiredSizeTReturnValue = _call_StaticGetRequiredSizeTMock.ReturnRandom();
+   const size_t staticGetRequiredSizeTReturnValue = _call_DocoptParser_StaticGetRequiredSizeTMock.ReturnRandom();
    //
    const size_t argumentValue = _docoptParser.GetProgramModeSpecificRequiredSizeT(_docoptArgs, _argName, 0, { 0 });
    //
-   METALMOCK(_call_StaticGetRequiredSizeTMock.CalledOnceWith(_docoptArgs, _argName));
+   METALMOCK(_call_DocoptParser_StaticGetRequiredSizeTMock.CalledOnceWith(_docoptArgs, _argName));
    ARE_EQUAL(staticGetRequiredSizeTReturnValue, argumentValue);
 }
 

@@ -11,12 +11,12 @@ EVIDENCE
 
 Utils::Stopwatch _stopwatch;
 // Function Pointers
-METALMOCK_NONVOID0_STATIC(chrono::time_point<chrono::high_resolution_clock>, chrono::high_resolution_clock, now)
+METALMOCK_NONVOID0_STATIC_OR_FREE(chrono::time_point<chrono::high_resolution_clock>, _call_high_resolution_clock_now)
 
 STARTUP
 {
    // Function Pointers
-   _stopwatch._call_now = BIND_0ARG_METALMOCK_OBJECT(nowMock);
+   _stopwatch._call_now = BIND_0ARG_METALMOCK_OBJECT(_call_high_resolution_clock_nowMock);
 }
 
 TEST(DefaultConstructor_SetsNowFunctionPointer)
@@ -31,11 +31,11 @@ TEST(DefaultConstructor_SetsNowFunctionPointer)
 TEST(Start_SetsStartTimeToNow)
 {
    const chrono::time_point<chrono::high_resolution_clock> now = chrono::high_resolution_clock::now();
-   nowMock.Return(now);
+   _call_high_resolution_clock_nowMock.Return(now);
    //
    _stopwatch.Start();
    //
-   nowMock.CalledOnce();
+   _call_high_resolution_clock_nowMock.CalledOnce();
    ARE_EQUAL(now, _stopwatch._startTime);
 }
 
@@ -67,11 +67,11 @@ TEST2X2(StopAndGetElapsedSeconds_StartPreviouslyCalled_SetsStartTimeBackToDefaul
 
    const chrono::time_point<chrono::high_resolution_clock>
       stopTimeThatIsElapsedMillisecondsAheadOfStartTime = startTime + chrono::milliseconds(elapsedMilliseconds);
-   nowMock.Return(stopTimeThatIsElapsedMillisecondsAheadOfStartTime);
+   _call_high_resolution_clock_nowMock.Return(stopTimeThatIsElapsedMillisecondsAheadOfStartTime);
    //
    const string elapsedSeconds = _stopwatch.StopAndGetElapsedSeconds();
    //
-   METALMOCK(nowMock.CalledOnce());
+   METALMOCK(_call_high_resolution_clock_nowMock.CalledOnce());
    ARE_EQUAL(chrono::time_point<chrono::high_resolution_clock>(), _stopwatch._startTime);
    ARE_EQUAL(expectedReturnValue, elapsedSeconds);
 }
@@ -87,12 +87,12 @@ TEST(StopAndGetElapsedMilliseconds_StartPreviouslyCalled_ReturnsElapsedMilliseco
    chrono::time_point<chrono::high_resolution_clock> startTime;
    startTime += chrono::milliseconds(100);
    const chrono::time_point<chrono::high_resolution_clock> stopTime = startTime + chrono::milliseconds(1000);
-   nowMock.Return(stopTime);
+   _call_high_resolution_clock_nowMock.Return(stopTime);
    _stopwatch._startTime = startTime;
    //
    const unsigned long long elapsedMilliseconds = _stopwatch.StopAndGetElapsedMilliseconds();
    //
-   METALMOCK(nowMock.CalledOnce());
+   METALMOCK(_call_high_resolution_clock_nowMock.CalledOnce());
    ARE_EQUAL(1000, elapsedMilliseconds);
 }
 

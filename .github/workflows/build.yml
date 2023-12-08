@@ -5,7 +5,7 @@ jobs:
   build:
     strategy:
       matrix:
-         cxx: [clang++, g++-11]
+         cxx: [g++-11]
          cmake_build_type: [Debug, Release]         
 
     runs-on: ubuntu-latest

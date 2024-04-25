@@ -11,6 +11,6 @@ private:
    unique_ptr<const BinaryFileBytesMaker> _binaryFileBytesMaker;
 public:
    CreateBinaryFileSubProgram();
-   virtual ~CreateBinaryFileSubProgram();
+   virtual ~CreateBinaryFileSubProgram() override;
    int Run(const FileArbArgs& args) override;
 };

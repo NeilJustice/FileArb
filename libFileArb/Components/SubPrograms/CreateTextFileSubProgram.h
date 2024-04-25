@@ -10,6 +10,6 @@ private:
    unique_ptr<const TextFileTextMaker> _textFileTextMaker;
 public:
    CreateTextFileSubProgram();
-   virtual ~CreateTextFileSubProgram();
+   virtual ~CreateTextFileSubProgram() override;
    int Run(const FileArbArgs& args) override;
 };

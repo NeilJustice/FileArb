@@ -15,6 +15,6 @@ private:
    unique_ptr<FileCreator> _fileCreator;
 public:
    CreateBinaryFilesSubProgram();
-   virtual ~CreateBinaryFilesSubProgram();
+   virtual ~CreateBinaryFilesSubProgram() override;
    int Run(const FileArbArgs& args) override;
 };

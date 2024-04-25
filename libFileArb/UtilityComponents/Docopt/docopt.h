@@ -184,20 +184,6 @@ namespace docopt
 
       friend bool operator==(const Value&, const Value&);
       friend bool operator!=(const Value&, const Value&);
-   private:
-      static const char* KindAsString(Kind kind)
-      {
-         switch (kind)
-         {
-         case Kind::Empty: return "empty";
-         case Kind::Bool: return "bool";
-         case Kind::Long: return "long";
-         case Kind::SizeT: return "size_t";
-         case Kind::String: return "string";
-         case Kind::StringList: return "string-list";
-         default: return "unknown";
-         }
-      }
    };
 }
 

@@ -15,6 +15,6 @@ private:
    unique_ptr<FileCreator> _fileCreator;
 public:
    CreateTextFilesSubProgram();
-   virtual ~CreateTextFilesSubProgram();
+   virtual ~CreateTextFilesSubProgram() override;
    int Run(const FileArbArgs& args) override;
 };

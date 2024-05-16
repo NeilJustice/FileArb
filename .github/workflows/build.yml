@@ -51,6 +51,7 @@ jobs:
         with:
           files: FileArbDevOpsPythonTests/CoberturaCodeCoverageResults_FileArbDevOpsPythonTests.xml
           fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
         if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
 
       - name: Run BuildAndInstallCPlusPlusProgram.py in non code coverage mode if clang++ Debug/Release or g++-11 Debug

@@ -4,7 +4,6 @@
 <a href="https://github.com/NeilJustice/FileArb/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg"></a>
 <a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"></a>
 <a href="https://codecov.io/gh/NeilJustice/FileArb"><img src="https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>
-<a href="https://sonarcloud.io/dashboard?id=NeilJustice_FileArb"><img src="https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileArb&metric=alert_status"></a>
 <img src="Screenshots/Dependencies-0-brightgreen.svg" />
 </p>
 
@@ -161,11 +160,11 @@ Console output for `filearb create-text-files --target=target_dir --directories=
 
 ![FileArb code structure as it appears in Visual Studio 2022](Screenshots/Windows/FileArbCodeExampleInVisualStudio2022.png)
 
-## Linux Jenkins jobs
+## Linux Jenkins jobs which build and statically analyze FileArb
 
 ![Linux FileArb Jenkins jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
-## Windows Jenkins jobs
+## Windows Jenkins jobs which build and statically analyze FileArb
 
 ![Windows FileArb Jenkins jobs](Screenshots/Windows/WindowsFileArbJenkinsJobs.png)
 

@@ -7,6 +7,7 @@ cppcheck \
    --cppcheck-build-dir=Cppcheck \
    --suppressions-list=CppcheckSuppressions.txt \
    -D__linux__ \
+   -DMETALMOCK_VOID2_CONST \
    -DMETALMOCK_NONVOID1_FREE \
    -DMETALMOCK_NONVOID2_STATIC \
    -DMETALMOCK_NONVOID4_STATIC \

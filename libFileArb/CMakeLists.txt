@@ -34,17 +34,16 @@ source_group("" FILES ${Sources})
 
 add_library(libFileArb ${Sources})
 if(UNIX)
+   target_precompile_headers(libFileArb PRIVATE pch.h)
    set_target_properties(libFileArb PROPERTIES DEBUG_OUTPUT_NAME "FileArbDebug")
    set_target_properties(libFileArb PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "FileArbRelWithDebInfo")
 elseif(MSVC)
-   set_target_properties(libFileArb PROPERTIES DEBUG_OUTPUT_NAME "libFileArbDebug")
-   set_target_properties(libFileArb PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libFileArbRelWithDebInfo")
-
+   IfMSVCEnablePrecompiledHeaders()
    replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ob1" "/Ob2")
    append(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Oi /Ot /GS- /arch:AVX2 /fp:fast")
+   set_target_properties(libFileArb PROPERTIES DEBUG_OUTPUT_NAME "libFileArbDebug")
+   set_target_properties(libFileArb PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libFileArbRelWithDebInfo")
 endif()
-
-IfMSVCEnablePrecompiledHeaders()
 
 if(UNIX)
    if(LCovCodeCoverageMode)

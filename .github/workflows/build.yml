@@ -100,7 +100,7 @@ jobs:
         run: tree $GITHUB_WORKSPACE
 
       - name: Archive binary filearb
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: filearb
           path: Release/FileArb/filearb

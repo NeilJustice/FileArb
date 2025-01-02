@@ -60,7 +60,7 @@ jobs:
               --solution-name=FileArb \
               --cmake-generator=Ninja \
               --cmake-build-type="${{ matrix.cmake_build_type }}" \
-              --cmake-definitions="-DFastLinuxDebugBuildMode=ON" \
+              --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" \
               --tests-project-name=libFileArbTests \
               --no-install
         env:

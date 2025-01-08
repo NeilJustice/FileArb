@@ -24,8 +24,8 @@ Three use cases for FileArb:
 * [FileArb code structure as it appears in Visual Studio 2022 on Windows](#filearb-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
 * [Linux Jenkins jobs which build and statically analyze FileArb](#linux-jenkins-jobs-which-build-and-statically-analyze-filearb)
 * [Windows Jenkins jobs which build and statically analyze FileArb](#windows-jenkins-jobs-which-build-and-statically-analyze-filearb)
-* [4 commands to build binary filearb on Linux with Clang](#4-commands-to-build-binary-filearb-on-linux-with-clang)
-* [4 commands to build executable FileArb.exe on Windows with Visual Studio 2022](#4-commands-to-build-executable-filearbexe-on-windows-with-visual-studio-2022)
+* [Steps to build binary filearb on Linux with Clang](#steps-to-build-binary-filearb-on-linux-with-clang)
+* [Steps to build executable FileArb.exe on Windows with Visual Studio 2022](#steps-to-build-executable-filearbexe-on-windows-with-visual-studio-2022)
 * [Thanks to](#thanks-to)
 
 ## FileArb command line usage
@@ -167,12 +167,12 @@ Console output for `filearb create-text-files --target=target_dir --directories=
 
 ![Windows FileArb Jenkins jobs](Screenshots/Windows/WindowsFileArbJenkinsJobs.png)
 
-## 4 commands to build binary filearb on Linux with Clang
+## Steps to build binary filearb on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/FileArb
 cd FileArb && mkdir Release && cd Release
-CXX=clang++ cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release
+CXX=clang++ cmake .. -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo
 sudo cmake --build . --target install
 ```
 
@@ -180,13 +180,13 @@ Resulting binary `/usr/local/bin/filearb`:
 
 ![Resulting binary filearb](Screenshots/Linux/filearbBinaryOnLinux.png)
 
-## 4 commands to build executable FileArb.exe on Windows with Visual Studio 2022
+## Steps to build executable FileArb.exe on Windows with Visual Studio 2022
 
 ```powershell
 git clone https://github.com/NeilJustice/FileArb
 cd FileArb
-cmake . -G"Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
-cmake --build . --config Release --target install
+cmake . -G"Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX="C:\bin"
+cmake --build . --config RelWithDebInfo --target install
 ```
 
 Resulting executable `C:\bin\FileArb.exe`:
@@ -196,3 +196,4 @@ Resulting executable `C:\bin\FileArb.exe`:
 ## Thanks to
 
 <a href="https://brandmark.io">brandmark.io</a> for FileArb's logo
+

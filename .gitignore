@@ -1,8 +1,7 @@
 # CMake
 CMakeFiles/
 Debug/
-Release/
-ReleaseCI/
+RelWithDebInfo/
 *.cmake
 !CMakeMacros.cmake
 CMakeCache.txt

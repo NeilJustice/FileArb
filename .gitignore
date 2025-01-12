@@ -15,6 +15,7 @@ coverage.xml
 CoberturaCodeCoverageResults_FileArbDevOpsPythonTests.xml
 
 # Linux
+covhtml/
 build.ninja
 
 # Windows

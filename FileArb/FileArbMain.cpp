@@ -18,6 +18,6 @@ using namespace std;
 int main(int argc, char* argv[])
 {
    FileArbProgram fileArbProgram;
-   const int exitCode = fileArbProgram.Main(argc, argv);
+   int exitCode = fileArbProgram.Main(argc, argv);
    return exitCode;
 }

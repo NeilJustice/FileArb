@@ -24,7 +24,6 @@ if(UNIX)
 endif()
 
 if(UNIX)
-   target_link_libraries(FileArb stdc++fs)
    if(LCovCodeCoverageMode)
      target_link_libraries(FileArb CodeCovLibraryInterface)
    endif()

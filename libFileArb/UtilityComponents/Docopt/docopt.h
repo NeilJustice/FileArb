@@ -5,7 +5,7 @@
 #pragma warning(disable: 4365) // 'return': conversion from 'size_t' to 'ptrdiff_t', signed/unsigned mismatch
 #pragma warning(disable: 4643) // Forward declaring 'allocator' in namespace std is not permitted by the C++ Standard.
 #pragma warning(disable: 4800) // Implicit conversion from 'int' to bool. Possible information loss
-#pragma warning(disable: 26812) // The enum type 'boost::detail::local_counted_base::count_type' is unscoped. Prefer 'enum class' over 'enum'
+#pragma warning(disable: 26812) // The enum type 'boost::detail::local_counted_base::count_type' is unscoped. Prefer 'enum struct' over 'enum'
 #endif
 #include <functional>
 #include <iostream>
@@ -30,7 +30,7 @@ namespace docopt
    struct Value
    {
    public:
-      enum class Kind
+      enum struct Kind
       {
          Empty,
          Bool,
@@ -77,6 +77,11 @@ namespace docopt
       bool IsBool() const
       {
          return kind == Kind::Bool;
+      }
+
+      bool IsEmpty() const
+      {
+         return kind == Kind::Empty;
       }
 
       bool IsString() const
@@ -152,7 +157,8 @@ namespace docopt
          {
          case Kind::String:
          {
-            return hash<string>()(variant.strValue);
+            const size_t hashCode = hash<string>()(variant.strValue);
+            return hashCode;
          }
          case Kind::StringList:
          {
@@ -165,20 +171,24 @@ namespace docopt
          }
          case Kind::Bool:
          {
-            return hash<bool>()(variant.boolValue);
+            const size_t hashCode = hash<bool>()(variant.boolValue);
+            return hashCode;
          }
          case Kind::Long:
          {
-            return hash<long>()(variant.longValue);
+            const size_t hashCode = hash<long>()(variant.longValue);
+            return hashCode;
          }
          case Kind::SizeT:
          {
-            return hash<size_t>()(variant.sizeTValue);
+            const size_t hashCode = hash<size_t>()(variant.sizeTValue);
+            return hashCode;
          }
          case Kind::Empty:
          default:
          {
-            return hash<void*>()(nullptr);
+            const size_t hashCode = hash<void*>()(nullptr);
+            return hashCode;
          }
          }
       }
@@ -403,7 +413,8 @@ namespace docopt
       const vector<string>& argv,
       bool help,
       const string& version,
-      bool options_first) noexcept;
+      bool options_first,
+      bool doExitIfDocoptArgumentError) noexcept;
 
    inline bool starts_with(const string& str, const string& prefix)
    {
@@ -615,7 +626,7 @@ namespace docopt
    protected:
       vector<shared_ptr<Pattern>> fChildren;
    public:
-      BranchPattern(vector<shared_ptr<Pattern>> children = {})
+      explicit BranchPattern(vector<shared_ptr<Pattern>> children = {})
          : fChildren(std::move(children))
       {
       }
@@ -719,15 +730,13 @@ namespace docopt
       {
       }
    protected:
-      virtual pair<size_t, shared_ptr<LeafPattern>> SingleMatch(
-         const vector<shared_ptr<Pattern>>& left) const override;
+      virtual pair<size_t, shared_ptr<LeafPattern>> SingleMatch(const vector<shared_ptr<Pattern>>& left) const override;
    };
 
    class OptionLeafPattern final : public LeafPattern
    {
    protected:
-      virtual pair<size_t, shared_ptr<LeafPattern>> SingleMatch(
-         const vector<shared_ptr<Pattern>>& left) const override;
+      virtual pair<size_t, shared_ptr<LeafPattern>> SingleMatch(const vector<shared_ptr<Pattern>>& left) const override;
    private:
       string _shortOption;
       string _longOption;
@@ -1901,9 +1910,10 @@ namespace docopt
       {
          argvPatterns = parse_argv(Tokens(argv), options, options_first);
       }
-      catch (const Tokens::OptionError& error)
+      catch (const Tokens::OptionError& optionError)
       {
-         throw DocoptArgumentError(error.what());
+         const string optionErrorMessage = optionError.what();
+         throw DocoptArgumentError(optionErrorMessage);
       }
       extras(help, version, argvPatterns);
       vector<shared_ptr<LeafPattern>> collected;
@@ -1927,7 +1937,7 @@ namespace docopt
          const string leftover = join(argv.begin(), argv.end(), " ");
          throw DocoptArgumentError("Unexpected argument: " + leftover);
       }
-      throw DocoptArgumentError("Error: Invalid command line arguments. See program usage below for valid command line arguments:\n");
+      throw DocoptArgumentError("Error: Invalid command line arguments.\n");
    }
 
    map<string, Value> docopt(
@@ -1935,12 +1945,12 @@ namespace docopt
       const vector<string>& argv,
       bool help,
       const string& version,
-      bool options_first) noexcept
+      bool options_first,
+      bool doExitIfDocoptArgumentError) noexcept
    {
       try
       {
-         const map<string, Value> docoptArguments =
-            docopt_parse(doc, argv, help, !version.empty(), options_first);
+         map<string, Value> docoptArguments = docopt_parse(doc, argv, help, !version.empty(), options_first);
          return docoptArguments;
       }
       catch (const DocoptExitHelp&)
@@ -1953,22 +1963,26 @@ namespace docopt
          cout << version << '\n';
          exit(0);
       }
-      catch (const DocoptLanguageError& error)
+      catch (const DocoptLanguageError& docoptLanguageError)
       {
-         cerr << "Docopt usage string could not be parsed\n";
-         cerr << error.what() << '\n';
+         cout << "Docopt usage string could not be parsed\n";
+         const string docoptLanguageErrorMessage = docoptLanguageError.what();
+         cout << docoptLanguageErrorMessage << '\n';
          exit(-1);
       }
-      catch (const DocoptArgumentError& error)
+      catch (const DocoptArgumentError&)
       {
-         cerr << error.what();
-         cout << '\n';
-         cout << doc << '\n';
-         exit(-1);
+         if (doExitIfDocoptArgumentError)
+         {
+            cout << "Error: Invalid command line arguments. Valid command line arguments:\n\n";
+            cout << doc << '\n';
+            exit(1);
+         }
+         return {};
       }
    }
 
-   inline ostream& operator<<(ostream& os, const docopt::Value& docoptValue)
+   inline ostream& operator<<(ostream& os, const Value& docoptValue)
    {
       if (docoptValue.IsBool())
       {

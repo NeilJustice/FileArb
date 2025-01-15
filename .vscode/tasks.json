@@ -46,7 +46,7 @@
          "label": "Run Debug FileArb",
          "command": "${workspaceRoot}/Debug/FileArb/filearb",
          "args": [
-            ""
+            "create-binary-files", "--target=/home/neil/test1", "--directories=1", "--files=1", "--bytes=3", "--random-bytes"
          ],
          "problemMatcher": [
             "$gcc"

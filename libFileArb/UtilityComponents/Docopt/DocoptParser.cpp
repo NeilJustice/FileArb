@@ -24,7 +24,7 @@ namespace Utils
          throw invalid_argument("argv cannot be empty");
       }
       const vector<string> argvWithoutFirstArgument(argv.data() + 1, argv.data() + argv.size());
-      map<string, docopt::Value> argPairs = _call_docopt(usage, argvWithoutFirstArgument, true, "", false);
+      map<string, docopt::Value> argPairs = _call_docopt(usage, argvWithoutFirstArgument, true, "", false, false);
       return argPairs;
    }
 

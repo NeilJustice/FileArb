@@ -29,7 +29,8 @@ EVIDENCE
 Utils::DocoptParser _docoptParser;
 // Function Pointers
 using DocoptMapType = map<string, docopt::Value>;
-METALMOCK_NONVOID5_STATIC_OR_FREE(DocoptMapType, _call_docopt, const string&, const vector<string>&, bool, const string&, bool)
+METALMOCK_NONVOID6_STATIC_OR_FREE(DocoptMapType, _call_docopt, 
+   const string&, const vector<string>&, bool, const string&, bool, bool)
 METALMOCK_NONVOID2_STATIC_OR_FREE(size_t, _call_DocoptParser_StaticGetRequiredSizeT, map<string COMMA docopt::Value>, const string&)
 METALMOCK_NONVOID2_STATIC_OR_FREE(string, _call_DocoptParser_StaticGetRequiredString, map<string COMMA docopt::Value>, const string&)
 
@@ -40,7 +41,7 @@ const string ExpectedKeyNotFoundWhat = "Key not found in map: [" + _argName + "]
 STARTUP
 {
    // Function Pointers
-   _docoptParser._call_docopt = BIND_5ARG_METALMOCK_OBJECT(_call_docoptMock);
+   _docoptParser._call_docopt = BIND_6ARG_METALMOCK_OBJECT(_call_docoptMock);
    _docoptParser._call_StaticGetRequiredSizeT = BIND_2ARG_METALMOCK_OBJECT(_call_DocoptParser_StaticGetRequiredSizeTMock);
    _docoptParser._call_StaticGetRequiredString = BIND_2ARG_METALMOCK_OBJECT(_call_DocoptParser_StaticGetRequiredStringMock);
 }
@@ -75,7 +76,7 @@ TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
    //
    const vector<string> expectedNonEmptyArgvWithoutFirstArgument(
       nonEmptyArgv.data() + 1, nonEmptyArgv.data() + nonEmptyArgv.size());
-   METALMOCK(_call_docoptMock.CalledOnceWith(usage, expectedNonEmptyArgvWithoutFirstArgument, true, "", false));
+   METALMOCK(_call_docoptMock.CalledOnceWith(usage, expectedNonEmptyArgvWithoutFirstArgument, true, "", false, false));
    ARE_EQUAL(docoptReturnValue, docoptValues);
 }
 

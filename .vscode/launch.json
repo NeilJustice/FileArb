@@ -5,15 +5,13 @@
          "name": "Debug FileArb",
          "type": "cppdbg",
          "request": "launch",
-         "program": "${workspaceRoot}/Debug/FileArb/filearb",
-         "args": [ "create-binary-files", "--target=.", "--directories=1", "--files=1", "--bytes=3", "--random-bytes" ],
-         "stopAtEntry": false,
          "cwd": "${workspaceFolder}",
-         "environment": [],
-         "externalConsole": false,
          "MIMode": "gdb",
          "miDebuggerPath": "/usr/bin/gdb",
-         "preLaunchTask": "Build Debug"
+         "preLaunchTask": "Build Debug",
+         "program": "${workspaceRoot}/Debug/FileArb/filearb",
+         "args": [ "create-binary-files", "--target=.", "--directories=1", "--files=1", "--bytes=3", "--random-bytes" ],
+         "stopAtEntry": true
       }
    ]
 }

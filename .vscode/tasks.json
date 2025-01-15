@@ -1,165 +1,121 @@
 {
    "version": "2.0.0",
    "tasks": [
-   {
-      "type": "shell",
-      "label": "Build Debug",
-      "options": { "cwd": "${workspaceRoot}/Debug" },
-      "command": "ninja",
-      "args": [ "-v" ],
-      "group": { "kind": "build", "isDefault": true },
-      "problemMatcher": {
-         "base" : "$gcc",
-         "fileLocation": [
-            "relative",
-            "${workspaceRoot}/Debug"
-         ]
-      }
-   },
-   {
-      "type": "shell",
-      "label": "Build RelWithDebInfo",
-      "command": "ninja",
-      "args": [ "-v" ],
-      "options": { "cwd": "${workspaceRoot}/RelWithDebInfo" },
-      "problemMatcher": {
-         "base" : "$gcc",
-         "fileLocation": [
-            "relative",
-            "${workspaceRoot}/RelWithDebInfo"
-         ]
-      }
-   },
-   {
-      "type": "shell",
-      "label": "Run Debug FileArb",
-      "command": "${workspaceRoot}/Debug/FileArb/FileArb",
-      "args": [ "" ],
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Run Debug libFileArbTests",
-      "command": "${workspaceRoot}/Debug/libFileArbTests/libFileArbTests",
-      "args": [ "" ],
-      "problemMatcher": [ "$gcc" ],
-      "group": { "kind": "test", "isDefault": true }
-   },
-   {
-      "type": "shell",
-      "label": "Run RelWithDebInfo FileArb",
-      "command": "${workspaceRoot}/RelWithDebInfo/FileArb/FileArb",
-      "args": [ "" ],
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Run RelWithDebInfo libFileArbTests",
-      "command": "${workspaceRoot}/RelWithDebInfo/libFileArbTests/libFileArbTests",
-      "args": [ "" ],
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Clean Debug",
-      "command": "ninja",
-      "args": [ "clean" ],
-      "options": { "cwd": "${workspaceRoot}/Debug" },
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Clean RelWithDebInfo",
-      "command": "ninja",
-      "args": [ "clean" ],
-      "options": { "cwd": "${workspaceRoot}/RelWithDebInfo" },
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Compile Active File",
-      "command": "/usr/bin/clang++",
-      "args": [
-         "-c",
-         "-std=c++23",
-         "-Wall",
-         "-Werror",
-         "-I/code/FileArb",
-         "-I/code/FileArb/libFileArb",
-         "-I/code/FileArb/libFileArbTests",
-         "${file}"
-       ],
-       "options": { "cwd": "${workspaceFolder}" },
-       "problemMatcher": [ "$gcc" ]
-     },
-     {
-      "type": "shell",
-      "label": "Check Syntax Of Active File",
-      "command": "/usr/bin/clang++",
-      "args": [
-        "-fsyntax-only",
-        "-std=c++23",
-        "-I/code/FileArb",
-        "-I/code/FileArb/libFileArb",
-        "-I/code/FileArb/libFileArbTests",
-        "${file}"
-      ],
-      "options": { "cwd": "${workspaceFolder}" },
-      "problemMatcher": [ "$gcc" ]
-   },
       {
-         "label": "Run Current File",
          "type": "shell",
-         "command": "PYTHONPATH=. python ${file}",
+         "label": "Build Debug",
          "options": {
-            "cwd": "${workspaceRoot}"
+            "cwd": "${workspaceRoot}/Debug"
          },
-         "presentation": {
-            "panel": "dedicated",
-            "showReuseMessage": false,
-            "clear": true
+         "command": "ninja",
+         "args": [
+            "-v"
+         ],
+         "group": {
+            "kind": "build",
+            "isDefault": true
+         },
+         "problemMatcher": {
+            "base": "$gcc",
+            "fileLocation": [
+               "relative",
+               "${workspaceRoot}/Debug"
+            ]
          }
       },
       {
-         "label": "Run All Python Tests",
          "type": "shell",
-         "command": "PYTHONPATH=FileArbDevOpsPython python FileArbDevOpsPythonTests/RunAll.py",
+         "label": "Build RelWithDebInfo",
+         "command": "ninja",
+         "args": [
+            "-v"
+         ],
          "options": {
-            "cwd": "${workspaceRoot}"
+            "cwd": "${workspaceRoot}/RelWithDebInfo"
          },
-         "presentation": {
-            "panel": "dedicated",
-            "showReuseMessage": false,
-            "clear": true
+         "problemMatcher": {
+            "base": "$gcc",
+            "fileLocation": [
+               "relative",
+               "${workspaceRoot}/RelWithDebInfo"
+            ]
          }
       },
       {
-         "label": "Pylint Current File",
          "type": "shell",
-         "command": "pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append('.')\" ${file}",
-         "options": {
-            "cwd": "${workspaceRoot}"
-         },
-         "presentation": {
-            "panel": "dedicated",
-            "showReuseMessage": false,
-            "clear": true
-         },
-         "problemMatcher": []
+         "label": "Run Debug FileArb",
+         "command": "${workspaceRoot}/Debug/FileArb/filearb",
+         "args": [
+            ""
+         ],
+         "problemMatcher": [
+            "$gcc"
+         ]
       },
       {
-         "label": "Pylint All",
          "type": "shell",
-         "command": "ag -g \"\\.py$\" -0 | xargs -0 pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append('.')\"",
+         "label": "Run Debug libFileArbTests",
+         "command": "${workspaceRoot}/Debug/libFileArbTests/libFileArbTests",
+         "args": [
+            ""
+         ],
+         "problemMatcher": [
+            "$gcc"
+         ],
+         "group": {
+            "kind": "test",
+            "isDefault": true
+         }
+      },
+      {
+         "type": "shell",
+         "label": "Run RelWithDebInfo FileArb",
+         "command": "${workspaceRoot}/RelWithDebInfo/FileArb/filearb",
+         "args": [
+            ""
+         ],
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "type": "shell",
+         "label": "Run RelWithDebInfo libFileArbTests",
+         "command": "${workspaceRoot}/RelWithDebInfo/libFileArbTests/libFileArbTests",
+         "args": [
+            ""
+         ],
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "type": "shell",
+         "label": "Clean Debug",
+         "command": "ninja",
+         "args": [
+            "clean"
+         ],
          "options": {
-            "cwd": "${workspaceRoot}"
+            "cwd": "${workspaceRoot}/Debug"
          },
-         "presentation": {
-            "panel": "dedicated",
-            "showReuseMessage": false,
-            "clear": true
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "type": "shell",
+         "label": "Clean RelWithDebInfo",
+         "command": "ninja",
+         "args": [
+            "clean"
+         ],
+         "options": {
+            "cwd": "${workspaceRoot}/RelWithDebInfo"
          },
-         "problemMatcher": []
+         "problemMatcher": [
+            "$gcc"
+         ]
       }
    ]
 }

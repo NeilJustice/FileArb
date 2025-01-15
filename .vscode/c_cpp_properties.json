@@ -20,8 +20,7 @@
            },
            "intelliSenseMode": "clang-x64",
            "compilerPath": "/usr/bin/clang",
-           "cStandard": "c11",
-           "cppStandard": "c++17"
+           "cppStandard": "c++23"
        }
    ],
    "version": 4

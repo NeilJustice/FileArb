@@ -17,15 +17,15 @@
    },
    {
       "type": "shell",
-      "label": "Build Release",
+      "label": "Build RelWithDebInfo",
       "command": "ninja",
       "args": [ "-v" ],
-      "options": { "cwd": "${workspaceRoot}/Release" },
+      "options": { "cwd": "${workspaceRoot}/RelWithDebInfo" },
       "problemMatcher": {
          "base" : "$gcc",
          "fileLocation": [
             "relative",
-            "${workspaceRoot}/Debug"
+            "${workspaceRoot}/RelWithDebInfo"
          ]
       }
    },
@@ -46,15 +46,15 @@
    },
    {
       "type": "shell",
-      "label": "Run Release FileArb",
-      "command": "${workspaceRoot}/Release/FileArb/FileArb",
+      "label": "Run RelWithDebInfo FileArb",
+      "command": "${workspaceRoot}/RelWithDebInfo/FileArb/FileArb",
       "args": [ "" ],
       "problemMatcher": [ "$gcc" ]
    },
    {
       "type": "shell",
-      "label": "Run Release libFileArbTests",
-      "command": "${workspaceRoot}/Release/libFileArbTests/libFileArbTests",
+      "label": "Run RelWithDebInfo libFileArbTests",
+      "command": "${workspaceRoot}/RelWithDebInfo/libFileArbTests/libFileArbTests",
       "args": [ "" ],
       "problemMatcher": [ "$gcc" ]
    },
@@ -68,10 +68,10 @@
    },
    {
       "type": "shell",
-      "label": "Clean Release",
+      "label": "Clean RelWithDebInfo",
       "command": "ninja",
       "args": [ "clean" ],
-      "options": { "cwd": "${workspaceRoot}/Release" },
+      "options": { "cwd": "${workspaceRoot}/RelWithDebInfo" },
       "problemMatcher": [ "$gcc" ]
    },
    {
@@ -80,7 +80,7 @@
       "command": "/usr/bin/clang++",
       "args": [
          "-c",
-         "-std=c++1z",
+         "-std=c++23",
          "-Wall",
          "-Werror",
          "-I/code/FileArb",
@@ -97,7 +97,7 @@
       "command": "/usr/bin/clang++",
       "args": [
         "-fsyntax-only",
-        "-std=c++1z",
+        "-std=c++23",
         "-I/code/FileArb",
         "-I/code/FileArb/libFileArb",
         "-I/code/FileArb/libFileArbTests",

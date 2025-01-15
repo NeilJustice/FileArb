@@ -14,18 +14,6 @@
          "MIMode": "gdb",
          "miDebuggerPath": "/usr/bin/gdb",
          "preLaunchTask": "Build Debug"
-      },
-      {
-         "name": "Debug Python",
-         "type": "python",
-         "python": "/usr/bin/python",
-         "request": "launch",
-         "program": "${file}",
-         "args": [ "" ],
-         "env": { "PYTHONPATH": ".." },
-         "stopOnEntry": false,
-         "console": "integratedTerminal",
-         "cwd": "${fileDirname}"
       }
    ]
 }

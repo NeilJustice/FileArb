@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libFileArb/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileArb/UtilityComponents/FileSystem/FileSystemExceptions.h"
 
 TESTS(FileSystemExceptionsTests)

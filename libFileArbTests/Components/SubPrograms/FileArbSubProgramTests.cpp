@@ -1,8 +1,5 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
-#include "libFileArb/UtilityComponents/Console/Console.h"
-#include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
-#include "libFileArb/UtilityComponents/Time/StopwatchFactory.h"
 
 TESTS(FileArbSubProgramTests)
 AFACT(DefaultConstructor_NewsConsoleAndFileSystem)

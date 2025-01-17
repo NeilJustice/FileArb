@@ -1,8 +1,6 @@
-#include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
-#include <functional>
-#include <memory>
-#include <string>
-#include <vector>
+#include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h" // IWYU pragma: keep
+#include <functional> // IWYU pragma: keep
+#include <memory> // IWYU pragma: keep
 using namespace std;
 #include "libFileArb/Components/FileArbProgram.h"
 

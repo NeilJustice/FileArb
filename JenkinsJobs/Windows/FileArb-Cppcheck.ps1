@@ -25,7 +25,7 @@ cppcheck.exe `
    -DMETALMOCK_VOID4_CONST `
    -DRUN_TEMPLATE_TESTS `
    -I . `
-   -I X:\include\ZenUnitAndMetalMock `
+   -I C:\include\ZenUnitAndMetalMock `
    -I "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um" `
    -I libFileArb `
    -j $numberOfLogicalProcessors `

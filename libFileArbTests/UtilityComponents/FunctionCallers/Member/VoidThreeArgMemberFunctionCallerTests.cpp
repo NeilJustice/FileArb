@@ -7,7 +7,7 @@ AFACT(CallConstMemberFunctionNTimes_NIs0_CallsFunctionZeroTimes)
 AFACT(CallConstMemberFunctionNTimes_NIs2_CallsFunctionTwice)
 EVIDENCE
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 VoidThreeArgMemberFunctionCallerTests()
 {
 }

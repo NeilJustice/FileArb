@@ -11,7 +11,7 @@ AFACT(ParallelCallConstMemberFunctionNTimes_NIs0_CallsFunctionZeroTimes)
 AFACT(ParallelCallConstMemberFunctionNTimes_NIs2_CallsFunctionTwiceInParallel)
 EVIDENCE
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 VoidTwoArgMemberFunctionCallerTests()
 {
 }

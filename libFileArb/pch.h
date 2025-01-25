@@ -9,18 +9,18 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <random>
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    #include <cstring>
    #include <limits.h>
    #include <mutex>
    #include <thread>
    #include <unistd.h>
 #elif defined _WIN32
-#define WIN32_LEAN_AND_MEAN
-#define NOGDI
-#define NOMINMAX
-#include <io.h> // _isatty()
-#include "Windows.h"
+   #define WIN32_LEAN_AND_MEAN
+   #define NOGDI
+   #define NOMINMAX
+   #include <io.h> // _isatty()
+   #include "Windows.h"
 #endif
 using namespace std;
 namespace fs = std::filesystem;

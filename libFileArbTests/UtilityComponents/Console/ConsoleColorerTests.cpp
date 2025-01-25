@@ -9,7 +9,7 @@ AFACT(SetTextColor_CallsSetSupportsColorIfUnset_SupportsColor_CallsPlatformSpeci
 AFACT(UnsetTextColor_DidPreviouslySetTextColorIsFalse_DoesNothing)
 AFACT(UnsetTextColor_DidPreviouslySetTextColorIsTrue_CallsSetTextColorWhite)
 // Private Functions
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 FACTS(ColorToLinuxColor_ReturnsLinuxColorStringForColor)
 AFACT(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
 #elif _WIN32
@@ -116,7 +116,7 @@ TEST(UnsetTextColor_DidPreviouslySetTextColorIsTrue_CallsSetTextColorWhite)
 
 // Private Functions
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 
 TEST2X2(ColorToLinuxColor_ReturnsLinuxColorStringForColor,
    Color color, const char* expectedReturnValue,

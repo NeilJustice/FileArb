@@ -13,7 +13,7 @@ AFACT(CreateFileWithBytes_CallsCreateBinaryOrTextFileWithBinaryFileArguments)
 // Private Functions
 AFACT(CreateBinaryOrTextFile_CreatesParentDirectoryOfFilePath_CreatesFileWithSpecifiedBytes)
 AFACT(GetCurrentPath_ReturnsResultOfCallingFilesystemCurrentPath)
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 AFACT(OpenFile_FOpenReturnsNullptr_ThrowsRuntimeErrorExceptionWithReadableErrnoValue)
 AFACT(OpenFile_FOpenReturnsNonNullptr_ReturnsOpenedFile)
 #elif _WIN32
@@ -26,7 +26,7 @@ Utils::FileSystem _fileSystem;
 // Function Pointers
 METALMOCK_NONVOID0_STATIC_OR_FREE(int*, _call_errno)
 METALMOCK_NONVOID1_STATIC_OR_FREE(int, _call_fclose, FILE*)
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 METALMOCK_NONVOID2_STATIC_OR_FREE(FILE*, _call_fopen, const char*, const char*)
 #elif _WIN32
 METALMOCK_NONVOID3_STATIC_OR_FREE(errno_t, _call_fopen_s, FILE**, const char*, const char*)
@@ -49,7 +49,7 @@ STARTUP
    // Function Pointers
    _fileSystem._call_errno = BIND_0ARG_METALMOCK_OBJECT(_call_errnoMock);
    _fileSystem._call_fclose = BIND_1ARG_METALMOCK_OBJECT(_call_fcloseMock);
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    _fileSystem._call_fopen = BIND_2ARG_METALMOCK_OBJECT(_call_fopenMock);
 #elif _WIN32
    _fileSystem._call_fopen_s = BIND_3ARG_METALMOCK_OBJECT(_call_fopen_sMock);
@@ -70,7 +70,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    Utils::FileSystem fileSystem{};
    // Function Pointers
    STD_FUNCTION_TARGETS(fclose, fileSystem._call_fclose);
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    STD_FUNCTION_TARGETS(GetErrno, fileSystem._call_errno);
    STD_FUNCTION_TARGETS(fopen, fileSystem._call_fopen);
 #elif _WIN32
@@ -174,7 +174,7 @@ struct fopen_CallHistory
    }
 } _fopen_CallHistory;
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 
 FILE* fopen_CallInsteadFunction(const char* filePath, const char* fileOpenMode)
 {

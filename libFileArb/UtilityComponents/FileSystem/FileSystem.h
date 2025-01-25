@@ -1,7 +1,7 @@
 #pragma once
 class FileSystemTests;
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 int* GetErrno();
 #endif
 
@@ -22,7 +22,7 @@ namespace Utils
       friend class ::FileSystemTests;
       // Function Pointers
       std::function<int*()> _call_errno;
-   #if defined __linux__ || defined __APPLE__
+   #if defined __linux__
       std::function<FILE*(const char*, const char*)> _call_fopen;
    #elif _WIN32
       std::function<errno_t(FILE**, const char*, const char*)> _call_fopen_s;

@@ -1,5 +1,5 @@
 #pragma once
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 #include <atomic>
 #include <cxxabi.h>
 #endif
@@ -47,7 +47,7 @@ namespace Utils
          return cachedDemangledTypeName;
       }
 
-   #if defined __linux__ || defined __APPLE__
+   #if defined __linux__
       static string Demangle(const char* mangledTypeName)
       {
          int demangleStatus = -1;

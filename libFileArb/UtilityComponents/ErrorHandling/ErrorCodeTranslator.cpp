@@ -2,7 +2,7 @@
 #include "libFileArb/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 #include <array>
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 int* GetLinuxErrno()
 {
    return &errno;
@@ -13,7 +13,7 @@ namespace Utils
 {
    ErrorCodeTranslator::ErrorCodeTranslator()
       // Function Pointers
-   #if defined __linux__ || defined __APPLE__
+   #if defined __linux__
       : _call_errno(GetLinuxErrno),
         _call_strerror_r(strerror_r)
    #elif _WIN32
@@ -71,7 +71,7 @@ namespace Utils
 
    constexpr size_t MaximumErrnoDescriptionLength = 64ULL;
 
-   #if defined __linux__ || defined __APPLE__
+   #if defined __linux__
 
    string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
    {

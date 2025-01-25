@@ -8,7 +8,7 @@ EVIDENCE
 TEST(GetClassNameAndMessage_ReturnsExceptionClassNameColonSpaceWhatText)
 {
    const exception ex;
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    ARE_EQUAL("std::exception: std::exception", Utils::Exception::GetClassNameAndMessage(&ex));
 #elif _WIN32
    ARE_EQUAL("std::exception: Unknown exception", Utils::Exception::GetClassNameAndMessage(&ex));

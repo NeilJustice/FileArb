@@ -1,7 +1,7 @@
 #pragma once
 class ErrorCodeTranslatorTests;
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 int* GetLinuxErrno();
 #endif
 
@@ -17,7 +17,7 @@ namespace Utils
    private:
       // Function Pointers
       function<int*()> _call_errno;
-   #if defined __linux__ || defined __APPLE__
+   #if defined __linux__
       std::function<char*(int, char*, size_t)> _call_strerror_r;
    #elif _WIN32
       std::function<errno_t(char*, size_t, int)> _call_strerror_s;

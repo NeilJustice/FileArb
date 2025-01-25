@@ -7,7 +7,7 @@
 #include "libFileArb/UtilityComponents/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
 #include "libFileArb/UtilityComponents/FunctionCallers/Member/VoidFourArgMemberFunctionCaller.h"
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 int* GetErrno()
 {
    return &errno;
@@ -18,7 +18,7 @@ namespace Utils
 {
    FileSystem::FileSystem()
       // Function Pointers
-   #if defined __linux__ || defined __APPLE__
+   #if defined __linux__
       : _call_errno(GetErrno)
       , _call_fopen(fopen)
    #elif _WIN32
@@ -75,7 +75,7 @@ namespace Utils
       _asserter->ThrowIfSizeTValuesNotEqual(numberOfBytesWritten, bytesSize, "fwrite unexpectedly did not return bytesSize");
    }
 
-   #if defined __linux__ || defined __APPLE__
+   #if defined __linux__
 
    shared_ptr<FILE> FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
    {

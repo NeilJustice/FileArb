@@ -10,4 +10,4 @@ python -u FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --cmake-definitions="-DClangCodeCoverageMode=ON" \
    --no-install
 
-python /code/CodeCovSidekick/CodeCovSidekick.py --solution=FileArb --tests-project=libFileArbTests
+LinuxCodeCoverageRunner measure-cplusplus-code-coverage --solution=FileArb --tests-project=libFileArbTests

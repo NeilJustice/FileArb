@@ -1,5 +1,5 @@
-$env:PYTHONPATH="."
-python.exe -u FileArbDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
+$env:PYTHONPATH="FileArbDevOpsPython"
+python.exe -u FileArbDevOpsPython\FileArbDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --solution-name=FileArb `
    --cmake-build-type=Debug `
    --tests-project=libFileArbTests `

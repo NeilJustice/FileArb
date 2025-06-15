@@ -57,7 +57,7 @@ jobs:
 
       - name: Run BuildAndInstallCPlusPlusProgram.py in non code coverage mode if clang++ Debug/Release or g++ Debug
         run: |
-           python FileArbDevOpsPython/FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+           python FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=FileArb \
               --cmake-build-type="${{ matrix.cmake_build_type }}" \
               --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" \

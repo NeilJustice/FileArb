@@ -50,7 +50,7 @@ if(UNIX)
    endif()
 elseif(MSVC)
    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-   set(CMAKE_CXX_FLAGS "/std:c++latest /EHsc /MP /Wall /WX /permissive- /sdl")
+   set(CMAKE_CXX_FLAGS "/std:c++latest /EHsc /MP /Wall /WX /permissive-")
 endif()
 
 add_subdirectory(FileArb)

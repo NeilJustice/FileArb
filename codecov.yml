@@ -1,2 +1,2 @@
 ignore:
-  - "libFileArb/UtilityComponents/Docopt/docopt.h"
+  - "libFileArb/Components/Docopt/docopt.h"

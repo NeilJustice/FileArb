@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Color : unsigned char
+enum struct Color : unsigned char
 {
    Unset,
    Red,

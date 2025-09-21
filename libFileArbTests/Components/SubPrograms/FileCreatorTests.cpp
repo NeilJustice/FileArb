@@ -2,13 +2,13 @@
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 #include "libFileArbTests/Components/Makers/MetalMock/BinaryFileBytesMakerMock.h"
 #include "libFileArbTests/Components/Makers/MetalMock/TextFileTextMakerMock.h"
-#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libFileArbTests/UtilityComponents/ForEachers/MetalMock/TwoArgMemberFunctionForEacherMock.h"
-#include "libFileArbTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
-#include "libFileArbTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
-#include "libFileArbTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchFactoryMock.h"
-#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/ForEachers/MetalMock/TwoArgMemberFunctionForEacherMock.h"
+#include "libFileArbTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileArbTests/Components/FunctionCallers/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
+#include "libFileArbTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchFactoryMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileCreatorTests)
 AFACT(DefaultConstructor_NewsComponents)

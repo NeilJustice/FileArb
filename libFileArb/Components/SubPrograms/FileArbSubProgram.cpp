@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
-#include "libFileArb/UtilityComponents/Console/Console.h"
-#include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
-#include "libFileArb/UtilityComponents/Time/StopwatchFactory.h"
+#include "libFileArb/Components/Console/Console.h"
+#include "libFileArb/Components/FileSystem/FileSystem.h"
+#include "libFileArb/Components/Time/StopwatchFactory.h"
 
 FileArbSubProgram::FileArbSubProgram()
    // Base Class Constant Components

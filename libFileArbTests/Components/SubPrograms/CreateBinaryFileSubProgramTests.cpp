@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/CreateBinaryFileSubProgram.h"
-#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileArbTests/Components/Makers/MetalMock/BinaryFileBytesMakerMock.h"
-#include "libFileArbTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
-#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
-#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchFactoryMock.h"
+#include "libFileArbTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchFactoryMock.h"
 
 TESTS(CreateBinaryFileSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)

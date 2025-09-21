@@ -3,9 +3,9 @@
 #include "libFileArbTests/Components/Makers/MetalMock/BinaryFileBytesMakerMock.h"
 #include "libFileArbTests/Components/Makers/MetalMock/FilePathsMakerMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
-#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
-#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchFactoryMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchFactoryMock.h"
 
 TESTS(CreateBinaryFilesSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)

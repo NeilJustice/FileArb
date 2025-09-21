@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/ProgramModeDeterminer.h"
-#include "libFileArbTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
+#include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
 
 TESTS(ProgramModeDeterminerTests)
 AFACT(DefaultConstructor_NewsComponents)

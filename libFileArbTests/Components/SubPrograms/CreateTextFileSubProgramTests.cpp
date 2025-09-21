@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "libFileArb/Components/SubPrograms/CreateTextFileSubProgram.h"
-#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libFileArbTests/Components/Makers/MetalMock/TextFileTextMakerMock.h"
-#include "libFileArbTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
-#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
-#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchFactoryMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchFactoryMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(CreateTextFileSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)

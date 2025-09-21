@@ -3,9 +3,9 @@
 #include "libFileArb/Components/Makers/TextFileTextMaker.h"
 #include "libFileArb/Components/SubPrograms/CreateTextFilesSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
-#include "libFileArb/UtilityComponents/Console/Console.h"
-#include "libFileArb/UtilityComponents/Time/Stopwatch.h"
-#include "libFileArb/UtilityComponents/Time/StopwatchFactory.h"
+#include "libFileArb/Components/Console/Console.h"
+#include "libFileArb/Components/Time/Stopwatch.h"
+#include "libFileArb/Components/Time/StopwatchFactory.h"
 
 CreateTextFilesSubProgram::CreateTextFilesSubProgram()
    // Constant Components

@@ -5,9 +5,9 @@
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramFactoryMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
-#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libFileArbTests/UtilityComponents/FunctionCallers/TryCatchCallers/MetalMock/NonVoidOneArgTryCatchCallerMock.h"
-#include "libFileArbTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/FunctionCallers/TryCatchCallers/MetalMock/NonVoidOneArgTryCatchCallerMock.h"
+#include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileArbProgramTests)
 AFACT(DefaultConstructor_SetsFunctionPointer_NewsComponents)

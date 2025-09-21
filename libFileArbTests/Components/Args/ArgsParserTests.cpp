@@ -7,9 +7,9 @@
 #include "libFileArbTests/Components/Args/MetalMock/CreateBinaryFilesArgsParserMock.h"
 #include "libFileArbTests/Components/Args/MetalMock/CreateTextFilesArgsParserMock.h"
 #include "libFileArbTests/Components/Args/MetalMock/ProgramModeDeterminerMock.h"
-#include "libFileArbTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libFileArbTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
-#include "libFileArbTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
+#include "libFileArbTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(ArgsParserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)

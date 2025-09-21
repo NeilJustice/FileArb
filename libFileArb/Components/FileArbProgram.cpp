@@ -6,9 +6,9 @@
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
 #include "libFileArb/StaticUtilities/Exception.h"
 #include "libFileArb/StaticUtilities/Vector.h"
-#include "libFileArb/UtilityComponents/Console/Console.h"
-#include "libFileArb/UtilityComponents/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
-#include "libFileArb/UtilityComponents/Time/Stopwatch.h"
+#include "libFileArb/Components/Console/Console.h"
+#include "libFileArb/Components/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
+#include "libFileArb/Components/Time/Stopwatch.h"
 
 FileArbProgram::FileArbProgram()
    // Function Pointers

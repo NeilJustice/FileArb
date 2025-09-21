@@ -10,8 +10,8 @@ class CreateBinaryFileArgsParser;
 class CreateBinaryFilesArgsParser;
 class CreateTextFileArgsParser;
 class CreateTextFilesArgsParser;
-
 class ProgramModeDeterminer;
+struct FileArbArgs;
 
 class ArgsParser
 {

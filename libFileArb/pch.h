@@ -1,6 +1,5 @@
 #pragma once
 #include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
-
 #include <charconv>
 #include <execution>
 #include <filesystem>
@@ -27,22 +26,16 @@ namespace fs = std::filesystem;
 
 // libFileArb Compiler
 #include "libFileArb/Compiler/CompilerMacros.h"
-
 // libFileArb Enums
 #include "libFileArb/Enums/Color.h"
 #include "libFileArb/Enums/ProgramMode.h"
 #include "libFileArb/Enums/WindowsColor.h"
-
-// libFileArb ValueTypes
-#include "libFileArb/ValueTypes/FileArbArgs.h"
-
 // libFileArb Components
 #include "libFileArb/Components/Args/ArgsParser.h"
-
+#include "libFileArb/Components/Docopt/DocoptParser.h"
 // libFileArb StaticUtilities
 #include "libFileArb/StaticUtilities/ReleaseAssert.h"
 #include "libFileArb/StaticUtilities/StringUtil.h"
 #include "libFileArb/StaticUtilities/Type.h"
-
-// libFileArb UtilityComponents
-#include "libFileArb/UtilityComponents/Docopt/DocoptParser.h"
+// libFileArb ValueTypes
+#include "libFileArb/ValueTypes/FileArbArgs.h"

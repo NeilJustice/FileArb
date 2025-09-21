@@ -7,8 +7,8 @@
 #include "libFileArb/Components/Args/CreateTextFilesArgsParser.h"
 #include "libFileArb/Components/Args/ProgramModeDeterminer.h"
 #include "libFileArb/StaticUtilities/Vector.h"
-#include "libFileArb/UtilityComponents/Console/Console.h"
-#include "libFileArb/UtilityComponents/FileSystem/FileSystem.h"
+#include "libFileArb/Components/Console/Console.h"
+#include "libFileArb/Components/FileSystem/FileSystem.h"
 
 ArgsParser::ArgsParser()
    // Function Callers

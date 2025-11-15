@@ -24,10 +24,6 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, quiet, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, fileNamePrefix, ZenUnit::Random<string>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, fileExtension, ZenUnit::Random<string>());
-
-   const FileArbArgs expectedFileArbArgs;
-   const FileArbArgs actualFileArbArgs;
-   ZenUnit::Equalizer<FileArbArgs>::AssertEqual(expectedFileArbArgs, actualFileArbArgs); // Function coverage for Cppcheck
 }
 
 TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)

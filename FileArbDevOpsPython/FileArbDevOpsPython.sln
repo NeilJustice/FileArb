@@ -20,7 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConfigurationFiles", "Confi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{AC3A658D-B158-4CEB-A7DB-4089B8C0ACF2}"
 	ProjectSection(SolutionItems) = preProject
-		JenkinsJobs\Linux\FileArb-Cppcheck.sh = JenkinsJobs\Linux\FileArb-Cppcheck.sh
 		JenkinsJobs\Linux\FileArb-Debug-Clang.sh = JenkinsJobs\Linux\FileArb-Debug-Clang.sh
 		JenkinsJobs\Linux\FileArb-Debug-GCC.sh = JenkinsJobs\Linux\FileArb-Debug-GCC.sh
 		JenkinsJobs\Linux\FileArb-Release-Clang.sh = JenkinsJobs\Linux\FileArb-Release-Clang.sh
@@ -34,7 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{AC3A658D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{0585F101-B99D-49C2-B499-F420D66A6238}"
 	ProjectSection(SolutionItems) = preProject
-		JenkinsJobs\Windows\FileArb-Cppcheck.ps1 = JenkinsJobs\Windows\FileArb-Cppcheck.ps1
 		JenkinsJobs\Windows\FileArb-Debug.ps1 = JenkinsJobs\Windows\FileArb-Debug.ps1
 		JenkinsJobs\Windows\FileArb-Release.ps1 = JenkinsJobs\Windows\FileArb-Release.ps1
 		JenkinsJobs\Windows\FileArbDevOpsPython-Mypy-Flake8-Pylint.ps1 = JenkinsJobs\Windows\FileArbDevOpsPython-Mypy-Flake8-Pylint.ps1

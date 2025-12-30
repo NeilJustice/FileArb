@@ -31,11 +31,7 @@ namespace Utils
          Arg2Type arg2) const
       {
          const auto boundConstMemberFunction = bind(constMemberFunction, constClassPointer, placeholders::_1, arg2);
-#ifdef __linux__
-         for_each(__pstl::execution::seq, elements.cbegin(), elements.cend(), boundConstMemberFunction);
-#elif _WIN32
          for_each(std::execution::par_unseq, elements.cbegin(), elements.cend(), boundConstMemberFunction);
-#endif
       }
 
       virtual void CallConstMemberFunctionWithEachElementOptionallyInParallel(
@@ -74,11 +70,7 @@ namespace Utils
          Arg2Type arg2) const
       {
          const auto boundNonConstMemberFunction = bind(nonConstMemberFunction, nonConstClassPointer, placeholders::_1, arg2);
-#ifdef __linux__
-         for_each(__pstl::execution::seq, elements.cbegin(), elements.cend(), boundNonConstMemberFunction);
-#elif _WIN32
          for_each(std::execution::par_unseq, elements.cbegin(), elements.cend(), boundNonConstMemberFunction);
-#endif
       }
 
       virtual void CallNonConstMemberFunctionWithEachElementOptionallyInParallel(

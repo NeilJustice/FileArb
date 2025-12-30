@@ -50,11 +50,7 @@ namespace Utils
          vector<size_t> callIndexElements(numberOfCalls);
          std::iota(callIndexElements.begin(), callIndexElements.end(), 0ULL);
          const auto constMemberFunctionBoundWithArg1AndArg2Bound = std::bind(constMemberFunction, constClassPointer, std::placeholders::_1, arg1, arg2);
-#ifdef __linux__
-         for_each(std::execution::seq, callIndexElements.cbegin(), callIndexElements.cend(), constMemberFunctionBoundWithArg1AndArg2Bound);
-#elif _WIN32
          for_each(std::execution::par_unseq, callIndexElements.cbegin(), callIndexElements.cend(), constMemberFunctionBoundWithArg1AndArg2Bound);
-#endif
       }
    };
 }

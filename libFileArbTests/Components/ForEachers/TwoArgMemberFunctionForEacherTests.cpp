@@ -267,7 +267,8 @@ TEST(ConstAndNonConstTwoArgFunction_CodeCoverage)
    Class classType{};
    classType.ConstMemberFunction(ElementType{}, Arg2Type{});
    classType.NonConstMemberFunction(ElementType{}, Arg2Type{});
-};
+}
 
 RUN_TEMPLATE_TESTS(TwoArgMemberFunctionForEacherTests, int, int)
 THEN_RUN_TEMPLATE_TESTS(TwoArgMemberFunctionForEacherTests, double, char)
+

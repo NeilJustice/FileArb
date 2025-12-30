@@ -3,11 +3,25 @@ project(FileArb)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 if(UNIX)
-   set(CMAKE_CXX_FLAGS "-std=c++2b -Wall -Wextra -pedantic -Werror -Wno-deprecated-copy")
+   set(CMAKE_CXX_FLAGS "-std=c++2b -Weverything -Werror \
+      -Wno-alloca \
+      -Wno-c++98-compat \
+      -Wno-c++98-compat-pedantic \
+      -Wno-disabled-macro-expansion \
+      -Wno-exit-time-destructors \
+      -Wno-extra-semi-stmt \
+      -Wno-global-constructors \
+      -Wno-missing-variable-declarations \
+      -Wno-padded \
+      -Wno-reserved-identifier \
+      -Wno-shadow-field-in-constructor \
+      -Wno-switch-enum \
+      -Wno-unsafe-buffer-usage \
+      -Wno-weak-vtables")
    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-      append(CMAKE_CXX_FLAGS "-Wno-gnu-zero-variadic-macro-arguments")
+      #append(CMAKE_CXX_FLAGS "-Wno-gnu-zero-variadic-macro-arguments")
    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-      append(CMAKE_CXX_FLAGS "-no-pie -fopenmp")
+      #append(CMAKE_CXX_FLAGS "-no-pie -fopenmp")
    endif()
    if(FastLinuxDebugBuildMode)
       replace(CMAKE_CXX_FLAGS_DEBUG "-g" "")

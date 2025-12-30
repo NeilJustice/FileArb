@@ -25,7 +25,7 @@ jobs:
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('FileArbDevOpsPython/dev-requirements.txt') }}
 
       - name: Install lld and ninja-build
-        run: sudo apt-get install lld ninja-build
+        run: sudo apt-get install lld ninja-build libtbb-dev
 
       - name: Install lcov Perl dependencies if g++ Release
         run: sudo apt-get install libcapture-tiny-perl libdatetime-perl

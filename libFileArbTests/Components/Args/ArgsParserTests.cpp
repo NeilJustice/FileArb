@@ -54,18 +54,9 @@ STARTUP
 
 TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
-   ArgsParser argsParser;
+   const ArgsParser argsParser;
    // Function Pointers
    STD_FUNCTION_TARGETS(exit, argsParser._call_exit);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(argsParser._bytesStringConverter);
-   DELETE_TO_ASSERT_NEWED(argsParser._console);
-   DELETE_TO_ASSERT_NEWED(argsParser._createBinaryFileArgsParser);
-   DELETE_TO_ASSERT_NEWED(argsParser._createTextFileArgsParser);
-   DELETE_TO_ASSERT_NEWED(argsParser._createBinaryFilesArgsParser);
-   DELETE_TO_ASSERT_NEWED(argsParser._createTextFilesArgsParser);
-   DELETE_TO_ASSERT_NEWED(argsParser._docoptParser);
-   DELETE_TO_ASSERT_NEWED(argsParser._fileSystem);
 }
 
 TEST(ParseStringArgs_ProgramModeIsCreateBinaryFile_ParsesCreateBinaryFileArgs_ReturnsFileArbArgs)

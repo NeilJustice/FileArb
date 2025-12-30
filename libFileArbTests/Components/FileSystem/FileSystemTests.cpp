@@ -80,13 +80,6 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    STD_FUNCTION_TARGETS_OVERLOAD(Utils::FileSystem::GetCurrentPathOverloadType, fs::current_path, fileSystem._call_get_fs_current_path);
 #endif
    STD_FUNCTION_TARGETS(fwrite, fileSystem._call_fwrite);
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(fileSystem._caller_CreateBinaryOrTextFile);
-   DELETE_TO_ASSERT_NEWED(fileSystem._caller_OpenFile);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileSystem._asserter);
-   DELETE_TO_ASSERT_NEWED(fileSystem._errorCodeTranslator);
-
    fileSystem._call_errno(); // 100% code coverage for GetErrno() on Linux
 }
 

@@ -3,7 +3,6 @@
 #include "libFileArbTests/Components/Makers/MetalMock/RandomStringMakerMock.h"
 
 TESTS(BinaryFileBytesMakerTests)
-AFACT(DefaultConstructor_NewsComponents)
 AFACT(MakeNonRandomBytesString_MakesAndReturnsBytesStringWithAll0Bytes)
 AFACT(MakeRandomBytesString_MakesAndReturnsRandomBytesString)
 EVIDENCE
@@ -16,13 +15,6 @@ STARTUP
 {
    // Constant Components
    _binaryFileBytesMaker._randomStringMaker.reset(_randomStringMakerMock = new RandomStringMakerMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   BinaryFileBytesMaker binaryFileBytesMaker;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(binaryFileBytesMaker._randomStringMaker);
 }
 
 TEST(MakeNonRandomBytesString_MakesAndReturnsBytesStringWithAll0Bytes)

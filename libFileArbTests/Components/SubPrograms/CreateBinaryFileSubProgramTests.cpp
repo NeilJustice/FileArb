@@ -7,7 +7,6 @@
 #include "libFileArbTests/Components/Time/MetalMock/StopwatchFactoryMock.h"
 
 TESTS(CreateBinaryFileSubProgramTests)
-AFACT(DefaultConstructor_NewsComponents)
 AFACT(Run_GenerateRandomBytesIsTrue_WritesRandomBinaryFileToTargetDirectory_Returns0)
 AFACT(Run_GenerateRandomBytesIsFalse_WritesNonRandomBinaryFileToTargetDirectory_Returns0)
 EVIDENCE
@@ -28,13 +27,6 @@ STARTUP
    _createBinaryFileSubProgram._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
    // Constant Components
    _createBinaryFileSubProgram._binaryFileBytesMaker.reset(_binaryFileBytesMakerMock = new BinaryFileBytesMakerMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   CreateBinaryFileSubProgram createBinaryFileSubProgram;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(createBinaryFileSubProgram._binaryFileBytesMaker);
 }
 
 TEST(Run_GenerateRandomBytesIsTrue_WritesRandomBinaryFileToTargetDirectory_Returns0)

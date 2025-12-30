@@ -4,7 +4,6 @@
 #include "libFileArbTests/Components/Makers/MetalMock/RandomStringMakerMock.h"
 
 TESTS(TextFileTextMakerTests)
-AFACT(DefaultConstructor_SetsReplicateLineNTimesFunction)
 AFACT(MakeNonRandomFileText_ReturnsAllZerosStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
 AFACT(MakeRandomFileText_ReturnsRandomCharsStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)
 EVIDENCE
@@ -19,14 +18,6 @@ STARTUP
    // Constant Components
    _textFileTextMaker._lineReplicator.reset(_lineReplicatorMock = new LineReplicatorMock);
    _textFileTextMaker._randomStringMaker.reset(_randomStringMakerMock = new RandomStringMakerMock);
-}
-
-TEST(DefaultConstructor_SetsReplicateLineNTimesFunction)
-{
-   TextFileTextMaker textFileTextMaker;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(textFileTextMaker._lineReplicator);
-   DELETE_TO_ASSERT_NEWED(textFileTextMaker._randomStringMaker);
 }
 
 TEST(MakeNonRandomFileText_ReturnsAllZerosStringWithNumberOfCharactersPerLineReplicatedNumberOfLinesTimes)

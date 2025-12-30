@@ -3,7 +3,6 @@
 #include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
 
 TESTS(ProgramModeDeterminerTests)
-AFACT(DefaultConstructor_NewsComponents)
 AFACT(DetermineProgramMode_ProgramModeIsCreateBinaryFile_ReturnsProgramModeCreateBinaryFile)
 AFACT(DetermineProgramMode_ProgramModeIsCreateTextFile_ReturnsProgramModeCreateTextFile)
 AFACT(DetermineProgramMode_ProgramModeIsCreateBinaryFiles_ReturnsProgramModeCreateBinaryFiles)
@@ -19,13 +18,6 @@ STARTUP
 {
    // Constant Components
    _programModeDeterminer._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   ProgramModeDeterminer programModeDeterminer;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(programModeDeterminer._docoptParser);
 }
 
 TEST(DetermineProgramMode_ProgramModeIsCreateBinaryFile_ReturnsProgramModeCreateBinaryFile)

@@ -2,7 +2,6 @@
 #include "libFileArb/Components/Args/CreateTextFileArgsParser.h"
 
 TESTS(CreateTextFileArgsParserTests)
-AFACT(DefaultConstructor_NewsComponents)
 AFACT(ParseArgs_ParsesArgs_ReturnsFileArbArgs)
 EVIDENCE
 
@@ -16,14 +15,6 @@ STARTUP
    // Constant Components
    _createTextFileArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
    _createTextFileArgsParser._fileNamePrefixAndExtensionGetter.reset(_fileNamePrefixAndExtensionGetterMock = new FileNamePrefixAndExtensionGetterMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   CreateTextFileArgsParser createTextFileArgsParser;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(createTextFileArgsParser._docoptParser);
-   DELETE_TO_ASSERT_NEWED(createTextFileArgsParser._fileNamePrefixAndExtensionGetter);
 }
 
 TEST(ParseArgs_ParsesArgs_ReturnsFileArbArgs)

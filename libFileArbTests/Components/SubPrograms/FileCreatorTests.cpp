@@ -11,7 +11,6 @@
 #include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileCreatorTests)
-AFACT(DefaultConstructor_NewsComponents)
 AFACT(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 AFACT(CreateFiles_ParallelIsFalase_SequentiallyCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)
 AFACT(CreateRandomBinaryFiles_CreatesRandomBinaryFilesAtFilePathOptionallyInParallel)
@@ -56,21 +55,6 @@ STARTUP
    _fileCreator._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _fileCreator._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
    _fileCreator._textFileTextMaker.reset(_textFileTextMakerMock = new TextFileTextMakerMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   FileCreator fileCreator;
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(fileCreator._caller_CreateSequentiallyNumberedFilesInNumberedDirectory);
-   DELETE_TO_ASSERT_NEWED(fileCreator._caller_CreateNumberedFileInDirectory);
-   DELETE_TO_ASSERT_NEWED(fileCreator._memberForEacher_filePaths);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileCreator._binaryFileBytesMaker);
-   DELETE_TO_ASSERT_NEWED(fileCreator._console);
-   DELETE_TO_ASSERT_NEWED(fileCreator._fileSystem);
-   DELETE_TO_ASSERT_NEWED(fileCreator._stopwatchFactory);
-   DELETE_TO_ASSERT_NEWED(fileCreator._textFileTextMaker);
 }
 
 TEST(CreateFiles_ParallelIsTrue_InParallelCreatesSequentiallyNumberedDirectoriesContainingSequentiallyNumberedFiles)

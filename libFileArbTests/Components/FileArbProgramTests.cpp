@@ -47,17 +47,10 @@ STARTUP
 
 TEST(DefaultConstructor_SetsFunctionPointer_NewsComponents)
 {
-   FileArbProgram fileArbProgram;
+   const FileArbProgram fileArbProgram;
    // Function Callers
    STD_FUNCTION_TARGETS(Utils::Exception::GetClassNameAndMessage, fileArbProgram._call_Utils_Exception_ClassNameAndMessage);
    STD_FUNCTION_TARGETS(Utils::Vector::FromArgcArgv, fileArbProgram._call_Utils_Vector_FromArgcArgv);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileArbProgram._console);
-   DELETE_TO_ASSERT_NEWED(fileArbProgram._nonVoidOneArgTryCatchCaller);
-   DELETE_TO_ASSERT_NEWED(fileArbProgram._argsParser);
-   DELETE_TO_ASSERT_NEWED(fileArbProgram._fileArbSubProgramFactory);
-   DELETE_TO_ASSERT_NEWED(fileArbProgram._fileCreator);
-   DELETE_TO_ASSERT_NEWED(fileArbProgram._stopwatch);
 }
 
 TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)

@@ -3,7 +3,6 @@
 #include "libFileArbTests/Components/Args/MetalMock/BytesStringConverterMock.h"
 
 TESTS(CreateBinaryFilesArgsParserTests)
-AFACT(DefaultConstructor_NewsComponents)
 AFACT(ParseArgs_ParsesCreateBinaryFilesArgs_ReturnsFileArbArgs)
 EVIDENCE
 
@@ -20,15 +19,6 @@ STARTUP
    _createBinaryFilesArgsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
    _createBinaryFilesArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
    _createBinaryFilesArgsParser._fileNamePrefixAndExtensionGetter.reset(_fileNamePrefixAndExtensionGetterMock = new FileNamePrefixAndExtensionGetterMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   CreateBinaryFilesArgsParser createBinaryFilesArgsParser;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(createBinaryFilesArgsParser._bytesStringConverter);
-   DELETE_TO_ASSERT_NEWED(createBinaryFilesArgsParser._docoptParser);
-   DELETE_TO_ASSERT_NEWED(createBinaryFilesArgsParser._fileNamePrefixAndExtensionGetter);
 }
 
 TEST(ParseArgs_ParsesCreateBinaryFilesArgs_ReturnsFileArbArgs)

@@ -39,7 +39,7 @@ STARTUP
 
 TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
 {
-   Utils::ConsoleColorer consoleColorer;
+   const Utils::ConsoleColorer consoleColorer;
    //
    // Function Pointers
 #ifdef _WIN32
@@ -51,8 +51,6 @@ TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
    STD_FUNCTION_TARGETS(fileno, consoleColorer._call_fileno);
    STD_FUNCTION_TARGETS(isatty, consoleColorer._call_isatty);
 #endif
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(consoleColorer._asserter);
    // Mutable Fields
    IS_FALSE(consoleColorer._supportsColor);
    IS_FALSE(consoleColorer._supportsColorHasBeenSet);

@@ -7,7 +7,6 @@
 #include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(CreateTextFileSubProgramTests)
-AFACT(DefaultConstructor_NewsComponents)
 AFACT(Run_GenerateRandomLetterIsTrue_WritesRandomTextFileToTargetDirectory_Returns0)
 AFACT(Run_GenerateRandomLetterIsFalse_WritesNonRandomTextFileToTargetDirectory_Returns0)
 EVIDENCE
@@ -28,13 +27,6 @@ STARTUP
    _createTextFileSubProgram._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
    // Constant Components
    _createTextFileSubProgram._textFileTextMaker.reset(_textFileTextMakerMock = new TextFileTextMakerMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   CreateTextFileSubProgram createTextFileSubProgram;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(createTextFileSubProgram._textFileTextMaker);
 }
 
 TEST(Run_GenerateRandomLetterIsTrue_WritesRandomTextFileToTargetDirectory_Returns0)

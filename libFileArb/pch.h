@@ -1,7 +1,6 @@
 #pragma once
 #include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
 #include <charconv>
-#include <execution>
 #include <filesystem>
 #include <functional>
 #include <iostream>
@@ -11,6 +10,7 @@
 #if defined __linux__
    #include <cstring>
    #include <limits.h>
+   #include <memory>
    #include <mutex>
    #include <thread>
    #include <unistd.h>

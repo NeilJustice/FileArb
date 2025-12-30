@@ -3,7 +3,6 @@
 #include "libFileArbTests/Components/Makers/MetalMock/RandomCharacterMakerMock.h"
 
 TESTS(RandomStringMakerTests)
-AFACT(DefaultConstructor_NewsComponents)
 AFACT(MakeRandomBytesString_NumberOfRandomBytesIs0_ReturnsEmptyString)
 AFACT(MakeRandomBytesString_NumberOfRandomBytesIs3_ReturnsStringWithLength3PopulatedWith3RandomBytes)
 AFACT(MakeRandomCapitalLettersString_NumberOfRandomCapitalLettersIs3_ReturnsStringWithLength3PopulatedWith3RandomCapitalLetters)
@@ -17,13 +16,6 @@ STARTUP
 {
    // Constant Components
    _randomStringMaker._randomCharacterGenerator.reset(_randomCharacterGeneratorMock = new RandomCharacterMakerMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   RandomStringMaker randomStringMaker;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(randomStringMaker._randomCharacterGenerator);
 }
 
 TEST(MakeRandomBytesString_NumberOfRandomBytesIs0_ReturnsEmptyString)

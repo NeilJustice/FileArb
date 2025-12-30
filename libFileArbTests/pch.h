@@ -1,9 +1,9 @@
 #pragma once
 #include "libFileArb/Compiler/IfMSVCIgnoreTheseWarningsGlobally.h"
-#include <execution>
 #include <filesystem>
 #if defined __linux__
    #include <cstring>
+   #include <memory>
    #include <mutex>
    #include <thread>
    #include <unistd.h>

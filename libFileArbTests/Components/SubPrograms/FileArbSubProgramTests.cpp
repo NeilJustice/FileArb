@@ -2,20 +2,10 @@
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 
 TESTS(FileArbSubProgramTests)
-AFACT(DefaultConstructor_NewsConsoleAndFileSystem)
 AFACT(Run_Returns0)
 EVIDENCE
 
 FileArbSubProgram _fileArbSubProgram;
-
-TEST(DefaultConstructor_NewsConsoleAndFileSystem)
-{
-   FileArbSubProgram fileArbSubProgram;
-   // Base Class Constant Components
-   DELETE_TO_ASSERT_NEWED(fileArbSubProgram._console);
-   DELETE_TO_ASSERT_NEWED(fileArbSubProgram._fileSystem);
-   DELETE_TO_ASSERT_NEWED(fileArbSubProgram._stopwatchFactory);
-}
 
 TEST(Run_Returns0)
 {

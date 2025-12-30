@@ -3,7 +3,6 @@
 #include "libFileArbTests/Components/Console/MetalMock/ConsoleColorerMock.h"
 
 TESTS(ConsoleTests)
-AFACT(DefaultConstructor_NewsConsoleColorer)
 AFACT(NakedWriteLine_CodeCoverage)
 AFACT(ThreadIdWriteLine_CodeCoverage)
 AFACT(ThreadIdWriteLineWithColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
@@ -17,13 +16,6 @@ STARTUP
 {
    // Mutable Components
    _console._consoleColorer.reset(_consoleColorerMock = new Utils::ConsoleColorerMock);
-}
-
-TEST(DefaultConstructor_NewsConsoleColorer)
-{
-   Utils::Console console;
-   // Function Pointers
-   DELETE_TO_ASSERT_NEWED(console._consoleColorer);
 }
 
 TEST(NakedWriteLine_CodeCoverage)

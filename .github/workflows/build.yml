@@ -24,6 +24,15 @@ jobs:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('FileArbDevOpsPython/dev-requirements.txt') }}
 
+      - uses: KyleMayes/install-llvm-action@v2
+        with:
+          llvm-version: 'latest'
+
+      #- name: Use llvm-cov
+      #run: |
+      ## The action sets the LLVM_PATH environment variable
+      #${{ env.LLVM_PATH }}/bin/llvm-cov --version
+
       - name: Install lld and ninja-build
         run: sudo apt-get install lld ninja-build libtbb-dev
 

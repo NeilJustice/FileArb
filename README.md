@@ -67,7 +67,7 @@ Usage:
 
 ```ini
 filearb create-binary-file
-   --target=<TargetDirectoryPath>
+   --target=<DirectoryPath>
    --bytes=<NumberOfBytes>
    [--random-bytes]
 ```
@@ -98,7 +98,7 @@ Here are the contents of one potential random binary file after running `filearb
 
 ```ini
 filearb create-binary-files
-   --target=<TargetDirectoryPath>
+   --target=<DirectoryPath>
    --directories=<NumberOfDirectories>
    --files=<NumberOfFiles>
    --bytes=<BytesPerFile>
@@ -117,7 +117,7 @@ Console output for `filearb create-binary-files --target=. --directories=5 --fil
 
 ```ini
 filearb create-text-file
-   --target=<TargetDirectoryPath>
+   --target=<DirectoryPath>
    --lines=<LinesPerFile>
    --characters=<CharactersPerLine>
    [--random-letters]

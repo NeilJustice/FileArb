@@ -20,8 +20,6 @@ Three use cases for FileArb:
    * [create-binary-files](#create-binary-files)
    * [create-text-file](#create-text-file)
    * [create-text-files](#create-text-files)
-* [Linux Jenkins jobs which build and statically analyze FileArb](#linux-jenkins-jobs-which-build-and-statically-analyze-filearb)
-* [Windows Jenkins jobs which build and statically analyze FileArb](#windows-jenkins-jobs-which-build-and-statically-analyze-filearb)
 * [Steps to build binary filearb on Linux with Clang](#steps-to-build-binary-filearb-on-linux-with-clang)
 * [Steps to build executable FileArb.exe on Windows with Visual Studio 2022](#steps-to-build-executable-filearbexe-on-windows-with-visual-studio-2022)
 * [Thanks to](#thanks-to)
@@ -148,14 +146,6 @@ filearb create-text-files
 Console output for `filearb create-text-files --target=target_dir --directories=5 --files=3 --lines=3 --characters=64 --random-letters --parallel` on Linux:
 
 ![create-text-files](Screenshots/Linux/create-text-files.png)
-
-## Linux Jenkins jobs which build and statically analyze FileArb
-
-![Linux FileArb Jenkins jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
-
-## Windows Jenkins jobs which build and statically analyze FileArb
-
-![Windows FileArb Jenkins jobs](Screenshots/Windows/WindowsFileArbJenkinsJobs.png)
 
 ## Steps to build binary filearb on Linux with Clang
 

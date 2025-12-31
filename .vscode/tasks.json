@@ -88,34 +88,7 @@
          "problemMatcher": [
             "$gcc"
          ]
-      },
-      {
-         "type": "shell",
-         "label": "Clean Debug",
-         "command": "ninja",
-         "args": [
-            "clean"
-         ],
-         "options": {
-            "cwd": "${workspaceRoot}/Debug"
-         },
-         "problemMatcher": [
-            "$gcc"
-         ]
-      },
-      {
-         "type": "shell",
-         "label": "Clean RelWithDebInfo",
-         "command": "ninja",
-         "args": [
-            "clean"
-         ],
-         "options": {
-            "cwd": "${workspaceRoot}/RelWithDebInfo"
-         },
-         "problemMatcher": [
-            "$gcc"
-         ]
       }
    ]
 }
+

@@ -2,7 +2,7 @@
   <img src="Screenshots/FileArbLogo.png" width="64%"><br>
   <img src="https://img.shields.io/badge/c%2B%2B-23-blue.svg"/>
   <a href="https://github.com/NeilJustice/FileArb/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg"></a>
-  <a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true"></a>
+  <a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s"></a>
   <a href="https://codecov.io/gh/NeilJustice/FileArb"><img src="https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>
 </p>
 
@@ -20,8 +20,6 @@ Three use cases for FileArb:
    * [create-binary-files](#create-binary-files)
    * [create-text-file](#create-text-file)
    * [create-text-files](#create-text-files)
-* [FileArb code structure as it appears in Visual Studio Code on Linux](#filearb-code-structure-as-it-appears-in-visual-studio-code-on-linux)
-* [FileArb code structure as it appears in Visual Studio 2022 on Windows](#filearb-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
 * [Linux Jenkins jobs which build and statically analyze FileArb](#linux-jenkins-jobs-which-build-and-statically-analyze-filearb)
 * [Windows Jenkins jobs which build and statically analyze FileArb](#windows-jenkins-jobs-which-build-and-statically-analyze-filearb)
 * [Steps to build binary filearb on Linux with Clang](#steps-to-build-binary-filearb-on-linux-with-clang)
@@ -150,14 +148,6 @@ filearb create-text-files
 Console output for `filearb create-text-files --target=target_dir --directories=5 --files=3 --lines=3 --characters=64 --random-letters --parallel` on Linux:
 
 ![create-text-files](Screenshots/Linux/create-text-files.png)
-
-## FileArb code structure as it appears in Visual Studio Code on Linux
-
-![FileArb code structure as it appears in Visual Studio Code](Screenshots/Linux/FileArbCodeExampleInVSCode.png)
-
-## FileArb code structure as it appears in Visual Studio 2022 on Windows
-
-![FileArb code structure as it appears in Visual Studio 2022](Screenshots/Windows/FileArbCodeExampleInVisualStudio2022.png)
 
 ## Linux Jenkins jobs which build and statically analyze FileArb
 

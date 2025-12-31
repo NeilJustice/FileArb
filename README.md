@@ -5,7 +5,6 @@
 <a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s/branch/master?svg=true"></a>
 <a href="https://codecov.io/gh/NeilJustice/FileArb"><img src="https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>
 </p>
-[![Build status](https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s?svg=true)](https://ci.appveyor.com/project/NeilJustice/filearb)
 
 FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
 

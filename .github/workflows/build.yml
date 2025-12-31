@@ -5,7 +5,7 @@ jobs:
   build:
     strategy:
       matrix:
-         cxx: [clang++]
+         cxx: [clang++, g++]
          cmake_build_type: [Debug, Release]
 
     runs-on: ubuntu-latest
@@ -24,21 +24,12 @@ jobs:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('FileArbDevOpsPython/dev-requirements.txt') }}
 
-      - uses: KyleMayes/install-llvm-action@v2
-        with:
-          version: '18.1.8'
-
-      #- name: Use llvm-cov
-      #run: |
-      ## The action sets the LLVM_PATH environment variable
-      #${{ env.LLVM_PATH }}/bin/llvm-cov --version
-
       - name: Install lld and ninja-build
         run: sudo apt-get install lld ninja-build libtbb-dev
 
-      - name: Install lcov Perl dependencies if clang++ Release
+      - name: Install lcov Perl dependencies if g++ Release
         run: sudo apt-get install libcapture-tiny-perl libdatetime-perl
-        if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Release' }}
+        if: ${{ matrix.cxx == 'g++' && matrix.cmake_build_type == 'Release' }}
 
       - name: Download ZenUnit.h
         run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
@@ -49,22 +40,22 @@ jobs:
       - name: Install pip packages
         run: pip install --upgrade --upgrade-strategy eager -r FileArbDevOpsPython/dev-requirements.txt
 
-      - name: Mypy, Flake8, Pylint, then run unit tests with coverage and pytest if clang++ Release
+      - name: Mypy, Flake8, Pylint, then run unit tests with coverage and pytest if g++ Release
         working-directory: FileArbDevOpsPython
         run: python FileArbDevOpsPython/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=FileArbDevOpsPythonTests/RunAllWithCoverage.py
         env:
           PYTHONPATH: .
-        if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Release' }}
+        if: ${{ matrix.cxx == 'g++' && matrix.cmake_build_type == 'Release' }}
 
-      - name: Upload Python code coverage if clang++ Release
+      - name: Upload Python code coverage if g++ Release
         uses: codecov/codecov-action@v5
         with:
           files: FileArbDevOpsPython/FileArbDevOpsPythonTests/CoberturaCodeCoverageResults_FileArbDevOpsPythonTests.xml
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
-        if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Release' }}
+        if: ${{ matrix.cxx == 'g++' && matrix.cmake_build_type == 'Release' }}
 
-      - name: Run BuildAndInstallCPlusPlusProgram.py in non code coverage mode if Debug
+      - name: Run BuildAndInstallCPlusPlusProgram.py in non code coverage mode if clang++ Debug/Release or g++ Debug
         run: |
            python FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=FileArb \
@@ -75,9 +66,9 @@ jobs:
         env:
           CXX: "/usr/bin/${{ matrix.cxx }}"
           PYTHONPATH: FileArbDevOpsPython
-        if: ${{ matrix.cmake_build_type == 'Debug' }}
+        if: ${{ matrix.cxx == 'clang++' || (matrix.cxx == 'g++' && matrix.cmake_build_type == 'Debug') }}
 
-      - name: Run BuildAndInstallCPlusPlusProgram.py in code coverage mode if Release
+      - name: Run BuildAndInstallCPlusPlusProgram.py in code coverage mode if g++ Release
         run: |
            python FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=FileArb \
@@ -88,21 +79,21 @@ jobs:
         env:
           CXX: "/usr/bin/${{ matrix.cxx }}"
           PYTHONPATH: FileArbDevOpsPython
-        if: ${{ matrix.cmake_build_type == 'Release' }}
+        if: ${{ matrix.cxx == 'g++' && matrix.cmake_build_type == 'Release' }}
 
       - name: Print .comment section of binary libFileArbTests to confirm it was linked with LLD
         run: readelf --string-dump .comment "${{matrix.cmake_build_type}}/libFileArbTests/libFileArbTests"
 
-      - name: Install and run lcov 2.4 then upload to Codecov.io if clang++ Release
+      - name: Install and run lcov 2.4 then upload to Codecov.io if g++ Release
         run: |
           mkdir -p lcov_2.4
           wget https://github.com/linux-test-project/lcov/releases/download/v2.4/lcov-2.4.tar.gz --output-document="lcov_2.4/lcov-2.4.tar.gz"
           tar xf "lcov_2.4/lcov-2.4.tar.gz" --strip-components=1 --directory lcov_2.4
           lcov_2.4/bin/lcov --version
-          lcov_2.4/bin/lcov --directory . --capture --no-external --ignore-errors inconsistent --output-file coverage.info --gcov-tool llvm-cov
+          lcov_2.4/bin/lcov --directory . --capture --no-external --ignore-errors inconsistent --output-file coverage.info
           lcov_2.4/bin/lcov --list coverage.info
           bash <(curl -s https://codecov.io/bash) -f coverage.info -t ${{ secrets.CODECOV_TOKEN }} || echo "Codecov did not collect coverage reports"
-        if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Release' }}
+        if: ${{ matrix.cxx == 'g++' && matrix.cmake_build_type == 'Release' }}
 
       - name: tree GITHUB_WORKSPACE
         run: tree $GITHUB_WORKSPACE

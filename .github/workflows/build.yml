@@ -26,7 +26,7 @@ jobs:
 
       - uses: KyleMayes/install-llvm-action@v2
         with:
-          version: 'latest'
+          version: '21'
 
       #- name: Use llvm-cov
       #run: |

@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <functional>
 #include <iostream>
+#include <mutex>
 #include <unordered_map>
 #include <unordered_set>
 #include <random>
@@ -11,7 +12,6 @@
    #include <cstring>
    #include <limits.h>
    #include <memory>
-   #include <mutex>
    #include <thread>
    #include <unistd.h>
 #elif defined _WIN32

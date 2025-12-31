@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="Screenshots/FileArbLogo.png" width="64%"><br>
-  <img src="https://img.shields.io/badge/c%2B%2B-23-blue.svg"/>
-  <a href="https://github.com/NeilJustice/FileArb/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg"></a>
-  <a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s"></a>
-  <a href="https://codecov.io/gh/NeilJustice/FileArb"><img src="https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>
+<img src="Screenshots/FileArbLogo.png" width="64%"><br>
+<img src="https://img.shields.io/badge/c%2B%2B-23-blue.svg"/>
+<a href="https://github.com/NeilJustice/FileArb/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg"></a>
+<a href="https://ci.appveyor.com/project/NeilJustice/FileArb"><img src="https://ci.appveyor.com/api/projects/status/ky25lmolb009xq0s/branch/master?svg=true"></a>
+<a href="https://codecov.io/gh/NeilJustice/FileArb"><img src="https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>
 </p>
 
 FileArb is a cross-platform C++ command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.

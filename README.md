@@ -1,4 +1,4 @@
-<p align="center"><img src="Screenshots/FileArbLogo.png" width="50%"><br></p>
+<p align="center"><img src="Screenshots/FileArbLogo.png" width="64%"><br></p>
 
 |Build Type|Build Status|
 |----------|------------|

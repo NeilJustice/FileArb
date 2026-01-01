@@ -33,9 +33,6 @@ jobs:
           PYTHONPATH: .
         if: ${{ matrix.cmake_build_type == 'Release' }}
 
-      - name: tree GITHUB_WORKSPACE
-        run: tree $GITHUB_WORKSPACE
-
       - name: Run BuildAndInstallCPlusPlusProgram.py
         run: |
           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "ZenUnitAndMetalMock/ZenUnit.h"

@@ -6,7 +6,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-         cmake_build_type: [Debug, Release]
+         cmake_build_type: [Debug, RelWithDebInfo]
     steps:
       - uses: actions/checkout@v6
         with:

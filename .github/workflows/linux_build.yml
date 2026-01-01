@@ -31,7 +31,7 @@ jobs:
         run: sudo apt-get install libcapture-tiny-perl libdatetime-perl
         if: ${{ matrix.cxx == 'g++' && matrix.cmake_build_type == 'Release' }}
 
-      - name: Download ZenUnit.h
+      - name: Download ZenUnit.h and MetalMock.h
         run: |
           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"

@@ -39,11 +39,11 @@ jobs:
 
       - name: Run BuildAndInstallCPlusPlusProgram.py
         run: |
-           python FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
-              --solution-name=FileArb \
-              --cmake-build-type="${{ matrix.cmake_build_type }}" \
-              --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" \
-              --tests-project-name=libFileArbTests \
+           python FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py `
+              --solution-name=FileArb `
+              --cmake-build-type="${{ matrix.cmake_build_type }}" `
+              --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" `
+              --tests-project-name=libFileArbTests `
               --no-install
         env:
           PYTHONPATH: FileArbDevOpsPython

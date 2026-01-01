@@ -30,12 +30,12 @@ jobs:
       - name: Install pip packages
         run: pip install --upgrade --upgrade-strategy eager -r FileArbDevOpsPython/dev-requirements.txt
 
-#      - name: Mypy, Flake8, Pylint, then run unit tests with coverage and pytest if Release
- #       working-directory: FileArbDevOpsPython
-  #      run: python FileArbDevOpsPython/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=FileArbDevOpsPythonTests/RunAllWithCoverage.py
-   #     env:
-    #      PYTHONPATH: .
-     #   if: ${{ matrix.cmake_build_type == 'Release' }}
+      - name: Mypy, Flake8, Pylint, then run unit tests with coverage and pytest if Release
+        working-directory: FileArbDevOpsPython
+        run: python FileArbDevOpsPython/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=FileArbDevOpsPythonTests/RunAllWithCoverage.py
+        env:
+          PYTHONPATH: .
+        if: ${{ matrix.cmake_build_type == 'Release' }}
 
 #      - name: Upload Python code coverage if Release
  #       uses: codecov/codecov-action@v5

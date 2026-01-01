@@ -25,8 +25,8 @@ jobs:
 
       - name: Download ZenUnit.h and MetalMock.h
         run: |
-          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
-          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
+          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "D:\include\ZenUnitAndMetalMock\ZenUnit.h"
+          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "D:\include\ZenUnitAndMetalMock\MetalMock.h"
 
       - name: Install pip packages
         run: pip install --upgrade --upgrade-strategy eager -r FileArbDevOpsPython/dev-requirements.txt

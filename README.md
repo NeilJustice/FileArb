@@ -2,8 +2,8 @@
 
 |Build Type|Build Status|
 |----------|------------|
-|ubuntu-latest Clang 18 and GCC 13|<a href="https://github.com/NeilJustice/FileArb/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/build.yml/badge.svg"></a>|
-|windows-latest VS2022|<a href="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml/badge.svg"></a>|
+|Clang 18 and GCC 13 on ubuntu-latest|<a href="https://github.com/NeilJustice/FileArb/actions/workflows/linux_build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/linux_build.yml/badge.svg"></a>|
+|VS2022 on windows-latest|<a href="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml/badge.svg"></a>|
 |GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileArb"><img src="https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>|
 
 FileArb is a cross-platform C++23 command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.

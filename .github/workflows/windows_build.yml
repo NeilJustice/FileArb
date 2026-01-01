@@ -21,11 +21,10 @@ jobs:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('FileArbDevOpsPython/dev-requirements.txt') }}
 
-      - name: Download ZenUnit.h
-        run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
-
-      - name: Download MetalMock.h
-        run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
+      - name: Download ZenUnit.h and MetalMock.h
+        run: |
+          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
+          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
 
       - name: Install pip packages
         run: pip install --upgrade --upgrade-strategy eager -r FileArbDevOpsPython/dev-requirements.txt
@@ -42,7 +41,7 @@ jobs:
            python FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py `
               --solution-name=FileArb `
               --cmake-build-type="${{ matrix.cmake_build_type }}" `
-              --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" `
+              --cmake-definitions="" `
               --tests-project-name=libFileArbTests `
               --no-install
         env:

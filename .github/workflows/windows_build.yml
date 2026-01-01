@@ -38,6 +38,9 @@ jobs:
           PYTHONPATH: .
         if: ${{ matrix.cmake_build_type == 'Release' }}
 
+      - name: tree GITHUB_WORKSPACE
+        run: tree $GITHUB_WORKSPACE
+
       - name: Run BuildAndInstallCPlusPlusProgram.py
         run: |
            python FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py `

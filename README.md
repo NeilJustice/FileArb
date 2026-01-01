@@ -156,10 +156,6 @@ CXX=clang++ cmake .. -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo
 sudo cmake --build . --target install
 ```
 
-Resulting binary `/usr/local/bin/filearb`:
-
-![Resulting binary filearb](Screenshots/Linux/filearbBinaryOnLinux.png)
-
 ## Steps to build executable FileArb.exe on Windows with Visual Studio 2022
 
 ```powershell
@@ -168,10 +164,6 @@ cd FileArb
 cmake . -G"Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX="C:\bin"
 cmake --build . --config RelWithDebInfo --target install
 ```
-
-Resulting executable `C:\bin\FileArb.exe`:
-
-![Resulting executable FileArb.exe](Screenshots/Windows/FileArbDotExe.png)
 
 ## Thanks to
 

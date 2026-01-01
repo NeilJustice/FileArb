@@ -37,22 +37,14 @@ jobs:
           PYTHONPATH: .
         if: ${{ matrix.cmake_build_type == 'Release' }}
 
-#      - name: Upload Python code coverage if Release
- #       uses: codecov/codecov-action@v5
-  #      with:
-   #       files: FileArbDevOpsPython/FileArbDevOpsPythonTests/CoberturaCodeCoverageResults_FileArbDevOpsPythonTests.xml
-    #      fail_ci_if_error: true
-     #     token: ${{ secrets.CODECOV_TOKEN }}
-      #  if: ${{ matrix.cmake_build_type == 'Release' }}
-
-#      - name: Run BuildAndInstallCPlusPlusProgram.py
- #       run: |
-  #         python FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
-   #           --solution-name=FileArb \
-    #          --cmake-build-type="${{ matrix.cmake_build_type }}" \
-     #         --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" \
-      #        --tests-project-name=libFileArbTests \
-       #       --no-install
-        #env:
-         # PYTHONPATH: FileArbDevOpsPython
+      - name: Run BuildAndInstallCPlusPlusProgram.py
+        run: |
+           python FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+              --solution-name=FileArb \
+              --cmake-build-type="${{ matrix.cmake_build_type }}" \
+              --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" \
+              --tests-project-name=libFileArbTests \
+              --no-install
+        env:
+          PYTHONPATH: FileArbDevOpsPython
 

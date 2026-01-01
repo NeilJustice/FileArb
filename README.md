@@ -6,7 +6,7 @@
 |VS2022 on windows-latest|<a href="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml/badge.svg"></a>|
 |GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileArb"><img src="https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>|
 
-FileArb is a cross-platform C++23 command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
+FileArb is a C++23 command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
 
 Three use cases for FileArb:
 

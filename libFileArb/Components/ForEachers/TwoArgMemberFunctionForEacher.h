@@ -1,5 +1,7 @@
 #pragma once
+#ifndef _LIBCPP_VERSION
 #include <execution>
+#endif
 
 namespace Utils
 {
@@ -31,7 +33,11 @@ namespace Utils
          Arg2Type arg2) const
       {
          const auto boundConstMemberFunction = bind(constMemberFunction, constClassPointer, placeholders::_1, arg2);
+#ifdef _LIBCPP_VERSION
+         for_each(elements.cbegin(), elements.cend(), boundConstMemberFunction);
+#else
          for_each(std::execution::par_unseq, elements.cbegin(), elements.cend(), boundConstMemberFunction);
+#endif
       }
 
       virtual void CallConstMemberFunctionWithEachElementOptionallyInParallel(
@@ -70,7 +76,11 @@ namespace Utils
          Arg2Type arg2) const
       {
          const auto boundNonConstMemberFunction = bind(nonConstMemberFunction, nonConstClassPointer, placeholders::_1, arg2);
+#ifdef _LIBCPP_VERSION
+         for_each(elements.cbegin(), elements.cend(), boundNonConstMemberFunction);
+#else
          for_each(std::execution::par_unseq, elements.cbegin(), elements.cend(), boundNonConstMemberFunction);
+#endif
       }
 
       virtual void CallNonConstMemberFunctionWithEachElementOptionallyInParallel(

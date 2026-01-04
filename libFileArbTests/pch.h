@@ -7,6 +7,10 @@
    #include <memory>
    #include <thread>
    #include <unistd.h>
+   #ifdef _LIBCPP_VERSION
+      #include <algorithm>
+      #include <type_traits>
+   #endif
 #endif
 namespace fs = std::filesystem;
 using namespace std;

@@ -14,6 +14,10 @@
    #include <memory>
    #include <thread>
    #include <unistd.h>
+   #ifdef _LIBCPP_VERSION
+      #include <algorithm>
+      #include <type_traits>
+   #endif
 #elif defined _WIN32
    #define WIN32_LEAN_AND_MEAN
    #define NOGDI

@@ -27,8 +27,10 @@ namespace Utils
    #endif
       , _call_fclose(fclose)
       , _call_fs_create_directories_as_assignable_function_overload_pointer(fs::create_directories)
+      , _call_fs_create_directories(_call_fs_create_directories_as_assignable_function_overload_pointer)
       , _call_fwrite(fwrite)
       , _call_get_fs_current_path_as_assignable_function_overload_pointer(fs::current_path)
+      , _call_get_fs_current_path(_call_get_fs_current_path_as_assignable_function_overload_pointer)
       // Function Callers
       , _caller_CreateBinaryOrTextFile(make_unique<_caller_CreateBinaryOrTextFileType>())
       , _caller_OpenFile(make_unique<_caller_OpenFileType>())
@@ -36,8 +38,6 @@ namespace Utils
       , _asserter(make_unique<Asserter>())
       , _errorCodeTranslator(make_unique<Utils::ErrorCodeTranslator>())
    {
-      _call_fs_create_directories = _call_fs_create_directories_as_assignable_function_overload_pointer;
-      _call_get_fs_current_path = _call_get_fs_current_path_as_assignable_function_overload_pointer;
    }
 
    FileSystem::~FileSystem()

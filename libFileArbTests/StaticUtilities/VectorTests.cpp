@@ -11,17 +11,17 @@ EVIDENCE
 
 TEST(FromArgcArgv_ReturnsArgsVector)
 {
-   const char* const chars1[] = { "ExePath" };
-   const vector<string> expectedArgsA = { "ExePath" };
-   VECTORS_ARE_EQUAL(expectedArgsA, Utils::Vector::FromArgcArgv(1, const_cast<char**>(chars1)));
+   const array<const char*, 1> chars1 { "ExePath" };
+   const vector<string> expectedArgsA { "ExePath" };
+   VECTORS_ARE_EQUAL(expectedArgsA, Utils::Vector::FromArgcArgv(1, const_cast<char**>(chars1.data())));
 
-   const char* const chars2[] = { "ExePath", "Arg1" };
-   const vector<string> expectedArgsB = { "ExePath", "Arg1" };
-   VECTORS_ARE_EQUAL(expectedArgsB, Utils::Vector::FromArgcArgv(2, const_cast<char**>(chars2)));
+   const array<const char*, 2> chars2 { "ExePath", "Arg1" };
+   const vector<string> expectedArgsB { "ExePath", "Arg1" };
+   VECTORS_ARE_EQUAL(expectedArgsB, Utils::Vector::FromArgcArgv(2, const_cast<char**>(chars2.data())));
 
-   const char* const chars3[] = { "ExePath", "Arg1", "Arg2" };
-   const vector<string> expectedArgsC = { "ExePath", "Arg1", "Arg2" };
-   VECTORS_ARE_EQUAL(expectedArgsC, Utils::Vector::FromArgcArgv(3, const_cast<char**>(chars3)));
+   const array<const char*, 3> chars3 { "ExePath", "Arg1", "Arg2" };
+   const vector<string> expectedArgsC { "ExePath", "Arg1", "Arg2" };
+   VECTORS_ARE_EQUAL(expectedArgsC, Utils::Vector::FromArgcArgv(3, const_cast<char**>(chars3.data())));
 }
 
 TEST(Join_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)

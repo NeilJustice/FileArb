@@ -12,15 +12,14 @@ class Class
 public:
    bool doThrowException = false;
    vector<ArgumentType> calls;
-   int exitCode = 0;
+   int exitCode;
 
    string exceptionWhat;
    vector<pair<string, ArgumentType>> exceptionHandlerCalls;
-   int exceptionHandlerExitCode = 0;
+   int exceptionHandlerExitCode;
 
    Class()
-      : doThrowException(false)
-      , exitCode(ZenUnit::Random<int>())
+      : exitCode(ZenUnit::Random<int>())
       , exceptionWhat(ZenUnit::Random<string>())
       , exceptionHandlerExitCode(ZenUnit::Random<int>())
    {

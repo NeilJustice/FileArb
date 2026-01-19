@@ -29,7 +29,7 @@ FileArbProgram::~FileArbProgram()
 {
 }
 
-int FileArbProgram::Main(int argc, char* argv[])
+int FileArbProgram::Main(int argc, char* argv[]) // NOLINT
 {
    if (argc == 1)
    {

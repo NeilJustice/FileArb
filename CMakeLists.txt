@@ -9,10 +9,15 @@ if(UNIX)
          -Wno-alloca \
          -Wno-c++98-compat \
          -Wno-c++98-compat-pedantic \
+         -Wno-covered-switch-default \
+         -Wno-deprecated-copy-with-dtor \
          -Wno-disabled-macro-expansion \
          -Wno-exit-time-destructors \
          -Wno-extra-semi-stmt \
          -Wno-global-constructors \
+         -Wno-gnu-zero-variadic-macro-arguments \
+         -Wno-header-hygiene \
+         -Wno-missing-noreturn \
          -Wno-missing-variable-declarations \
          -Wno-padded \
          -Wno-reserved-identifier \
@@ -20,7 +25,11 @@ if(UNIX)
          -Wno-switch-enum \
          -Wno-thread-safety-negative \
          -Wno-unsafe-buffer-usage \
+         -Wno-unused-template \
          -Wno-weak-vtables")
+      if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 21.0.0)
+         append(CMAKE_CXX_FLAGS "-Wno-nrvo")
+      endif()
    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
       set(CMAKE_CXX_FLAGS "-std=c++2b -Wall -Wextra -pedantic -Werror")
    endif()
@@ -34,6 +43,11 @@ if(UNIX)
    endif()
    if(ClangTidyMode)
       set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+      include(ProcessorCount)
+      ProcessorCount(NumberOfCores)
+      add_custom_target(clang-tidy COMMAND
+         find -name "*.cpp" -not -path "*/CMakeFiles/*" -print0 | xargs -0 -n 1 -P ${NumberOfCores} -t clang-tidy -p ${CMAKE_BUILD_TYPE} -config-file=/code/CMakeUtils/clang-tidy-config.txt -extra-arg=-std=c++2b -extra-arg=-Wno-unknown-warning-option
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} VERBATIM USES_TERMINAL)
       message("ClangTidyMode enabled: CMAKE_EXPORT_COMPILE_COMMANDS set to ON")
    elseif(ClangUndefinedBehaviorSanitizerMode)
       replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g" "")
@@ -74,10 +88,3 @@ add_subdirectory(libFileArbTests)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo")
 
-if(UNIX)
-   include(ProcessorCount)
-   ProcessorCount(NumberOfCores)
-   add_custom_target(clang-tidy COMMAND
-      find -name "*.cpp" -not -path "*/CMakeFiles/*" -print0 | xargs -0 -n 1 -P ${NumberOfCores} -t clang-tidy -p ${CMAKE_BUILD_TYPE}
-      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} VERBATIM USES_TERMINAL)
-endif()

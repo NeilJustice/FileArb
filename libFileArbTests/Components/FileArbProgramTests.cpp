@@ -58,7 +58,7 @@ TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
    _consoleMock->NakedWriteLineMock.Expect();
    const string exePath = ZenUnit::Random<string>();
    const string fileArbIniPath = ZenUnit::Random<string>();
-   const char* argv[] = { exePath.c_str(), fileArbIniPath.c_str() };
+   const char* argv[] = { exePath.c_str(), fileArbIniPath.c_str() }; // NOLINT
    //
    const int exitCode = _fileArbProgram.Main(1, const_cast<char**>(argv));
    //
@@ -82,7 +82,7 @@ TEST(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExitCod
    const string exePath = ZenUnit::Random<string>();
    const string fileArbIniPath = ZenUnit::Random<string>();
    const int argc = ZenUnit::RandomNotEqualTo<int>(1);
-   const char* argv[] = { exePath.c_str(), fileArbIniPath.c_str() };
+   const char* argv[] = { exePath.c_str(), fileArbIniPath.c_str() }; // NOLINT
    //
    const int returnedSubProgramExitCode = _fileArbProgram.Main(argc, const_cast<char**>(argv));
    //
@@ -90,7 +90,7 @@ TEST(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExitCod
    const string expectedExitCodeLine = Utils::String::ConcatValues("ExitCode: ", subProgramExitCode);
    METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
-   METALMOCKTHEN(_call_Vector_FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)))).Then(
+   METALMOCKTHEN(_call_Vector_FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)))).Then( // NOLINT
    METALMOCKTHEN(_nonVoidOneArgTryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.CalledOnceWith(
       &_fileArbProgram, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(

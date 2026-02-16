@@ -27,7 +27,7 @@ x64/
 *.dat
 *.db
 *.opendb
-*.sln
+*.slnx
 !FileArbDevOpsPython.sln
 *.suo
 *.filters

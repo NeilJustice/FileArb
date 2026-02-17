@@ -28,7 +28,6 @@ x64/
 *.db
 *.opendb
 *.slnx
-!FileArbDevOpsPython.sln
 *.suo
 *.filters
 *.ipch

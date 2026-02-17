@@ -1,8 +1,5 @@
-$env:PYTHONPATH="FileArbDevOpsPython"
-python.exe -u FileArbDevOpsPython\FileArbDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
+WindowsCPlusPlusBuilder.exe build-cpp-program `
    --solution-name=FileArb `
-   --cmake-build-type=Debug `
-   --tests-project=libFileArbTests `
-   --cmake-definitions="" `
-   --no-install
+   --configuration=Debug `
+   --install=false
 exit $LastExitCode

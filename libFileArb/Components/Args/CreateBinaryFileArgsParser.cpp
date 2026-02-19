@@ -6,7 +6,7 @@
 CreateBinaryFileArgsParser::CreateBinaryFileArgsParser()
    // Constant Components
    : _bytesStringConverter(make_unique<BytesStringConverter>())
-   , _docoptParser(make_unique<Utils::DocoptParser>())
+   , _docoptParser(make_unique<DocoptParser>())
    , _fileNamePrefixAndExtensionGetter(make_unique<FileNamePrefixAndExtensionGetter>())
 {
 }
@@ -15,7 +15,7 @@ CreateBinaryFileArgsParser::~CreateBinaryFileArgsParser()
 {
 }
 
-FileArbArgs CreateBinaryFileArgsParser::ParseArgs(const map<string, docopt::Value>& docoptArgs, string_view commandLine) const
+FileArbArgs CreateBinaryFileArgsParser::ParseArgs(const map<string, docopt::value>& docoptArgs, string_view commandLine) const
 {
    FileArbArgs fileArbArgs;
    fileArbArgs.commandLine = commandLine;

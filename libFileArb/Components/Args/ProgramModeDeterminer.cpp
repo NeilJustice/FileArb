@@ -5,7 +5,7 @@
 
 ProgramModeDeterminer::ProgramModeDeterminer()
    // Constant Components
-   : _docoptParser(make_unique<Utils::DocoptParser>())
+   : _docoptParser(make_unique<DocoptParser>())
 {
 }
 
@@ -14,10 +14,10 @@ ProgramModeDeterminer::~ProgramModeDeterminer()
 }
 
 ProgramMode ProgramModeDeterminer::DetermineProgramMode(
-   const map<string, docopt::Value>& docoptArgs_create_binary_file,
-   const map<string, docopt::Value>& docoptArgs_create_text_file,
-   const map<string, docopt::Value>& docoptArgs_create_binary_files,
-   const map<string, docopt::Value>& docoptArgs_create_text_files) const
+   const map<string, docopt::value>& docoptArgs_create_binary_file,
+   const map<string, docopt::value>& docoptArgs_create_text_file,
+   const map<string, docopt::value>& docoptArgs_create_binary_files,
+   const map<string, docopt::value>& docoptArgs_create_text_files) const
 {
    if (!docoptArgs_create_binary_file.empty())
    {

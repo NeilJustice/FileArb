@@ -6,10 +6,11 @@ class CreateTextFileArgsParser
    friend class CreateTextFileArgsParserTests;
 private:
    // Constant Components
-   unique_ptr<const Utils::DocoptParser> _docoptParser;
+   unique_ptr<const DocoptParser> _docoptParser;
    unique_ptr<const FileNamePrefixAndExtensionGetter> _fileNamePrefixAndExtensionGetter;
 public:
    CreateTextFileArgsParser();
    virtual ~CreateTextFileArgsParser();
-   virtual FileArbArgs ParseArgs(const map<string, docopt::Value>& docoptArgs, string_view commandLine) const;
+
+   virtual FileArbArgs ParseArgs(const map<string, docopt::value>& docoptArgs, string_view commandLine) const;
 };

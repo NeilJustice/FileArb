@@ -21,7 +21,7 @@ ArgsParser::ArgsParser()
    , _createTextFileArgsParser(make_unique<CreateTextFileArgsParser>())
    , _createBinaryFilesArgsParser(make_unique<CreateBinaryFilesArgsParser>())
    , _createTextFilesArgsParser(make_unique<CreateTextFilesArgsParser>())
-   , _docoptParser(make_unique<Utils::DocoptParser>())
+   , _docoptParser(make_unique<DocoptParser>())
    , _programModeDeterminer(make_unique<ProgramModeDeterminer>())
 {
 }
@@ -40,17 +40,17 @@ FileArbArgs ArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
    const string workingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
    _console->ThreadIdWriteLineWithColor(workingDirectoryMessage, Color::White);
 
-   const map<string, docopt::Value> docoptArgs_create_binary_file =
-      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs);
+   const map<string, docopt::value> docoptArgs_create_binary_file =
+      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs, false);
 
-   const map<string, docopt::Value> docoptArgs_create_text_file =
-      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_text_file, stringArgs);
+   const map<string, docopt::value> docoptArgs_create_text_file =
+      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_text_file, stringArgs, false);
 
-   const map<string, docopt::Value> docoptArgs_create_binary_files =
-      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs);
+   const map<string, docopt::value> docoptArgs_create_binary_files =
+      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs, false);
 
-   const map<string, docopt::Value> docoptArgs_create_text_files =
-      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_text_files, stringArgs);
+   const map<string, docopt::value> docoptArgs_create_text_files =
+      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_text_files, stringArgs, false);
 
    const ProgramMode programMode = _programModeDeterminer->DetermineProgramMode(
       docoptArgs_create_binary_file,

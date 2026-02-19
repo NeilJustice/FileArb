@@ -4,6 +4,6 @@
 class CreateBinaryFileArgsParserMock : public Metal::Mock<CreateBinaryFileArgsParser>
 {
 public:
-   using DocoptMapType = map<string, docopt::Value>;
+   using DocoptMapType = map<string, docopt::value>;
    METALMOCK_NONVOID2_CONST(FileArbArgs, ParseArgs, const DocoptMapType&, string_view)
 };

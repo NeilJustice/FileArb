@@ -2,7 +2,6 @@
 namespace Utils
 {
    class Console;
-   class DocoptParser;
    class FileSystem;
 }
 class BytesStringConverter;
@@ -10,6 +9,7 @@ class CreateBinaryFileArgsParser;
 class CreateBinaryFilesArgsParser;
 class CreateTextFileArgsParser;
 class CreateTextFilesArgsParser;
+class DocoptParser;
 class ProgramModeDeterminer;
 struct FileArbArgs;
 
@@ -27,10 +27,11 @@ private:
    unique_ptr<const CreateTextFileArgsParser> _createTextFileArgsParser;
    unique_ptr<const CreateBinaryFilesArgsParser> _createBinaryFilesArgsParser;
    unique_ptr<const CreateTextFilesArgsParser> _createTextFilesArgsParser;
-   unique_ptr<const Utils::DocoptParser> _docoptParser;
+   unique_ptr<const DocoptParser> _docoptParser;
    unique_ptr<const ProgramModeDeterminer> _programModeDeterminer;
 public:
    ArgsParser();
    virtual ~ArgsParser();
+
    virtual FileArbArgs ParseStringArgs(const vector<string>& stringArgs) const;
 };

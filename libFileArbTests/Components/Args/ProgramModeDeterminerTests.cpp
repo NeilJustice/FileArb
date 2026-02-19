@@ -12,20 +12,20 @@ EVIDENCE
 
 ProgramModeDeterminer _programModeDeterminer;
 // Constant Components
-Utils::DocoptParserMock* _docoptParserMock = nullptr;
+DocoptParserMock* _docoptParserMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _programModeDeterminer._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
+   _programModeDeterminer._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
 }
 
 TEST(DetermineProgramMode_ProgramModeIsCreateBinaryFile_ReturnsProgramModeCreateBinaryFile)
 {
-   const map<string, docopt::Value> docoptArgs_create_binary_file = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::Value>();
-   const map<string, docopt::Value> docoptArgs_create_text_file;
-   const map<string, docopt::Value> docoptArgs_create_binary_files;
-   const map<string, docopt::Value> docoptArgs_create_text_files;
+   const map<string, docopt::value> docoptArgs_create_binary_file = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
+   const map<string, docopt::value> docoptArgs_create_text_file;
+   const map<string, docopt::value> docoptArgs_create_binary_files;
+   const map<string, docopt::value> docoptArgs_create_text_files;
    //
    const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
       docoptArgs_create_binary_file,
@@ -38,10 +38,10 @@ TEST(DetermineProgramMode_ProgramModeIsCreateBinaryFile_ReturnsProgramModeCreate
 
 TEST(DetermineProgramMode_ProgramModeIsCreateTextFile_ReturnsProgramModeCreateTextFile)
 {
-   const map<string, docopt::Value> docoptArgs_create_binary_file;
-   const map<string, docopt::Value> docoptArgs_create_text_file = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::Value>();
-   const map<string, docopt::Value> docoptArgs_create_binary_files;
-   const map<string, docopt::Value> docoptArgs_create_text_files;
+   const map<string, docopt::value> docoptArgs_create_binary_file;
+   const map<string, docopt::value> docoptArgs_create_text_file = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
+   const map<string, docopt::value> docoptArgs_create_binary_files;
+   const map<string, docopt::value> docoptArgs_create_text_files;
    //
    const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
       docoptArgs_create_binary_file,
@@ -54,10 +54,10 @@ TEST(DetermineProgramMode_ProgramModeIsCreateTextFile_ReturnsProgramModeCreateTe
 
 TEST(DetermineProgramMode_ProgramModeIsCreateBinaryFiles_ReturnsProgramModeCreateBinaryFiles)
 {
-   const map<string, docopt::Value> docoptArgs_create_binary_file;
-   const map<string, docopt::Value> docoptArgs_create_text_file;
-   const map<string, docopt::Value> docoptArgs_create_binary_files = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::Value>();
-   const map<string, docopt::Value> docoptArgs_create_text_files;
+   const map<string, docopt::value> docoptArgs_create_binary_file;
+   const map<string, docopt::value> docoptArgs_create_text_file;
+   const map<string, docopt::value> docoptArgs_create_binary_files = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
+   const map<string, docopt::value> docoptArgs_create_text_files;
    //
    const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
       docoptArgs_create_binary_file,
@@ -70,10 +70,10 @@ TEST(DetermineProgramMode_ProgramModeIsCreateBinaryFiles_ReturnsProgramModeCreat
 
 TEST(DetermineProgramMode_ProgramModeIsCreateTextFiles_ReturnsProgramModeCreateTextFiles)
 {
-   const map<string, docopt::Value> docoptArgs_create_binary_file;
-   const map<string, docopt::Value> docoptArgs_create_text_file;
-   const map<string, docopt::Value> docoptArgs_create_binary_files;
-   const map<string, docopt::Value> docoptArgs_create_text_files = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::Value>();
+   const map<string, docopt::value> docoptArgs_create_binary_file;
+   const map<string, docopt::value> docoptArgs_create_text_file;
+   const map<string, docopt::value> docoptArgs_create_binary_files;
+   const map<string, docopt::value> docoptArgs_create_text_files = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
    //
    const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
       docoptArgs_create_binary_file,
@@ -86,10 +86,10 @@ TEST(DetermineProgramMode_ProgramModeIsCreateTextFiles_ReturnsProgramModeCreateT
 
 TEST(DetermineProgramMode_ProgramModeIsInvalid_ThrowsInvalidArgument)
 {
-   const map<string, docopt::Value> docoptArgs_create_binary_file;
-   const map<string, docopt::Value> docoptArgs_create_text_file;
-   const map<string, docopt::Value> docoptArgs_create_binary_files;
-   const map<string, docopt::Value> docoptArgs_create_text_files;
+   const map<string, docopt::value> docoptArgs_create_binary_file;
+   const map<string, docopt::value> docoptArgs_create_text_file;
+   const map<string, docopt::value> docoptArgs_create_binary_files;
+   const map<string, docopt::value> docoptArgs_create_text_files;
    //
    const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
       docoptArgs_create_binary_file,

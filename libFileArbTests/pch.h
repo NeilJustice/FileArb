@@ -18,7 +18,7 @@ using namespace std;
 #include "ZenUnitAndMetalMock/MetalMock.h"
 
 // libFileArb Compiler
-#include "libFileArb/Compiler/CompilerMacros.h"
+#include "libFileArb/Compiler/CompilerHints.h"
 // libFileArb Enums
 #include "libFileArb/Enums/Color.h"
 #include "libFileArb/Enums/ProgramMode.h"

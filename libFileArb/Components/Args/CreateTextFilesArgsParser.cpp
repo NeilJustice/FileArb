@@ -4,7 +4,7 @@
 
 CreateTextFilesArgsParser::CreateTextFilesArgsParser()
    // Constant Components
-   : _docoptParser(make_unique<Utils::DocoptParser>())
+   : _docoptParser(make_unique<DocoptParser>())
    , _fileNamePrefixAndExtensionGetter(make_unique<FileNamePrefixAndExtensionGetter>())
 {
 }
@@ -13,7 +13,7 @@ CreateTextFilesArgsParser::~CreateTextFilesArgsParser()
 {
 }
 
-FileArbArgs CreateTextFilesArgsParser::ParseArgs(const map<string, docopt::Value>& docoptArgs, string_view commandLine) const
+FileArbArgs CreateTextFilesArgsParser::ParseArgs(const map<string, docopt::value>& docoptArgs, string_view commandLine) const
 {
    FileArbArgs fileArbArgs;
    fileArbArgs.commandLine = commandLine;

@@ -1,19 +1,19 @@
 #pragma once
-#include "libFileArb/Components/Docopt/docopt.h"
+#include "libFileArb/docopt/docopt.h"
 
 namespace ZenUnit
 {
    template<>
-   inline docopt::Value Random()
+   inline docopt::value Random()
    {
       const long randomLong = ZenUnit::Random<long>();
       if (randomLong % 2 == 0)
       {
-         docopt::Value randomLongDocoptValue(randomLong);
+         docopt::value randomLongDocoptValue(randomLong);
          return randomLongDocoptValue;
       }
       const string randomString = ZenUnit::Random<string>();
-      docopt::Value randomStringDocoptValue(randomString);
+      docopt::value randomStringDocoptValue(randomString);
       return randomStringDocoptValue;
    }
 }

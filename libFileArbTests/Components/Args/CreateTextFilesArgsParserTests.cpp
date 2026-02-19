@@ -7,13 +7,13 @@ EVIDENCE
 
 CreateTextFilesArgsParser _createTextFilesArgsParser;
 // Constant Components
-Utils::DocoptParserMock* _docoptParserMock = nullptr;
+DocoptParserMock* _docoptParserMock = nullptr;
 FileNamePrefixAndExtensionGetterMock* _fileNamePrefixAndExtensionGetterMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _createTextFilesArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
+   _createTextFilesArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
    _createTextFilesArgsParser._fileNamePrefixAndExtensionGetter.reset(_fileNamePrefixAndExtensionGetterMock = new FileNamePrefixAndExtensionGetterMock);
 }
 
@@ -42,7 +42,7 @@ TEST(ParseArgs_ParsesCreateTextFilesArgs_ReturnsFileArbArgs)
       parallel,
       quiet);
 
-   const map<string, docopt::Value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    const string commandLine = ZenUnit::Random<string>();
    //
    const FileArbArgs fileArbArgs = _createTextFilesArgsParser.ParseArgs(docoptArgs, commandLine);

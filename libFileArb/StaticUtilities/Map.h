@@ -1,51 +1,48 @@
 #pragma once
+#include "libFileArb/Compiler/CompilerHints.h"
 
-namespace Utils
+class Map
 {
-   class Map
+public:
+   template<
+      template<typename...>
+      typename MapType,
+   typename KeyType, typename ValueType, typename... Types>
+   static const ValueType& At(const MapType<KeyType, ValueType, Types...>& m, const KeyType& key)
    {
-   public:
-      template<
-         template<typename...>
-         typename MapType,
-         typename KeyType, typename ValueType, typename... Types>
-      static const ValueType& At(const MapType<KeyType, ValueType, Types...>& m, const KeyType& key)
+      try
       {
-         try
-         {
-            const ValueType& value = m.at(key);
-            return value;
-         }
-         catch (const std::out_of_range&)
-         {
-            ThrowOutOfRangeExceptionWithMessageIncludingTheKeyNotFound(key);
-         }
+         const ValueType& Value = m.at(key);
+         return Value;
       }
+      // When std::map::at() throws out_of_range, its what() text reads just "key not found",
+      // not including in the message the key not found.
+      catch (const std::out_of_range&)
+      {
+         ThrowKeyNotFound(key);
+      }
+   }
 
-      template<
-         template<typename...>
-         typename MapType,
-         typename KeyType, typename ValueType>
-      static pair<bool, ValueType> TryGetValue(const MapType<KeyType, ValueType>& m, const KeyType& key)
+   template<typename MapType, typename KeyType, typename ValueType>
+   static bool TryGetValue(const MapType& m, const KeyType& key, ValueType& outValue)
+   {
+      const typename MapType::const_iterator findIter = m.find(key);
+      if (findIter != m.end())
       {
-         const typename MapType<KeyType, ValueType>::const_iterator findIter = m.find(key);
-         if (findIter != m.end())
-         {
-            pair<bool, ValueType> trueAndValueInMap = {true, findIter->second};
-            return trueAndValueInMap;
-         }
-         pair<bool, ValueType> falseAndDefaultValue = {false, ValueType{}};
-         return falseAndDefaultValue;
+         outValue = findIter->second;
+         return true;
       }
+      return false;
+   }
 
-   private:
-      template<typename KeyType>
-      static NORETURN NOINLINE void ThrowOutOfRangeExceptionWithMessageIncludingTheKeyNotFound(const KeyType& key)
-      {
-         std::ostringstream oss;
-         oss << "Key not found in map: [" << key << "]";
-         const std::string what(oss.str());
-         throw std::out_of_range(what);
-      }
-   };
-}
+   Map() = delete;
+private:
+   template<typename KeyType>
+   [[noreturn]] static NOINLINE void ThrowKeyNotFound(const KeyType& key)
+   {
+      std::ostringstream oss;
+      oss << "Error: Key not found in map: [" << key << "]";
+      const std::string what(oss.str());
+      throw std::out_of_range(what);
+   }
+};

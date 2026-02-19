@@ -39,15 +39,16 @@ int FileArbProgram::Main(int argc, char* argv[]) // NOLINT
    _stopwatch->Start();
    const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
 
-   int subProgramExitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallNonConstMemberFunction(
-      this, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler);
+   int exitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallNonConstMemberFunction(
+      this, &FileArbProgram::Run, stringArgs,
+      &FileArbProgram::ExceptionHandler);
 
    const string runtimeInSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string durationLine = Utils::String::ConcatStrings("TotalDuration: ", runtimeInSeconds, " seconds");
    _console->ThreadIdWriteLine(durationLine);
-   const string exitCodeLine = Utils::String::ConcatValues("ExitCode: ", subProgramExitCode);
+   const string exitCodeLine = Utils::String::ConcatValues("ExitCode: ", exitCode);
    _console->ThreadIdWriteLine(exitCodeLine);
-   return subProgramExitCode;
+   return exitCode;
 }
 
 int FileArbProgram::Run(const vector<string>& stringArgs)

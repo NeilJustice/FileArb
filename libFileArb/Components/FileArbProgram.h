@@ -28,6 +28,7 @@ private:
 public:
    FileArbProgram();
    virtual ~FileArbProgram();
+
    int Main(int argc, char* argv[]);
 private:
    int Run(const vector<string>& stringArgs);

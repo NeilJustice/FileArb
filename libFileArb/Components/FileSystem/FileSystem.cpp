@@ -3,7 +3,6 @@
 #include "libFileArb/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileArb/Components/FileSystem/FCloseDeleter.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
-#include "libFileArb/Components/FileSystem/FileSystemExceptions.h"
 #include "libFileArb/Components/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
 #include "libFileArb/Components/FunctionCallers/Member/VoidFourArgMemberFunctionCaller.h"
 

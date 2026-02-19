@@ -36,14 +36,23 @@ private:
 public:
    FileCreator();
    virtual ~FileCreator();
+
    virtual void CreateFiles(const string& fileTextOrBytes, const FileArbArgs& args) const;
    virtual void CreateRandomBinaryFiles(const vector<fs::path>& allFilePaths, const FileArbArgs& args) const;
    virtual void CreateRandomTextFiles(const vector<fs::path>& allFilePaths, const FileArbArgs& args) const;
 private:
    void CreateNumberedFileInDirectory(
-      size_t callIndex, const fs::path& directoryPath, const string& fileTextOrBytes, const FileArbArgs& args) const;
+      size_t callIndex,
+      const fs::path& directoryPath,
+      const string& fileTextOrBytes,
+      const FileArbArgs& args) const;
+
    void CreateRandomBinaryFile(const fs::path& filePath, const FileArbArgs& args) const;
+
    void CreateRandomTextFile(const fs::path& filePath, const FileArbArgs& args) const;
+
    void CreateSequentiallyNumberedFilesInNumberedDirectory(
-      size_t callIndex, const string& fileTextOrBytes, const FileArbArgs& args) const;
+      size_t callIndex,
+      const string& fileTextOrBytes,
+      const FileArbArgs& args) const;
 };

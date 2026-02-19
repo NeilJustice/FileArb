@@ -12,5 +12,6 @@ private:
 public:
    CreateBinaryFileSubProgram();
    virtual ~CreateBinaryFileSubProgram() override;
+
    int Run(const FileArbArgs& args) override;
 };

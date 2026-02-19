@@ -17,5 +17,6 @@ protected:
 public:
    FileArbSubProgram();
    virtual ~FileArbSubProgram();
+
    virtual int Run(const FileArbArgs& args);
 };

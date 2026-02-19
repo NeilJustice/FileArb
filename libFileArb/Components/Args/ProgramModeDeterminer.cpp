@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/ProgramModeDeterminer.h"
-#include "libFileArb/Components/Console/Console.h"
 #include "libFileArb/Components/Docopt/DocoptParser.h"
 
 ProgramModeDeterminer::ProgramModeDeterminer()

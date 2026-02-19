@@ -11,5 +11,6 @@ private:
 public:
    CreateTextFileSubProgram();
    virtual ~CreateTextFileSubProgram() override;
+
    int Run(const FileArbArgs& args) override;
 };

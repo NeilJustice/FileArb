@@ -57,7 +57,10 @@ void FileCreator::CreateRandomTextFiles(const vector<fs::path>& allFilePaths, co
 // Private Functions
 
 void FileCreator::CreateNumberedFileInDirectory(
-   size_t callIndex, const fs::path& directoryPath, const string& fileTextOrBytes, const FileArbArgs& args) const
+   size_t callIndex,
+   const fs::path& directoryPath,
+   const string& fileTextOrBytes,
+   const FileArbArgs& args) const
 {
    const size_t fileNumber = callIndex + 1;
    shared_ptr<Utils::Stopwatch> threadUniqueCreateFileStopwatch;
@@ -111,7 +114,9 @@ void FileCreator::CreateRandomTextFile(const fs::path& filePath, const FileArbAr
 }
 
 void FileCreator::CreateSequentiallyNumberedFilesInNumberedDirectory(
-   size_t callIndex, const string& fileTextOrBytes, const FileArbArgs& args) const
+   size_t callIndex,
+   const string& fileTextOrBytes,
+   const FileArbArgs& args) const
 {
    shared_ptr<Utils::Stopwatch> threadUniqueCreateFileStopwatch;
    if (!args.quiet)

@@ -14,6 +14,7 @@ private:
 public:
    TextFileTextMaker();
    virtual ~TextFileTextMaker();
+
    virtual string MakeNonRandomFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const;
    virtual string MakeRandomFileText(size_t numberOfLines, size_t numberOfCharactersPerLine) const;
 };

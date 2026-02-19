@@ -18,6 +18,7 @@ namespace docopt
       Empty,
       Bool,
       Long,
+      SizeT,
       String,
       StringList
    };
@@ -27,11 +28,33 @@ namespace docopt
    /// This type can be one of: {bool, long, string, vector<string>}, or empty.
    struct value
    {
+      union Variant
+      {
+         Variant() {}
+         ~Variant() {}
+
+         bool boolValue;
+         long longValue;
+         size_t sizeTValue = 0ULL;
+         std::string strValue;
+         std::vector<std::string> strList;
+      };
+
+      Kind kind_ = Kind::Empty;
+      Variant variant_{};
+
       value() {}
       value(std::string);
       value(std::vector<std::string>);
 
       explicit value(bool);
+
+      explicit value(size_t sizeTValue)
+         : kind_(Kind::SizeT)
+      {
+         variant_.sizeTValue = sizeTValue;
+      }
+
       explicit value(long);
       explicit value(int v)
          : value(static_cast<long>(v))
@@ -71,6 +94,11 @@ namespace docopt
          return kind_ == Kind::Long;
       }
 
+      bool isSizeT() const
+      {
+         return kind_ == Kind::SizeT;
+      }
+
       bool isStringList() const
       {
          return kind_ == Kind::StringList;
@@ -88,17 +116,6 @@ namespace docopt
       friend bool operator!=(const value&, const value&);
 
    private:
-      union Variant
-      {
-         Variant() {}
-         ~Variant() {}
-
-         bool boolValue;
-         long longValue;
-         std::string strValue;
-         std::vector<std::string> strList;
-      };
-
       static const char* kindAsString(Kind kind)
       {
          switch (kind)
@@ -124,9 +141,6 @@ namespace docopt
          error += kindAsString(kind_);
          throw std::runtime_error(std::move(error));
       }
-
-      Kind kind_ = Kind::Empty;
-      Variant variant_{};
    };
 
    std::ostream& operator<<(std::ostream&, const value&);
@@ -195,6 +209,11 @@ namespace docopt
          variant_.longValue = other.variant_.longValue;
          break;
       }
+      case Kind::SizeT:
+      {
+         variant_.sizeTValue = other.variant_.sizeTValue;
+         break;
+      }
       case Kind::Empty:
       default:
       {
@@ -228,6 +247,11 @@ namespace docopt
          variant_.longValue = other.variant_.longValue;
          break;
       }
+      case Kind::SizeT:
+      {
+         variant_.sizeTValue = other.variant_.sizeTValue;
+         break;
+      }
       case Kind::Empty:
       default:
       {
@@ -253,6 +277,7 @@ namespace docopt
       case Kind::Empty:
       case Kind::Bool:
       case Kind::Long:
+      case Kind::SizeT:
       default:
       {
          // trivial dtor
@@ -273,7 +298,6 @@ namespace docopt
       // these two statements throwing, which gives us a consistency guarantee.
       this->~value();
       new (this) value(std::move(other));
-
       return *this;
    }
 
@@ -304,6 +328,11 @@ namespace docopt
       case Kind::Long:
       {
          return std::hash<long>()(variant_.longValue);
+      }
+      case Kind::SizeT:
+      {
+         size_t hashCode = std::hash<size_t>()(variant_.sizeTValue);
+         return hashCode;
       }
       case Kind::Empty:
       default:
@@ -390,6 +419,10 @@ namespace docopt
       case Kind::Long:
       {
          return v1.variant_.longValue == v2.variant_.longValue;
+      }
+      case Kind::SizeT:
+      {
+         return v1.variant_.sizeTValue == v2.variant_.sizeTValue;
       }
       case Kind::Empty:
       default:

@@ -26,7 +26,7 @@ namespace
       const auto strEnd = str.find_last_not_of(whitespace);
       if (strEnd == std::string::npos)
       {
-         return {};	 // no content
+         return {}; // no content
       }
       str.erase(strEnd + 1);
       const auto strBegin = str.find_first_not_of(whitespace);

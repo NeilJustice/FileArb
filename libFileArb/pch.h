@@ -26,8 +26,6 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-// libFileArb Compiler
-#include "libFileArb/Compiler/CompilerHints.h"
 // libFileArb Enums
 #include "libFileArb/Enums/Color.h"
 #include "libFileArb/Enums/ProgramMode.h"

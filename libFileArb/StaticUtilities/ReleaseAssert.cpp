@@ -3,7 +3,7 @@
 
 namespace Utils
 {
-   [[noreturn]] NOINLINE static void ThrowLogicError(
+   [[noreturn]] static void ThrowLogicError(
       const char* predicateText,
       const char* filePath,
       long lineNumber,

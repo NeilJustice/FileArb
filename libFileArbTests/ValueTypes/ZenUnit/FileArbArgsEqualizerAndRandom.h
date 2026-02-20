@@ -9,7 +9,6 @@ namespace ZenUnit
    {
       static void AssertEqual(const FileArbArgs& expectedFileArbArgs, const FileArbArgs& actualFileArbArgs)
       {
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, commandLine);
          FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, programMode);
          FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, targetDirectoryPath);
          FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfDirectoriesToCreate);
@@ -29,7 +28,6 @@ namespace ZenUnit
    inline FileArbArgs TestableFileArbArgs(const RandomGenerator* randomGenerator)
    {
       FileArbArgs randomFileArbArgs;
-      randomFileArbArgs.commandLine = randomGenerator->String();
       randomFileArbArgs.programMode = static_cast<ProgramMode>(randomGenerator->Enum(static_cast<int>(ProgramMode::MaxValue)));
       randomFileArbArgs.targetDirectoryPath = randomGenerator->FilesystemPath();
       randomFileArbArgs.numberOfDirectoriesToCreate = randomGenerator->SizeT();

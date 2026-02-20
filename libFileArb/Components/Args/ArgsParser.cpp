@@ -46,22 +46,22 @@ FileArbArgs ArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
    {
       case ProgramMode::CreateBinaryFile:
       {
-         fileArbArgs = _createBinaryFileArgsParser->ParseArgs(docoptArgs, commandLine);
+         fileArbArgs = _createBinaryFileArgsParser->ParseArgs(docoptArgs);
          break;
       }
       case ProgramMode::CreateTextFile:
       {
-         fileArbArgs = _createTextFileArgsParser->ParseArgs(docoptArgs, commandLine);
+         fileArbArgs = _createTextFileArgsParser->ParseArgs(docoptArgs);
          break;
       }
       case ProgramMode::CreateBinaryFiles:
       {
-         fileArbArgs = _createBinaryFilesArgsParser->ParseArgs(docoptArgs, commandLine);
+         fileArbArgs = _createBinaryFilesArgsParser->ParseArgs(docoptArgs);
          break;
       }
       case ProgramMode::CreateTextFiles:
       {
-         fileArbArgs = _createTextFilesArgsParser->ParseArgs(docoptArgs, commandLine);
+         fileArbArgs = _createTextFilesArgsParser->ParseArgs(docoptArgs);
          break;
       }
       default:

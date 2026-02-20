@@ -10,7 +10,6 @@ EVIDENCE
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
 {
    ZENUNIT_EQUALIZER_TEST_SETUP(FileArbArgs);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, commandLine, ZenUnit::Random<string>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, programMode, ZenUnit::RandomNon0Enum<ProgramMode>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, targetDirectoryPath, ZenUnit::Random<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileArbArgs, numberOfDirectoriesToCreate, ZenUnit::RandomNon0<size_t>());
@@ -30,10 +29,11 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
 {
    ZenUnit::RandomGeneratorMock randomGeneratorMock;
 
-   const string commandLine = ZenUnit::Random<string>();
    const string fileNamePrefix = ZenUnit::Random<string>();
    const string fileExtension = ZenUnit::Random<string>();
-   randomGeneratorMock.StringMock.ReturnValues(commandLine, fileNamePrefix, fileExtension);
+   randomGeneratorMock.StringMock.ReturnValues(
+      fileNamePrefix,
+      fileExtension);
 
    const ProgramMode programMode = static_cast<ProgramMode>(randomGeneratorMock.EnumMock.ReturnRandom());
 
@@ -59,13 +59,12 @@ TEST(TestableFileArbArgs_ReturnsFileArbArgsWithAllRandomFields)
    //
    const FileArbArgs randomFileArbArgs = TestableFileArbArgs(&randomGeneratorMock);
    //
-   METALMOCK(randomGeneratorMock.StringMock.CalledNTimes(3));
+   METALMOCK(randomGeneratorMock.StringMock.CalledNTimes(2));
    METALMOCK(randomGeneratorMock.EnumMock.CalledOnceWith(static_cast<int>(ProgramMode::MaxValue)));
    METALMOCK(randomGeneratorMock.FilesystemPathMock.CalledOnce());
    METALMOCK(randomGeneratorMock.SizeTMock.CalledNTimes(5));
    METALMOCK(randomGeneratorMock.BoolMock.CalledNTimes(4));
    FileArbArgs expectedRandomFileArbArgs;
-   expectedRandomFileArbArgs.commandLine = commandLine;
    expectedRandomFileArbArgs.programMode = programMode;
    expectedRandomFileArbArgs.targetDirectoryPath = targetDirectoryPath;
    expectedRandomFileArbArgs.numberOfDirectoriesToCreate = numberOfDirectoriesToCreate;

@@ -14,5 +14,5 @@ public:
    CreateBinaryFilesArgsParser();
    virtual ~CreateBinaryFilesArgsParser();
 
-   virtual FileArbArgs ParseArgs(const map<string, docopt::value>& docoptArgs, string_view commandLine) const;
+   virtual FileArbArgs ParseArgs(const map<string, docopt::value>& docoptArgs) const;
 };

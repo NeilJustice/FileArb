@@ -14,7 +14,7 @@ public:
    CreateBinaryFileArgsParser();
    virtual ~CreateBinaryFileArgsParser();
 
-   virtual FileArbArgs ParseArgs(const map<string, docopt::value>& docoptArgs, string_view commandLine) const;
+   virtual FileArbArgs ParseArgs(const map<string, docopt::value>& docoptArgs) const;
 private:
    static pair<string, string> GetFileNamePrefixAndExtension(
       bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode);

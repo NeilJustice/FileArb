@@ -43,9 +43,8 @@ TEST(ParseArgs_ParsesCreateTextFilesArgs_ReturnsFileArbArgs)
       quiet);
 
    const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
-   const string commandLine = ZenUnit::Random<string>();
    //
-   const FileArbArgs fileArbArgs = _createTextFilesArgsParser.ParseArgs(docoptArgs, commandLine);
+   const FileArbArgs fileArbArgs = _createTextFilesArgsParser.ParseArgs(docoptArgs);
    //
    METALMOCK(_docoptParserMock->GetRequiredSizeTMock.CalledNTimes(4));
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledNTimes(3));
@@ -59,7 +58,6 @@ TEST(ParseArgs_ParsesCreateTextFilesArgs_ReturnsFileArbArgs)
    METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptArgs, "--parallel"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptArgs, "--quiet")));
    FileArbArgs expectedFileArbArgs;
-   expectedFileArbArgs.commandLine = commandLine;
    expectedFileArbArgs.programMode = ProgramMode::CreateTextFiles;
    expectedFileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
    expectedFileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;

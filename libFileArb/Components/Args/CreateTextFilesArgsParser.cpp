@@ -13,10 +13,9 @@ CreateTextFilesArgsParser::~CreateTextFilesArgsParser()
 {
 }
 
-FileArbArgs CreateTextFilesArgsParser::ParseArgs(const map<string, docopt::value>& docoptArgs, string_view commandLine) const
+FileArbArgs CreateTextFilesArgsParser::ParseArgs(const map<string, docopt::value>& docoptArgs) const
 {
    FileArbArgs fileArbArgs;
-   fileArbArgs.commandLine = commandLine;
    fileArbArgs.programMode = ProgramMode::CreateTextFiles;
 
    const pair<string, string> fileNamePrefixAndFileExtension =

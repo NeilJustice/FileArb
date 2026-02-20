@@ -15,10 +15,9 @@ CreateBinaryFileArgsParser::~CreateBinaryFileArgsParser()
 {
 }
 
-FileArbArgs CreateBinaryFileArgsParser::ParseArgs(const map<string, docopt::value>& docoptArgs, string_view commandLine) const
+FileArbArgs CreateBinaryFileArgsParser::ParseArgs(const map<string, docopt::value>& docoptArgs) const
 {
    FileArbArgs fileArbArgs;
-   fileArbArgs.commandLine = commandLine;
    fileArbArgs.programMode = ProgramMode::CreateBinaryFile;
 
    const pair<string, string> fileNamePrefixAndFileExtension =

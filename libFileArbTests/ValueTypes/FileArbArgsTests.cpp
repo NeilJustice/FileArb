@@ -10,7 +10,6 @@ TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    const FileArbArgs defaultFileArbArgs{};
    FileArbArgs expectedDefaultFileArbArgs{};
-   expectedDefaultFileArbArgs.commandLine = "";
    expectedDefaultFileArbArgs.programMode = ProgramMode::Unset;
    expectedDefaultFileArbArgs.targetDirectoryPath = fs::path();
    expectedDefaultFileArbArgs.numberOfDirectoriesToCreate = 0;

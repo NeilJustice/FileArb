@@ -5,7 +5,6 @@ struct FileArbArgs
    static const string CommandLineUsage;
 
    // Command line fields
-   string commandLine;
    ProgramMode programMode = ProgramMode::Unset;
    fs::path targetDirectoryPath;
    size_t numberOfDirectoriesToCreate = 0;

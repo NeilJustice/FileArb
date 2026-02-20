@@ -83,7 +83,7 @@ TEST(ParseStringArgs__CreateBinaryFile)
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs, false))).Then(
    METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(docoptArgs))).Then(
 
-   METALMOCKTHEN(_createBinaryFileArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs, commandLine)));
+   METALMOCKTHEN(_createBinaryFileArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs)));
 
    ARE_EQUAL(fileArbArgs, returnedFileArbArgs);
 }
@@ -109,7 +109,7 @@ TEST(ParseStringArgs__CreateTextFile)
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs, false))).Then(
    METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(docoptArgs))).Then(
 
-   METALMOCKTHEN(_createTextFileArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs, commandLine)));
+   METALMOCKTHEN(_createTextFileArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs)));
 
    ARE_EQUAL(fileArbArgs, returnedFileArbArgs);
 }
@@ -135,7 +135,7 @@ TEST(ParseStringArgs__CreateBinaryFiles)
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs, false))).Then(
    METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(docoptArgs))).Then(
 
-   METALMOCKTHEN(_createBinaryFilesArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs, commandLine)));
+   METALMOCKTHEN(_createBinaryFilesArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs)));
 
    ARE_EQUAL(fileArbArgs, returnedFileArbArgs);
 }
@@ -161,7 +161,7 @@ TEST(ParseStringArgs__CreateTextFiles)
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileArbArgs::CommandLineUsage, stringArgs, false))).Then(
    METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(docoptArgs))).Then(
 
-   METALMOCKTHEN(_createTextFilesArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs, commandLine)));
+   METALMOCKTHEN(_createTextFilesArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs)));
 
    ARE_EQUAL(fileArbArgs, returnedFileArbArgs);
 }

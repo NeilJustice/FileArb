@@ -36,9 +36,8 @@ TEST(ParseArgs_ParsesArgs_ReturnsFileArbArgs)
    const bool generateRandomBytes = _docoptParserMock->GetOptionalBoolMock.ReturnRandom();
 
    const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
-   const string commandLine = ZenUnit::Random<string>();
    //
-   const FileArbArgs fileArbArgs = _createBinaryFileArgsParser.ParseArgs(docoptArgs, commandLine);
+   const FileArbArgs fileArbArgs = _createBinaryFileArgsParser.ParseArgs(docoptArgs);
    //
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledNTimes(2));
    METALMOCKTHEN(_fileNamePrefixAndExtensionGetterMock->GetFileNamePrefixAndExtensionMock.CalledOnceWith(ProgramMode::CreateBinaryFile)).Then(
@@ -47,7 +46,6 @@ TEST(ParseArgs_ParsesArgs_ReturnsFileArbArgs)
    METALMOCKTHEN(_bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.CalledOnceWith(bytesString))).Then(
    METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--random-bytes")));
    FileArbArgs expectedFileArbArgs;
-   expectedFileArbArgs.commandLine = commandLine;
    expectedFileArbArgs.programMode = ProgramMode::CreateBinaryFile;
    expectedFileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
    expectedFileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;

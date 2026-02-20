@@ -33,9 +33,8 @@ TEST(ParseArgs_ParsesArgs_ReturnsFileArbArgs)
    const bool generateRandomBytes = _docoptParserMock->GetOptionalBoolMock.ReturnRandom();
 
    const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
-   const string commandLine = ZenUnit::Random<string>();
    //
-   const FileArbArgs fileArbArgs = _createTextFileArgsParser.ParseArgs(docoptArgs, commandLine);
+   const FileArbArgs fileArbArgs = _createTextFileArgsParser.ParseArgs(docoptArgs);
    //
    METALMOCK(_docoptParserMock->GetRequiredSizeTMock.CalledNTimes(2));
    METALMOCKTHEN(_fileNamePrefixAndExtensionGetterMock->GetFileNamePrefixAndExtensionMock.CalledOnceWith(ProgramMode::CreateTextFile)).Then(
@@ -44,7 +43,6 @@ TEST(ParseArgs_ParsesArgs_ReturnsFileArbArgs)
    METALMOCKTHEN(_docoptParserMock->GetRequiredSizeTMock.CalledWith(docoptArgs, "--characters"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--random-letters")));
    FileArbArgs expectedFileArbArgs;
-   expectedFileArbArgs.commandLine = commandLine;
    expectedFileArbArgs.programMode = ProgramMode::CreateTextFile;
    expectedFileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
    expectedFileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;

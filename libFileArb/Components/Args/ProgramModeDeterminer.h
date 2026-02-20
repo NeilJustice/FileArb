@@ -11,9 +11,5 @@ public:
    ProgramModeDeterminer();
    virtual ~ProgramModeDeterminer();
 
-   virtual ProgramMode DetermineProgramMode(
-      const map<string, docopt::value>& docoptArgs_create_binary_file,
-      const map<string, docopt::value>& docoptArgs_create_text_file,
-      const map<string, docopt::value>& docoptArgs_create_binary_files,
-      const map<string, docopt::value>& docoptArgs_create_text_files) const;
+   virtual ProgramMode DetermineProgramMode(const map<string, docopt::value>& docoptArgs) const;
 };

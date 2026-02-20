@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "libFileArb/Components/FileArbProgram.h"
-#include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArbTests/Components/Args/MetalMock/ArgsParserMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/FunctionCallers/TryCatchCallers/MetalMock/NonVoidOneArgTryCatchCallerMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramFactoryMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileCreatorMock.h"
-#include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
-#include "libFileArbTests/Components/FunctionCallers/TryCatchCallers/MetalMock/NonVoidOneArgTryCatchCallerMock.h"
 #include "libFileArbTests/Components/Time/MetalMock/StopwatchMock.h"
+#include "libFileArbTests/Components/Vector/MetalMock/VectorHelperMock.h"
 
 TESTS(FileArbProgramTests)
 AFACT(DefaultConstructor_SetsFunctionPointer_NewsComponents)
@@ -19,13 +19,13 @@ EVIDENCE
 
 FileArbProgram _fileArbProgram;
 // Function Callers
-METALMOCK_NONVOID2_STATIC_OR_FREE(vector<string>, _call_Vector_FromArgcArgv, int, char**)
 METALMOCK_NONVOID1_STATIC_OR_FREE(string, _call_Exception_GetClassNameAndMessage, const exception*)
 // Constant Components
+ArgsParserMock* _argsParserMock = nullptr;
 Utils::ConsoleMock* _consoleMock = nullptr;
 Utils::NonVoidOneArgTryCatchCallerMock<int, FileArbProgram, const vector<string>&>* _nonVoidOneArgTryCatchCallerMock = nullptr;
 Utils::StopwatchMock* _stopwatchMock = nullptr;
-ArgsParserMock* _argsParserMock = nullptr;
+Utils::VectorHelperMock* _vectorHelperMock = nullptr;
 // Mutable Components
 FileArbSubProgramFactoryMock* _fileArbSubProgramFactoryMock = nullptr;
 FileCreatorMock* _fileCreatorMock = nullptr;
@@ -33,13 +33,13 @@ FileCreatorMock* _fileCreatorMock = nullptr;
 STARTUP
 {
    // Function Callers
-   _fileArbProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(_call_Vector_FromArgcArgvMock);
    _fileArbProgram._call_Utils_Exception_ClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(_call_Exception_GetClassNameAndMessageMock);
    // Constant Components
+   _fileArbProgram._argsParser.reset(_argsParserMock = new ArgsParserMock);
    _fileArbProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
    _fileArbProgram._nonVoidOneArgTryCatchCaller.reset(_nonVoidOneArgTryCatchCallerMock = new Utils::NonVoidOneArgTryCatchCallerMock<int, FileArbProgram, const vector<string>&>);
-   _fileArbProgram._argsParser.reset(_argsParserMock = new ArgsParserMock);
    _fileArbProgram._fileArbSubProgramFactory.reset(_fileArbSubProgramFactoryMock = new FileArbSubProgramFactoryMock);
+   _fileArbProgram._vectorHelper.reset(_vectorHelperMock = new Utils::VectorHelperMock);
    // Mutable Components
    _fileArbProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
    _fileArbProgram._stopwatch.reset(_stopwatchMock = new Utils::StopwatchMock);
@@ -50,7 +50,6 @@ TEST(DefaultConstructor_SetsFunctionPointer_NewsComponents)
    const FileArbProgram fileArbProgram;
    // Function Callers
    STD_FUNCTION_TARGETS(Utils::Exception::GetClassNameAndMessage, fileArbProgram._call_Utils_Exception_ClassNameAndMessage);
-   STD_FUNCTION_TARGETS(Utils::Vector::FromArgcArgv, fileArbProgram._call_Utils_Vector_FromArgcArgv);
 }
 
 TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
@@ -70,8 +69,7 @@ TEST(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExitCod
 {
    _stopwatchMock->StartMock.Expect();
 
-   const vector<string> stringArgs{ ZenUnit::Random<string>(), ZenUnit::Random<string>() };
-   _call_Vector_FromArgcArgvMock.Return(stringArgs);
+   const vector<string> stringArgs = _vectorHelperMock->FromArgcArgvMock.ReturnRandom();
 
    int subProgramExitCode = _nonVoidOneArgTryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.ReturnRandom();
 
@@ -89,12 +87,19 @@ TEST(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExitCod
    const string expectedDurationLine = Utils::String::ConcatValues("TotalDuration: ", runtimeInSeconds, " seconds");
    const string expectedExitCodeLine = Utils::String::ConcatValues("ExitCode: ", subProgramExitCode);
    METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
-   METALMOCKTHEN(_call_Vector_FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)))).Then( // NOLINT
+
+   METALMOCKTHEN(_vectorHelperMock->FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)))).Then( // NOLINT
+
    METALMOCKTHEN(_nonVoidOneArgTryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.CalledOnceWith(
-      &_fileArbProgram, &FileArbProgram::Run, stringArgs, &FileArbProgram::ExceptionHandler))).Then(
+      &_fileArbProgram, &FileArbProgram::Run, stringArgs,
+      &FileArbProgram::ExceptionHandler))).Then(
+
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
+
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedDurationLine))).Then(
+
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedExitCodeLine)));
    ARE_EQUAL(subProgramExitCode, returnedSubProgramExitCode);
 }

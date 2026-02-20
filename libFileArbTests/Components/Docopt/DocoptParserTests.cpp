@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "libFileArb/Components/Docopt/DocoptParser.h"
-#include "libFileArbTests/ValueTypes/ZenUnit/docoptvalueRandom.h"
+#include "libFileArbTests/Components/Maps/MetalMock/MapHelperMock.h"
 
 TESTS(DocoptParserTests)
 AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
+AFACT(DocoptArgsAreForProgramMode_ReturnsTrueIfSo)
 
 AFACT(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 AFACT(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
@@ -30,7 +31,10 @@ EVIDENCE
 DocoptParser _docoptParser;
 // Function Pointers
 //METALMOCK_NONVOID5_STATIC_OR_FREE(map<string COMMA docopt::value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
-
+// Constant Components
+using _mapHelperMockType = Utils::MapHelperMock<string, docopt::value>;
+_mapHelperMockType* _mapHelperMock = nullptr;
+// Testing Fields
 map<string, docopt::value> _docoptArgs;
 string _argName;
 string _expectedKeyNotFoundWhat;
@@ -39,7 +43,9 @@ STARTUP
 {
    // Function Pointers
    //_docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
-
+   // Constant Components
+   _docoptParser._mapHelper.reset(_mapHelperMock = new _mapHelperMockType);
+   // Testing Fields
    _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    _argName = ZenUnit::Random<string>() + "_argName";
    _expectedKeyNotFoundWhat = "Error: Key not found in map: [" + _argName + "]";
@@ -50,6 +56,20 @@ TEST(DefaultConstructor_SetsFieldsToDefaultValues)
    const DocoptParser docoptParser;
    // Function Pointers
    //STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
+}
+
+TEST(DocoptArgsAreForProgramMode_ReturnsTrueIfSo)
+{
+   const bool docoptArgsAreForProgramMode = _mapHelperMock->ContainsKeyWithValueMock.ReturnRandom();
+   const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
+   const string programModeString = ZenUnit::Random<string>();
+   //
+   const bool returnedDocoptArgsAreForProgramMode = _docoptParser.DocoptArgsAreForProgramMode(docoptArgs, programModeString);
+   //
+   const docopt::value trueDocoptValue(true);
+   METALMOCK(_mapHelperMock->ContainsKeyWithValueMock.CalledOnceWith(
+      &docoptArgs, programModeString, trueDocoptValue));
+   ARE_EQUAL(docoptArgsAreForProgramMode, returnedDocoptArgsAreForProgramMode);
 }
 
 TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)

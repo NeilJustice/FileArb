@@ -5,10 +5,11 @@
 #include "libFileArb/Components/Args/CreateBinaryFilesArgsParser.h"
 #include "libFileArb/Components/Args/CreateTextFileArgsParser.h"
 #include "libFileArb/Components/Args/CreateTextFilesArgsParser.h"
+#include "libFileArb/Components/Args/PreamblePrinter.h"
 #include "libFileArb/Components/Args/ProgramModeDeterminer.h"
-#include "libFileArb/StaticUtilities/Vector.h"
 #include "libFileArb/Components/Console/Console.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
+#include "libFileArb/Components/Vector/VectorHelper.h"
 
 ArgsParser::ArgsParser()
    // Function Callers
@@ -22,7 +23,9 @@ ArgsParser::ArgsParser()
    , _createBinaryFilesArgsParser(make_unique<CreateBinaryFilesArgsParser>())
    , _createTextFilesArgsParser(make_unique<CreateTextFilesArgsParser>())
    , _docoptParser(make_unique<DocoptParser>())
+   , _preamblePrinter(make_unique<Utils::PreamblePrinter>())
    , _programModeDeterminer(make_unique<ProgramModeDeterminer>())
+   , _vectorHelper(make_unique<Utils::VectorHelper>())
 {
 }
 
@@ -32,53 +35,33 @@ ArgsParser::~ArgsParser()
 
 FileArbArgs ArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
 {
-   const string commandLine = Utils::Vector::Join(stringArgs, ' ');
-   const string runningMessage = Utils::String::ConcatStrings("Running: ", commandLine);
-   _console->ThreadIdWriteLineWithColor(runningMessage, Color::White);
+   const string commandLine = _vectorHelper->Join(stringArgs, ' ');
+   _preamblePrinter->PrintPreamble(commandLine, _console.get());
 
-   const fs::path workingDirectoryPath = _fileSystem->GetCurrentPath();
-   const string workingDirectoryMessage = Utils::String::ConcatStrings("WorkingDirectory: ", workingDirectoryPath.string());
-   _console->ThreadIdWriteLineWithColor(workingDirectoryMessage, Color::White);
-
-   const map<string, docopt::value> docoptArgs_create_binary_file =
-      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_binary_file, stringArgs, false);
-
-   const map<string, docopt::value> docoptArgs_create_text_file =
-      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_text_file, stringArgs, false);
-
-   const map<string, docopt::value> docoptArgs_create_binary_files =
-      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_binary_files, stringArgs, false);
-
-   const map<string, docopt::value> docoptArgs_create_text_files =
-      _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage_create_text_files, stringArgs, false);
-
-   const ProgramMode programMode = _programModeDeterminer->DetermineProgramMode(
-      docoptArgs_create_binary_file,
-      docoptArgs_create_text_file,
-      docoptArgs_create_binary_files,
-      docoptArgs_create_text_files);
+   const map<string, docopt::value> docoptArgs = _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage, stringArgs, false);
+   const ProgramMode programMode = _programModeDeterminer->DetermineProgramMode(docoptArgs);
 
    FileArbArgs fileArbArgs;
    switch (programMode)
    {
       case ProgramMode::CreateBinaryFile:
       {
-         fileArbArgs = _createBinaryFileArgsParser->ParseArgs(docoptArgs_create_binary_file, commandLine);
+         fileArbArgs = _createBinaryFileArgsParser->ParseArgs(docoptArgs, commandLine);
          break;
       }
       case ProgramMode::CreateTextFile:
       {
-         fileArbArgs = _createTextFileArgsParser->ParseArgs(docoptArgs_create_text_file, commandLine);
+         fileArbArgs = _createTextFileArgsParser->ParseArgs(docoptArgs, commandLine);
          break;
       }
       case ProgramMode::CreateBinaryFiles:
       {
-         fileArbArgs = _createBinaryFilesArgsParser->ParseArgs(docoptArgs_create_binary_files, commandLine);
+         fileArbArgs = _createBinaryFilesArgsParser->ParseArgs(docoptArgs, commandLine);
          break;
       }
       case ProgramMode::CreateTextFiles:
       {
-         fileArbArgs = _createTextFilesArgsParser->ParseArgs(docoptArgs_create_text_files, commandLine);
+         fileArbArgs = _createTextFilesArgsParser->ParseArgs(docoptArgs, commandLine);
          break;
       }
       default:

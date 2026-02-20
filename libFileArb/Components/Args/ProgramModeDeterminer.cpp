@@ -12,25 +12,25 @@ ProgramModeDeterminer::~ProgramModeDeterminer()
 {
 }
 
-ProgramMode ProgramModeDeterminer::DetermineProgramMode(
-   const map<string, docopt::value>& docoptArgs_create_binary_file,
-   const map<string, docopt::value>& docoptArgs_create_text_file,
-   const map<string, docopt::value>& docoptArgs_create_binary_files,
-   const map<string, docopt::value>& docoptArgs_create_text_files) const
+ProgramMode ProgramModeDeterminer::DetermineProgramMode(const map<string, docopt::value>& docoptArgs) const
 {
-   if (!docoptArgs_create_binary_file.empty())
+   const bool is_create_binary_file = _docoptParser->DocoptArgsAreForProgramMode(docoptArgs, "create-binary-file");
+   if (is_create_binary_file)
    {
       return ProgramMode::CreateBinaryFile;
    }
-   if (!docoptArgs_create_text_file.empty())
+   const bool is_create_text_file = _docoptParser->DocoptArgsAreForProgramMode(docoptArgs, "create-text-file");
+   if (is_create_text_file)
    {
       return ProgramMode::CreateTextFile;
    }
-   if (!docoptArgs_create_binary_files.empty())
+   const bool is_create_binary_files = _docoptParser->DocoptArgsAreForProgramMode(docoptArgs, "create-binary-files");
+   if (is_create_binary_files)
    {
       return ProgramMode::CreateBinaryFiles;
    }
-   if (!docoptArgs_create_text_files.empty())
+   const bool is_create_text_files = _docoptParser->DocoptArgsAreForProgramMode(docoptArgs, "create-text-files");
+   if (is_create_text_files)
    {
       return ProgramMode::CreateTextFiles;
    }

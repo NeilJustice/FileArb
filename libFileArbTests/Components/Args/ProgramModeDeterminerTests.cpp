@@ -3,11 +3,11 @@
 #include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
 
 TESTS(ProgramModeDeterminerTests)
-AFACT(DetermineProgramMode_ProgramModeIsCreateBinaryFile_ReturnsProgramModeCreateBinaryFile)
-AFACT(DetermineProgramMode_ProgramModeIsCreateTextFile_ReturnsProgramModeCreateTextFile)
-AFACT(DetermineProgramMode_ProgramModeIsCreateBinaryFiles_ReturnsProgramModeCreateBinaryFiles)
-AFACT(DetermineProgramMode_ProgramModeIsCreateTextFiles_ReturnsProgramModeCreateTextFiles)
-AFACT(DetermineProgramMode_ProgramModeIsInvalid_ThrowsInvalidArgument)
+AFACT(DetermineProgramMode__CreateBinaryFile)
+AFACT(DetermineProgramMode__CreateTextFile)
+AFACT(DetermineProgramMode__CreateBinaryFiles)
+AFACT(DetermineProgramMode__CreateTextFiles)
+AFACT(DetermineProgramMode__InvalidProgramModeIsInvalid_ThrowsInvalidArgument)
 EVIDENCE
 
 ProgramModeDeterminer _programModeDeterminer;
@@ -20,83 +20,84 @@ STARTUP
    _programModeDeterminer._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
 }
 
-TEST(DetermineProgramMode_ProgramModeIsCreateBinaryFile_ReturnsProgramModeCreateBinaryFile)
+TEST(DetermineProgramMode__CreateBinaryFile)
 {
-   const map<string, docopt::value> docoptArgs_create_binary_file = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
-   const map<string, docopt::value> docoptArgs_create_text_file;
-   const map<string, docopt::value> docoptArgs_create_binary_files;
-   const map<string, docopt::value> docoptArgs_create_text_files;
+   _docoptParserMock->DocoptArgsAreForProgramModeMock.Return(true);
+   const map<string, docopt::value> docoptArgs = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
    //
-   const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
-      docoptArgs_create_binary_file,
-      docoptArgs_create_text_file,
-      docoptArgs_create_binary_files,
-      docoptArgs_create_text_files);
+   const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(docoptArgs);
    //
+   METALMOCK(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledOnceWith(docoptArgs, "create-binary-file"));
    ARE_EQUAL(ProgramMode::CreateBinaryFile, programMode);
 }
 
-TEST(DetermineProgramMode_ProgramModeIsCreateTextFile_ReturnsProgramModeCreateTextFile)
+TEST(DetermineProgramMode__CreateTextFile)
 {
-   const map<string, docopt::value> docoptArgs_create_binary_file;
-   const map<string, docopt::value> docoptArgs_create_text_file = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
-   const map<string, docopt::value> docoptArgs_create_binary_files;
-   const map<string, docopt::value> docoptArgs_create_text_files;
+   _docoptParserMock->DocoptArgsAreForProgramModeMock.ReturnValues(
+      false,
+      true);
+   const map<string, docopt::value> docoptArgs = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
    //
-   const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
-      docoptArgs_create_binary_file,
-      docoptArgs_create_text_file,
-      docoptArgs_create_binary_files,
-      docoptArgs_create_text_files);
+   const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(docoptArgs);
    //
+   METALMOCK(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledNTimes(2));
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-binary-file")).Then(
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-text-file")));
    ARE_EQUAL(ProgramMode::CreateTextFile, programMode);
 }
 
-TEST(DetermineProgramMode_ProgramModeIsCreateBinaryFiles_ReturnsProgramModeCreateBinaryFiles)
+TEST(DetermineProgramMode__CreateBinaryFiles)
 {
-   const map<string, docopt::value> docoptArgs_create_binary_file;
-   const map<string, docopt::value> docoptArgs_create_text_file;
-   const map<string, docopt::value> docoptArgs_create_binary_files = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
-   const map<string, docopt::value> docoptArgs_create_text_files;
+   _docoptParserMock->DocoptArgsAreForProgramModeMock.ReturnValues(
+      false,
+      false,
+      true);
+   const map<string, docopt::value> docoptArgs = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
    //
-   const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
-      docoptArgs_create_binary_file,
-      docoptArgs_create_text_file,
-      docoptArgs_create_binary_files,
-      docoptArgs_create_text_files);
+   const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(docoptArgs);
    //
+   METALMOCK(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledNTimes(3));
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-binary-file")).Then(
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-text-file"))).Then(
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-binary-files")));
    ARE_EQUAL(ProgramMode::CreateBinaryFiles, programMode);
 }
 
-TEST(DetermineProgramMode_ProgramModeIsCreateTextFiles_ReturnsProgramModeCreateTextFiles)
+TEST(DetermineProgramMode__CreateTextFiles)
 {
-   const map<string, docopt::value> docoptArgs_create_binary_file;
-   const map<string, docopt::value> docoptArgs_create_text_file;
-   const map<string, docopt::value> docoptArgs_create_binary_files;
-   const map<string, docopt::value> docoptArgs_create_text_files = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
+   _docoptParserMock->DocoptArgsAreForProgramModeMock.ReturnValues(
+      false,
+      false,
+      false,
+      true);
+   const map<string, docopt::value> docoptArgs = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
    //
-   const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
-      docoptArgs_create_binary_file,
-      docoptArgs_create_text_file,
-      docoptArgs_create_binary_files,
-      docoptArgs_create_text_files);
+   const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(docoptArgs);
    //
+   METALMOCK(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledNTimes(4));
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-binary-file")).Then(
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-text-file"))).Then(
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-binary-files"))).Then(
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-text-files")));
    ARE_EQUAL(ProgramMode::CreateTextFiles, programMode);
 }
 
-TEST(DetermineProgramMode_ProgramModeIsInvalid_ThrowsInvalidArgument)
+TEST(DetermineProgramMode__InvalidProgramModeIsInvalid_ThrowsInvalidArgument)
 {
-   const map<string, docopt::value> docoptArgs_create_binary_file;
-   const map<string, docopt::value> docoptArgs_create_text_file;
-   const map<string, docopt::value> docoptArgs_create_binary_files;
-   const map<string, docopt::value> docoptArgs_create_text_files;
+   _docoptParserMock->DocoptArgsAreForProgramModeMock.ReturnValues(
+      false,
+      false,
+      false,
+      false);
+   const map<string, docopt::value> docoptArgs = ZenUnit::RandomNonEmptyOrderedMap<string, docopt::value>();
    //
-   const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
-      docoptArgs_create_binary_file,
-      docoptArgs_create_text_file,
-      docoptArgs_create_binary_files,
-      docoptArgs_create_text_files);
+   const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(docoptArgs);
    //
+   METALMOCK(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledNTimes(4));
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-binary-file")).Then(
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-text-file"))).Then(
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-binary-files"))).Then(
+   METALMOCKTHEN(_docoptParserMock->DocoptArgsAreForProgramModeMock.CalledWith(docoptArgs, "create-text-files")));
    ARE_EQUAL(ProgramMode::Invalid, programMode);
 }
 

@@ -1,12 +1,28 @@
 #include "pch.h"
 #include "docopt/docopt.h"
 #include "libFileArb/Components/Docopt/DocoptParser.h"
+#include "libFileArb/Components/Maps/MapHelper.h"
 #include "libFileArb/StaticUtilities/Map.h"
 
 DocoptParser::DocoptParser()
    // Function Pointers
    : _call_StaticGetRequiredSizeT(StaticGetRequiredSizeT)
+   // Constant Components
+   , _mapHelper(make_unique<_mapHelperType>())
 {
+}
+
+DocoptParser::~DocoptParser()
+{
+}
+
+bool DocoptParser::DocoptArgsAreForProgramMode(
+   const map<string, docopt::value>& docoptArgs,
+   const string& programModeString) const
+{
+   const docopt::value trueDocoptValue(true);
+   bool docoptArgsAreForProgramMode = _mapHelper->ContainsKeyWithValue(&docoptArgs, programModeString, trueDocoptValue);
+   return docoptArgsAreForProgramMode;
 }
 
 map<string, docopt::value> DocoptParser::ParseArgs(
@@ -30,7 +46,8 @@ map<string, docopt::value> DocoptParser::ParseArgs(
 }
 
 string DocoptParser::GetRequiredString(
-   const map<string, docopt::value>& docoptArgs, const string& argName) const
+   const map<string, docopt::value>& docoptArgs,
+   const string& argName) const
 {
    const docopt::value docoptValue = Map::At(docoptArgs, argName);
    const string& stringArg = docoptValue.asString();
@@ -38,7 +55,8 @@ string DocoptParser::GetRequiredString(
 }
 
 bool DocoptParser::GetRequiredBool(
-   const map<string, docopt::value>& docoptArgs, const string& argName) const
+   const map<string, docopt::value>& docoptArgs,
+   const string& argName) const
 {
    const docopt::value docoptValue = Map::At(docoptArgs, argName);
    bool boolValue = docoptValue.asBool();
@@ -61,7 +79,8 @@ string DocoptParser::GetProgramModeSpecificRequiredString(
 }
 
 bool DocoptParser::GetOptionalBool(
-   const map<string, docopt::value>& docoptArgs, const string& argName) const
+   const map<string, docopt::value>& docoptArgs,
+   const string& argName) const
 {
    docopt::value docoptValue;
    if (Map::TryGetValue(docoptArgs, argName, docoptValue))
@@ -73,7 +92,8 @@ bool DocoptParser::GetOptionalBool(
 }
 
 string DocoptParser::GetOptionalString(
-   const map<string, docopt::value>& docoptArgs, const string& argName) const
+   const map<string, docopt::value>& docoptArgs,
+   const string& argName) const
 {
    docopt::value docoptValue;
    if (Map::TryGetValue(docoptArgs, argName, docoptValue))
@@ -85,7 +105,9 @@ string DocoptParser::GetOptionalString(
 }
 
 string DocoptParser::GetOptionalStringWithDefaultValue(
-   const map<string, docopt::value>& docoptArgs, string_view argName, string_view defaultValue) const
+   const map<string, docopt::value>& docoptArgs,
+   string_view argName,
+   string_view defaultValue) const
 {
    docopt::value docoptValue;
    if (Map::TryGetValue(docoptArgs, string(argName), docoptValue))
@@ -100,7 +122,8 @@ string DocoptParser::GetOptionalStringWithDefaultValue(
 }
 
 size_t DocoptParser::GetRequiredSizeT(
-   const map<string, docopt::value>& docoptArgs, const string& argName) const
+   const map<string, docopt::value>& docoptArgs,
+   const string& argName) const
 {
    size_t sizeTValue = _call_StaticGetRequiredSizeT(docoptArgs, argName);
    return sizeTValue;
@@ -109,7 +132,8 @@ size_t DocoptParser::GetRequiredSizeT(
 // Private Functions
 
 size_t DocoptParser::StaticGetRequiredSizeT(
-   const map<string, docopt::value>& docoptArgs, const string& argName)
+   const map<string, docopt::value>& docoptArgs,
+   const string& argName)
 {
    const docopt::value& docoptValue = Map::At(docoptArgs, argName);
    size_t sizeTValue = docoptValue.asSizeT();

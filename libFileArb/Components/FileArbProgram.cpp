@@ -1,24 +1,24 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/ArgsParser.h"
+#include "libFileArb/Components/Console/Console.h"
 #include "libFileArb/Components/FileArbProgram.h"
+#include "libFileArb/Components/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgram.h"
 #include "libFileArb/Components/SubPrograms/FileArbSubProgramFactory.h"
 #include "libFileArb/Components/SubPrograms/FileCreator.h"
-#include "libFileArb/StaticUtilities/Exception.h"
-#include "libFileArb/StaticUtilities/Vector.h"
-#include "libFileArb/Components/Console/Console.h"
-#include "libFileArb/Components/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
 #include "libFileArb/Components/Time/Stopwatch.h"
+#include "libFileArb/Components/Vector/VectorHelper.h"
+#include "libFileArb/StaticUtilities/Exception.h"
 
 FileArbProgram::FileArbProgram()
    // Function Pointers
    : _call_Utils_Exception_ClassNameAndMessage(Utils::Exception::GetClassNameAndMessage)
-   , _call_Utils_Vector_FromArgcArgv(Utils::Vector::FromArgcArgv)
    // Constant Components
+   , _argsParser(make_unique<ArgsParser>())
    , _console(make_unique<Utils::Console>())
    , _nonVoidOneArgTryCatchCaller(make_unique<Utils::NonVoidOneArgTryCatchCaller<int, FileArbProgram, const vector<string>&>>())
-   , _argsParser(make_unique<ArgsParser>())
    , _fileArbSubProgramFactory(make_unique<FileArbSubProgramFactory>())
+   , _vectorHelper(make_unique<Utils::VectorHelper>())
    // Mutable Components
    , _fileCreator(make_unique<FileCreator>())
    , _stopwatch(make_unique<Utils::Stopwatch>())
@@ -37,7 +37,7 @@ int FileArbProgram::Main(int argc, char* argv[]) // NOLINT
       return 0;
    }
    _stopwatch->Start();
-   const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
+   const vector<string> stringArgs = _vectorHelper->FromArgcArgv(argc, argv);
 
    int exitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallNonConstMemberFunction(
       this, &FileArbProgram::Run, stringArgs,

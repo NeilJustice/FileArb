@@ -3,6 +3,8 @@ namespace Utils
 {
    class Console;
    class FileSystem;
+   class PreamblePrinter;
+   class VectorHelper;
 }
 class BytesStringConverter;
 class CreateBinaryFileArgsParser;
@@ -28,7 +30,9 @@ private:
    unique_ptr<const CreateBinaryFilesArgsParser> _createBinaryFilesArgsParser;
    unique_ptr<const CreateTextFilesArgsParser> _createTextFilesArgsParser;
    unique_ptr<const DocoptParser> _docoptParser;
+   unique_ptr<const Utils::PreamblePrinter> _preamblePrinter;
    unique_ptr<const ProgramModeDeterminer> _programModeDeterminer;
+   unique_ptr<const Utils::VectorHelper> _vectorHelper;
 public:
    ArgsParser();
    virtual ~ArgsParser();

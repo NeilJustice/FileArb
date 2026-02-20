@@ -6,6 +6,10 @@ class DocoptParserMock : public Metal::Mock<DocoptParser>
 public:
    using DocoptMapType = map<string, docopt::value>;
 
+   METALMOCK_NONVOID2_CONST(bool, DocoptArgsAreForProgramMode,
+      const DocoptMapType&,
+      const string&)
+
    METALMOCK_NONVOID3_CONST(DocoptMapType, ParseArgs,
       const string&,
       const vector<string>&,

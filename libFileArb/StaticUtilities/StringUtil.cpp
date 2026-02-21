@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "libFileArb/StaticUtilities/StringUtil.h"
+#ifdef __linux__
+#include <charconv>
+#endif
 
 namespace Utils
 {
@@ -34,7 +37,7 @@ namespace Utils
    size_t Utils::String::ToSizeT(string_view str)
    {
       size_t sizeTValue{};
-      from_chars_result fromCharsResult = from_chars(str.data(), str.data() + str.size(), sizeTValue, 10);
+      const from_chars_result fromCharsResult = from_chars(str.data(), str.data() + str.size(), sizeTValue, 10);
       if (fromCharsResult.ec != errc{})
       {
          const string exceptionMessage = Utils::String::ConcatStrings(

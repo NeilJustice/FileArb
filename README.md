@@ -3,7 +3,7 @@
 |Build Type|Build Status|
 |----------|------------|
 |Clang 18 and GCC 13 on ubuntu-latest|<a href="https://github.com/NeilJustice/FileArb/actions/workflows/linux_build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/linux_build.yml/badge.svg"></a>|
-|VS2022 on windows-latest|<a href="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml/badge.svg"></a>|
+|VS2026 on windows-latest|<a href="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml/badge.svg"></a>|
 |GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileArb"><img src="https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>|
 
 FileArb is a C++23 command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
@@ -21,8 +21,8 @@ Three use cases for FileArb:
    * [create-text-file](#create-text-file)
    * [create-text-files](#create-text-files)
 * [Steps to build binary filearb on Linux with Clang](#steps-to-build-binary-filearb-on-linux-with-clang)
-* [Steps to build executable FileArb.exe on Windows with Visual Studio 2022](#steps-to-build-executable-filearbexe-on-windows-with-visual-studio-2022)
-* [Thanks to](#thanks-to)
+* [Steps to build executable FileArb.exe on Windows with Visual Studio 2026](#steps-to-build-executable-filearbexe-on-windows-with-visual-studio-2026)
+* [Acknowledgements](#acknowledgements)
 
 ## FileArb command line usage
 
@@ -156,7 +156,7 @@ CXX=clang++ cmake .. -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo
 sudo cmake --build . --target install
 ```
 
-## Steps to build executable FileArb.exe on Windows with Visual Studio 2022
+## Steps to build executable FileArb.exe on Windows with Visual Studio 2026
 
 ```powershell
 git clone https://github.com/NeilJustice/FileArb
@@ -165,7 +165,6 @@ cmake . -G"Visual Studio 18 2026" -A x64 -DCMAKE_INSTALL_PREFIX="C:\bin"
 cmake --build . --config RelWithDebInfo --target install
 ```
 
-## Thanks to
+## Acknowledgements
 
 <a href="https://brandmark.io">brandmark.io</a> for FileArb's logo
-

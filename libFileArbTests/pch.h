@@ -27,6 +27,7 @@ using namespace std;
 #include "libFileArb/StaticUtilities/StringUtil.h"
 
 // libFileArbTests Components
+#include "libFileArb/docopt/docopt.h"
 #include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
 #include "libFileArbTests/Components/Getters/MetalMock/FileNamePrefixAndExtensionGetterMock.h"
 // libFileArbtests ValueTypes

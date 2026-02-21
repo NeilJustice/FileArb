@@ -15,6 +15,11 @@ namespace Utils
       return exceptionWhat;
    }
 
+   FileNotFoundException::FileNotFoundException(const fs::path& filePath)
+      : runtime_error(filePath.string())
+   {
+   }
+
    FileOpenException::FileOpenException(const fs::path& filePath, int errnoValue)
       : runtime_error(MakeFileSystemExceptionMessage(filePath, errnoValue))
    {

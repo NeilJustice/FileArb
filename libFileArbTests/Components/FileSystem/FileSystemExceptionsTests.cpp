@@ -3,6 +3,7 @@
 
 TESTS(FileSystemExceptionsTests)
 AFACT(FileCreateException_WhatReturnsExpected)
+AFACT(FileNotFoundException_WhatReturnsExpectedText)
 AFACT(FileOpenException_WhatReturnsExpected)
 AFACT(FileCloseException_WhatReturnsExpected)
 AFACT(FileMalformedException_NonLineNumberOverload_WhatReturnsExpected)
@@ -20,6 +21,17 @@ TEST(FileCreateException_WhatReturnsExpected)
 {
    const Utils::FileCreateException ex(_filePath, _errnoValue);
    ARE_EQUAL(_expectedFileWhat, ex.what());
+}
+
+TEST(FileNotFoundException_WhatReturnsExpectedText)
+{
+   const fs::path filePath = ZenUnit::Random<fs::path>();
+   //
+   const Utils::FileNotFoundException ex(filePath);
+   //
+   const string expectedExceptionMessage = filePath.string();
+   const string actualExceptionMessage = ex.what();
+   ARE_EQUAL(expectedExceptionMessage, actualExceptionMessage);
 }
 
 TEST(FileOpenException_WhatReturnsExpected)

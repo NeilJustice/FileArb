@@ -4,6 +4,12 @@ namespace Utils
 {
    string MakeFileSystemExceptionMessage(const fs::path& filePath, int errnoValue);
 
+   class FileNotFoundException : public runtime_error
+   {
+   public:
+      explicit FileNotFoundException(const fs::path& filePath);
+   };
+
    class FileOpenException : public std::runtime_error
    {
    public:

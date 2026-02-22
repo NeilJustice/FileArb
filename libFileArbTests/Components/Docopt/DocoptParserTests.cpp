@@ -29,6 +29,8 @@ AFACT(GetOptionalString_ArgInMap_ReturnsValue)
 AFACT(GetOptionalStringWithDefaultValue_ArgNotInMap_ReturnsDefaultValue)
 AFACT(GetOptionalStringWithDefaultValue_ArgInMap_ReturnsValue)
 
+AFACT(GetRequiredSizeT_DoesSo)
+
 AFACT(GetRequiredFilePathWhichMustExist_DoesSo)
 AFACT(GetRequiredFolderPathWhichNeedNotExist_DoesSo)
 // Private Functions
@@ -39,8 +41,8 @@ EVIDENCE
 
 DocoptParser _docoptParser;
 // Function Pointers
-//METALMOCK_NONVOID5_STATIC_OR_FREE(map<string COMMA docopt::value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
 using DocoptMapType = map<string, docopt::value>;
+METALMOCK_NONVOID2_STATIC_OR_FREE(size_t, _call_DocoptParser_StaticGetRequiredSizeT, const DocoptMapType&, const string&)
 METALMOCK_NONVOID2_STATIC_OR_FREE(string, _call_DocoptParser_StaticGetRequiredString, const DocoptMapType&, const string&)
 // Constant Components
 Utils::FileSystemPatherMock* _fileSystemPatherMock = nullptr;
@@ -53,7 +55,7 @@ string _expectedStringKeyNotFoundInMapExceptionMessage;
 STARTUP
 {
    // Function Pointers
-   //_docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
+   _docoptParser._call_StaticGetRequiredSizeT = BIND_2ARG_METALMOCK_OBJECT(_call_DocoptParser_StaticGetRequiredSizeTMock);
    _docoptParser._call_StaticGetRequiredString = BIND_2ARG_METALMOCK_OBJECT(_call_DocoptParser_StaticGetRequiredStringMock);
    // Constant Components
    _docoptParser._fileSystemPather.reset(_fileSystemPatherMock = new Utils::FileSystemPatherMock);
@@ -237,6 +239,16 @@ TEST(GetOptionalStringWithDefaultValue_ArgInMap_ReturnsValue)
    const string argValue = _docoptParser.GetOptionalStringWithDefaultValue(_docoptArgs, _argName, defaultValue);
    //
    ARE_EQUAL(argValueInMap, argValue);
+}
+
+TEST(GetRequiredSizeT_DoesSo)
+{
+   const size_t sizeTValue = _call_DocoptParser_StaticGetRequiredSizeTMock.ReturnRandom();
+   //
+   const size_t returnedSizeTValue = _docoptParser.GetRequiredSizeT(_docoptArgs, _argName);
+   //
+   METALMOCK(_call_DocoptParser_StaticGetRequiredSizeTMock.CalledOnceWith(_docoptArgs, _argName));
+   ARE_EQUAL(sizeTValue, returnedSizeTValue);
 }
 
 TEST(GetRequiredFilePathWhichMustExist_DoesSo)

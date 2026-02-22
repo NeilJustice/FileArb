@@ -3,7 +3,7 @@
 class FileNamePrefixAndExtensionGetter
 {
 public:
-   virtual ~FileNamePrefixAndExtensionGetter() = default;
+   virtual ~FileNamePrefixAndExtensionGetter();
 
    virtual pair<string, string> GetFileNamePrefixAndExtension(ProgramMode programMode) const;
 };

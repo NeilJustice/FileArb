@@ -52,9 +52,9 @@ elseif(MSVC)
    set_target_properties(libFileArb PROPERTIES DEBUG_OUTPUT_NAME "libFileArbDebug")
    set_target_properties(libFileArb PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libFileArbRelWithDebInfo")
 
-   #set_target_properties(libFileArb PROPERTIES UNITY_BUILD ON)
-   #set_target_properties(libFileArb PROPERTIES UNITY_BUILD_BATCH_SIZE 4)
-   #append(CMAKE_CXX_FLAGS "/FIpch.h")
+   set_target_properties(libFileArb PROPERTIES UNITY_BUILD ON)
+   set_target_properties(libFileArb PROPERTIES UNITY_BUILD_BATCH_SIZE 2)
+   append(CMAKE_CXX_FLAGS "/FIpch.h")
 endif()
 
 if(UNIX)

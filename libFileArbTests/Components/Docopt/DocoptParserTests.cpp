@@ -34,7 +34,11 @@ AFACT(GetRequiredSizeT_DoesSo)
 AFACT(GetRequiredFilePathWhichMustExist_DoesSo)
 AFACT(GetRequiredFolderPathWhichNeedNotExist_DoesSo)
 // Private Functions
-AFACT(StaticGetRequiredString_ArgNotInMap_ThrowsOutOfRangeException)
+AFACT(StaticGetRequiredSizeT_ArgNotInMap_ThrowsInvalidArgumentException)
+AFACT(StaticGetRequiredSizeT_ArgInMapAsNoneValue_ThrowsInvalidArgumentException)
+AFACT(StaticGetRequiredSizeT_ArgInMapAsSizeTValue_ReturnsValue)
+
+AFACT(StaticGetRequiredString_ArgNotInMap_ThrowsInvalidArgumentException)
 AFACT(StaticGetRequiredString_ArgInMapAsNoneValue_ThrowsInvalidArgumentException)
 AFACT(StaticGetRequiredString_ArgInMapAsStringValue_ReturnsValue)
 EVIDENCE
@@ -50,7 +54,6 @@ Utils::FileSystemPatherMock* _fileSystemPatherMock = nullptr;
 map<string, docopt::value> _docoptArgs;
 string _argName;
 string _expectedKeyNotFoundInMapExceptionMessage;
-string _expectedStringKeyNotFoundInMapExceptionMessage;
 
 STARTUP
 {
@@ -63,7 +66,6 @@ STARTUP
    _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    _argName = ZenUnit::Random<string>() + "_argName";
    _expectedKeyNotFoundInMapExceptionMessage = Utils::String::ConcatStrings("Error: Key not found in map: [", _argName, "]");
-   _expectedStringKeyNotFoundInMapExceptionMessage = Utils::String::ConcatStrings("String key not found in map: [", _argName, "]");
 }
 
 TEST(DefaultConstructor_SetsFieldsToDefaultValues)
@@ -289,7 +291,33 @@ TEST(GetRequiredFolderPathWhichNeedNotExist_DoesSo)
 
 // Private Functions
 
-TEST(StaticGetRequiredString_ArgNotInMap_ThrowsOutOfRangeException)
+TEST(StaticGetRequiredSizeT_ArgNotInMap_ThrowsInvalidArgumentException)
+{
+   THROWS_EXCEPTION(_docoptParser.StaticGetRequiredSizeT(_docoptArgs, _argName),
+      invalid_argument, _expectedKeyNotFoundInMapExceptionMessage);
+}
+
+TEST(StaticGetRequiredSizeT_ArgInMapAsNoneValue_ThrowsInvalidArgumentException)
+{
+   _docoptArgs[_argName] = docopt::value();
+   //
+   const string expectedExceptionMessage = Utils::String::ConcatStrings(
+      "Key[", _argName, "] found in map but with non-size_t value");
+   THROWS_EXCEPTION(_docoptParser.StaticGetRequiredSizeT(_docoptArgs, _argName),
+      invalid_argument, expectedExceptionMessage);
+}
+
+TEST(StaticGetRequiredSizeT_ArgInMapAsSizeTValue_ReturnsValue)
+{
+   const size_t sizeTArgumentValue = ZenUnit::Random<size_t>();
+   _docoptArgs[_argName] = docopt::value(sizeTArgumentValue);
+   //
+   const size_t returnedSizeTArgumentValue = _docoptParser.StaticGetRequiredSizeT(_docoptArgs, _argName);
+   //
+   ARE_EQUAL(sizeTArgumentValue, returnedSizeTArgumentValue);
+}
+
+TEST(StaticGetRequiredString_ArgNotInMap_ThrowsInvalidArgumentException)
 {
    THROWS_EXCEPTION(_docoptParser.StaticGetRequiredString(_docoptArgs, _argName),
       invalid_argument, _expectedKeyNotFoundInMapExceptionMessage);
@@ -299,8 +327,10 @@ TEST(StaticGetRequiredString_ArgInMapAsNoneValue_ThrowsInvalidArgumentException)
 {
    _docoptArgs[_argName] = docopt::value();
    //
+   const string expectedExceptionMessage = Utils::String::ConcatStrings(
+      "Key[", _argName, "] found in map but with non-string value");
    THROWS_EXCEPTION(_docoptParser.StaticGetRequiredString(_docoptArgs, _argName),
-      invalid_argument, _expectedStringKeyNotFoundInMapExceptionMessage);
+      invalid_argument, expectedExceptionMessage);
 }
 
 TEST(StaticGetRequiredString_ArgInMapAsStringValue_ReturnsValue)

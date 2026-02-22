@@ -101,18 +101,24 @@ TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 
 TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 {
-   //const map<string, docopt::value> docoptReturnValue = ZenUnit::RandomOrderedMap<string, docopt::value>();
-   //docoptMock.Return(docoptReturnValue);
-
-   //const string usage = ZenUnit::Random<string>();
-   //const vector<string> nonEmptyArgv(ZenUnit::RandomBetween<size_t>(1, 2));
-   ////
-   //const map<string, docopt::value> docoptValues = _docoptParser.ParseArgs(usage, nonEmptyArgv);
-   ////
-   //const vector<string> expectedNonEmptyArgvWithoutFirstArgument(
-   //   nonEmptyArgv.data() + 1, nonEmptyArgv.data() + nonEmptyArgv.size());
-   //METALMOCK(docoptMock.CalledOnceWith(usage, expectedNonEmptyArgvWithoutFirstArgument, true, "", false));
-   //ARE_EQUAL(docoptReturnValue, docoptValues);
+   const string usage = R"(
+usage:
+   program_name --arg1=<Value> --arg2=<Value>)";
+   const vector<string> argv =
+   {
+      "program_name",
+      "--arg1=value1",
+      "--arg2=value2"
+   };
+   //
+   const map<string, docopt::value> docoptValues = _docoptParser.ParseArgs(usage, argv, true);
+   //
+   const map<string, docopt::value> expectedDocoptValues
+   {
+      { "--arg1", docopt::value(string("value1")) },
+      { "--arg2", docopt::value(string("value2")) }
+   };
+   MAPS_ARE_EQUAL(expectedDocoptValues, docoptValues);
 }
 
 TEST(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)

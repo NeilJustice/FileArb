@@ -71,7 +71,7 @@ elseif(MSVC)
    replace(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "/debug" "")
 
    set_target_properties(libFileArbTests PROPERTIES UNITY_BUILD ON)
-   set_target_properties(libFileArbTests PROPERTIES UNITY_BUILD_BATCH_SIZE 2)
+   set_target_properties(libFileArbTests PROPERTIES UNITY_BUILD_BATCH_SIZE 3)
    append(CMAKE_CXX_FLAGS "/FIpch.h")
 endif()
 

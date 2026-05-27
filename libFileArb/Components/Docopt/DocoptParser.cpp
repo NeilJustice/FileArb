@@ -148,17 +148,22 @@ size_t DocoptParser::StaticGetRequiredSizeT(
    const map<string, docopt::value>& docoptArgs, const string& argName)
 {
    const docopt::value& docoptValue = Map::At(docoptArgs, argName);
-   if (docoptValue.isSizeT())
+   try
    {
       size_t sizeTArgumentValue = docoptValue.asSizeT();
       return sizeTArgumentValue;
    }
-   const string exceptionMessage = Utils::String::ConcatStrings(
-      "Key[", argName, "] found in map but with non-size_t value");
-   throw invalid_argument(exceptionMessage);
+   catch (const exception& ex)
+   {
+      const string exceptionMessage = ex.what();
+      const string enhancedExceptionMessage = Utils::String::ConcatValues(
+         "Argument \"", argName, "\" has a value not convertible to size_t");
+      throw invalid_argument(enhancedExceptionMessage);
+   }
 }
 
-string DocoptParser::StaticGetRequiredString(const map<string, docopt::value>& docoptArgs, const string& argName)
+string DocoptParser::StaticGetRequiredString(
+   const map<string, docopt::value>& docoptArgs, const string& argName)
 {
    const docopt::value& docoptValue = Map::At(docoptArgs, argName);
    if (docoptValue.isString())

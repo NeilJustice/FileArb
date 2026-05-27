@@ -301,8 +301,8 @@ TEST(StaticGetRequiredSizeT_ArgInMapAsNoneValue_ThrowsInvalidArgumentException)
 {
    _docoptArgs[_argName] = docopt::value();
    //
-   const string expectedExceptionMessage = Utils::String::ConcatStrings(
-      "Key[", _argName, "] found in map but with non-size_t value");
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
+      "Argument \"", _argName, "\" has a value not convertible to size_t");
    THROWS_EXCEPTION(_docoptParser.StaticGetRequiredSizeT(_docoptArgs, _argName),
       invalid_argument, expectedExceptionMessage);
 }

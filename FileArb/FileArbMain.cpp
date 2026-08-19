@@ -6,6 +6,8 @@
 using namespace std;
 #include "libFileArb/Components/FileArbProgram.h"
 
+// Testing Args
+// ============
 // create-binary-file --target=C:\FileArbTesting --bytes=3K --random-bytes
 // create-binary-files --target=C:\FileArbTesting --directories=1 --files=1 --bytes=3 --random-bytes
 // create-binary-files --target=C:\FileArbTesting --directories=3 --files=1000 --bytes=3 --random-bytes --quiet
@@ -14,6 +16,10 @@ using namespace std;
 // create-text-file --target=C:\FileArbTesting --lines=3 --characters=3 --random-letters
 // create-text-files --target=C:\FileArbTesting --directories=3 --files=3 --lines=3 --characters=3 --random-letters --parallel --quiet
 // create-text-files --target=C:\FileArbTesting --directories=32 --files=100 --lines=100 --characters=100 --random-letters --parallel --quiet
+
+// Performance Test Args
+// =====================
+// create-text-files --target=X:\PerformanceTestingProgramResults\FileArb\PerformanceTest --directories=32 --files=100 --lines=1000 --characters=200 --random-letters --parallel
 
 int main(int argc, char* argv[])
 {

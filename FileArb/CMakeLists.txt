@@ -26,4 +26,5 @@ elseif(MSVC)
    replace(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "/debug" "/DEBUG:FULL")
 endif()
 
+set_target_properties(FileArb PROPERTIES OUTPUT_NAME_RELWITHDEBINFO "FileArbRelease")
 install(TARGETS FileArb DESTINATION "bin")

@@ -1,0 +1,7 @@
+create-text-files
+--target=X:\PerformanceTestingProgramResults\FileArb\VSDiagnostics
+--directories=10
+--files=1000
+--lines=1000
+--characters=1000
+--quiet

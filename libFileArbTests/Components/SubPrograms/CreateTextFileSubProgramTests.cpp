@@ -22,9 +22,9 @@ TextFileTextMakerMock* _textFileTextMakerMock = nullptr;
 STARTUP
 {
    // Base Class Constant Components
-   _createTextFileSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
-   _createTextFileSubProgram._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
-   _createTextFileSubProgram._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
+   _createTextFileSubProgram.p_console.reset(_consoleMock = new Utils::ConsoleMock);
+   _createTextFileSubProgram.p_fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
+   _createTextFileSubProgram.p_stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
    // Constant Components
    _createTextFileSubProgram._textFileTextMaker.reset(_textFileTextMakerMock = new TextFileTextMakerMock);
 }

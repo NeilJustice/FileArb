@@ -6,9 +6,9 @@
 
 FileArbSubProgram::FileArbSubProgram()
    // Base Class Constant Components
-   : _console(make_unique<Utils::Console>())
-   , _fileSystem(make_unique<Utils::FileSystem>())
-   , _stopwatchFactory(make_unique<Utils::StopwatchFactory>())
+   : p_console(make_unique<Utils::Console>())
+   , p_fileSystem(make_unique<Utils::FileSystem>())
+   , p_stopwatchFactory(make_unique<Utils::StopwatchFactory>())
 {
 }
 

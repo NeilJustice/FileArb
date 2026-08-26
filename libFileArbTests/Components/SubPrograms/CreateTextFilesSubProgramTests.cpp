@@ -13,21 +13,23 @@ AFACT(Run_GenerateRandomLetterIsFalse_CreatesNonRandomTextFiles_Returns0)
 EVIDENCE
 
 CreateTextFilesSubProgram _createTextFilesSubProgram;
+// Base Constant Components
+Utils::ConsoleMock* p_consoleMock = nullptr;
+Utils::StopwatchFactoryMock* p_stopwatchFactoryMock = nullptr;
 // Constant Components
-Utils::ConsoleMock* _consoleMock = nullptr;
 FilePathsMakerMock* _filePathsMakerMock = nullptr;
 TextFileTextMakerMock* _textFileTextMakerMock = nullptr;
-Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 // Mutable Components
 FileCreatorMock* _fileCreatorMock = nullptr;
 
 STARTUP
 {
+   // Base Constant Components
+   _createTextFilesSubProgram.p_console.reset(p_consoleMock = new Utils::ConsoleMock);
+   _createTextFilesSubProgram.p_stopwatchFactory.reset(p_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
    // Constant Components
-   _createTextFilesSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
    _createTextFilesSubProgram._filePathsMaker.reset(_filePathsMakerMock = new FilePathsMakerMock);
    _createTextFilesSubProgram._textFileTextMaker.reset(_textFileTextMakerMock = new TextFileTextMakerMock);
-   _createTextFilesSubProgram._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
    // Mutable Components
    _createTextFilesSubProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
 }
@@ -36,9 +38,9 @@ TEST(Run_GenerateRandomLetterIsTrue_CreatesRandomTextFiles_Returns0)
 {
    shared_ptr<Utils::StopwatchMock> createFilesStopwatchMock = make_shared<Utils::StopwatchMock>();
    const unsigned long long millisecondsToWriteFiles = createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
-   _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(createFilesStopwatchMock);
+   p_stopwatchFactoryMock->NewAndStartStopwatchMock.Return(createFilesStopwatchMock);
 
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   p_consoleMock->ThreadIdWriteLineMock.Expect();
 
    const vector<fs::path> allFilePaths = _filePathsMakerMock->MakeFilePathsMock.ReturnRandom();
    _fileCreatorMock->CreateRandomTextFilesMock.Expect();
@@ -50,11 +52,11 @@ TEST(Run_GenerateRandomLetterIsTrue_CreatesRandomTextFiles_Returns0)
    const size_t expectedTotalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
    const string expectedCreatedFilesMessage = Utils::String::ConcatValues(
       "Wrote " , expectedTotalNumberOfFiles, " text files to ", args.numberOfDirectoriesToCreate, " directories [" , millisecondsToWriteFiles, " ms]");
-   METALMOCKTHEN(_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(p_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(_filePathsMakerMock->MakeFilePathsMock.CalledOnceWith(args))).Then(
    METALMOCKTHEN(_fileCreatorMock->CreateRandomTextFilesMock.CalledOnceWith(allFilePaths, args))).Then(
    METALMOCKTHEN(createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
+   METALMOCKTHEN(p_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
    IS_ZERO(exitCode);
 }
 
@@ -62,9 +64,9 @@ TEST(Run_GenerateRandomLetterIsFalse_CreatesNonRandomTextFiles_Returns0)
 {
    shared_ptr<Utils::StopwatchMock> createFilesStopwatchMock = make_shared<Utils::StopwatchMock>();
    const unsigned long long millisecondsToWriteFiles = createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
-   _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(createFilesStopwatchMock);
+   p_stopwatchFactoryMock->NewAndStartStopwatchMock.Return(createFilesStopwatchMock);
 
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   p_consoleMock->ThreadIdWriteLineMock.Expect();
 
    const string fileText = _textFileTextMakerMock->MakeNonRandomFileTextMock.ReturnRandom();
    _fileCreatorMock->CreateFilesMock.Expect();
@@ -76,11 +78,11 @@ TEST(Run_GenerateRandomLetterIsFalse_CreatesNonRandomTextFiles_Returns0)
    const size_t expectedTotalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
    const string expectedCreatedFilesMessage = Utils::String::ConcatValues(
       "Wrote " , expectedTotalNumberOfFiles, " text files to ", args.numberOfDirectoriesToCreate, " directories [" , millisecondsToWriteFiles, " ms]");
-   METALMOCKTHEN(_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(p_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(_textFileTextMakerMock->MakeNonRandomFileTextMock.CalledOnceWith(args.numberOfLinesPerFile, args.numberOfCharactersPerLine))).Then(
    METALMOCKTHEN(_fileCreatorMock->CreateFilesMock.CalledOnceWith(fileText, args))).Then(
    METALMOCKTHEN(createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
+   METALMOCKTHEN(p_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
    IS_ZERO(exitCode);
 }
 

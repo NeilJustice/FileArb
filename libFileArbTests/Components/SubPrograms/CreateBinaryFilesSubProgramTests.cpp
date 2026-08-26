@@ -13,21 +13,23 @@ AFACT(Run_GenerateRandomBytesIsTrue_CreatesRandomBinaryFiles_Returns0)
 EVIDENCE
 
 CreateBinaryFilesSubProgram _createBinaryFilesSubProgram;
+// Base Class Constant Components
+Utils::ConsoleMock* p_consoleMock = nullptr;
+Utils::StopwatchFactoryMock* p_stopwatchFactoryMock = nullptr;
 // Constant Components
-Utils::ConsoleMock* _consoleMock = nullptr;
 BinaryFileBytesMakerMock* _binaryFileBytesMakerMock = nullptr;
 FilePathsMakerMock* _filePathsMakerMock = nullptr;
-Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 // Mutable Components
 FileCreatorMock* _fileCreatorMock = nullptr;
 
 STARTUP
 {
+   // Base Class Constant Components
+   _createBinaryFilesSubProgram.p_console.reset(p_consoleMock = new Utils::ConsoleMock);
+   _createBinaryFilesSubProgram.p_stopwatchFactory.reset(p_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
    // Constant Components
-   _createBinaryFilesSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
    _createBinaryFilesSubProgram._binaryFileBytesMaker.reset(_binaryFileBytesMakerMock = new BinaryFileBytesMakerMock);
    _createBinaryFilesSubProgram._filePathsMaker.reset(_filePathsMakerMock = new FilePathsMakerMock);
-   _createBinaryFilesSubProgram._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
    // Mutable Components
    _createBinaryFilesSubProgram._fileCreator.reset(_fileCreatorMock = new FileCreatorMock);
 }
@@ -36,13 +38,13 @@ TEST(Run_GenerateRandomBytesIsTrue_CreatesRandomBinaryFiles_Returns0)
 {
    shared_ptr<Utils::StopwatchMock> createFilesStopwatchMock = make_shared<Utils::StopwatchMock>();
    const unsigned long long millisecondsToWriteFiles = createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
-   _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(createFilesStopwatchMock);
+   p_stopwatchFactoryMock->NewAndStartStopwatchMock.Return(createFilesStopwatchMock);
 
    const vector<fs::path> filePaths = _filePathsMakerMock->MakeFilePathsMock.ReturnRandom();
 
    _fileCreatorMock->CreateRandomBinaryFilesMock.Expect();
 
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   p_consoleMock->ThreadIdWriteLineMock.Expect();
 
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.generateRandomBytes = true;
@@ -52,11 +54,11 @@ TEST(Run_GenerateRandomBytesIsTrue_CreatesRandomBinaryFiles_Returns0)
    const size_t expectedTotalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
    const string expectedCreatedFilesMessage = Utils::String::ConcatValues(
       "Wrote " , expectedTotalNumberOfFiles, " binary files to ", args.numberOfDirectoriesToCreate, " directories [" , millisecondsToWriteFiles, " ms]");
-   METALMOCKTHEN(_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(p_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(_filePathsMakerMock->MakeFilePathsMock.CalledOnceWith(args))).Then(
    METALMOCKTHEN(_fileCreatorMock->CreateRandomBinaryFilesMock.CalledOnceWith(filePaths, args))).Then(
    METALMOCKTHEN(createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
+   METALMOCKTHEN(p_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
    IS_ZERO(exitCode);
 }
 
@@ -64,13 +66,13 @@ TEST(Run_GenerateRandomBytesIsFalse_CreatesNonRandomBinaryFiles_Returns0)
 {
    shared_ptr<Utils::StopwatchMock> createFilesStopwatchMock = make_shared<Utils::StopwatchMock>();
    const unsigned long long millisecondsToWriteFiles = createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
-   _stopwatchFactoryMock->NewAndStartStopwatchMock.Return(createFilesStopwatchMock);
+   p_stopwatchFactoryMock->NewAndStartStopwatchMock.Return(createFilesStopwatchMock);
 
    const string bytesString = _binaryFileBytesMakerMock->MakeNonRandomBytesStringMock.ReturnRandom();
 
    _fileCreatorMock->CreateFilesMock.Expect();
 
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   p_consoleMock->ThreadIdWriteLineMock.Expect();
 
    FileArbArgs args = ZenUnit::Random<FileArbArgs>();
    args.generateRandomBytes = false;
@@ -80,11 +82,11 @@ TEST(Run_GenerateRandomBytesIsFalse_CreatesNonRandomBinaryFiles_Returns0)
    const size_t expectedTotalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
    const string expectedCreatedFilesMessage = Utils::String::ConcatValues(
       "Wrote " , expectedTotalNumberOfFiles, " binary files to ", args.numberOfDirectoriesToCreate, " directories [" , millisecondsToWriteFiles, " ms]");
-   METALMOCKTHEN(_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(p_stopwatchFactoryMock->NewAndStartStopwatchMock.CalledOnce()).Then(
    METALMOCKTHEN(_binaryFileBytesMakerMock->MakeNonRandomBytesStringMock.CalledOnceWith(args.numberOfBytesPerFile))).Then(
    METALMOCKTHEN(_fileCreatorMock->CreateFilesMock.CalledOnceWith(bytesString, args))).Then(
    METALMOCKTHEN(createFilesStopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
+   METALMOCKTHEN(p_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedCreatedFilesMessage)));
    IS_ZERO(exitCode);
 }
 

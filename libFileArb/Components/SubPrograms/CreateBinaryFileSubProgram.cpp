@@ -18,7 +18,7 @@ CreateBinaryFileSubProgram::~CreateBinaryFileSubProgram()
 
 int CreateBinaryFileSubProgram::Run(const FileArbArgs& args)
 {
-   const shared_ptr<Utils::Stopwatch> stopwatch = _stopwatchFactory->NewAndStartStopwatch();
+   const shared_ptr<Utils::Stopwatch> stopwatch = p_stopwatchFactory->NewAndStartStopwatch();
 
    string fileBytesString;
    if (args.generateRandomBytes)
@@ -30,10 +30,10 @@ int CreateBinaryFileSubProgram::Run(const FileArbArgs& args)
       fileBytesString = _binaryFileBytesMaker->MakeNonRandomBytesString(args.numberOfBytesPerFile);
    }
    const fs::path filePath = args.targetDirectoryPath / "binaryfile.bin";
-   _fileSystem->CreateFileWithBytes(filePath, fileBytesString);
+   p_fileSystem->CreateFileWithBytes(filePath, fileBytesString);
 
    const unsigned long long elapsedMilliseconds = stopwatch->StopAndGetElapsedMilliseconds();
    const string message = Utils::String::ConcatValues("Wrote binary file ", filePath.string(), " [", elapsedMilliseconds, " ms]");
-   _console->ThreadIdWriteLine(message);
+   p_console->ThreadIdWriteLine(message);
    return 0;
 }

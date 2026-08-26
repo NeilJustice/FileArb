@@ -18,7 +18,7 @@ CreateTextFileSubProgram::~CreateTextFileSubProgram()
 
 int CreateTextFileSubProgram::Run(const FileArbArgs& args)
 {
-   const shared_ptr<Utils::Stopwatch> stopwatch = _stopwatchFactory->NewAndStartStopwatch();
+   const shared_ptr<Utils::Stopwatch> stopwatch = p_stopwatchFactory->NewAndStartStopwatch();
 
    string fileText;
    if (args.generateRandomLetters)
@@ -30,10 +30,10 @@ int CreateTextFileSubProgram::Run(const FileArbArgs& args)
       fileText = _textFileTextMaker->MakeNonRandomFileText(args.numberOfLinesPerFile, args.numberOfCharactersPerLine);
    }
    const fs::path filePath = args.targetDirectoryPath / "textfile.txt";
-   _fileSystem->CreateTextFile(filePath, fileText);
+   p_fileSystem->CreateTextFile(filePath, fileText);
 
    const unsigned long long elapsedMilliseconds = stopwatch->StopAndGetElapsedMilliseconds();
    const string message = Utils::String::ConcatValues("Wrote text file ", filePath.string(), " [", elapsedMilliseconds, " ms]");
-   _console->ThreadIdWriteLine(message);
+   p_console->ThreadIdWriteLine(message);
    return 0;
 }

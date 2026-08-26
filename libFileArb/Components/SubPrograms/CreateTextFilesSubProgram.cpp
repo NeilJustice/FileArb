@@ -22,7 +22,7 @@ CreateTextFilesSubProgram::~CreateTextFilesSubProgram()
 
 int CreateTextFilesSubProgram::Run(const FileArbArgs& args)
 {
-   const shared_ptr<Utils::Stopwatch> createFilesStopwatch = _stopwatchFactory->NewAndStartStopwatch();
+   const shared_ptr<Utils::Stopwatch> createFilesStopwatch = p_stopwatchFactory->NewAndStartStopwatch();
    if (args.generateRandomLetters)
    {
        const vector<fs::path> allFilePaths = _filePathsMaker->MakeFilePaths(args);
@@ -37,6 +37,6 @@ int CreateTextFilesSubProgram::Run(const FileArbArgs& args)
    const size_t totalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
    const string createdFilesMessage = Utils::String::ConcatValues(
       "Wrote " , totalNumberOfFiles, " text files to ", args.numberOfDirectoriesToCreate, " directories [" , elapsedMilliseconds, " ms]");
-   _console->ThreadIdWriteLine(createdFilesMessage);
+   p_console->ThreadIdWriteLine(createdFilesMessage);
    return 0;
 }

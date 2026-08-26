@@ -22,7 +22,7 @@ CreateBinaryFilesSubProgram::~CreateBinaryFilesSubProgram()
 
 int CreateBinaryFilesSubProgram::Run(const FileArbArgs& args)
 {
-   const shared_ptr<Utils::Stopwatch> createFilesStopwatch = _stopwatchFactory->NewAndStartStopwatch();
+   const shared_ptr<Utils::Stopwatch> createFilesStopwatch = p_stopwatchFactory->NewAndStartStopwatch();
    if (args.generateRandomBytes)
    {
       const vector<fs::path> allFilePaths = _filePathsMaker->MakeFilePaths(args);
@@ -37,6 +37,6 @@ int CreateBinaryFilesSubProgram::Run(const FileArbArgs& args)
    const size_t totalNumberOfFiles = args.numberOfFilesToCreate * args.numberOfDirectoriesToCreate;
    const string createdFilesMessage = Utils::String::ConcatValues(
       "Wrote " , totalNumberOfFiles, " binary files to ", args.numberOfDirectoriesToCreate, " directories [" , elapsedMilliseconds, " ms]");
-   _console->ThreadIdWriteLine(createdFilesMessage);
+   p_console->ThreadIdWriteLine(createdFilesMessage);
    return 0;
 }

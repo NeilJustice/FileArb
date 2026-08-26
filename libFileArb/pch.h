@@ -31,7 +31,7 @@ namespace fs = std::filesystem;
 #include "libFileArb/Enums/ProgramMode.h"
 #include "libFileArb/Enums/WindowsColor.h"
 // libFileArb Components
-#include "libFileArb/Components/Args/ArgsParser.h"
+#include "libFileArb/Components/Args/FileArbArgsParser.h"
 #include "libFileArb/docopt/docopt.h"
 #include "libFileArb/Components/Docopt/DocoptParser.h"
 // libFileArb StaticUtilities

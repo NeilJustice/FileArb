@@ -7,7 +7,7 @@ namespace Utils
    class Stopwatch;
    class VectorHelper;
 }
-class ArgsParser;
+class FileArbArgsParser;
 class FileArbSubProgramFactory;
 class FileCreator;
 
@@ -24,8 +24,8 @@ private:
       const vector<string>&>;
    unique_ptr<const _nonVoidOneArgTryCatchCallerType> _nonVoidOneArgTryCatchCaller;
    // Constant Components
-   unique_ptr<const ArgsParser> _argsParser;
    unique_ptr<const Utils::Console> _console;
+   unique_ptr<const FileArbArgsParser> _fileArbArgsParser;
    unique_ptr<const FileArbSubProgramFactory> _fileArbSubProgramFactory;
    unique_ptr<const Utils::VectorHelper> _vectorHelper;
    // Mutable Components

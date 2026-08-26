@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Args/ArgsParser.h"
+#include "libFileArb/Components/Args/FileArbArgsParser.h"
 #include "libFileArbTests/Components/Args/MetalMock/BytesStringConverterMock.h"
 #include "libFileArbTests/Components/Args/MetalMock/CreateBinaryFileArgsParserMock.h"
 #include "libFileArbTests/Components/Args/MetalMock/CreateBinaryFilesArgsParserMock.h"
@@ -12,7 +12,7 @@
 #include "libFileArbTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libFileArbTests/Components/Vector/MetalMock/VectorHelperMock.h"
 
-TESTS(ArgsParserTests)
+TESTS(FileArbArgsParserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 AFACT(ParseStringArgs__CreateBinaryFile)
 AFACT(ParseStringArgs__CreateBinaryFiles)
@@ -21,7 +21,7 @@ AFACT(ParseStringArgs__CreateTextFiles)
 FACTS(ParseStringArgs__InvalidProgramMode)
 EVIDENCE
 
-ArgsParser _argsParser;
+FileArbArgsParser _fileArbArgsParser;
 // Function Pointers
 METALMOCK_VOID1_STATIC_OR_FREE(_call_exit, int)
 // Constant Components
@@ -40,26 +40,26 @@ Utils::VectorHelperMock* _vectorHelperMock = nullptr;
 STARTUP
 {
    // Function Pointers
-   _argsParser._call_exit = BIND_1ARG_METALMOCK_OBJECT(_call_exitMock);
+   _fileArbArgsParser._call_exit = BIND_1ARG_METALMOCK_OBJECT(_call_exitMock);
    // Constant Components
-   _argsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
-   _argsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
-   _argsParser._createBinaryFileArgsParser.reset(_createBinaryFileArgsParserMock = new CreateBinaryFileArgsParserMock);
-   _argsParser._createTextFileArgsParser.reset(_createTextFileArgsParserMock = new CreateTextFileArgsParserMock);
-   _argsParser._createBinaryFilesArgsParser.reset(_createBinaryFilesArgsParserMock = new CreateBinaryFilesArgsParserMock);
-   _argsParser._createTextFilesArgsParser.reset(_createTextFilesArgsParserMock = new CreateTextFilesArgsParserMock);
-   _argsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
-   _argsParser._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
-   _argsParser._preamblePrinter.reset(_preamblePrinterMock = new Utils::PreamblePrinterMock);
-   _argsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);
-   _argsParser._vectorHelper.reset(_vectorHelperMock = new Utils::VectorHelperMock);
+   _fileArbArgsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
+   _fileArbArgsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _fileArbArgsParser._createBinaryFileArgsParser.reset(_createBinaryFileArgsParserMock = new CreateBinaryFileArgsParserMock);
+   _fileArbArgsParser._createTextFileArgsParser.reset(_createTextFileArgsParserMock = new CreateTextFileArgsParserMock);
+   _fileArbArgsParser._createBinaryFilesArgsParser.reset(_createBinaryFilesArgsParserMock = new CreateBinaryFilesArgsParserMock);
+   _fileArbArgsParser._createTextFilesArgsParser.reset(_createTextFilesArgsParserMock = new CreateTextFilesArgsParserMock);
+   _fileArbArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
+   _fileArbArgsParser._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
+   _fileArbArgsParser._preamblePrinter.reset(_preamblePrinterMock = new Utils::PreamblePrinterMock);
+   _fileArbArgsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);
+   _fileArbArgsParser._vectorHelper.reset(_vectorHelperMock = new Utils::VectorHelperMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
-   const ArgsParser argsParser;
+   const FileArbArgsParser fileArbArgsParser;
    // Function Pointers
-   STD_FUNCTION_TARGETS(exit, argsParser._call_exit);
+   STD_FUNCTION_TARGETS(exit, fileArbArgsParser._call_exit);
 }
 
 TEST(ParseStringArgs__CreateBinaryFile)
@@ -75,7 +75,7 @@ TEST(ParseStringArgs__CreateBinaryFile)
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
-   const FileArbArgs returnedFileArbArgs = _argsParser.ParseStringArgs(stringArgs);
+   const FileArbArgs returnedFileArbArgs = _fileArbArgsParser.ParseStringArgs(stringArgs);
    //
    METALMOCKTHEN(_vectorHelperMock->JoinMock.CalledOnceWith(stringArgs, ' ')).Then(
    METALMOCKTHEN(_preamblePrinterMock->PrintPreambleMock.CalledOnceWith(commandLine, _consoleMock))).Then(
@@ -101,7 +101,7 @@ TEST(ParseStringArgs__CreateTextFile)
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
-   const FileArbArgs returnedFileArbArgs = _argsParser.ParseStringArgs(stringArgs);
+   const FileArbArgs returnedFileArbArgs = _fileArbArgsParser.ParseStringArgs(stringArgs);
    //
    METALMOCKTHEN(_vectorHelperMock->JoinMock.CalledOnceWith(stringArgs, ' ')).Then(
    METALMOCKTHEN(_preamblePrinterMock->PrintPreambleMock.CalledOnceWith(commandLine, _consoleMock))).Then(
@@ -127,7 +127,7 @@ TEST(ParseStringArgs__CreateBinaryFiles)
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
-   const FileArbArgs returnedFileArbArgs = _argsParser.ParseStringArgs(stringArgs);
+   const FileArbArgs returnedFileArbArgs = _fileArbArgsParser.ParseStringArgs(stringArgs);
    //
    METALMOCKTHEN(_vectorHelperMock->JoinMock.CalledOnceWith(stringArgs, ' ')).Then(
    METALMOCKTHEN(_preamblePrinterMock->PrintPreambleMock.CalledOnceWith(commandLine, _consoleMock))).Then(
@@ -153,7 +153,7 @@ TEST(ParseStringArgs__CreateTextFiles)
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
-   const FileArbArgs returnedFileArbArgs = _argsParser.ParseStringArgs(stringArgs);
+   const FileArbArgs returnedFileArbArgs = _fileArbArgsParser.ParseStringArgs(stringArgs);
    //
    METALMOCKTHEN(_vectorHelperMock->JoinMock.CalledOnceWith(stringArgs, ' ')).Then(
    METALMOCKTHEN(_preamblePrinterMock->PrintPreambleMock.CalledOnceWith(commandLine, _consoleMock))).Then(
@@ -185,7 +185,7 @@ TEST1X1(ParseStringArgs__InvalidProgramMode,
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
-   _argsParser.ParseStringArgs(stringArgs);
+   _fileArbArgsParser.ParseStringArgs(stringArgs);
    //
    METALMOCKTHEN(_vectorHelperMock->JoinMock.CalledOnceWith(stringArgs, ' ')).Then(
    METALMOCKTHEN(_preamblePrinterMock->PrintPreambleMock.CalledOnceWith(commandLine, _consoleMock))).Then(
@@ -198,4 +198,4 @@ TEST1X1(ParseStringArgs__InvalidProgramMode,
    METALMOCKTHEN(_call_exitMock.CalledOnceWith(1)));
 }
 
-RUN_TESTS(ArgsParserTests)
+RUN_TESTS(FileArbArgsParserTests)

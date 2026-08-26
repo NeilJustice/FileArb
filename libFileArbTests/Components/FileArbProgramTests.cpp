@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/FileArbProgram.h"
-#include "libFileArbTests/Components/Args/MetalMock/ArgsParserMock.h"
+#include "libFileArbTests/Components/Args/MetalMock/FileArbArgsParserMock.h"
 #include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileArbTests/Components/FunctionCallers/TryCatchCallers/MetalMock/NonVoidOneArgTryCatchCallerMock.h"
 #include "libFileArbTests/Components/SubPrograms/MetalMock/FileArbSubProgramFactoryMock.h"
@@ -27,8 +27,8 @@ using _nonVoidOneArgTryCatchCallerMockType = Utils::NonVoidOneArgTryCatchCallerM
    const vector<string>&>;
 _nonVoidOneArgTryCatchCallerMockType* _nonVoidOneArgTryCatchCallerMock = nullptr;
 // Constant Components
-ArgsParserMock* _argsParserMock = nullptr;
 Utils::ConsoleMock* _consoleMock = nullptr;
+FileArbArgsParserMock* _fileArbArgsParserMock = nullptr;
 Utils::StopwatchMock* _stopwatchMock = nullptr;
 Utils::VectorHelperMock* _vectorHelperMock = nullptr;
 // Mutable Components
@@ -42,8 +42,8 @@ STARTUP
    // Function Callers
    _fileArbProgram._nonVoidOneArgTryCatchCaller.reset(_nonVoidOneArgTryCatchCallerMock = new _nonVoidOneArgTryCatchCallerMockType);
    // Constant Components
-   _fileArbProgram._argsParser.reset(_argsParserMock = new ArgsParserMock);
    _fileArbProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _fileArbProgram._fileArbArgsParser.reset(_fileArbArgsParserMock = new FileArbArgsParserMock);
    _fileArbProgram._fileArbSubProgramFactory.reset(_fileArbSubProgramFactoryMock = new FileArbSubProgramFactoryMock);
    _fileArbProgram._vectorHelper.reset(_vectorHelperMock = new Utils::VectorHelperMock);
    // Mutable Components
@@ -112,7 +112,7 @@ TEST(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExitCod
 
 TEST(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_ReturnsExitCodeFromSubProgram)
 {
-   const FileArbArgs args = _argsParserMock->ParseStringArgsMock.ReturnRandom();
+   const FileArbArgs args = _fileArbArgsParserMock->ParseStringArgsMock.ReturnRandom();
 
    shared_ptr<FileArbSubProgramMock> fileArbSubProgramMock = make_shared<FileArbSubProgramMock>();
    const int exitCode = fileArbSubProgramMock->RunMock.ReturnRandom();
@@ -127,7 +127,7 @@ TEST(Run_ParsesArgs_GetsFileArbSubProgramForProgramMode_RunsFileArbSubProgram_Re
    //
    const int returnedExitCode = _fileArbProgram.Run(stringArgs);
    //
-   METALMOCKTHEN(_argsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs)).Then(
+   METALMOCKTHEN(_fileArbArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs)).Then(
    METALMOCKTHEN(_fileArbSubProgramFactoryMock->NewFileArbSubProgramMock.CalledOnceWith(args.programMode))).Then(
    METALMOCKTHEN(fileArbSubProgramMock->RunMock.CalledOnceWith(args)));
    ARE_EQUAL(exitCode, returnedExitCode);

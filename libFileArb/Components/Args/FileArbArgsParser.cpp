@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Args/ArgsParser.h"
+#include "libFileArb/Components/Args/FileArbArgsParser.h"
 #include "libFileArb/Components/Args/BytesStringConverter.h"
 #include "libFileArb/Components/Args/CreateBinaryFileArgsParser.h"
 #include "libFileArb/Components/Args/CreateBinaryFilesArgsParser.h"
@@ -11,7 +11,7 @@
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/Vector/VectorHelper.h"
 
-ArgsParser::ArgsParser()
+FileArbArgsParser::FileArbArgsParser()
    // Function Callers
    : _call_exit(exit)
    // Constant Components
@@ -29,11 +29,11 @@ ArgsParser::ArgsParser()
 {
 }
 
-ArgsParser::~ArgsParser()
+FileArbArgsParser::~FileArbArgsParser()
 {
 }
 
-FileArbArgs ArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
+FileArbArgs FileArbArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
 {
    const string commandLine = _vectorHelper->Join(stringArgs, ' ');
    _preamblePrinter->PrintPreamble(commandLine, _console.get());

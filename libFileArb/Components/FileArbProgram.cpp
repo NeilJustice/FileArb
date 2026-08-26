@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Args/ArgsParser.h"
+#include "libFileArb/Components/Args/FileArbArgsParser.h"
 #include "libFileArb/Components/Console/Console.h"
 #include "libFileArb/Components/FileArbProgram.h"
 #include "libFileArb/Components/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
@@ -16,8 +16,8 @@ FileArbProgram::FileArbProgram()
    // Function Callers
    , _nonVoidOneArgTryCatchCaller(make_unique<_nonVoidOneArgTryCatchCallerType>())
    // Constant Components
-   , _argsParser(make_unique<ArgsParser>())
    , _console(make_unique<Utils::Console>())
+   , _fileArbArgsParser(make_unique<FileArbArgsParser>())
    , _fileArbSubProgramFactory(make_unique<FileArbSubProgramFactory>())
    , _vectorHelper(make_unique<Utils::VectorHelper>())
    // Mutable Components
@@ -54,7 +54,7 @@ int FileArbProgram::Main(int argc, char* argv[]) // NOLINT
 
 int FileArbProgram::Run(const vector<string>& stringArgs)
 {
-   const FileArbArgs args = _argsParser->ParseStringArgs(stringArgs);
+   const FileArbArgs args = _fileArbArgsParser->ParseStringArgs(stringArgs);
    const shared_ptr<FileArbSubProgram> fileArbSubProgram = _fileArbSubProgramFactory->NewFileArbSubProgram(args.programMode);
    int exitCode = fileArbSubProgram->Run(args);
    return exitCode;

@@ -15,10 +15,10 @@ class DocoptParser;
 class ProgramModeDeterminer;
 struct FileArbArgs;
 
-class ArgsParser
+class FileArbArgsParser
 {
 private:
-   friend class ArgsParserTests;
+   friend class FileArbArgsParserTests;
    // Function Pointers
    function<void(int)> _call_exit;
    // Constant Components
@@ -34,8 +34,8 @@ private:
    unique_ptr<const ProgramModeDeterminer> _programModeDeterminer;
    unique_ptr<const Utils::VectorHelper> _vectorHelper;
 public:
-   ArgsParser();
-   virtual ~ArgsParser();
+   FileArbArgsParser();
+   virtual ~FileArbArgsParser();
 
    virtual FileArbArgs ParseStringArgs(const vector<string>& stringArgs) const;
 };

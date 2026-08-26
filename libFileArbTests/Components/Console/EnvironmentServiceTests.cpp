@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileArb/Components/Args/EnvironmentService.h"
-#include "libFileArbTests/Components/Args/MetalMock/IntegerAsserterMock.h"
+#include "libFileArb/Components/Console/EnvironmentService.h"
+#include "libFileArbTests/Components/Asserters/MetalMock/IntegerAsserterMock.h"
 
 #ifdef __linux__
 #include <pwd.h>

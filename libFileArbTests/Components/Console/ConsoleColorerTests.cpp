@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/Console/ConsoleColorer.h"
-#include "libFileArbTests/Components/Misc/MetalMock/AsserterMock.h"
+#include "libFileArbTests/Components/Asserters/MetalMock/AsserterMock.h"
 
 TESTS(ConsoleColorerTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)

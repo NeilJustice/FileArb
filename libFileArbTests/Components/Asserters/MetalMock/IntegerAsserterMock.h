@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileArb/Components/Args/IntegerAsserter.h"
+#include "libFileArb/Components/Asserters/IntegerAsserter.h"
 
 namespace Utils
 {

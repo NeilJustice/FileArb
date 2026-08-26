@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileArb/Components/Args/IntegerAsserter.h"
+#include "libFileArb/Components/Asserters/IntegerAsserter.h"
 
 TESTS(IntegerAsserterTests)
 AFACT(ThrowIfIntsAreNotEqual_IntsAreEqual_DoesNothing)

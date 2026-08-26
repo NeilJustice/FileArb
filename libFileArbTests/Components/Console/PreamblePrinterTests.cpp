@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "libFileArb/Components/Args/PreamblePrinter.h"
-#include "libFileArbTests/Components/Args/MetalMock/EnvironmentServiceMock.h"
+#include "libFileArb/Components/Console/PreamblePrinter.h"
 #include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileArbTests/Components/Console/MetalMock/EnvironmentServiceMock.h"
 #include "libFileArbTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(PreamblePrinterTests)

@@ -16,14 +16,14 @@ namespace Utils
       template<typename T>
       static const string* GetName(const T& variable)
       {
-         const string* const typeName = TypeInfoToTypeName(typeid(variable));
+         const string* typeName = TypeInfoToTypeName(typeid(variable));
          return typeName;
       }
 
       template<typename T>
       static const string* GetName()
       {
-         const string* const typeName = TypeInfoToTypeName(typeid(T));
+         const string* typeName = TypeInfoToTypeName(typeid(T));
          return typeName;
       }
 
@@ -43,7 +43,7 @@ namespace Utils
             const string* const cachedDemangledTypeName = &emplaceResult.first->second;
             return cachedDemangledTypeName;
          }
-         const string* const cachedDemangledTypeName = &findIter->second;
+         const string* cachedDemangledTypeName = &findIter->second;
          return cachedDemangledTypeName;
       }
 

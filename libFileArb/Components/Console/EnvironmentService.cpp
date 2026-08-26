@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileArb/Components/Args/EnvironmentService.h"
-#include "libFileArb/Components/Args/IntegerAsserter.h"
+#include "libFileArb/Components/Asserters/IntegerAsserter.h"
+#include "libFileArb/Components/Console/EnvironmentService.h"
 #ifdef _WIN32
 #include "Psapi.h"
 #endif

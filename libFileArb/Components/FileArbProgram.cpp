@@ -45,7 +45,7 @@ int FileArbProgram::Main(int argc, char* argv[]) // NOLINT
       &FileArbProgram::ExceptionHandler);
 
    const string runtimeInSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string durationLine = Utils::String::ConcatStrings("TotalDuration: ", runtimeInSeconds, " seconds");
+   const string durationLine = Utils::String::ConcatStrings("Duration: ", runtimeInSeconds, " seconds");
    _console->ThreadIdWriteLine(durationLine);
    const string exitCodeLine = Utils::String::ConcatValues("ExitCode: ", exitCode);
    _console->ThreadIdWriteLine(exitCodeLine);

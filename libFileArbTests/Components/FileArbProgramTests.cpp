@@ -90,7 +90,7 @@ TEST(Main_ArgcIsNot1_TryCatchCallsRunWithStringArgs_PrintsDuration_PrintsExitCod
    //
    const int returnedSubProgramExitCode = _fileArbProgram.Main(argc, const_cast<char**>(argv));
    //
-   const string expectedDurationLine = Utils::String::ConcatValues("TotalDuration: ", runtimeInSeconds, " seconds");
+   const string expectedDurationLine = Utils::String::ConcatValues("Duration: ", runtimeInSeconds, " seconds");
    const string expectedExitCodeLine = Utils::String::ConcatValues("ExitCode: ", subProgramExitCode);
    METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
 

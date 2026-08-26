@@ -13,10 +13,11 @@
 FileArbProgram::FileArbProgram()
    // Function Pointers
    : _call_Utils_Exception_ClassNameAndMessage(Utils::Exception::GetClassNameAndMessage)
+   // Function Callers
+   , _nonVoidOneArgTryCatchCaller(make_unique<_nonVoidOneArgTryCatchCallerType>())
    // Constant Components
    , _argsParser(make_unique<ArgsParser>())
    , _console(make_unique<Utils::Console>())
-   , _nonVoidOneArgTryCatchCaller(make_unique<Utils::NonVoidOneArgTryCatchCaller<int, FileArbProgram, const vector<string>&>>())
    , _fileArbSubProgramFactory(make_unique<FileArbSubProgramFactory>())
    , _vectorHelper(make_unique<Utils::VectorHelper>())
    // Mutable Components

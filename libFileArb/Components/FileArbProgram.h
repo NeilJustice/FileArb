@@ -17,12 +17,15 @@ private:
    friend class FileArbProgramTests;
    // Function Pointers
    function<string(const exception*)> _call_Utils_Exception_ClassNameAndMessage;
+   // Function Callers
+   using _nonVoidOneArgTryCatchCallerType = Utils::NonVoidOneArgTryCatchCaller<
+      int,
+      FileArbProgram,
+      const vector<string>&>;
+   unique_ptr<const _nonVoidOneArgTryCatchCallerType> _nonVoidOneArgTryCatchCaller;
    // Constant Components
    unique_ptr<const ArgsParser> _argsParser;
    unique_ptr<const Utils::Console> _console;
-
-   unique_ptr<const Utils::NonVoidOneArgTryCatchCaller<int, FileArbProgram, const vector<string>&>> _nonVoidOneArgTryCatchCaller;
-
    unique_ptr<const FileArbSubProgramFactory> _fileArbSubProgramFactory;
    unique_ptr<const Utils::VectorHelper> _vectorHelper;
    // Mutable Components

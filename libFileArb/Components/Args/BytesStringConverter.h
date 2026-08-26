@@ -2,7 +2,6 @@
 
 class BytesStringConverter
 {
-   friend class BytesStringConverterTests;
 public:
    virtual ~BytesStringConverter() = default;
 

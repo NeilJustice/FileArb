@@ -38,6 +38,6 @@ size_t BytesStringConverter::ConvertBytesStringToNumberOfBytes(const string& byt
       return bytes;
    }
    const string exceptionMessage = Utils::String::ConcatStrings(
-      "BytesStringConverter::ConvertBytesStringToNumberOfBytes(string_view bytesString) called with invalid bytesString: \"", bytesString, "\"");
+      "BytesStringConverter::ConvertBytesStringToNumberOfBytes called with invalid bytesString: \"", bytesString, "\"");
    throw invalid_argument(exceptionMessage);
 }

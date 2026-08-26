@@ -3,8 +3,7 @@
 class FilePathsMaker
 {
 public:
-   FilePathsMaker();
-   virtual ~FilePathsMaker();
+   virtual ~FilePathsMaker() = default;
 
    virtual vector<fs::path> MakeFilePaths(const FileArbArgs& args) const;
 };

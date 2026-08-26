@@ -2,7 +2,12 @@
 
 namespace Utils
 {
-   void ReleaseAssert(bool predicateResult, const char* predicateText, const char* filePath, long lineNumber, const char* functionName);
+   void ReleaseAssert(
+      bool predicateResult,
+      const char* predicateText,
+      const char* filePath,
+      long lineNumber,
+      const char* functionName);
 }
 
 #ifndef release_assert

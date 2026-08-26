@@ -14,8 +14,6 @@ public:
          const ValueType& Value = m.at(key);
          return Value;
       }
-      // When std::map::at() throws out_of_range, its what() text reads just "key not found",
-      // not including in the message the key not found.
       catch (const std::out_of_range&)
       {
          ThrowKeyNotFound(key);

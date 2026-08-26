@@ -6,11 +6,14 @@ namespace Utils
    class NonVoidOneArgTryCatchCaller
    {
    public:
+      using NonConstMemberFunctionType = int (ClassType::*)(ArgumentType);
+      using ExceptionHandlerFunctionType = int (ClassType::*)(const exception&, ArgumentType);
+
       virtual int TryCatchCallNonConstMemberFunction(
          ClassType* nonConstClassPointer,
-         int (ClassType::*nonConstMemberFunction)(ArgumentType),
+         NonConstMemberFunctionType nonConstMemberFunction,
          ArgumentType argument,
-         int (ClassType::*exceptionHandlerMemberFunction)(const exception&, ArgumentType)) const
+         ExceptionHandlerFunctionType exceptionHandlerMemberFunction) const
       {
          try
          {

@@ -1,14 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/Makers/FilePathsMaker.h"
 
-FilePathsMaker::FilePathsMaker()
-{
-}
-
-FilePathsMaker::~FilePathsMaker()
-{
-}
-
 vector<fs::path> FilePathsMaker::MakeFilePaths(const FileArbArgs& args) const
 {
    size_t numberOfFilePaths = args.numberOfDirectoriesToCreate * args.numberOfFilesToCreate;

@@ -24,12 +24,12 @@ private:
    // Constant Components
    unique_ptr<const BytesStringConverter> _bytesStringConverter;
    unique_ptr<const Utils::Console> _console;
-   unique_ptr<const Utils::FileSystem> _fileSystem;
    unique_ptr<const CreateBinaryFileArgsParser> _createBinaryFileArgsParser;
    unique_ptr<const CreateTextFileArgsParser> _createTextFileArgsParser;
    unique_ptr<const CreateBinaryFilesArgsParser> _createBinaryFilesArgsParser;
    unique_ptr<const CreateTextFilesArgsParser> _createTextFilesArgsParser;
    unique_ptr<const DocoptParser> _docoptParser;
+   unique_ptr<const Utils::FileSystem> _fileSystem;
    unique_ptr<const Utils::PreamblePrinter> _preamblePrinter;
    unique_ptr<const ProgramModeDeterminer> _programModeDeterminer;
    unique_ptr<const Utils::VectorHelper> _vectorHelper;

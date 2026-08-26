@@ -19,13 +19,23 @@ class FileCreator
    friend class FileCreatorTests;
 private:
    // Function Callers
-   using VoidTwoArgMemberFunctionCallerType = Utils::VoidTwoArgMemberFunctionCaller<FileCreator, const string&, const FileArbArgs&>;
+   using VoidTwoArgMemberFunctionCallerType = Utils::VoidTwoArgMemberFunctionCaller<
+      FileCreator,
+      const string&,
+      const FileArbArgs&>;
    unique_ptr<const VoidTwoArgMemberFunctionCallerType> _caller_CreateSequentiallyNumberedFilesInNumberedDirectory;
 
-   using VoidThreeArgMemberFunctionCallerType = Utils::VoidThreeArgMemberFunctionCaller<FileCreator, const fs::path&, const string&, const FileArbArgs&>;
+   using VoidThreeArgMemberFunctionCallerType = Utils::VoidThreeArgMemberFunctionCaller<
+      FileCreator,
+      const fs::path&,
+      const string&,
+      const FileArbArgs&>;
    unique_ptr<const VoidThreeArgMemberFunctionCallerType> _caller_CreateNumberedFileInDirectory;
 
-   using _memberForEacher_filePathsType = Utils::TwoArgMemberFunctionForEacher<FileCreator, fs::path, const FileArbArgs&>;
+   using _memberForEacher_filePathsType = Utils::TwoArgMemberFunctionForEacher<
+      FileCreator,
+      fs::path,
+      const FileArbArgs&>;
    unique_ptr<const _memberForEacher_filePathsType> _memberForEacher_filePaths;
    // Constant Components
    unique_ptr<const BinaryFileBytesMaker> _binaryFileBytesMaker;
@@ -37,9 +47,14 @@ public:
    FileCreator();
    virtual ~FileCreator();
 
-   virtual void CreateFiles(const string& fileTextOrBytes, const FileArbArgs& args) const;
-   virtual void CreateRandomBinaryFiles(const vector<fs::path>& allFilePaths, const FileArbArgs& args) const;
-   virtual void CreateRandomTextFiles(const vector<fs::path>& allFilePaths, const FileArbArgs& args) const;
+   virtual void CreateFiles(
+      const string& fileTextOrBytes, const FileArbArgs& args) const;
+
+   virtual void CreateRandomBinaryFiles(
+      const vector<fs::path>& allFilePaths, const FileArbArgs& args) const;
+
+   virtual void CreateRandomTextFiles(
+      const vector<fs::path>& allFilePaths, const FileArbArgs& args) const;
 private:
    void CreateNumberedFileInDirectory(
       size_t callIndex,

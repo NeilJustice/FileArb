@@ -19,10 +19,7 @@ namespace Utils
       FileSystemPather();
       virtual ~FileSystemPather();
 
-      // Exceptions
-      virtual void ThrowIfFileDoesNotExist(const fs::path& filePath) const;
-
-      // File and Folder Paths
       virtual fs::path GetAbsoluteFileOrFolderPath(const fs::path& fileOrFolderPath) const;
+      virtual void ThrowIfFileDoesNotExist(const fs::path& filePath) const;
    };
 }

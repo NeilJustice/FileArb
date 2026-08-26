@@ -28,7 +28,8 @@ FileCreator::~FileCreator()
 {
 }
 
-void FileCreator::CreateFiles(const string& fileTextOrBytes, const FileArbArgs& args) const
+void FileCreator::CreateFiles(
+   const string& fileTextOrBytes, const FileArbArgs& args) const
 {
    if (args.parallel)
    {
@@ -42,13 +43,15 @@ void FileCreator::CreateFiles(const string& fileTextOrBytes, const FileArbArgs& 
    }
 }
 
-void FileCreator::CreateRandomBinaryFiles(const vector<fs::path>& allFilePaths, const FileArbArgs& args) const
+void FileCreator::CreateRandomBinaryFiles(
+   const vector<fs::path>& allFilePaths, const FileArbArgs& args) const
 {
    _memberForEacher_filePaths->CallConstMemberFunctionWithEachElementOptionallyInParallel(
       allFilePaths, this, &FileCreator::CreateRandomBinaryFile, args, args.parallel);
 }
 
-void FileCreator::CreateRandomTextFiles(const vector<fs::path>& allFilePaths, const FileArbArgs& args) const
+void FileCreator::CreateRandomTextFiles(
+   const vector<fs::path>& allFilePaths, const FileArbArgs& args) const
 {
    _memberForEacher_filePaths->CallConstMemberFunctionWithEachElementOptionallyInParallel(
       allFilePaths, this, &FileCreator::CreateRandomTextFile, args, args.parallel);

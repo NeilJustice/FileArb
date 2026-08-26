@@ -4,14 +4,11 @@
 
 TESTS(FileSystemPatherTests)
 AFACT(DefaultConstructor_SetsFunctionPointers)
-
-// Exceptions
-AFACT(ThrowIfFileDoesNotExist_FileExists_DoesNothing)
-AFACT(ThrowIfFileDoesNotExist_FileDoesNotExist_ThrowsFileDoesNotExistException)
-
-// File and Folder Paths
 AFACT(GetAbsoluteFileOrFolderPath_IsEmptyPath_ReturnsEmptyPath)
 AFACT(GetAbsoluteFileOrFolderPath_IsNotEmptyPath_ReturnsResultOfCallingFilesystemAbsoluteOnFileOrFolderPath)
+
+AFACT(ThrowIfFileDoesNotExist_FileExists_DoesNothing)
+AFACT(ThrowIfFileDoesNotExist_FileDoesNotExist_ThrowsFileDoesNotExistException)
 EVIDENCE
 
 Utils::FileSystemPather _fileSystemPather;
@@ -39,7 +36,25 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 #endif
 }
 
-// Exceptions
+TEST(GetAbsoluteFileOrFolderPath_IsEmptyPath_ReturnsEmptyPath)
+{
+   const fs::path emptyFileOrFolderPath;
+   //
+   const fs::path& returnedAbsoluteFileOrFolderPath = _fileSystemPather.GetAbsoluteFileOrFolderPath(emptyFileOrFolderPath);
+   //
+   IS_EMPTY_PATH(returnedAbsoluteFileOrFolderPath);
+}
+
+TEST(GetAbsoluteFileOrFolderPath_IsNotEmptyPath_ReturnsResultOfCallingFilesystemAbsoluteOnFileOrFolderPath)
+{
+   const fs::path absoluteFileOrFolderPath = _call_fs_absoluteMock.ReturnRandom();
+   const fs::path fileOrFolderPath = ZenUnit::Random<string>();
+   //
+   const fs::path& returnedAbsoluteFileOrFolderPath = _fileSystemPather.GetAbsoluteFileOrFolderPath(fileOrFolderPath);
+   //
+   METALMOCK(_call_fs_absoluteMock.CalledOnceWith(fileOrFolderPath));
+   ARE_EQUAL(absoluteFileOrFolderPath, returnedAbsoluteFileOrFolderPath);
+}
 
 TEST(ThrowIfFileDoesNotExist_FileExists_DoesNothing)
 {
@@ -61,28 +76,6 @@ TEST(ThrowIfFileDoesNotExist_FileDoesNotExist_ThrowsFileDoesNotExistException)
       Utils::FileNotFoundException, expectedExceptionMessage);
    //
    METALMOCK(_call_fs_is_regular_fileMock.CalledOnceWith(filePath));
-}
-
-// File and Folder Paths
-
-TEST(GetAbsoluteFileOrFolderPath_IsEmptyPath_ReturnsEmptyPath)
-{
-   const fs::path emptyFileOrFolderPath;
-   //
-   const fs::path& returnedAbsoluteFileOrFolderPath = _fileSystemPather.GetAbsoluteFileOrFolderPath(emptyFileOrFolderPath);
-   //
-   IS_EMPTY_PATH(returnedAbsoluteFileOrFolderPath);
-}
-
-TEST(GetAbsoluteFileOrFolderPath_IsNotEmptyPath_ReturnsResultOfCallingFilesystemAbsoluteOnFileOrFolderPath)
-{
-   const fs::path absoluteFileOrFolderPath = _call_fs_absoluteMock.ReturnRandom();
-   const fs::path fileOrFolderPath = ZenUnit::Random<string>();
-   //
-   const fs::path& returnedAbsoluteFileOrFolderPath = _fileSystemPather.GetAbsoluteFileOrFolderPath(fileOrFolderPath);
-   //
-   METALMOCK(_call_fs_absoluteMock.CalledOnceWith(fileOrFolderPath));
-   ARE_EQUAL(absoluteFileOrFolderPath, returnedAbsoluteFileOrFolderPath);
 }
 
 RUN_TESTS(FileSystemPatherTests)

@@ -24,6 +24,7 @@ namespace Utils
    public:
       ConsoleColorer() noexcept;
       virtual ~ConsoleColorer();
+
       virtual bool SetTextColor(Color textColor);
       virtual void UnsetTextColor(bool didPreviouslySetTextColor) const;
    private:

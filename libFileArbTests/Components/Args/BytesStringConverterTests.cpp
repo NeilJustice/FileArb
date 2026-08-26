@@ -99,7 +99,7 @@ TEST1X1(ConvertBytesStringToNumberOfBytes_BytesStringEndsWithInvalidSuffix_Throw
    "1YB")
 {
    const string expectedExceptionMessage = Utils::String::ConcatStrings(
-      "BytesStringConverter::ConvertBytesStringToNumberOfBytes(string_view bytesString) called with invalid bytesString: \"", invalidBytesString, "\"");
+      "BytesStringConverter::ConvertBytesStringToNumberOfBytes called with invalid bytesString: \"", invalidBytesString, "\"");
    THROWS_EXCEPTION(_bytesStringConverter.ConvertBytesStringToNumberOfBytes(invalidBytesString),
       invalid_argument, expectedExceptionMessage);
 }

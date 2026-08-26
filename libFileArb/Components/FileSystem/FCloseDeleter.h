@@ -11,6 +11,7 @@ namespace Utils
       function<int(FILE*)> _call_fclose;
    public:
       FCloseDeleter();
+
       void operator()(FILE* rawFilePointer) const;
    };
 }

@@ -1,14 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/Makers/LineReplicator.h"
 
-LineReplicator::LineReplicator()
-{
-}
-
-LineReplicator::~LineReplicator()
-{
-}
-
 string LineReplicator::ReplicateLineNTimes(const string& line, size_t n) const
 {
    const size_t replicatedStringLength = line.size() * n;

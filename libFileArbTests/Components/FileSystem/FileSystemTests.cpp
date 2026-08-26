@@ -35,10 +35,19 @@ METALMOCK_NONVOID1_STATIC_OR_FREE(bool, _call_fs_create_directories, const fs::p
 METALMOCK_NONVOID4_STATIC_OR_FREE(size_t, _call_fwrite, const void*, size_t, size_t, FILE*)
 METALMOCK_NONVOID0_STATIC_OR_FREE(fs::path, _call_get_fs_current_path)
 // Function Callers
-using _caller_CreateBinaryOrTextFileMockType = Utils::VoidFourArgMemberFunctionCallerMock<Utils::FileSystem, const fs::path&, const char*, const char*, size_t>;
+using _caller_CreateBinaryOrTextFileMockType = Utils::VoidFourArgMemberFunctionCallerMock<
+   Utils::FileSystem,
+   const fs::path&,
+   const char*,
+   const char*,
+   size_t>;
 _caller_CreateBinaryOrTextFileMockType* _caller_CreateBinaryOrTextFileMock = nullptr;
 
-using _caller_OpenFileMockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<shared_ptr<FILE>, Utils::FileSystem, const fs::path&, const char*>;
+using _caller_OpenFileMockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<
+   shared_ptr<FILE>,
+   Utils::FileSystem,
+   const fs::path&,
+   const char*>;
 _caller_OpenFileMockType* _caller_OpenFileMock = nullptr;
 // Constant Components
 Utils::AsserterMock* _asserterMock = nullptr;

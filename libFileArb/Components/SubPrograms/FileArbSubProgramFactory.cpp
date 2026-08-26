@@ -9,22 +9,10 @@ shared_ptr<FileArbSubProgram> FileArbSubProgramFactory::NewFileArbSubProgram(Pro
 {
    switch (programMode)
    {
-   case ProgramMode::CreateTextFile:
-   {
-      return make_shared<CreateTextFileSubProgram>();
-   }
-   case ProgramMode::CreateTextFiles:
-   {
-      return make_shared<CreateTextFilesSubProgram>();
-   }
-   case ProgramMode::CreateBinaryFile:
-   {
-      return make_shared<CreateBinaryFileSubProgram>();
-   }
-   case ProgramMode::CreateBinaryFiles:
-   {
-      return make_shared<CreateBinaryFilesSubProgram>();
-   }
+   case ProgramMode::CreateTextFile: return make_shared<CreateTextFileSubProgram>();
+   case ProgramMode::CreateTextFiles: return make_shared<CreateTextFilesSubProgram>();
+   case ProgramMode::CreateBinaryFile: return make_shared<CreateBinaryFileSubProgram>();
+   case ProgramMode::CreateBinaryFiles: return make_shared<CreateBinaryFilesSubProgram>();
    default: throw invalid_argument("Invalid ProgramMode: " + to_string(static_cast<int>(programMode)));
    }
 }

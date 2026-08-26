@@ -20,7 +20,9 @@ private:
    // Constant Components
    unique_ptr<const ArgsParser> _argsParser;
    unique_ptr<const Utils::Console> _console;
+
    unique_ptr<const Utils::NonVoidOneArgTryCatchCaller<int, FileArbProgram, const vector<string>&>> _nonVoidOneArgTryCatchCaller;
+
    unique_ptr<const FileArbSubProgramFactory> _fileArbSubProgramFactory;
    unique_ptr<const Utils::VectorHelper> _vectorHelper;
    // Mutable Components

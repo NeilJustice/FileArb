@@ -6,10 +6,12 @@ namespace Utils
    class VoidThreeArgMemberFunctionCaller
    {
    public:
+      using ConstMemberFunctionType = void (ClassType::*)(size_t, Arg1Type, Arg2Type, Arg3Type) const;
+
       virtual void CallConstMemberFunctionNTimes(
          size_t numberOfCalls,
          const ClassType* constClassPointer,
-         void (ClassType::*constMemberFunction)(size_t, Arg1Type, Arg2Type, Arg3Type) const,
+         ConstMemberFunctionType constMemberFunction,
          Arg1Type arg1,
          Arg2Type arg2,
          Arg3Type arg3) const

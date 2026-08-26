@@ -6,9 +6,12 @@ namespace Utils
    class VoidFourArgMemberFunctionCaller
    {
    public:
+      using ConstMemberFunctionType = void (ClassType::*)(Arg1Type, Arg2Type, Arg3Type, Arg4Type) const;
+      using NonConstMemberFunctionType = void (ClassType::*)(Arg1Type, Arg2Type, Arg3Type, Arg4Type);
+
       virtual void CallConstMemberFunction(
          const ClassType* constClassPointer,
-         void (ClassType::* constMemberFunction)(Arg1Type, Arg2Type, Arg3Type, Arg4Type) const,
+         ConstMemberFunctionType constMemberFunction,
          Arg1Type arg1, Arg2Type arg2, Arg3Type arg3, Arg4Type arg4) const
       {
          (constClassPointer->*constMemberFunction)(arg1, arg2, arg3, arg4);
@@ -16,7 +19,7 @@ namespace Utils
 
       virtual void CallNonConstMemberFunction(
          ClassType* nonConstClassPointer,
-         void (ClassType::* nonConstMemberFunction)(Arg1Type, Arg2Type, Arg3Type, Arg4Type),
+         NonConstMemberFunctionType nonConstMemberFunction,
          Arg1Type arg1, Arg2Type arg2, Arg3Type arg3, Arg4Type arg4) const
       {
          (nonConstClassPointer->*nonConstMemberFunction)(arg1, arg2, arg3, arg4);

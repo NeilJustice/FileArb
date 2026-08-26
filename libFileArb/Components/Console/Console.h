@@ -16,6 +16,7 @@ namespace Utils
    public:
       Console();
       virtual ~Console();
+
       virtual void NakedWriteLine(string_view message) const;
       virtual void ThreadIdWriteLine(string_view message) const;
       virtual void ThreadIdWriteLineWithColor(string_view message, Color color) const;

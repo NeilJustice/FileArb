@@ -9,8 +9,6 @@ private:
    // Constant Components
    unique_ptr<const LineReplicator> _lineReplicator;
    unique_ptr<const RandomStringMaker> _randomStringMaker;
-   // Mutable Fields
-   string _fileText;
 public:
    TextFileTextMaker();
    virtual ~TextFileTextMaker();

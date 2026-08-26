@@ -1,5 +1,6 @@
 #pragma once
 class BytesStringConverter;
+class DocoptParser;
 class FileNamePrefixAndExtensionGetter;
 
 class CreateBinaryFileArgsParser
@@ -15,7 +16,4 @@ public:
    virtual ~CreateBinaryFileArgsParser();
 
    virtual FileArbArgs ParseArgs(const map<string, docopt::value>& docoptArgs) const;
-private:
-   static pair<string, string> GetFileNamePrefixAndExtension(
-      bool isCreateBinaryFileMode, bool isCreateBinaryFilesMode, bool isCreateTextFileMode, bool isCreateTextFilesMode);
 };

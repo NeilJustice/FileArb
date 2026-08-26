@@ -9,8 +9,9 @@ namespace Utils
       long lineNumber,
       const char* functionName)
    {
-      const string what = Utils::String::ConcatValues("release_assert(", predicateText, ") failed in ", functionName, "()\n", filePath, "(", lineNumber, ")");
-      throw logic_error(what);
+      const string exceptionMessage = Utils::String::ConcatValues(
+         "release_assert(", predicateText, ") failed in ", functionName, "()\n", filePath, "(", lineNumber, ")");
+      throw logic_error(exceptionMessage);
    }
 
    void ReleaseAssert(

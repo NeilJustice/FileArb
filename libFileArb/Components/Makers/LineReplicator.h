@@ -3,8 +3,7 @@
 class LineReplicator
 {
 public:
-   LineReplicator();
-   virtual ~LineReplicator();
+   virtual ~LineReplicator() = default;
 
    virtual string ReplicateLineNTimes(const string& line, size_t n) const;
 };

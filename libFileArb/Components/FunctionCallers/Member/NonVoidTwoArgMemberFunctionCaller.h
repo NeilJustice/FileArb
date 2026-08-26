@@ -6,9 +6,11 @@ namespace Utils
    class NonVoidTwoArgMemberFunctionCaller
    {
    public:
+      using ConstMemberFunctionType = ReturnType(ClassType::*)(Arg1Type, Arg2Type) const;
+
       virtual ReturnType CallConstMemberFunction(
          const ClassType* constClassPointer,
-         ReturnType(ClassType::* constMemberFunction)(Arg1Type, Arg2Type) const,
+         ConstMemberFunctionType constMemberFunction,
          Arg1Type arg1,
          Arg2Type arg2) const
       {

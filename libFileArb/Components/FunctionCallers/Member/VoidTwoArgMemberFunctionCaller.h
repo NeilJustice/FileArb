@@ -51,11 +51,19 @@ namespace Utils
       {
          vector<size_t> callIndexElements(numberOfCalls);
          std::iota(callIndexElements.begin(), callIndexElements.end(), 0ULL);
-         const auto constMemberFunctionBoundWithArg1AndArg2Bound = std::bind(constMemberFunction, constClassPointer, std::placeholders::_1, arg1, arg2);
+         const auto constMemberFunctionBoundWithArg1AndArg2Bound = std::bind(
+            constMemberFunction, constClassPointer, std::placeholders::_1, arg1, arg2);
 #ifdef _LIBCPP_VERSION
-         for_each(callIndexElements.cbegin(), callIndexElements.cend(), constMemberFunctionBoundWithArg1AndArg2Bound);
+         for_each(
+            callIndexElements.cbegin(),
+            callIndexElements.cend(),
+            constMemberFunctionBoundWithArg1AndArg2Bound);
 #else
-         for_each(std::execution::par_unseq, callIndexElements.cbegin(), callIndexElements.cend(), constMemberFunctionBoundWithArg1AndArg2Bound);
+         for_each(
+            std::execution::par_unseq,
+            callIndexElements.cbegin(),
+            callIndexElements.cend(),
+            constMemberFunctionBoundWithArg1AndArg2Bound);
 #endif
       }
    };

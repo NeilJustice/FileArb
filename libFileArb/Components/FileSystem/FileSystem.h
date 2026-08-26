@@ -37,10 +37,19 @@ namespace Utils
       fs::path(*_call_get_fs_current_path_as_assignable_function_overload_pointer)();
       function<fs::path()> _call_get_fs_current_path;
       // Function Callers
-      using _caller_CreateBinaryOrTextFileType = Utils::VoidFourArgMemberFunctionCaller<FileSystem, const fs::path&, const char*, const char*, size_t>;
+      using _caller_CreateBinaryOrTextFileType = Utils::VoidFourArgMemberFunctionCaller<
+         FileSystem,
+         const fs::path&,
+         const char*,
+         const char*,
+         size_t>;
       unique_ptr<const _caller_CreateBinaryOrTextFileType> _caller_CreateBinaryOrTextFile;
 
-      using _caller_OpenFileType = Utils::NonVoidTwoArgMemberFunctionCaller<shared_ptr<FILE>, FileSystem, const fs::path&, const char*>;
+      using _caller_OpenFileType = Utils::NonVoidTwoArgMemberFunctionCaller<
+         shared_ptr<FILE>,
+         FileSystem,
+         const fs::path&,
+         const char*>;
       unique_ptr<const _caller_OpenFileType> _caller_OpenFile;
       // Constant Callers
       unique_ptr<const Asserter> _asserter;
@@ -48,6 +57,7 @@ namespace Utils
    public:
       FileSystem();
       virtual ~FileSystem();
+
       virtual void CreateTextFile(const fs::path& filePath, string_view text) const;
       virtual void CreateFileWithBytes(const fs::path& filePath, string_view bytesString) const;
       virtual fs::path GetCurrentPath() const;

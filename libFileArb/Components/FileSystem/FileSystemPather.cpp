@@ -18,19 +18,6 @@ namespace Utils
    {
    }
 
-   // Exceptions
-
-   void FileSystemPather::ThrowIfFileDoesNotExist(const fs::path& filePath) const
-   {
-      const bool isRegularFileThatExists = _call_fs_is_regular_file(filePath);
-      [[unlikely]] if (!isRegularFileThatExists)
-      {
-         throw FileNotFoundException(filePath);
-      }
-   }
-
-   // File and Folder Paths
-
    fs::path FileSystemPather::GetAbsoluteFileOrFolderPath(const fs::path& fileOrFolderPath) const
    {
       if (fileOrFolderPath.empty())
@@ -39,5 +26,14 @@ namespace Utils
       }
       fs::path absoluteFileOrFolderPath = _call_fs_absolute(fileOrFolderPath);
       return absoluteFileOrFolderPath;
+   }
+
+   void FileSystemPather::ThrowIfFileDoesNotExist(const fs::path& filePath) const
+   {
+      const bool isRegularFileThatExists = _call_fs_is_regular_file(filePath);
+      [[unlikely]] if (!isRegularFileThatExists)
+      {
+         throw FileNotFoundException(filePath);
+      }
    }
 }

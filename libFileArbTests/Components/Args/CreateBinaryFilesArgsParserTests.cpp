@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/CreateBinaryFilesArgsParser.h"
 #include "libFileArbTests/Components/Args/MetalMock/BytesStringConverterMock.h"
+#include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
+#include "libFileArbTests/Components/Getters/MetalMock/FileNamePrefixAndExtensionGetterMock.h"
 
 TESTS(CreateBinaryFilesArgsParserTests)
 AFACT(ParseArgs_ParsesCreateBinaryFilesArgs_ReturnsFileArbArgs)

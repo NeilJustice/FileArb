@@ -2,6 +2,7 @@
 #include "libFileArb/Components/Args/CreateBinaryFileArgsParser.h"
 #include "libFileArbTests/Components/Args/MetalMock/BytesStringConverterMock.h"
 #include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
+#include "libFileArbTests/Components/Getters/MetalMock/FileNamePrefixAndExtensionGetterMock.h"
 
 TESTS(CreateBinaryFileArgsParserTests)
 AFACT(ParseArgs_ParsesArgs_ReturnsFileArbArgs)

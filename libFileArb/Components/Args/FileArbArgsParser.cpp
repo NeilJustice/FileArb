@@ -8,6 +8,7 @@
 #include "libFileArb/Components/Args/ProgramModeDeterminer.h"
 #include "libFileArb/Components/Console/Console.h"
 #include "libFileArb/Components/Console/PreamblePrinter.h"
+#include "libFileArb/Components/Docopt/DocoptParser.h"
 #include "libFileArb/Components/FileSystem/FileSystem.h"
 #include "libFileArb/Components/Vector/VectorHelper.h"
 

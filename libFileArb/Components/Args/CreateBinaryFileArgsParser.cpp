@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/BytesStringConverter.h"
 #include "libFileArb/Components/Args/CreateBinaryFileArgsParser.h"
+#include "libFileArb/Components/Docopt/DocoptParser.h"
 #include "libFileArb/Components/Getters/FileNamePrefixAndExtensionGetter.h"
 
 CreateBinaryFileArgsParser::CreateBinaryFileArgsParser()

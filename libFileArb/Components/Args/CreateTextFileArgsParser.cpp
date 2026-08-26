@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/CreateTextFileArgsParser.h"
+#include "libFileArb/Components/Docopt/DocoptParser.h"
 #include "libFileArb/Components/Getters/FileNamePrefixAndExtensionGetter.h"
 
 CreateTextFileArgsParser::CreateTextFileArgsParser()

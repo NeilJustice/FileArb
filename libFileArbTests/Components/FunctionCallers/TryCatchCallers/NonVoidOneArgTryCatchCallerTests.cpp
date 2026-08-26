@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
+#include "libFileArb/StaticUtilities/Exception.h"
 
 template<typename ArgumentType, typename ExceptionType>
 TEMPLATE_TESTS(NonVoidOneArgTryCatchCallerTests, ArgumentType, ExceptionType)

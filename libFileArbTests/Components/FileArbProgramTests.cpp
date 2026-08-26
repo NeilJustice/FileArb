@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/FileArbProgram.h"
+#include "libFileArb/StaticUtilities/Exception.h"
 #include "libFileArbTests/Components/Args/MetalMock/FileArbArgsParserMock.h"
 #include "libFileArbTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileArbTests/Components/FunctionCallers/TryCatchCallers/MetalMock/NonVoidOneArgTryCatchCallerMock.h"

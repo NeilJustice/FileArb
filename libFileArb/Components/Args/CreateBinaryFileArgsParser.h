@@ -1,15 +1,15 @@
 #pragma once
+#include "libFileArb/Components/Args/ArgsParserMixin.h"
 class BytesStringConverter;
 class DocoptParser;
 class FileNamePrefixAndExtensionGetter;
 
-class CreateBinaryFileArgsParser
+class CreateBinaryFileArgsParser : public ArgsParserMixin
 {
    friend class CreateBinaryFileArgsParserTests;
 private:
    // Constant Components
    unique_ptr<const BytesStringConverter> _bytesStringConverter;
-   unique_ptr<const DocoptParser> _docoptParser;
    unique_ptr<const FileNamePrefixAndExtensionGetter> _fileNamePrefixAndExtensionGetter;
 public:
    CreateBinaryFileArgsParser();

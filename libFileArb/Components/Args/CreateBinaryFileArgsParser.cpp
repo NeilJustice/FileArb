@@ -6,7 +6,6 @@
 CreateBinaryFileArgsParser::CreateBinaryFileArgsParser()
    // Constant Components
    : _bytesStringConverter(make_unique<BytesStringConverter>())
-   , _docoptParser(make_unique<DocoptParser>())
    , _fileNamePrefixAndExtensionGetter(make_unique<FileNamePrefixAndExtensionGetter>())
 {
 }
@@ -25,11 +24,11 @@ FileArbArgs CreateBinaryFileArgsParser::ParseArgs(const map<string, docopt::valu
    fileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
    fileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;
 
-   fileArbArgs.targetDirectoryPath = _docoptParser->GetRequiredString(docoptArgs, "--target");
+   fileArbArgs.targetDirectoryPath = p_docoptParser->GetRequiredString(docoptArgs, "--target");
 
-   const string bytesString = _docoptParser->GetRequiredString(docoptArgs, "--bytes");
+   const string bytesString = p_docoptParser->GetRequiredString(docoptArgs, "--bytes");
    fileArbArgs.numberOfBytesPerFile = _bytesStringConverter->ConvertBytesStringToNumberOfBytes(bytesString);
 
-   fileArbArgs.generateRandomBytes = _docoptParser->GetOptionalBool(docoptArgs, "--random-bytes");
+   fileArbArgs.generateRandomBytes = p_docoptParser->GetOptionalBool(docoptArgs, "--random-bytes");
    return fileArbArgs;
 }

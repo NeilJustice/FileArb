@@ -4,8 +4,7 @@
 
 CreateTextFileArgsParser::CreateTextFileArgsParser()
    // Constant Components
-   : _docoptParser(make_unique<DocoptParser>())
-   , _fileNamePrefixAndExtensionGetter(make_unique<FileNamePrefixAndExtensionGetter>())
+   : _fileNamePrefixAndExtensionGetter(make_unique<FileNamePrefixAndExtensionGetter>())
 {
 }
 
@@ -23,9 +22,17 @@ FileArbArgs CreateTextFileArgsParser::ParseArgs(const map<string, docopt::value>
    fileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
    fileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;
 
-   fileArbArgs.targetDirectoryPath = _docoptParser->GetRequiredString(docoptArgs, "--target");
-   fileArbArgs.numberOfLinesPerFile = _docoptParser->GetRequiredSizeT(docoptArgs, "--lines");
-   fileArbArgs.numberOfCharactersPerLine = _docoptParser->GetRequiredSizeT(docoptArgs, "--characters");
-   fileArbArgs.generateRandomLetters = _docoptParser->GetOptionalBool(docoptArgs, "--random-letters");
+   fileArbArgs.targetDirectoryPath = p_docoptParser->GetRequiredString(
+      docoptArgs, "--target");
+
+   fileArbArgs.numberOfLinesPerFile = p_docoptParser->GetRequiredSizeT(
+      docoptArgs, "--lines");
+
+   fileArbArgs.numberOfCharactersPerLine = p_docoptParser->GetRequiredSizeT(
+      docoptArgs, "--characters");
+
+   fileArbArgs.generateRandomLetters = p_docoptParser->GetOptionalBool(
+      docoptArgs, "--random-letters");
+
    return fileArbArgs;
 }

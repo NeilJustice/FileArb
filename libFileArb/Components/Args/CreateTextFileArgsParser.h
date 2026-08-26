@@ -1,12 +1,12 @@
 #pragma once
+#include "libFileArb/Components/Args/ArgsParserMixin.h"
 class FileNamePrefixAndExtensionGetter;
 
-class CreateTextFileArgsParser
+class CreateTextFileArgsParser : public ArgsParserMixin
 {
    friend class CreateTextFileArgsParserTests;
 private:
    // Constant Components
-   unique_ptr<const DocoptParser> _docoptParser;
    unique_ptr<const FileNamePrefixAndExtensionGetter> _fileNamePrefixAndExtensionGetter;
 public:
    CreateTextFileArgsParser();

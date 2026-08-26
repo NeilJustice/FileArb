@@ -6,7 +6,6 @@
 CreateBinaryFilesArgsParser::CreateBinaryFilesArgsParser()
    // Constant Components
    : _bytesStringConverter(make_unique<BytesStringConverter>())
-   , _docoptParser(make_unique<DocoptParser>())
    , _fileNamePrefixAndExtensionGetter(make_unique<FileNamePrefixAndExtensionGetter>())
 {
 }
@@ -25,15 +24,15 @@ FileArbArgs CreateBinaryFilesArgsParser::ParseArgs(const map<string, docopt::val
    fileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
    fileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;
 
-   fileArbArgs.targetDirectoryPath = _docoptParser->GetRequiredString(docoptArgs, "--target");
-   fileArbArgs.numberOfDirectoriesToCreate = _docoptParser->GetRequiredSizeT(docoptArgs, "--directories");
-   fileArbArgs.numberOfFilesToCreate = _docoptParser->GetRequiredSizeT(docoptArgs, "--files");
+   fileArbArgs.targetDirectoryPath = p_docoptParser->GetRequiredString(docoptArgs, "--target");
+   fileArbArgs.numberOfDirectoriesToCreate = p_docoptParser->GetRequiredSizeT(docoptArgs, "--directories");
+   fileArbArgs.numberOfFilesToCreate = p_docoptParser->GetRequiredSizeT(docoptArgs, "--files");
 
-   const string bytesString = _docoptParser->GetRequiredString(docoptArgs, "--bytes");
+   const string bytesString = p_docoptParser->GetRequiredString(docoptArgs, "--bytes");
    fileArbArgs.numberOfBytesPerFile = _bytesStringConverter->ConvertBytesStringToNumberOfBytes(bytesString);
 
-   fileArbArgs.generateRandomBytes = _docoptParser->GetOptionalBool(docoptArgs, "--random-bytes");
-   fileArbArgs.parallel = _docoptParser->GetOptionalBool(docoptArgs, "--parallel");
-   fileArbArgs.quiet = _docoptParser->GetOptionalBool(docoptArgs, "--quiet");
+   fileArbArgs.generateRandomBytes = p_docoptParser->GetOptionalBool(docoptArgs, "--random-bytes");
+   fileArbArgs.parallel = p_docoptParser->GetOptionalBool(docoptArgs, "--parallel");
+   fileArbArgs.quiet = p_docoptParser->GetOptionalBool(docoptArgs, "--quiet");
    return fileArbArgs;
 }

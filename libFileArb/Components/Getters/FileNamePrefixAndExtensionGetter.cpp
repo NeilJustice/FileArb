@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "libFileArb/Components/Getters/FileNamePrefixAndExtensionGetter.h"
 
-FileNamePrefixAndExtensionGetter::~FileNamePrefixAndExtensionGetter()
-{
-}
-
 pair<string, string> FileNamePrefixAndExtensionGetter::GetFileNamePrefixAndExtension(ProgramMode programMode) const
 {
    switch (programMode)

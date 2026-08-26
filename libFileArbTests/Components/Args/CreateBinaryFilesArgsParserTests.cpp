@@ -8,18 +8,18 @@ EVIDENCE
 
 CreateBinaryFilesArgsParser _createBinaryFilesArgsParser;
 // Base Constant Components
+BytesStringConverterMock* p_bytesStringConverterMock = nullptr;
 DocoptParserMock* p_docoptParserMock = nullptr;
 // Constant Components
-BytesStringConverterMock* _bytesStringConverterMock = nullptr;
 FileNamePrefixAndExtensionGetterMock* _fileNamePrefixAndExtensionGetterMock = nullptr;
 
 STARTUP
 {
    CreateBinaryFilesArgsParser createBinaryFilesArgsParser;
    // Base Constant Components
+   _createBinaryFilesArgsParser.p_bytesStringConverter.reset(p_bytesStringConverterMock = new BytesStringConverterMock);
    _createBinaryFilesArgsParser.p_docoptParser.reset(p_docoptParserMock = new DocoptParserMock);
    // Constant Components
-   _createBinaryFilesArgsParser._bytesStringConverter.reset(_bytesStringConverterMock = new BytesStringConverterMock);
    _createBinaryFilesArgsParser._fileNamePrefixAndExtensionGetter.reset(_fileNamePrefixAndExtensionGetterMock = new FileNamePrefixAndExtensionGetterMock);
 }
 
@@ -40,7 +40,7 @@ TEST(ParseArgs_ParsesCreateBinaryFilesArgs_ReturnsFileArbArgs)
       numberOfDirectoriesToCreate,
       numberOfFilesToCreate);
 
-   const size_t numberOfBytesPerFile = _bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.ReturnRandom();
+   const size_t numberOfBytesPerFile = p_bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.ReturnRandom();
 
    const bool generateRandomBytes = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
@@ -52,32 +52,51 @@ TEST(ParseArgs_ParsesCreateBinaryFilesArgs_ReturnsFileArbArgs)
 
    const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    //
-   const FileArbArgs fileArbArgs = _createBinaryFilesArgsParser.ParseArgs(docoptArgs);
+   const FileArbArgs args = _createBinaryFilesArgsParser.ParseArgs(docoptArgs);
    //
    METALMOCK(p_docoptParserMock->GetRequiredSizeTMock.CalledNTimes(2));
    METALMOCK(p_docoptParserMock->GetOptionalBoolMock.CalledNTimes(3));
    METALMOCK(p_docoptParserMock->GetRequiredStringMock.CalledNTimes(2));
-   METALMOCKTHEN(_fileNamePrefixAndExtensionGetterMock->GetFileNamePrefixAndExtensionMock.CalledOnceWith(fileArbArgs.programMode)).Then(
-   METALMOCKTHEN(p_docoptParserMock->GetRequiredStringMock.CalledWith(docoptArgs, "--target"))).Then(
-   METALMOCKTHEN(p_docoptParserMock->GetRequiredSizeTMock.CalledWith(docoptArgs, "--directories"))).Then(
-   METALMOCKTHEN(p_docoptParserMock->GetRequiredSizeTMock.CalledWith(docoptArgs, "--files"))).Then(
-   METALMOCKTHEN(p_docoptParserMock->GetRequiredStringMock.CalledWith(docoptArgs, "--bytes"))).Then(
-   METALMOCKTHEN(_bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.CalledOnceWith(bytesString))).Then(
-   METALMOCKTHEN(p_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptArgs, "--random-bytes"))).Then(
-   METALMOCKTHEN(p_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptArgs, "--parallel"))).Then(
-   METALMOCKTHEN(p_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptArgs, "--quiet")));
-   FileArbArgs expectedFileArbArgs;
-   expectedFileArbArgs.programMode = ProgramMode::CreateBinaryFiles;
-   expectedFileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
-   expectedFileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;
-   expectedFileArbArgs.targetDirectoryPath = targetDirectoryPath;
-   expectedFileArbArgs.numberOfDirectoriesToCreate = numberOfDirectoriesToCreate;
-   expectedFileArbArgs.numberOfFilesToCreate = numberOfFilesToCreate;
-   expectedFileArbArgs.numberOfBytesPerFile = numberOfBytesPerFile;
-   expectedFileArbArgs.generateRandomBytes = generateRandomBytes;
-   expectedFileArbArgs.parallel = parallel;
-   expectedFileArbArgs.quiet = quiet;
-   ARE_EQUAL(expectedFileArbArgs, fileArbArgs);
+
+   METALMOCKTHEN(_fileNamePrefixAndExtensionGetterMock->GetFileNamePrefixAndExtensionMock.CalledOnceWith(
+      args.programMode)).Then(
+
+   METALMOCKTHEN(p_docoptParserMock->GetRequiredStringMock.CalledWith(
+      docoptArgs, "--target"))).Then(
+
+   METALMOCKTHEN(p_docoptParserMock->GetRequiredSizeTMock.CalledWith(
+      docoptArgs, "--directories"))).Then(
+
+   METALMOCKTHEN(p_docoptParserMock->GetRequiredSizeTMock.CalledWith(
+      docoptArgs, "--files"))).Then(
+
+   METALMOCKTHEN(p_docoptParserMock->GetRequiredStringMock.CalledWith(
+      docoptArgs, "--bytes"))).Then(
+
+   METALMOCKTHEN(p_bytesStringConverterMock->ConvertBytesStringToNumberOfBytesMock.CalledOnceWith(
+      bytesString))).Then(
+
+   METALMOCKTHEN(p_docoptParserMock->GetOptionalBoolMock.CalledWith(
+      docoptArgs, "--random-bytes"))).Then(
+
+   METALMOCKTHEN(p_docoptParserMock->GetOptionalBoolMock.CalledWith(
+      docoptArgs, "--parallel"))).Then(
+
+   METALMOCKTHEN(p_docoptParserMock->GetOptionalBoolMock.CalledWith(
+      docoptArgs, "--quiet")));
+
+   FileArbArgs expectedArgs;
+   expectedArgs.programMode = ProgramMode::CreateBinaryFiles;
+   expectedArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
+   expectedArgs.fileExtension = fileNamePrefixAndFileExtension.second;
+   expectedArgs.targetDirectoryPath = targetDirectoryPath;
+   expectedArgs.numberOfDirectoriesToCreate = numberOfDirectoriesToCreate;
+   expectedArgs.numberOfFilesToCreate = numberOfFilesToCreate;
+   expectedArgs.numberOfBytesPerFile = numberOfBytesPerFile;
+   expectedArgs.generateRandomBytes = generateRandomBytes;
+   expectedArgs.parallel = parallel;
+   expectedArgs.quiet = quiet;
+   ARE_EQUAL(expectedArgs, args);
 }
 
 RUN_TESTS(CreateBinaryFilesArgsParserTests)

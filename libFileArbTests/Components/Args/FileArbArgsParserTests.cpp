@@ -71,7 +71,7 @@ TEST(ParseStringArgs__CreateBinaryFile)
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
    _programModeDeterminerMock->DetermineProgramModeMock.Return(ProgramMode::CreateBinaryFile);
 
-   const FileArbArgs fileArbArgs = _createBinaryFileArgsParserMock->ParseArgsMock.ReturnRandom();
+   const FileArbArgs args = _createBinaryFileArgsParserMock->ParseArgsMock.ReturnRandom();
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
@@ -85,7 +85,7 @@ TEST(ParseStringArgs__CreateBinaryFile)
 
    METALMOCKTHEN(_createBinaryFileArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs)));
 
-   ARE_EQUAL(fileArbArgs, returnedFileArbArgs);
+   ARE_EQUAL(args, returnedFileArbArgs);
 }
 
 TEST(ParseStringArgs__CreateTextFile)
@@ -97,7 +97,7 @@ TEST(ParseStringArgs__CreateTextFile)
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
    _programModeDeterminerMock->DetermineProgramModeMock.Return(ProgramMode::CreateTextFile);
 
-   const FileArbArgs fileArbArgs = _createTextFileArgsParserMock->ParseArgsMock.ReturnRandom();
+   const FileArbArgs args = _createTextFileArgsParserMock->ParseArgsMock.ReturnRandom();
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
@@ -111,7 +111,7 @@ TEST(ParseStringArgs__CreateTextFile)
 
    METALMOCKTHEN(_createTextFileArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs)));
 
-   ARE_EQUAL(fileArbArgs, returnedFileArbArgs);
+   ARE_EQUAL(args, returnedFileArbArgs);
 }
 
 TEST(ParseStringArgs__CreateBinaryFiles)
@@ -123,7 +123,7 @@ TEST(ParseStringArgs__CreateBinaryFiles)
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
    _programModeDeterminerMock->DetermineProgramModeMock.Return(ProgramMode::CreateBinaryFiles);
 
-   const FileArbArgs fileArbArgs = _createBinaryFilesArgsParserMock->ParseArgsMock.ReturnRandom();
+   const FileArbArgs args = _createBinaryFilesArgsParserMock->ParseArgsMock.ReturnRandom();
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
@@ -137,7 +137,7 @@ TEST(ParseStringArgs__CreateBinaryFiles)
 
    METALMOCKTHEN(_createBinaryFilesArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs)));
 
-   ARE_EQUAL(fileArbArgs, returnedFileArbArgs);
+   ARE_EQUAL(args, returnedFileArbArgs);
 }
 
 TEST(ParseStringArgs__CreateTextFiles)
@@ -149,7 +149,7 @@ TEST(ParseStringArgs__CreateTextFiles)
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
    _programModeDeterminerMock->DetermineProgramModeMock.Return(ProgramMode::CreateTextFiles);
 
-   const FileArbArgs fileArbArgs = _createTextFilesArgsParserMock->ParseArgsMock.ReturnRandom();
+   const FileArbArgs args = _createTextFilesArgsParserMock->ParseArgsMock.ReturnRandom();
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
@@ -163,7 +163,7 @@ TEST(ParseStringArgs__CreateTextFiles)
 
    METALMOCKTHEN(_createTextFilesArgsParserMock->ParseArgsMock.CalledOnceWith(docoptArgs)));
 
-   ARE_EQUAL(fileArbArgs, returnedFileArbArgs);
+   ARE_EQUAL(args, returnedFileArbArgs);
 }
 
 TEST1X1(ParseStringArgs__InvalidProgramMode,

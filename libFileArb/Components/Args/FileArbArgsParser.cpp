@@ -41,27 +41,27 @@ FileArbArgs FileArbArgsParser::ParseStringArgs(const vector<string>& stringArgs)
    const map<string, docopt::value> docoptArgs = _docoptParser->ParseArgs(FileArbArgs::CommandLineUsage, stringArgs, false);
    const ProgramMode programMode = _programModeDeterminer->DetermineProgramMode(docoptArgs);
 
-   FileArbArgs fileArbArgs;
+   FileArbArgs args;
    switch (programMode)
    {
       case ProgramMode::CreateBinaryFile:
       {
-         fileArbArgs = _createBinaryFileArgsParser->ParseArgs(docoptArgs);
+         args = _createBinaryFileArgsParser->ParseArgs(docoptArgs);
          break;
       }
       case ProgramMode::CreateTextFile:
       {
-         fileArbArgs = _createTextFileArgsParser->ParseArgs(docoptArgs);
+         args = _createTextFileArgsParser->ParseArgs(docoptArgs);
          break;
       }
       case ProgramMode::CreateBinaryFiles:
       {
-         fileArbArgs = _createBinaryFilesArgsParser->ParseArgs(docoptArgs);
+         args = _createBinaryFilesArgsParser->ParseArgs(docoptArgs);
          break;
       }
       case ProgramMode::CreateTextFiles:
       {
-         fileArbArgs = _createTextFilesArgsParser->ParseArgs(docoptArgs);
+         args = _createTextFilesArgsParser->ParseArgs(docoptArgs);
          break;
       }
       default:
@@ -71,5 +71,5 @@ FileArbArgs FileArbArgsParser::ParseStringArgs(const vector<string>& stringArgs)
          _call_exit(1);
       }
    }
-   return fileArbArgs;
+   return args;
 }

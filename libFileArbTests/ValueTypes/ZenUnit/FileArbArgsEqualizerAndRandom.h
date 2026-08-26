@@ -7,21 +7,21 @@ namespace ZenUnit
    template<>
    struct Equalizer<FileArbArgs>
    {
-      static void AssertEqual(const FileArbArgs& expectedFileArbArgs, const FileArbArgs& actualFileArbArgs)
+      static void AssertEqual(const FileArbArgs& expectedArgs, const FileArbArgs& actualFileArbArgs)
       {
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, programMode);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, targetDirectoryPath);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfDirectoriesToCreate);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfFilesToCreate);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfLinesPerFile);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfCharactersPerLine);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, numberOfBytesPerFile);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, generateRandomBytes);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, generateRandomLetters);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, parallel);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, quiet);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, fileNamePrefix);
-         FIELDS_ARE_EQUAL(expectedFileArbArgs, actualFileArbArgs, fileExtension);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, programMode);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, targetDirectoryPath);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, numberOfDirectoriesToCreate);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, numberOfFilesToCreate);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, numberOfLinesPerFile);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, numberOfCharactersPerLine);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, numberOfBytesPerFile);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, generateRandomBytes);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, generateRandomLetters);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, parallel);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, quiet);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, fileNamePrefix);
+         FIELDS_ARE_EQUAL(expectedArgs, actualFileArbArgs, fileExtension);
       }
    };
 

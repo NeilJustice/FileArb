@@ -8,7 +8,6 @@ class CreateBinaryFilesArgsParser : public ArgsParserMixin
    friend class CreateBinaryFilesArgsParserTests;
 private:
    // Constant Components
-   unique_ptr<const BytesStringConverter> _bytesStringConverter;
    unique_ptr<const FileNamePrefixAndExtensionGetter> _fileNamePrefixAndExtensionGetter;
 public:
    CreateBinaryFilesArgsParser();

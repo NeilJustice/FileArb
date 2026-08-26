@@ -5,8 +5,7 @@
 
 CreateBinaryFileArgsParser::CreateBinaryFileArgsParser()
    // Constant Components
-   : _bytesStringConverter(make_unique<BytesStringConverter>())
-   , _fileNamePrefixAndExtensionGetter(make_unique<FileNamePrefixAndExtensionGetter>())
+   : _fileNamePrefixAndExtensionGetter(make_unique<FileNamePrefixAndExtensionGetter>())
 {
 }
 
@@ -16,19 +15,23 @@ CreateBinaryFileArgsParser::~CreateBinaryFileArgsParser()
 
 FileArbArgs CreateBinaryFileArgsParser::ParseArgs(const map<string, docopt::value>& docoptArgs) const
 {
-   FileArbArgs fileArbArgs;
-   fileArbArgs.programMode = ProgramMode::CreateBinaryFile;
+   FileArbArgs args;
+   args.programMode = ProgramMode::CreateBinaryFile;
 
    const pair<string, string> fileNamePrefixAndFileExtension =
-      _fileNamePrefixAndExtensionGetter->GetFileNamePrefixAndExtension(fileArbArgs.programMode);
-   fileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
-   fileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;
+      _fileNamePrefixAndExtensionGetter->GetFileNamePrefixAndExtension(args.programMode);
+   args.fileNamePrefix = fileNamePrefixAndFileExtension.first;
+   args.fileExtension = fileNamePrefixAndFileExtension.second;
 
-   fileArbArgs.targetDirectoryPath = p_docoptParser->GetRequiredString(docoptArgs, "--target");
+   args.targetDirectoryPath = p_docoptParser->GetRequiredString(
+      docoptArgs, "--target");
 
-   const string bytesString = p_docoptParser->GetRequiredString(docoptArgs, "--bytes");
-   fileArbArgs.numberOfBytesPerFile = _bytesStringConverter->ConvertBytesStringToNumberOfBytes(bytesString);
+   const string bytesString = p_docoptParser->GetRequiredString(
+      docoptArgs, "--bytes");
+   args.numberOfBytesPerFile = p_bytesStringConverter->ConvertBytesStringToNumberOfBytes(bytesString);
 
-   fileArbArgs.generateRandomBytes = p_docoptParser->GetOptionalBool(docoptArgs, "--random-bytes");
-   return fileArbArgs;
+   args.generateRandomBytes = p_docoptParser->GetOptionalBool(
+      docoptArgs, "--random-bytes");
+
+   return args;
 }

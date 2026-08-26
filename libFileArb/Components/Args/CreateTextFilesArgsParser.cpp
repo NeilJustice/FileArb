@@ -14,37 +14,37 @@ CreateTextFilesArgsParser::~CreateTextFilesArgsParser()
 
 FileArbArgs CreateTextFilesArgsParser::ParseArgs(const map<string, docopt::value>& docoptArgs) const
 {
-   FileArbArgs fileArbArgs;
-   fileArbArgs.programMode = ProgramMode::CreateTextFiles;
+   FileArbArgs args;
+   args.programMode = ProgramMode::CreateTextFiles;
 
    const pair<string, string> fileNamePrefixAndFileExtension =
-      _fileNamePrefixAndExtensionGetter->GetFileNamePrefixAndExtension(fileArbArgs.programMode);
-   fileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
-   fileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;
+      _fileNamePrefixAndExtensionGetter->GetFileNamePrefixAndExtension(args.programMode);
+   args.fileNamePrefix = fileNamePrefixAndFileExtension.first;
+   args.fileExtension = fileNamePrefixAndFileExtension.second;
 
-   fileArbArgs.targetDirectoryPath = p_docoptParser->GetRequiredString(
+   args.targetDirectoryPath = p_docoptParser->GetRequiredString(
       docoptArgs, "--target");
 
-   fileArbArgs.numberOfDirectoriesToCreate = p_docoptParser->GetRequiredSizeT(
+   args.numberOfDirectoriesToCreate = p_docoptParser->GetRequiredSizeT(
       docoptArgs, "--directories");
 
-   fileArbArgs.numberOfFilesToCreate = p_docoptParser->GetRequiredSizeT(
+   args.numberOfFilesToCreate = p_docoptParser->GetRequiredSizeT(
       docoptArgs, "--files");
 
-   fileArbArgs.numberOfLinesPerFile = p_docoptParser->GetRequiredSizeT(
+   args.numberOfLinesPerFile = p_docoptParser->GetRequiredSizeT(
       docoptArgs, "--lines");
 
-   fileArbArgs.numberOfCharactersPerLine = p_docoptParser->GetRequiredSizeT(
+   args.numberOfCharactersPerLine = p_docoptParser->GetRequiredSizeT(
       docoptArgs, "--characters");
 
-   fileArbArgs.generateRandomLetters = p_docoptParser->GetOptionalBool(
+   args.generateRandomLetters = p_docoptParser->GetOptionalBool(
       docoptArgs, "--random-letters");
 
-   fileArbArgs.parallel = p_docoptParser->GetOptionalBool(
+   args.parallel = p_docoptParser->GetOptionalBool(
       docoptArgs, "--parallel");
 
-   fileArbArgs.quiet = p_docoptParser->GetOptionalBool(
+   args.quiet = p_docoptParser->GetOptionalBool(
       docoptArgs, "--quiet");
 
-   return fileArbArgs;
+   return args;
 }

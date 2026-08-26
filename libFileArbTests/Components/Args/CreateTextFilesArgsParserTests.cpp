@@ -46,11 +46,11 @@ TEST(ParseArgs_ParsesCreateTextFilesArgs_ReturnsFileArbArgs)
 
    const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    //
-   const FileArbArgs fileArbArgs = _createTextFilesArgsParser.ParseArgs(docoptArgs);
+   const FileArbArgs args = _createTextFilesArgsParser.ParseArgs(docoptArgs);
    //
    METALMOCK(p_docoptParserMock->GetRequiredSizeTMock.CalledNTimes(4));
    METALMOCK(p_docoptParserMock->GetOptionalBoolMock.CalledNTimes(3));
-   METALMOCKTHEN(_fileNamePrefixAndExtensionGetterMock->GetFileNamePrefixAndExtensionMock.CalledOnceWith(fileArbArgs.programMode)).Then(
+   METALMOCKTHEN(_fileNamePrefixAndExtensionGetterMock->GetFileNamePrefixAndExtensionMock.CalledOnceWith(args.programMode)).Then(
    METALMOCKTHEN(p_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--target"))).Then(
    METALMOCKTHEN(p_docoptParserMock->GetRequiredSizeTMock.CalledWith(docoptArgs, "--directories"))).Then(
    METALMOCKTHEN(p_docoptParserMock->GetRequiredSizeTMock.CalledWith(docoptArgs, "--files"))).Then(
@@ -59,19 +59,19 @@ TEST(ParseArgs_ParsesCreateTextFilesArgs_ReturnsFileArbArgs)
    METALMOCKTHEN(p_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptArgs, "--random-letters"))).Then(
    METALMOCKTHEN(p_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptArgs, "--parallel"))).Then(
    METALMOCKTHEN(p_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptArgs, "--quiet")));
-   FileArbArgs expectedFileArbArgs;
-   expectedFileArbArgs.programMode = ProgramMode::CreateTextFiles;
-   expectedFileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
-   expectedFileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;
-   expectedFileArbArgs.targetDirectoryPath = targetDirectoryPath;
-   expectedFileArbArgs.numberOfDirectoriesToCreate = numberOfDirectoriesToCreate;
-   expectedFileArbArgs.numberOfFilesToCreate = numberOfFilesToCreate;
-   expectedFileArbArgs.numberOfLinesPerFile = numberOfLinesPerFile;
-   expectedFileArbArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
-   expectedFileArbArgs.generateRandomLetters = generateRandomLetters;
-   expectedFileArbArgs.parallel = parallel;
-   expectedFileArbArgs.quiet = quiet;
-   ARE_EQUAL(expectedFileArbArgs, fileArbArgs);
+   FileArbArgs expectedArgs;
+   expectedArgs.programMode = ProgramMode::CreateTextFiles;
+   expectedArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
+   expectedArgs.fileExtension = fileNamePrefixAndFileExtension.second;
+   expectedArgs.targetDirectoryPath = targetDirectoryPath;
+   expectedArgs.numberOfDirectoriesToCreate = numberOfDirectoriesToCreate;
+   expectedArgs.numberOfFilesToCreate = numberOfFilesToCreate;
+   expectedArgs.numberOfLinesPerFile = numberOfLinesPerFile;
+   expectedArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
+   expectedArgs.generateRandomLetters = generateRandomLetters;
+   expectedArgs.parallel = parallel;
+   expectedArgs.quiet = quiet;
+   ARE_EQUAL(expectedArgs, args);
 }
 
 RUN_TESTS(CreateTextFilesArgsParserTests)

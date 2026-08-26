@@ -36,7 +36,7 @@ TEST(ParseArgs_ParsesArgs_ReturnsFileArbArgs)
 
    const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    //
-   const FileArbArgs fileArbArgs = _createTextFileArgsParser.ParseArgs(docoptArgs);
+   const FileArbArgs args = _createTextFileArgsParser.ParseArgs(docoptArgs);
    //
    METALMOCK(p_docoptParserMock->GetRequiredSizeTMock.CalledNTimes(2));
    METALMOCKTHEN(_fileNamePrefixAndExtensionGetterMock->GetFileNamePrefixAndExtensionMock.CalledOnceWith(ProgramMode::CreateTextFile)).Then(
@@ -44,15 +44,15 @@ TEST(ParseArgs_ParsesArgs_ReturnsFileArbArgs)
    METALMOCKTHEN(p_docoptParserMock->GetRequiredSizeTMock.CalledWith(docoptArgs, "--lines"))).Then(
    METALMOCKTHEN(p_docoptParserMock->GetRequiredSizeTMock.CalledWith(docoptArgs, "--characters"))).Then(
    METALMOCKTHEN(p_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--random-letters")));
-   FileArbArgs expectedFileArbArgs;
-   expectedFileArbArgs.programMode = ProgramMode::CreateTextFile;
-   expectedFileArbArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
-   expectedFileArbArgs.fileExtension = fileNamePrefixAndFileExtension.second;
-   expectedFileArbArgs.targetDirectoryPath = targetDirectoryPath;
-   expectedFileArbArgs.numberOfLinesPerFile = numberOfLinesPerFile;
-   expectedFileArbArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
-   expectedFileArbArgs.generateRandomLetters = generateRandomBytes;
-   ARE_EQUAL(expectedFileArbArgs, fileArbArgs);
+   FileArbArgs expectedArgs;
+   expectedArgs.programMode = ProgramMode::CreateTextFile;
+   expectedArgs.fileNamePrefix = fileNamePrefixAndFileExtension.first;
+   expectedArgs.fileExtension = fileNamePrefixAndFileExtension.second;
+   expectedArgs.targetDirectoryPath = targetDirectoryPath;
+   expectedArgs.numberOfLinesPerFile = numberOfLinesPerFile;
+   expectedArgs.numberOfCharactersPerLine = numberOfCharactersPerLine;
+   expectedArgs.generateRandomLetters = generateRandomBytes;
+   ARE_EQUAL(expectedArgs, args);
 }
 
 RUN_TESTS(CreateTextFileArgsParserTests)

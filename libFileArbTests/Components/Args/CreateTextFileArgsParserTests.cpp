@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "libFileArb/Components/Args/CreateTextFileArgsParser.h"
 #include "libFileArbTests/Components/Docopt/MetalMock/DocoptParserMock.h"
+#include "libFileArbTests/Components/Getters/MetalMock/FileNamePrefixAndExtensionGetterMock.h"
 
 TESTS(CreateTextFileArgsParserTests)
 AFACT(ParseArgs_ParsesArgs_ReturnsFileArbArgs)

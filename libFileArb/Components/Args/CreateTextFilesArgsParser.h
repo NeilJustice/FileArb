@@ -10,7 +10,7 @@ private:
    unique_ptr<const FileNamePrefixAndExtensionGetter> _fileNamePrefixAndExtensionGetter;
 public:
    CreateTextFilesArgsParser();
-   virtual ~CreateTextFilesArgsParser();
+   virtual ~CreateTextFilesArgsParser() override;
 
    virtual FileArbArgs ParseArgs(const map<string, docopt::value>& docoptArgs) const;
 };

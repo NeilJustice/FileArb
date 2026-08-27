@@ -11,7 +11,7 @@ private:
    unique_ptr<const FileNamePrefixAndExtensionGetter> _fileNamePrefixAndExtensionGetter;
 public:
    CreateBinaryFilesArgsParser();
-   virtual ~CreateBinaryFilesArgsParser();
+   virtual ~CreateBinaryFilesArgsParser() override;
 
    virtual FileArbArgs ParseArgs(const map<string, docopt::value>& docoptArgs) const;
 };

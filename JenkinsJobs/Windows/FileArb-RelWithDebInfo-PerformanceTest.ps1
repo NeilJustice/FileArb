@@ -9,6 +9,7 @@ $args = "create-text-files " +
 
 AcceliTune.exe build-then-measure-program-run-time `
    --working-dir="." `
+   --solution="FileArb" `
    --program="FileArb" `
    --configuration="RelWithDebInfo" `
    --args="$args" `

@@ -8,6 +8,7 @@ $args = "create-text-files " +
 
 AcceliTune.exe build-then-collect-hotspots `
    --working-dir="." `
+   --solution="FileArb" `
    --program="FileArb" `
    --configuration=RelWithDebInfo `
    --args="$args" `

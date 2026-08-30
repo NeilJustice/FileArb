@@ -6,14 +6,6 @@ RelWithDebInfo/
 !CMakeMacros.cmake
 CMakeCache.txt
 
-# Python
-__pycache__/
-htmlcov/
-CodeCoverageHTMLReport/
-coverage.xml
-.coverage
-CoberturaCodeCoverageResults_FileArbDevOpsPythonTests.xml
-
 # Linux
 covhtml/
 build.ninja

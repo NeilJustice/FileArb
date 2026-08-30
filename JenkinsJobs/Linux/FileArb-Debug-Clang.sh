@@ -1,11 +1,9 @@
 #!/bin/bash
 set -ev
 
-export CXX=/usr/bin/clang++
-export PYTHONPATH=FileArbDevOpsPython
-python -u FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+export CXX=clang++
+LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=FileArb \
-   --cmake-build-type=Debug \
-   --tests-project-name=libFileArbTests \
+   --configuration=Debug \
    --cmake-definitions="-DFastLinuxDebugBuildMode=ON" \
-   --no-install
+   --install=false

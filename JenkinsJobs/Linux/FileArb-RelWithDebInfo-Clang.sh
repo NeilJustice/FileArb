@@ -1,11 +1,9 @@
 #!/bin/bash
 set -ev
 
-export CXX=/usr/bin/clang++
-export PYTHONPATH=FileArbDevOpsPython
-python -u FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+export CXX=clang++
+LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=FileArb \
-   --cmake-build-type=RelWithDebInfo \
-   --tests-project-name=libFileArbTests \
-   --cmake-definitions="" \
-   --install
+   --configuration=RelWithDebInfo \
+   --cmake-definitions="-DFastLinuxReleaseBuildMode=ON" \
+   --install=false

@@ -1,12 +1,10 @@
 #!/bin/bash
 set -ev
 
-export CXX=clang++
-export PYTHONPATH=FileArbDevOpsPython
 export UBSAN_OPTIONS="silence_unsigned_overflow=1"
-python -u FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+export CXX=clang++
+LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=FileArb \
-   --cmake-build-type=Debug \
-   --tests-project-name=libFileArbTests \
+   --configuration=Debug \
    --cmake-definitions="-DClangUndefinedBehaviorSanitizerMode=ON" \
-   --no-install
+   --install=false

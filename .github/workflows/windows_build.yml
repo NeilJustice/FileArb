@@ -6,43 +6,33 @@ jobs:
     runs-on: windows-2025-vs2026
     strategy:
       matrix:
-         cmake_build_type: [Debug, RelWithDebInfo]
+        cmake_build_type: [Debug, RelWithDebInfo]
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: ilammy/msvc-dev-cmd@v1
-
-      - uses: actions/setup-python@v7
+      - uses: dawidd6/action-download-artifact@v9
         with:
-          python-version: '3.13'
+          repo: NeilJustice/WindowsCPlusPlusBuilder
+          github_token: ${{ secrets.WINDOWSCPLUSPLUSBUILDER_READ_PAT }}
+          workflow_search: true
+          workflow_conclusion: success
+          name: WindowsCPlusPlusBuilder
+          use_unzip: true
+          path: WindowsCPlusPlusBuilder/
 
-      - uses: actions/cache@v6
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('FileArbDevOpsPython/dev-requirements.txt') }}
-
-      - name: Install pip packages
-        run: pip install --upgrade --upgrade-strategy eager -r FileArbDevOpsPython/dev-requirements.txt
-
-      - name: Mypy, Flake8, Pylint, then run unit tests with coverage and pytest if Release
-        working-directory: FileArbDevOpsPython
-        run: python FileArbDevOpsPython/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=FileArbDevOpsPythonTests/RunAllWithCoverage.py
-        env:
-          PYTHONPATH: .
-        if: ${{ matrix.cmake_build_type == 'Release' }}
-
-      - name: Run BuildAndInstallCPlusPlusProgram.py
+      - name: Download ZenUnit.h and MetalMock.h
         run: |
-          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "ZenUnitAndMetalMock/ZenUnit.h"
-          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "ZenUnitAndMetalMock/MetalMock.h"
-          python FileArbDevOpsPython/FileArbDevOpsPython/BuildAndInstallCPlusPlusProgram.py `
-            --solution-name=FileArb `
-            --cmake-build-type="${{ matrix.cmake_build_type }}" `
-            --cmake-definitions="" `
-            --tests-project-name=libFileArbTests `
-            --no-install
-        env:
-          PYTHONPATH: FileArbDevOpsPython
-
+           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h"
+           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h"
+           
+      - uses: ilammy/msvc-dev-cmd@v1 # Places MSBuild.exe on the PATH, which is invoked by WindowsCPlusPlusBuilder.exe
+      
+      - name: Run WindowsCPlusPlusBuilder
+        run: |
+           WindowsCPlusPlusBuilder/WindowsCPlusPlusBuilder.exe build-cpp-solution `
+              --solution-name=FileArb `
+              --configuration="${{ matrix.cmake_build_type }}" `
+              --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" `
+              --install=false

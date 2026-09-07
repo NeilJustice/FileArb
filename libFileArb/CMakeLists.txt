@@ -42,7 +42,7 @@ source_group("" FILES ${Sources})
 add_library(libFileArb ${Sources})
 
 if(UNIX)
-   IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotIncludeWhatYouUseOrClangTidyMode(libFileArb 4)
+   IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotClangTidyMode(libFileArb 4)
    set_target_properties(libFileArb PROPERTIES DEBUG_OUTPUT_NAME "FileArbDebug")
    set_target_properties(libFileArb PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "FileArbRelWithDebInfo")
 elseif(MSVC)

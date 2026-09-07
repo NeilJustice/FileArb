@@ -45,7 +45,7 @@ elseif(MSVC)
    set(ZenUnitAndMetalMockIncludeDirectory C:\\include\\ZenUnitAndMetalMock)
 endif()
 
-function(IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotIncludeWhatYouUseOrClangTidyMode projectName unityBuildBatchSize)
+function(IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotClangTidyMode projectName unityBuildBatchSize)
    if(UNIX)
       if(NOT IncludeWhatYouUseMode AND NOT ClangTidyMode)
          target_precompile_headers(${projectName} PRIVATE pch.h)

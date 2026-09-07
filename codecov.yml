@@ -1,3 +1,2 @@
 ignore:
-  - libFileArb/docopt/**/*
-  - libFileArb/docopt/docopt_value.h
+  - libFileArb/docopt

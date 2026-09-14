@@ -6,13 +6,13 @@
 |VS2026 on windows-2025-vs2026|<a href="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileArb/actions/workflows/windows_build.yml/badge.svg"></a>|
 |GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileArb"><img src="https://codecov.io/gh/NeilJustice/FileArb/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>|
 
-FileArb is a C++23 command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
+FileArb is a C++ command line program for quickly creating in parallel an arbitrary number of arbitrarily large text files or binary files.
 
 Three use cases for FileArb:
 
 1. Performance testing the write speed of storage hardware such as USB drives, NVMe drives, and network file shares.
-2. Performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a> which perform many file operations such as text replacement.
-3. Learning the true cost of cloud storage resources by way of creating, for example, 10 1-GB files on an Azure file share followed by examining the resulting Azure bill.
+2. Performance testing file-I/O-intensive programs such as <a href="https://github.com/NeilJustice/FileRevisor">FileRevisor</a>.
+3. Learning the file write performance differences between Linux filesystems such as Btrfs versus F2FS versus XFS.
 
 * [FileArb command line usage](#filearb-command-line-usage)
 * [FileArb program modes](#filearb-program-modes)

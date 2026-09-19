@@ -35,7 +35,7 @@ jobs:
       - name: Run WindowsCPlusPlusBuilder
         run: |
           WindowsCPlusPlusBuilder/WindowsCPlusPlusBuilder.exe build-cpp-solution `
-            --solution-name=FileArb `
+            --solution=FileArb `
             --configuration="${{ matrix.cmake_build_type }}" `
             --cmake-definitions="" `
             --install=false

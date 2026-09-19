@@ -1,5 +1,5 @@
 WindowsCPlusPlusBuilder.exe build-cpp-solution `
-   --solution-name=FileArb `
+   --solution=FileArb `
    --configuration=RelWithDebInfo `
    --cmake-definitions="" `
    --install=true

@@ -167,4 +167,6 @@ cmake --build . --config RelWithDebInfo --target install
 
 ## Acknowledgements
 
+https://github.com/docopt/docopt.cpp
+https://github.com/hanickadot/compile-time-regular-expressions
 <a href="https://brandmark.io">brandmark.io</a> for FileArb's logo

@@ -21,7 +21,7 @@ Three use cases for FileArb:
    * [create-text-file](#create-text-file)
    * [create-text-files](#create-text-files)
 * [Steps to build binary filearb on Linux with Clang](#steps-to-build-binary-filearb-on-linux-with-clang)
-* [Steps to build executable FileArb.exe on Windows with Visual Studio 2026](#steps-to-build-executable-filearbexe-on-windows-with-visual-studio-2026)
+* [Steps to build FileArb.exe on Windows with Visual Studio 2026](#steps-to-build-filearbexe-on-windows-with-visual-studio-2026)
 * [Acknowledgements](#acknowledgements)
 
 ## FileArb command line usage
@@ -156,7 +156,7 @@ CXX=clang++ cmake .. -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo
 sudo cmake --build . --target install
 ```
 
-## Steps to build executable FileArb.exe on Windows with Visual Studio 2026
+## Steps to build FileArb.exe on Windows with Visual Studio 2026
 
 ```powershell
 git clone https://github.com/NeilJustice/FileArb
@@ -167,6 +167,8 @@ cmake --build . --config RelWithDebInfo --target install
 
 ## Acknowledgements
 
-https://github.com/docopt/docopt.cpp
-https://github.com/hanickadot/compile-time-regular-expressions
+<a href="https://github.com/docopt/docopt.cpp">docopt.cpp</a>
+
+<a href="https://github.com/hanickadot/compile-time-regular-expressions">compile-time-regular-expressions</a>
+
 <a href="https://brandmark.io">brandmark.io</a> for FileArb's logo

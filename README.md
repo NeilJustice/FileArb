@@ -22,7 +22,7 @@ Three use cases for FileArb:
    * [create-text-files](#create-text-files)
 * [Steps to build binary filearb on Linux with Clang](#steps-to-build-binary-filearb-on-linux-with-clang)
 * [Steps to build FileArb.exe on Windows with Visual Studio 2026](#steps-to-build-filearbexe-on-windows-with-visual-studio-2026)
-* [Acknowledgements](#acknowledgements)
+* [Thanks to](#thanks-to)
 
 ## FileArb command line usage
 
@@ -165,7 +165,7 @@ cmake . -G"Visual Studio 18 2026" -A x64 -DCMAKE_INSTALL_PREFIX="C:\bin"
 cmake --build . --config RelWithDebInfo --target install
 ```
 
-## Acknowledgements
+## Thanks to
 
 <a href="https://github.com/docopt/docopt.cpp">docopt.cpp</a>
 

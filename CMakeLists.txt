@@ -22,6 +22,7 @@ if(UNIX)
          -Wno-header-hygiene \
          -Wno-missing-noreturn \
          -Wno-missing-variable-declarations \
+         -Wno-nrvo \
          -Wno-padded \
          -Wno-reserved-identifier \
          -Wno-shadow-field-in-constructor \
@@ -31,8 +32,7 @@ if(UNIX)
          -Wno-unused-template \
          -Wno-weak-vtables")
       if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 23.0.0)
-         append(CMAKE_CXX_FLAGS "-Wno-nrvo \
-            -Wno-lifetime-safety-intra-tu-suggestions \
+         append(CMAKE_CXX_FLAGS "-Wno-lifetime-safety-intra-tu-suggestions \
             -Wno-lifetime-safety-invalidation")
       endif()
    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
